@@ -3,71 +3,50 @@ const services = [
   {
     title: 'จองห้องปฏิบัติการ',
     description:
-      'ผู้ใช้งานที่ได้รับสิทธิ์สามารถส่งคำขอใช้งานห้อง SIM Lab, ห้อง Debriefing และพื้นที่ฝึกปฏิบัติการหลังเข้าสู่ระบบ',
+      'บุคลากรที่ได้รับสิทธิ์สามารถส่งคำขอใช้ห้องปฏิบัติการและทรัพยากรที่เกี่ยวข้องผ่านระบบหลังเข้าสู่ระบบ',
   },
   {
-    title: 'จัดการหุ่น Simulation',
+    title: 'จัดการทรัพยากร Simulation',
     description:
-      'รองรับการเลือกประเภทหุ่นและรายการหุ่นที่พร้อมใช้งานตาม Scenario การฝึกปฏิบัติการ',
+      'รองรับการจัดการข้อมูลห้อง หุ่น Simulation และอุปกรณ์เพื่อประกอบการพิจารณาคำขอใช้งาน',
   },
   {
-    title: 'ขอใช้อุปกรณ์เพิ่มเติม',
+    title: 'ติดตามสถานะคำขอ',
     description:
-      'ระบบดึงอุปกรณ์แนะนำจาก Scenario และให้ผู้ขอจองเลือกอุปกรณ์เพิ่มเติมจากรายการที่มีในระบบ',
+      'ผู้ขอใช้งานสามารถติดตามสถานะคำขอและผลการพิจารณาจากเจ้าหน้าที่ผ่านระบบ',
   },
   {
     title: 'ตรวจสอบและอนุมัติ',
     description:
-      'Staff/Admin ตรวจสอบความพร้อมของห้อง หุ่น อุปกรณ์ และเงื่อนไขก่อนอนุมัติคำขอ',
+      'เจ้าหน้าที่ผู้มีสิทธิ์ตรวจสอบความพร้อมของทรัพยากรและเงื่อนไขก่อนอนุมัติหรือไม่อนุมัติคำขอ',
   },
 ]
 
 const resources = [
   {
-    value: '10',
-    label: 'ห้องปฏิบัติการ',
+    value: 'ห้อง',
+    label: 'ห้องปฏิบัติการ Simulation',
   },
   {
-    value: '26',
-    label: 'หุ่น Simulation',
+    value: 'หุ่น',
+    label: 'หุ่นและครุภัณฑ์ Simulation',
   },
   {
-    value: '80+',
-    label: 'รายการอุปกรณ์',
+    value: 'อุปกรณ์',
+    label: 'ทรัพยากรประกอบการฝึกปฏิบัติ',
   },
   {
-    value: '18',
-    label: 'Scenario',
+    value: 'คำขอ',
+    label: 'กระบวนการตรวจสอบและอนุมัติ',
   },
 ]
 
 const workflow = [
   'เข้าสู่ระบบด้วยบัญชีผู้ใช้งานที่ได้รับสิทธิ์',
   'เลือกวัน เวลา ห้อง และทรัพยากรที่ต้องการใช้งาน',
-  'เลือก Scenario และตรวจสอบรายการอุปกรณ์',
-  'ส่งคำขอเป็นสถานะรอตรวจสอบ',
-  'Staff/Admin ตรวจสอบและแจ้งผลการอนุมัติ',
-]
-
-const announcements = [
-  {
-    title: 'Prototype Frontend Preview',
-    date: 'มิถุนายน 2569',
-    description:
-      'เวอร์ชันนี้ใช้สำหรับนำเสนอภาพรวมหน้าระบบและ workflow เบื้องต้น ยังไม่เชื่อมต่อฐานข้อมูลจริง',
-  },
-  {
-    title: 'Booking Request Flow',
-    date: 'Mock Flow',
-    description:
-      'ตัวอย่าง workflow การส่งคำขอจองห้อง หุ่น Simulation Scenario และอุปกรณ์เพิ่มเติมหลังเข้าสู่ระบบ',
-  },
-  {
-    title: 'Admin Review Concept',
-    date: 'Planned Module',
-    description:
-      'คำขอทุกครั้งจะต้องผ่านการตรวจสอบจาก Staff/Admin ก่อนถือว่าได้รับอนุมัติ',
-  },
+  'ตรวจสอบข้อมูลและรายละเอียดคำขอให้ครบถ้วน',
+  'ส่งคำขอเพื่อรอการตรวจสอบจากเจ้าหน้าที่',
+  'ติดตามผลการพิจารณาและสถานะคำขอในระบบ',
 ]
 </script>
 
@@ -75,21 +54,21 @@ const announcements = [
   <section class="public-hero">
     <div class="public-hero-inner">
       <div class="public-hero-content">
-        <span class="public-kicker">Prototype Preview · Mock Data</span>
+        <span class="public-kicker">SIM PBRI</span>
 
         <h1>
-          ระบบบริหารจัดการการจองห้องปฏิบัติการ Simulation
+          ระบบบริหารจัดการทรัพยากรและการจองห้องปฏิบัติการ Simulation
         </h1>
 
         <p>
-          ระบบตัวอย่างสำหรับสนับสนุนการจัดการเรียนการสอน การฝึกปฏิบัติการจำลอง
-          การบริหารทรัพยากรห้อง หุ่น Simulation อุปกรณ์ และ Scenario
-          ภายในศูนย์ Simulation
+          ระบบสำหรับสนับสนุนการบริหารจัดการห้องปฏิบัติการ Simulation
+          ทรัพยากรที่เกี่ยวข้อง และกระบวนการส่งคำขอใช้งานภายในหน่วยงาน
+          โดยผู้ใช้งานต้องได้รับสิทธิ์และเข้าสู่ระบบก่อนดำเนินการ
         </p>
 
         <div class="public-hero-actions">
           <a class="public-primary-link" href="#workflow">
-            ดูขั้นตอนการจอง
+            ดูขั้นตอนการใช้งาน
           </a>
 
           <a class="public-secondary-link" href="#services">
@@ -101,28 +80,28 @@ const announcements = [
       <div class="public-hero-card">
         <div class="public-card-header">
           <span>SIM PBRI</span>
-          <strong>Booking Preview</strong>
+          <strong>Simulation Resource Management</strong>
         </div>
 
         <div class="public-status-list">
           <div>
-            <span>สถานะระบบ</span>
-            <strong>Frontend Prototype</strong>
+            <span>การเข้าใช้งาน</span>
+            <strong>สำหรับผู้ใช้งานที่ได้รับสิทธิ์</strong>
           </div>
 
           <div>
-            <span>ข้อมูล</span>
-            <strong>Mock Data Only</strong>
+            <span>การส่งคำขอ</span>
+            <strong>ดำเนินการหลังเข้าสู่ระบบ</strong>
           </div>
 
           <div>
-            <span>การจองจริง</span>
-            <strong>ยังไม่เปิดใช้งาน</strong>
+            <span>การอนุมัติ</span>
+            <strong>ตรวจสอบโดยเจ้าหน้าที่ผู้มีสิทธิ์</strong>
           </div>
 
           <div>
-            <span>การใช้งานระบบ</span>
-            <strong>ต้องเข้าสู่ระบบก่อน</strong>
+            <span>สถานะคำขอ</span>
+            <strong>ติดตามผลผ่านระบบ</strong>
           </div>
         </div>
       </div>
@@ -134,8 +113,8 @@ const announcements = [
       <span>Services</span>
       <h2>บริการหลักของระบบ</h2>
       <p>
-        ออกแบบเพื่อให้ผู้ใช้งานส่งคำขอจองได้เป็นระบบ
-        และให้เจ้าหน้าที่ตรวจสอบทรัพยากรก่อนอนุมัติ
+        สนับสนุนการส่งคำขอใช้ทรัพยากรอย่างเป็นระบบ
+        และช่วยให้เจ้าหน้าที่ตรวจสอบข้อมูลก่อนพิจารณาอนุมัติ
       </p>
     </div>
 
@@ -156,14 +135,14 @@ const announcements = [
     <div class="public-stats-inner">
       <div>
         <span class="public-kicker public-kicker-light">
-          Resource Overview
+          Resource Management
         </span>
 
-        <h2>ภาพรวมทรัพยากรสำหรับการฝึก Simulation</h2>
+        <h2>ทรัพยากรสำหรับการฝึก Simulation</h2>
 
         <p>
-          ข้อมูลตัวอย่างสำหรับนำเสนอภาพรวมระบบ
-          โดยระบบจริงจะเชื่อมต่อฐานข้อมูลและตรวจสอบความพร้อมใช้งานแบบเป็นปัจจุบัน
+          ระบบจัดการข้อมูลทรัพยากรที่เกี่ยวข้องกับการฝึกปฏิบัติ
+          เพื่อใช้ประกอบการส่งคำขอ ตรวจสอบความพร้อม และพิจารณาการใช้งาน
         </p>
       </div>
 
@@ -183,10 +162,10 @@ const announcements = [
   <section id="workflow" class="public-section">
     <div class="public-section-heading">
       <span>Workflow</span>
-      <h2>ขั้นตอนการจองใช้งาน</h2>
+      <h2>ขั้นตอนการส่งคำขอใช้งาน</h2>
       <p>
-        ผู้ใช้งานต้องเข้าสู่ระบบก่อนส่งคำขอ และทุกคำขอจะยังไม่ถือว่าอนุมัติ
-        จนกว่า Staff/Admin ตรวจสอบและยืนยันในระบบ
+        ผู้ใช้งานต้องเข้าสู่ระบบก่อนส่งคำขอ และคำขอจะได้รับการตรวจสอบ
+        โดยเจ้าหน้าที่ผู้มีสิทธิ์ก่อนมีผลเป็นรายการที่ได้รับอนุมัติ
       </p>
     </div>
 
@@ -200,48 +179,25 @@ const announcements = [
     </ol>
   </section>
 
-  <section class="public-news-section">
-    <div class="public-section-heading">
-      <span>Announcements</span>
-      <h2>ประกาศและความคืบหน้า</h2>
-      <p>
-        ส่วนนี้เป็นตัวอย่างพื้นที่ประกาศข่าวสารหรือความคืบหน้าของระบบ
-      </p>
-    </div>
-
-    <div class="public-news-grid">
-      <article
-        v-for="announcement in announcements"
-        :key="announcement.title"
-        class="public-news-card"
-      >
-        <span>{{ announcement.date }}</span>
-        <h3>{{ announcement.title }}</h3>
-        <p>{{ announcement.description }}</p>
-      </article>
-    </div>
-  </section>
-
   <section id="contact" class="public-contact-section">
     <div>
       <span class="public-kicker">Contact</span>
-      <h2>ติดต่อศูนย์ Simulation</h2>
+      <h2>ติดต่อผู้ดูแลระบบ</h2>
       <p>
-        สำหรับสอบถามการใช้งานห้องปฏิบัติการ หุ่น Simulation อุปกรณ์
-        หรือขั้นตอนการส่งคำขอจอง
+        หากต้องการสอบถามเกี่ยวกับสิทธิ์การเข้าใช้งาน ขั้นตอนการส่งคำขอ
+        หรือการใช้ทรัพยากร Simulation โปรดติดต่อเจ้าหน้าที่ผู้รับผิดชอบของหน่วยงาน
       </p>
     </div>
 
     <div class="public-contact-card">
-      <strong>SIM PBRI Center</strong>
-      <span>วิทยาลัย / ศูนย์ฝึกปฏิบัติการจำลอง</span>
-      <span>โทร. 0xx-xxx-xxxx</span>
-      <span>อีเมล sim-center@example.ac.th</span>
+      <strong>การขอรับสิทธิ์ใช้งาน</strong>
+      <span>ระบบนี้จัดไว้สำหรับบุคลากรและผู้ใช้งานที่ได้รับอนุญาต</span>
+      <span>กรุณาติดต่อเจ้าหน้าที่ผู้รับผิดชอบเพื่อขอรับหรือสอบถามสิทธิ์การใช้งาน</span>
     </div>
   </section>
 
   <footer class="public-footer">
-    <p>© 2026 SIM PBRI Prototype Preview</p>
-    <p>Frontend demo only · No real booking · No backend connection</p>
+    <p>© 2026 SIM PBRI</p>
+    <p>Simulation Resource Management and Booking System</p>
   </footer>
 </template>
