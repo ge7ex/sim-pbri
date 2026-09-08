@@ -12,8 +12,8 @@ defineEmits<Emits>()
     <header class="public-header">
       <div class="public-header-top">
         <div class="public-header-top-inner">
-          <span>ระบบตัวอย่างสำหรับนำเสนอความคืบหน้า · Frontend Prototype</span>
-          <span>Mock Data Only · No Real Booking</span>
+          <span>ระบบบริหารจัดการทรัพยากรและการจองห้องปฏิบัติการ Simulation</span>
+          <span>สำหรับบุคลากรและผู้ใช้งานที่ได้รับสิทธิ์</span>
         </div>
       </div>
 
