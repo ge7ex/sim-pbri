@@ -1,19 +1,21 @@
 <script setup lang="ts">
-defineProps<{
-    laravelVersion: string;
-}>();
+import PublicLayout from '../Layouts/PublicLayout.vue';
+import HomePage from '../Modules/Public/Pages/HomePage.vue';
+
+function openHome(): void {
+    window.location.href = '/';
+}
+
+function openLogin(): void {
+    window.location.href = '/login';
+}
 </script>
 
 <template>
-    <main>
-        <h1>SIM PBRI</h1>
-
-        <p>
-            Laravel + Inertia + Vue integration is working.
-        </p>
-
-        <p>
-            Laravel version: {{ laravelVersion }}
-        </p>
-    </main>
+    <PublicLayout
+        @open-home="openHome"
+        @open-login="openLogin"
+    >
+        <HomePage />
+    </PublicLayout>
 </template>
