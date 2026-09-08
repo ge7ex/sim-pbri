@@ -1,8 +1,17 @@
 <script setup lang="ts">
+interface Props {
+  authenticated?: boolean
+}
+
 interface Emits {
   openHome: []
   openLogin: []
+  logout: []
 }
+
+withDefaults(defineProps<Props>(), {
+  authenticated: false,
+})
 
 defineEmits<Emits>()
 </script>
@@ -41,9 +50,9 @@ defineEmits<Emits>()
           <button
             class="public-login-button"
             type="button"
-            @click="$emit('openLogin')"
+            @click="authenticated ? $emit('logout') : $emit('openLogin')"
           >
-            เข้าสู่ระบบ
+            {{ authenticated ? 'ออกจากระบบ' : 'เข้าสู่ระบบ' }}
           </button>
         </div>
       </div>
