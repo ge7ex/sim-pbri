@@ -4,7 +4,6 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 const form = useForm({
     email: '',
     password: '',
-    remember: false,
 });
 
 function submit(): void {
@@ -79,11 +78,6 @@ function submit(): void {
                     <small v-if="form.errors.password" id="password-error" class="login-error">
                         {{ form.errors.password }}
                     </small>
-                </label>
-
-                <label class="login-remember">
-                    <input v-model="form.remember" type="checkbox" name="remember">
-                    <span>จดจำการเข้าสู่ระบบบนอุปกรณ์นี้</span>
                 </label>
 
                 <button class="login-submit-button" type="submit" :disabled="form.processing">
@@ -240,19 +234,6 @@ function submit(): void {
     color: #b91c1c;
     font-size: 13px;
     font-weight: 700;
-}
-
-.login-remember {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: #475569;
-    font-size: 14px;
-}
-
-.login-remember input {
-    width: 16px;
-    height: 16px;
 }
 
 .login-submit-button {
