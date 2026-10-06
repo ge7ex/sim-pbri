@@ -16,4 +16,36 @@ enum UserRole: string
             self::Admin => 'ผู้ดูแลระบบ',
         };
     }
+
+    /**
+     * @return list<AppPermission>
+     */
+    public function permissions(): array
+    {
+        $booking = [
+            AppPermission::BookingView,
+            AppPermission::BookingCreate,
+            AppPermission::BookingCancel,
+        ];
+
+        return match ($this) {
+            self::Lecturer => $booking,
+            self::Staff => [
+                ...$booking,
+                AppPermission::BookingApprove,
+                AppPermission::ResourceView,
+            ],
+            self::Admin => [
+                ...$booking,
+                AppPermission::BookingApprove,
+                AppPermission::ResourceView,
+                AppPermission::ResourceManage,
+            ],
+        };
+    }
+
+    public function allows(AppPermission $permission): bool
+    {
+        return in_array($permission, $this->permissions(), true);
+    }
 }
