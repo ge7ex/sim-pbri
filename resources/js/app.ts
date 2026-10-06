@@ -13,7 +13,8 @@ createInertiaApp({
             { eager: true },
         );
 
-        return pages[`./${name}.vue`];
+        return pages[`./Pages/${name}.vue`]
+            ?? pages[`./${name}.vue`];
     },
 
     setup({ el, App, props, plugin }) {
