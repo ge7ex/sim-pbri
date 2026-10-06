@@ -7,6 +7,7 @@ use App\Models\College;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 final class AccessProfileTest extends TestCase
@@ -42,9 +43,7 @@ final class AccessProfileTest extends TestCase
             ->assertForbidden();
     }
 
-    /**
-     * @dataProvider authorizedRoleProvider
-     */
+    #[DataProvider('authorizedRoleProvider')]
     public function test_authorized_personnel_with_college_can_access_app(UserRole $role): void
     {
         $college = College::factory()->create();
