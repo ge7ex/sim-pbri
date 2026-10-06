@@ -15,18 +15,6 @@ Route::middleware(['auth', 'access-profile'])
     ->group(function (): void {
         Route::get('/', DashboardController::class)->name('dashboard');
 
-        Route::get('/bookings', [WorkspaceController::class, 'bookingHistory'])
-            ->middleware('permission:'.AppPermission::BookingView->value)
-            ->name('bookings.index');
-
-        Route::get('/calendar', [WorkspaceController::class, 'calendar'])
-            ->middleware('permission:'.AppPermission::BookingView->value)
-            ->name('calendar.index');
-
-        Route::get('/review', [WorkspaceController::class, 'review'])
-            ->middleware('permission:'.AppPermission::BookingApprove->value)
-            ->name('review.index');
-
         Route::get('/resources', [WorkspaceController::class, 'resources'])
             ->middleware('permission:'.AppPermission::ResourceUpdate->value)
             ->name('resources.index');

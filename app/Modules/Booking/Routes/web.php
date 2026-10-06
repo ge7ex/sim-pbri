@@ -1,36 +1,52 @@
 <?php
 
 use App\Core\Enums\AppPermission;
+use App\Modules\Booking\Http\Controllers\BookingCalendarController;
 use App\Modules\Booking\Http\Controllers\BookingCancellationController;
 use App\Modules\Booking\Http\Controllers\BookingController;
 use App\Modules\Booking\Http\Controllers\BookingReviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'access-profile'])
-    ->prefix('app/bookings')
-    ->name('bookings.')
+    ->prefix('app')
     ->group(function (): void {
-        Route::get('/create', [BookingController::class, 'create'])
-            ->middleware('permission:'.AppPermission::BookingCreate->value)
-            ->name('create');
+        Route::get('/bookings', [BookingController::class, 'index'])
+            ->middleware('permission:'.AppPermission::BookingView->value)
+            ->name('bookings.index');
 
-        Route::post('/', [BookingController::class, 'store'])
+        Route::get('/bookings/create', [BookingController::class, 'create'])
             ->middleware('permission:'.AppPermission::BookingCreate->value)
-            ->name('store');
+            ->name('bookings.create');
 
-        Route::post('/{booking}/cancel', BookingCancellationController::class)
+        Route::post('/bookings', [BookingController::class, 'store'])
+            ->middleware('permission:'.AppPermission::BookingCreate->value)
+            ->name('bookings.store');
+
+        Route::get('/bookings/{booking}', [BookingController::class, 'show'])
+            ->middleware('permission:'.AppPermission::BookingView->value)
+            ->name('bookings.show');
+
+        Route::post('/bookings/{booking}/cancel', BookingCancellationController::class)
             ->middleware('permission:'.AppPermission::BookingCancel->value)
-            ->name('cancel');
+            ->name('bookings.cancel');
 
-        Route::post('/{booking}/approve', [BookingReviewController::class, 'approve'])
-            ->middleware('permission:'.AppPermission::BookingApprove->value)
-            ->name('approve');
+        Route::get('/calendar', BookingCalendarController::class)
+            ->middleware('permission:'.AppPermission::BookingView->value)
+            ->name('calendar.index');
 
-        Route::post('/{booking}/reject', [BookingReviewController::class, 'reject'])
+        Route::get('/review', [BookingReviewController::class, 'index'])
             ->middleware('permission:'.AppPermission::BookingApprove->value)
-            ->name('reject');
+            ->name('review.index');
 
-        Route::post('/{booking}/recall', [BookingReviewController::class, 'recall'])
+        Route::post('/bookings/{booking}/approve', [BookingReviewController::class, 'approve'])
             ->middleware('permission:'.AppPermission::BookingApprove->value)
-            ->name('recall');
+            ->name('bookings.approve');
+
+        Route::post('/bookings/{booking}/reject', [BookingReviewController::class, 'reject'])
+            ->middleware('permission:'.AppPermission::BookingApprove->value)
+            ->name('bookings.reject');
+
+        Route::post('/bookings/{booking}/recall', [BookingReviewController::class, 'recall'])
+            ->middleware('permission:'.AppPermission::BookingApprove->value)
+            ->name('bookings.recall');
     });

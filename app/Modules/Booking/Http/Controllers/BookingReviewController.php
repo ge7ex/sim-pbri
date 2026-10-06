@@ -9,11 +9,23 @@ use App\Modules\Booking\Actions\RejectBookingAction;
 use App\Modules\Booking\Http\Requests\RecallBookingRequest;
 use App\Modules\Booking\Http\Requests\RejectBookingRequest;
 use App\Modules\Booking\Models\Booking;
+use App\Modules\Booking\Queries\BookingReviewQuery;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 final class BookingReviewController extends Controller
 {
+    public function index(
+        Request $request,
+        BookingReviewQuery $query,
+    ): Response {
+        return Inertia::render('Booking/Review', [
+            'bookings' => $query->paginate($request->user()),
+        ]);
+    }
+
     public function approve(
         Request $request,
         Booking $booking,
