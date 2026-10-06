@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureUserHasAccessProfile;
+use App\Http\Middleware\EnsureUserHasPermission;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'access-profile' => EnsureUserHasAccessProfile::class,
+            'permission' => EnsureUserHasPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
