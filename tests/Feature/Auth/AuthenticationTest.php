@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Core\Enums\UserRole;
+use App\Models\College;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,7 +25,7 @@ final class AuthenticationTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page->component('Auth/Login'));
     }
 
-    public function test_user_can_authenticate_with_valid_credentials(): void
+    public function test_user_without_access_profile_authenticates_and_returns_home(): void
     {
         $user = User::factory()->create([
             'password' => Hash::make('correct-password'),
@@ -36,6 +38,24 @@ final class AuthenticationTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
         $response->assertRedirect('/');
+    }
+
+    public function test_authorized_user_authenticates_and_enters_app(): void
+    {
+        $college = College::factory()->create();
+        $user = User::factory()->create([
+            'college_id' => $college->id,
+            'role' => UserRole::Lecturer->value,
+            'password' => Hash::make('correct-password'),
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'correct-password',
+        ]);
+
+        $this->assertAuthenticatedAs($user);
+        $response->assertRedirect('/app');
     }
 
     public function test_user_cannot_authenticate_with_invalid_password(): void
