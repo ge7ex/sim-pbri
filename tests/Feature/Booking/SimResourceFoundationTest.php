@@ -42,6 +42,7 @@ final class SimResourceFoundationTest extends TestCase
         ]);
 
         $room = SimResource::query()->create([
+            'college_id' => $college->id,
             'name' => 'SIM Lab',
             'kind' => SimResourceKind::Room,
             'status' => SimResourceStatus::Ready,
@@ -50,6 +51,7 @@ final class SimResourceFoundationTest extends TestCase
         ]);
 
         $equipment = SimResource::query()->create([
+            'college_id' => $college->id,
             'name' => 'Monitor',
             'kind' => SimResourceKind::Equipment,
             'status' => SimResourceStatus::Ready,
