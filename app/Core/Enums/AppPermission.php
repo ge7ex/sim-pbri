@@ -8,6 +8,9 @@ enum AppPermission: string
     case BookingCreate = 'booking.create';
     case BookingCancel = 'booking.cancel';
     case BookingApprove = 'booking.approve';
+
     case ResourceView = 'sim-resource.view';
-    case ResourceManage = 'sim-resource.manage';
+    case ResourceCreate = 'sim-resource.create';
+    case ResourceUpdate = 'sim-resource.update';
+    case ResourceDelete = 'sim-resource.delete';
 }
