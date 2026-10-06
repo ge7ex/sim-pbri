@@ -21,7 +21,7 @@ final class BookingController extends Controller
         BookingFilterRequest $request,
         BookingIndexQuery $query,
     ): Response {
-        return Inertia::render('Booking/Index', [
+        return Inertia::render('Modules/Booking/Pages/Index', [
             'bookings' => $query->paginate(
                 actor: $request->user(),
                 filters: $request->validated(),
@@ -50,7 +50,7 @@ final class BookingController extends Controller
                 'description',
             ]);
 
-        return Inertia::render('Booking/Create', [
+        return Inertia::render('Modules/Booking/Pages/Create', [
             'resources' => $resources,
         ]);
     }
@@ -80,7 +80,7 @@ final class BookingController extends Controller
             'statusTransitions.actor:id,name',
         ]);
 
-        return Inertia::render('Booking/Show', [
+        return Inertia::render('Modules/Booking/Pages/Show', [
             'booking' => $booking,
         ]);
     }

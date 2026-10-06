@@ -21,7 +21,7 @@ final class BookingReviewController extends Controller
         Request $request,
         BookingReviewQuery $query,
     ): Response {
-        return Inertia::render('Booking/Review', [
+        return Inertia::render('Modules/Booking/Pages/Review', [
             'bookings' => $query->paginate($request->user()),
         ]);
     }

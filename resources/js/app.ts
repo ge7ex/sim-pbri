@@ -5,9 +5,15 @@ import { createApp, h } from 'vue';
 
 createInertiaApp({
     resolve: (name) => {
-        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
+        const pages = import.meta.glob(
+            [
+                './Pages/**/*.vue',
+                './Modules/**/Pages/**/*.vue',
+            ],
+            { eager: true },
+        );
 
-        return pages[`./Pages/${name}.vue`];
+        return pages[`./${name}.vue`];
     },
 
     setup({ el, App, props, plugin }) {

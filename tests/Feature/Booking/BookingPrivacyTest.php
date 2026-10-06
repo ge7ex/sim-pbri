@@ -45,7 +45,7 @@ final class BookingPrivacyTest extends TestCase
             ->get('/app/calendar')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('Booking/Calendar')
+                ->component('Modules/Booking/Pages/Calendar')
                 ->has('events', 1)
                 ->where('events.0', [
                     'starts_at' => '2026-10-10T09:00:00+00:00',
@@ -120,7 +120,7 @@ final class BookingPrivacyTest extends TestCase
             ->get('/app/bookings')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('Booking/Index')
+                ->component('Modules/Booking/Pages/Index')
                 ->has('bookings.data', 1)
                 ->where('bookings.data.0.id', $ownBooking->id));
     }

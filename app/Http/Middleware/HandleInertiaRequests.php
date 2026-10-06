@@ -45,6 +45,9 @@ class HandleInertiaRequests extends Middleware
                     ],
                 'permissions' => $user?->permissionNames() ?? [],
             ],
+            'flash' => [
+                'success' => fn (): ?string => $request->session()->get('success'),
+            ],
         ];
     }
 }

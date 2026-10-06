@@ -14,7 +14,7 @@ final class BookingCalendarController extends Controller
         BookingFilterRequest $request,
         BookingCalendarQuery $query,
     ): Response {
-        return Inertia::render('Booking/Calendar', [
+        return Inertia::render('Modules/Booking/Pages/Calendar', [
             'events' => $query->get(
                 actor: $request->user(),
                 filters: $request->validated(),
