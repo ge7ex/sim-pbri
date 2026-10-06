@@ -39,7 +39,9 @@ enum UserRole: string
                 ...$booking,
                 AppPermission::BookingApprove,
                 AppPermission::ResourceView,
-                AppPermission::ResourceManage,
+                AppPermission::ResourceCreate,
+                AppPermission::ResourceUpdate,
+                AppPermission::ResourceDelete,
             ],
         };
     }
