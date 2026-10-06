@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Modules\SimResource\Models\SimResource;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Booking extends Model
@@ -59,6 +61,17 @@ final class Booking extends Model
     public function statusTransitions(): HasMany
     {
         return $this->hasMany(BookingStatusTransition::class);
+    }
+
+    /**
+     * @return BelongsToMany<SimResource, $this>
+     */
+    public function resources(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            SimResource::class,
+            'booking_resource',
+        )->withPivot('quantity')->withTimestamps();
     }
 
     /**
