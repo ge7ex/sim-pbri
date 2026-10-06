@@ -32,7 +32,7 @@ Route::middleware(['auth', 'access-profile'])
             ->name('review.index');
 
         Route::get('/resources', [WorkspaceController::class, 'resources'])
-            ->middleware('permission:'.AppPermission::ResourceManage->value)
+            ->middleware('permission:'.AppPermission::ResourceUpdate->value)
             ->name('resources.index');
     });
 
