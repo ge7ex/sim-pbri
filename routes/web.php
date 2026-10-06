@@ -19,10 +19,6 @@ Route::middleware(['auth', 'access-profile'])
             ->middleware('permission:'.AppPermission::BookingView->value)
             ->name('bookings.index');
 
-        Route::get('/bookings/create', [WorkspaceController::class, 'bookingCreate'])
-            ->middleware('permission:'.AppPermission::BookingCreate->value)
-            ->name('bookings.create');
-
         Route::get('/calendar', [WorkspaceController::class, 'calendar'])
             ->middleware('permission:'.AppPermission::BookingView->value)
             ->name('calendar.index');
@@ -36,4 +32,5 @@ Route::middleware(['auth', 'access-profile'])
             ->name('resources.index');
     });
 
+require base_path('app/Modules/Booking/Routes/web.php');
 require __DIR__.'/auth.php';
