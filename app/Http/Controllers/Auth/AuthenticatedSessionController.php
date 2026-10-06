@@ -22,7 +22,12 @@ final class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home', absolute: false));
+        $user = $request->user();
+        $fallbackRoute = $user?->hasAccessProfile() === true
+            ? route('dashboard', absolute: false)
+            : route('home', absolute: false);
+
+        return redirect()->intended($fallbackRoute);
     }
 
     public function destroy(Request $request): RedirectResponse
