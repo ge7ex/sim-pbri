@@ -43,6 +43,7 @@ class HandleInertiaRequests extends Middleware
                             ],
                         'has_access_profile' => $user->hasAccessProfile(),
                     ],
+                'permissions' => $user?->permissionNames() ?? [],
             ],
         ];
     }
