@@ -28,7 +28,7 @@ const items = computed(() => {
         { label: 'ส่งคำขอจอง', href: '/app/bookings/create', permission: 'booking.create' },
         { label: 'ปฏิทินการใช้งาน', href: '/app/calendar', permission: 'booking.view' },
         { label: 'ตรวจสอบคำขอ', href: '/app/review', permission: 'booking.approve' },
-        { label: 'จัดการทรัพยากร', href: '/app/resources', permission: 'sim-resource.manage' },
+        { label: 'จัดการทรัพยากร', href: '/app/resources', permission: 'sim-resource.update' },
     ].filter((item) => item.permission === null || granted.has(item.permission));
 });
 
