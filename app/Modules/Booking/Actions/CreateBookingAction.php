@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
+use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
 use Carbon\CarbonImmutable;
@@ -67,6 +68,14 @@ final class CreateBookingAction
             if ($resources->count() !== count($resourceIds)) {
                 throw ValidationException::withMessages([
                     'resources' => 'ไม่พบทรัพยากรที่เลือกบางรายการ',
+                ]);
+            }
+
+            if (
+                $resources->where('kind', SimResourceKind::Room)->count() !== 1
+            ) {
+                throw ValidationException::withMessages([
+                    'resources' => 'คำขอจองต้องเลือกห้องปฏิบัติการ 1 ห้อง',
                 ]);
             }
 

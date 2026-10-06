@@ -5,12 +5,18 @@ namespace App\Modules\Booking\Actions;
 use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
+use App\Modules\Booking\Services\BookingAvailabilityResolver;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 final class ApproveBookingAction
 {
+    public function __construct(
+        private readonly BookingAvailabilityResolver $availabilityResolver,
+    ) {
+    }
+
     public function execute(Booking $booking, User $actor): Booking
     {
         return DB::transaction(function () use ($booking, $actor): Booking {
@@ -38,6 +44,22 @@ final class ApproveBookingAction
                     'resources' => 'มีทรัพยากรในคำขอที่ไม่พร้อมใช้งาน',
                 ]);
             }
+
+            $quantities = $resources
+                ->mapWithKeys(
+                    static fn ($resource): array => [
+                        $resource->id => (int) $resource->pivot->quantity,
+                    ],
+                )
+                ->all();
+
+            $this->availabilityResolver->ensureAvailable(
+                resources: $resources,
+                requestedQuantities: $quantities,
+                startsAt: $locked->starts_at,
+                endsAt: $locked->ends_at,
+                ignoreBookingId: $locked->id,
+            );
 
             $locked->forceFill([
                 'status' => BookingStatus::Approved,

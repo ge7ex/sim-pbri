@@ -68,6 +68,32 @@ final class CreateBookingTest extends TestCase
         $this->assertSame($user->name, $booking->requester_name);
     }
 
+    public function test_booking_requires_exactly_one_room(): void
+    {
+        [$user] = $this->bookingContext();
+
+        $equipment = $this->createResource(
+            college: $user->college,
+            name: 'Patient Monitor',
+            kind: SimResourceKind::Equipment,
+            quantityTotal: 5,
+            isExclusive: false,
+        );
+
+        $this->actingAs($user)
+            ->from('/app/bookings/create')
+            ->post('/app/bookings', [
+                'resources' => [
+                    ['id' => $equipment->id, 'quantity' => 1],
+                ],
+                'starts_at' => '2026-10-07 09:00:00',
+                'ends_at' => '2026-10-07 11:00:00',
+            ])
+            ->assertSessionHasErrors('resources');
+
+        $this->assertDatabaseCount('bookings', 0);
+    }
+
     public function test_non_ready_resource_cannot_be_booked(): void
     {
         [$user, $room] = $this->bookingContext(SimResourceStatus::Maintenance);
@@ -132,7 +158,7 @@ final class CreateBookingTest extends TestCase
 
     public function test_nonexclusive_resource_allows_overlap_within_quantity_capacity(): void
     {
-        [$user] = $this->bookingContext();
+        [$user, $room] = $this->bookingContext();
 
         $equipment = $this->createResource(
             college: $user->college,
@@ -142,22 +168,22 @@ final class CreateBookingTest extends TestCase
             isExclusive: false,
         );
 
-        $this->createViaHttp($user, $equipment, '09:00', '11:00', 3);
+        $this->createViaHttp($user, $room, '09:00', '11:00', 1, $equipment, 3);
 
-        $this->actingAs($user)->post('/app/bookings', [
-            'resources' => [
-                ['id' => $equipment->id, 'quantity' => 2],
-            ],
-            'starts_at' => '2026-10-07 10:00:00',
-            'ends_at' => '2026-10-07 12:00:00',
-        ])->assertRedirect();
+        $secondRoom = $this->createResource(
+            college: $user->college,
+            name: 'SIM Lab 2',
+        );
+
+        $this->createViaHttp($user, $secondRoom, '10:00', '12:00', 1, $equipment, 2)
+            ->assertRedirect();
 
         $this->assertDatabaseCount('bookings', 2);
     }
 
     public function test_nonexclusive_resource_rejects_overlap_above_quantity_capacity(): void
     {
-        [$user] = $this->bookingContext();
+        [$user, $room] = $this->bookingContext();
 
         $equipment = $this->createResource(
             college: $user->college,
@@ -167,12 +193,18 @@ final class CreateBookingTest extends TestCase
             isExclusive: false,
         );
 
-        $this->createViaHttp($user, $equipment, '09:00', '11:00', 4);
+        $this->createViaHttp($user, $room, '09:00', '11:00', 1, $equipment, 4);
+
+        $secondRoom = $this->createResource(
+            college: $user->college,
+            name: 'SIM Lab 2',
+        );
 
         $this->actingAs($user)
             ->from('/app/bookings/create')
             ->post('/app/bookings', [
                 'resources' => [
+                    ['id' => $secondRoom->id, 'quantity' => 1],
                     ['id' => $equipment->id, 'quantity' => 2],
                 ],
                 'starts_at' => '2026-10-07 10:00:00',
@@ -237,15 +269,26 @@ final class CreateBookingTest extends TestCase
 
     private function createViaHttp(
         User $user,
-        SimResource $resource,
+        SimResource $room,
         string $startTime,
         string $endTime,
-        int $quantity = 1,
+        int $roomQuantity = 1,
+        ?SimResource $equipment = null,
+        int $equipmentQuantity = 1,
     ) {
+        $resources = [
+            ['id' => $room->id, 'quantity' => $roomQuantity],
+        ];
+
+        if ($equipment !== null) {
+            $resources[] = [
+                'id' => $equipment->id,
+                'quantity' => $equipmentQuantity,
+            ];
+        }
+
         return $this->actingAs($user)->post('/app/bookings', [
-            'resources' => [
-                ['id' => $resource->id, 'quantity' => $quantity],
-            ],
+            'resources' => $resources,
             'starts_at' => "2026-10-07 {$startTime}:00",
             'ends_at' => "2026-10-07 {$endTime}:00",
         ]);

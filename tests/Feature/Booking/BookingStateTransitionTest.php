@@ -37,6 +37,47 @@ final class BookingStateTransitionTest extends TestCase
         $this->assertSame($staff->id, $transition->actor_user_id);
     }
 
+    public function test_approval_rechecks_current_resource_capacity(): void
+    {
+        [$booking, $staff, $requester, $resource] = $this->pendingBooking(
+            resourceKind: SimResourceKind::Equipment,
+            resourceQuantity: 3,
+            quantityTotal: 5,
+            isExclusive: false,
+        );
+
+        $room = SimResource::query()->create([
+            'college_id' => $requester->college_id,
+            'name' => 'SIM Lab 2',
+            'kind' => SimResourceKind::Room,
+            'status' => SimResourceStatus::Ready,
+            'quantity_total' => 1,
+            'is_exclusive' => true,
+        ]);
+
+        $other = Booking::query()->create([
+            'college_id' => $requester->college_id,
+            'requested_by_user_id' => $requester->id,
+            'requester_name' => $requester->name,
+            'starts_at' => $booking->starts_at,
+            'ends_at' => $booking->ends_at,
+            'status' => BookingStatus::Pending,
+        ]);
+        $other->resources()->attach([
+            $room->id => ['quantity' => 1],
+            $resource->id => ['quantity' => 2],
+        ]);
+
+        $resource->update(['quantity_total' => 4]);
+
+        $this->actingAs($staff)
+            ->from('/app/review')
+            ->post("/app/bookings/{$booking->id}/approve")
+            ->assertSessionHasErrors('resources');
+
+        $this->assertSame(BookingStatus::Pending, $booking->refresh()->status);
+    }
+
     public function test_rejection_requires_reason_and_is_audited(): void
     {
         [$booking, $staff] = $this->pendingBooking();
@@ -139,8 +180,12 @@ final class BookingStateTransitionTest extends TestCase
     /**
      * @return array{Booking, User, User, SimResource}
      */
-    private function pendingBooking(): array
-    {
+    private function pendingBooking(
+        SimResourceKind $resourceKind = SimResourceKind::Room,
+        int $resourceQuantity = 1,
+        int $quantityTotal = 1,
+        bool $isExclusive = true,
+    ): array {
         $college = College::factory()->create();
 
         $requester = User::factory()->create([
@@ -155,11 +200,11 @@ final class BookingStateTransitionTest extends TestCase
 
         $resource = SimResource::query()->create([
             'college_id' => $college->id,
-            'name' => 'SIM Lab 1',
-            'kind' => SimResourceKind::Room,
+            'name' => 'Resource 1',
+            'kind' => $resourceKind,
             'status' => SimResourceStatus::Ready,
-            'quantity_total' => 1,
-            'is_exclusive' => true,
+            'quantity_total' => $quantityTotal,
+            'is_exclusive' => $isExclusive,
         ]);
 
         $booking = Booking::query()->create([
@@ -171,7 +216,10 @@ final class BookingStateTransitionTest extends TestCase
             'status' => BookingStatus::Pending,
         ]);
 
-        $booking->resources()->attach($resource->id, ['quantity' => 1]);
+        $booking->resources()->attach(
+            $resource->id,
+            ['quantity' => $resourceQuantity],
+        );
 
         return [$booking, $staff, $requester, $resource];
     }

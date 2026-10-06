@@ -13,7 +13,7 @@ final class PermissionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_lecturer_can_use_booking_workspace_but_cannot_review_or_manage_resources(): void
+    public function test_lecturer_can_use_booking_workspace_but_cannot_review_or_view_resources(): void
     {
         $user = $this->userWithRole(UserRole::Lecturer);
 
@@ -25,12 +25,16 @@ final class PermissionTest extends TestCase
         $this->actingAs($user)->get('/app/resources')->assertForbidden();
     }
 
-    public function test_staff_can_review_bookings_but_cannot_manage_resources(): void
+    public function test_staff_can_review_bookings_and_view_resources_read_only(): void
     {
         $user = $this->userWithRole(UserRole::Staff);
 
         $this->actingAs($user)->get('/app/review')->assertOk();
-        $this->actingAs($user)->get('/app/resources')->assertForbidden();
+        $this->actingAs($user)->get('/app/resources')->assertOk();
+
+        $this->actingAs($user)
+            ->post('/app/resources', [])
+            ->assertForbidden();
     }
 
     public function test_admin_can_review_bookings_and_manage_resources(): void

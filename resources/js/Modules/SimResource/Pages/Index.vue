@@ -33,13 +33,23 @@ const form = useForm({
     description: '',
 });
 
+function handleKindChange(): void {
+    if (form.kind === 'room') {
+        form.quantity_total = 1;
+        form.is_exclusive = true;
+    }
+}
+
 function submit(): void {
     form.post('/app/resources', {
         onSuccess: () => form.reset(),
     });
 }
 
-function updateStatus(resource: ResourceItem, status: ResourceItem['status']): void {
+function handleStatusChange(resource: ResourceItem, event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const status = target.value as ResourceItem['status'];
+
     router.put(`/app/resources/${resource.id}`, {
         name: resource.name,
         kind: resource.kind,
@@ -66,7 +76,7 @@ function updateStatus(resource: ResourceItem, status: ResourceItem['status']): v
             <form class="resource-form" @submit.prevent="submit">
                 <label>ชื่อ<input v-model="form.name" required maxlength="255"></label>
                 <label>ประเภท
-                    <select v-model="form.kind" @change="form.kind === 'room' && (form.quantity_total = 1, form.is_exclusive = true)">
+                    <select v-model="form.kind" @change="handleKindChange">
                         <option value="room">ห้องปฏิบัติการ</option>
                         <option value="equipment">อุปกรณ์เสริม</option>
                     </select>
@@ -97,7 +107,7 @@ function updateStatus(resource: ResourceItem, status: ResourceItem['status']): v
                             <td>{{ resource.location ?? '-' }}</td>
                             <td>{{ resource.quantity_total }}</td>
                             <td>
-                                <select v-if="canManage" :value="resource.status" @change="updateStatus(resource, ($event.target as HTMLSelectElement).value as ResourceItem['status'])">
+                                <select v-if="canManage" :value="resource.status" @change="handleStatusChange(resource, $event)">
                                     <option value="ready">พร้อมใช้งาน</option>
                                     <option value="pending">รอตรวจสอบ</option>
                                     <option value="maintenance">ปิดปรับปรุง</option>

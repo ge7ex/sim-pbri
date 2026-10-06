@@ -28,7 +28,10 @@ final class BookingFilterRequest extends FormRequest
             'date_to' => [
                 'nullable',
                 'date_format:Y-m-d',
-                'after_or_equal:date_from',
+                Rule::when(
+                    $this->filled('date_from'),
+                    ['after_or_equal:date_from'],
+                ),
             ],
         ];
     }

@@ -44,30 +44,43 @@ const form = useForm({
     note: '',
 });
 
-function setEquipmentQuantity(resource: ResourceItem, value: string): void {
-    const quantity = Number(value);
+function handleEquipmentInput(resource: ResourceItem, event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const quantity = Number(target.value);
 
     if (!Number.isInteger(quantity) || quantity <= 0) {
         delete equipmentQuantities.value[resource.id];
         return;
     }
 
-    equipmentQuantities.value[resource.id] = Math.min(quantity, resource.quantity_total);
+    equipmentQuantities.value[resource.id] = Math.min(
+        quantity,
+        resource.quantity_total,
+    );
 }
 
 function submit(): void {
-    const resources: Array<{ id: number; quantity: number }> = [];
-
-    if (selectedRoomId.value !== null) {
-        resources.push({ id: selectedRoomId.value, quantity: 1 });
+    if (selectedRoomId.value === null || !form.starts_at || !form.ends_at) {
+        return;
     }
+
+    const resources: Array<{ id: number; quantity: number }> = [
+        { id: selectedRoomId.value, quantity: 1 },
+    ];
 
     for (const [id, quantity] of Object.entries(equipmentQuantities.value)) {
         resources.push({ id: Number(id), quantity });
     }
 
     form.resources = resources;
-    form.post('/app/bookings');
+
+    form
+        .transform((data) => ({
+            ...data,
+            starts_at: new Date(data.starts_at).toISOString(),
+            ends_at: new Date(data.ends_at).toISOString(),
+        }))
+        .post('/app/bookings');
 }
 </script>
 
@@ -115,7 +128,7 @@ function submit(): void {
                 <div v-if="equipment.length" class="equipment-list">
                     <label v-for="item in equipment" :key="item.id">
                         <span><strong>{{ item.name }}</strong><small>พร้อมให้ใช้สูงสุด {{ item.quantity_total }} หน่วย</small></span>
-                        <input type="number" min="0" :max="item.quantity_total" placeholder="0" @input="setEquipmentQuantity(item, ($event.target as HTMLInputElement).value)">
+                        <input type="number" min="0" :max="item.quantity_total" placeholder="0" @input="handleEquipmentInput(item, $event)">
                     </label>
                 </div>
                 <p v-else class="empty">ไม่มีอุปกรณ์เสริมที่พร้อมใช้งาน</p>
@@ -142,5 +155,5 @@ function submit(): void {
 </template>
 
 <style scoped>
-.page-heading { display:flex; justify-content:space-between; gap:20px; margin-bottom:24px; } .eyebrow{margin:0 0 6px;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase} h1{margin:0;color:#16324f;font-size:34px} .page-heading p{color:#66788a}.booking-form{display:grid;gap:18px}.panel{border:1px solid #dfe6ee;border-radius:18px;background:#fff;padding:24px}.panel h2{margin:0;color:#17324f;font-size:19px}.section-help,.empty{color:#718096;line-height:1.6}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}.resource-card{display:grid;gap:7px;border:1px solid #d9e1e8;border-radius:14px;padding:16px;cursor:pointer}.resource-card.selected{border-color:#315b7c;background:#f4f7fa}.resource-card input{width:auto}.resource-card span,.resource-card small{color:#718096}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}label{display:grid;gap:7px;color:#44576a;font-size:13px;font-weight:800}input,textarea{width:100%;border:1px solid #cdd7e0;border-radius:10px;background:#fff;padding:11px 12px;color:#172033;font:inherit}input[readonly]{background:#f4f6f8;color:#627386}.equipment-list{display:grid;gap:10px;margin-top:16px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #edf1f4;padding:10px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:#718096;font-weight:500}.equipment-list input{width:110px}.full-field{margin-top:14px}.error{color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{border:0;border-radius:11px;background:#17324f;color:#fff;padding:13px 20px;font-weight:800;cursor:pointer}.form-actions button:disabled{opacity:.55;cursor:not-allowed}@media(max-width:720px){.field-grid{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}}
+.page-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 6px;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}h1{margin:0;color:#16324f;font-size:34px}.page-heading p{color:#66788a}.booking-form{display:grid;gap:18px}.panel{border:1px solid #dfe6ee;border-radius:18px;background:#fff;padding:24px}.panel h2{margin:0;color:#17324f;font-size:19px}.section-help,.empty{color:#718096;line-height:1.6}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}.resource-card{display:grid;gap:7px;border:1px solid #d9e1e8;border-radius:14px;padding:16px;cursor:pointer}.resource-card.selected{border-color:#315b7c;background:#f4f7fa}.resource-card input{width:auto}.resource-card span,.resource-card small{color:#718096}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}label{display:grid;gap:7px;color:#44576a;font-size:13px;font-weight:800}input,textarea{width:100%;border:1px solid #cdd7e0;border-radius:10px;background:#fff;padding:11px 12px;color:#172033;font:inherit}input[readonly]{background:#f4f6f8;color:#627386}.equipment-list{display:grid;gap:10px;margin-top:16px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #edf1f4;padding:10px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:#718096;font-weight:500}.equipment-list input{width:110px}.full-field{margin-top:14px}.error{color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{border:0;border-radius:11px;background:#17324f;color:#fff;padding:13px 20px;font-weight:800;cursor:pointer}.form-actions button:disabled{opacity:.55;cursor:not-allowed}@media(max-width:720px){.field-grid{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}}
 </style>
