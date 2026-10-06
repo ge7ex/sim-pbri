@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Modules\Booking\Actions;
+
+use App\Models\User;
+use App\Modules\Booking\Enums\BookingStatus;
+use App\Modules\Booking\Models\Booking;
+use App\Modules\SimResource\Enums\SimResourceStatus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+
+final class ApproveBookingAction
+{
+    public function execute(Booking $booking, User $actor): Booking
+    {
+        return DB::transaction(function () use ($booking, $actor): Booking {
+            $locked = Booking::query()
+                ->whereKey($booking->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($locked->status !== BookingStatus::Pending) {
+                throw ValidationException::withMessages([
+                    'status' => 'คำขอนี้ไม่ได้อยู่ในสถานะรอตรวจสอบ',
+                ]);
+            }
+
+            $resources = $locked->resources()
+                ->orderBy('sim_resources.id')
+                ->lockForUpdate()
+                ->get();
+
+            if ($resources->contains(
+                fn ($resource): bool =>
+                    $resource->status !== SimResourceStatus::Ready,
+            )) {
+                throw ValidationException::withMessages([
+                    'resources' => 'มีทรัพยากรในคำขอที่ไม่พร้อมใช้งาน',
+                ]);
+            }
+
+            $locked->forceFill([
+                'status' => BookingStatus::Approved,
+                'reviewed_by_user_id' => $actor->id,
+                'reviewed_at' => now(),
+                'review_reason' => null,
+            ])->save();
+
+            $locked->statusTransitions()->create([
+                'from_status' => BookingStatus::Pending,
+                'to_status' => BookingStatus::Approved,
+                'actor_user_id' => $actor->id,
+                'reason' => null,
+            ]);
+
+            return $locked->refresh();
+        }, attempts: 3);
+    }
+}
