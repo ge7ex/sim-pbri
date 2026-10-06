@@ -50,7 +50,7 @@ const quickActions = computed(() => [
         title: 'จัดการทรัพยากร',
         description: 'ดูแลข้อมูลห้องและทรัพยากรสำหรับงาน SIM',
         href: '/app/resources',
-        permission: 'sim-resource.manage',
+        permission: 'sim-resource.update',
     },
 ].filter((item) => permissions.value.has(item.permission)));
 </script>
