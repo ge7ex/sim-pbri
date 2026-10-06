@@ -40,10 +40,15 @@ class User extends Authenticatable
         return $this->belongsTo(College::class);
     }
 
+    public function accessRole(): ?UserRole
+    {
+        return UserRole::tryFrom((string) $this->role);
+    }
+
     public function hasAccessProfile(): bool
     {
         return $this->college_id !== null
-            && $this->role instanceof UserRole;
+            && $this->accessRole() !== null;
     }
 
     /**
@@ -54,7 +59,6 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'role' => UserRole::class,
         ];
     }
 }
