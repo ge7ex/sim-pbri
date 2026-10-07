@@ -34,6 +34,7 @@ enum UserRole: string
                 ...$booking,
                 AppPermission::BookingApprove,
                 AppPermission::ResourceView,
+                AppPermission::ScenarioView,
             ],
             self::Admin => [
                 ...$booking,
@@ -42,6 +43,9 @@ enum UserRole: string
                 AppPermission::ResourceCreate,
                 AppPermission::ResourceUpdate,
                 AppPermission::ResourceDelete,
+                AppPermission::ScenarioView,
+                AppPermission::ScenarioCreate,
+                AppPermission::ScenarioUpdate,
             ],
         };
     }

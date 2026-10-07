@@ -16,4 +16,5 @@ Route::middleware(['auth', 'access-profile'])
 
 require base_path('app/Modules/Booking/Routes/web.php');
 require base_path('app/Modules/SimResource/Routes/web.php');
+require base_path('app/Modules/Scenario/Routes/web.php');
 require __DIR__.'/auth.php';

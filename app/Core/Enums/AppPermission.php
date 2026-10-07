@@ -13,4 +13,8 @@ enum AppPermission: string
     case ResourceCreate = 'sim-resource.create';
     case ResourceUpdate = 'sim-resource.update';
     case ResourceDelete = 'sim-resource.delete';
+
+    case ScenarioView = 'scenario.view';
+    case ScenarioCreate = 'scenario.create';
+    case ScenarioUpdate = 'scenario.update';
 }
