@@ -212,15 +212,16 @@ function addCustomEquipment(): void {
             </div>
         </div>
 
+        <nav class="booking-sections" aria-label="ส่วนของคำขอ"><a href="#booking-time">วันเวลา</a><a href="#booking-room">ห้อง / จำนวนคน</a><a href="#booking-simulator">เครื่องจำลอง</a><a href="#booking-scenario">รายวิชา / Scenario</a><a href="#booking-equipment">อุปกรณ์</a><a href="#booking-contact">ข้อมูลผู้จอง</a></nav>
         <form class="booking-form" @submit.prevent="submit">
-            <section class="panel">
+            <section class="panel" id="booking-time">
                 <h2>1. วันที่และเวลา</h2>
                 <p class="section-help">ระบุช่วงเวลาเพื่อให้ระบบตรวจสอบห้องและเครื่องจำลองที่ว่าง</p>
                 <div class="field-grid"><label>เริ่มใช้งาน<input v-model="form.starts_at" type="datetime-local" required></label><label>สิ้นสุด<input v-model="form.ends_at" type="datetime-local" required></label></div>
                 <p v-if="form.errors.starts_at" class="error">{{ form.errors.starts_at }}</p><p v-if="form.errors.ends_at" class="error">{{ form.errors.ends_at }}</p>
             </section>
 
-            <section class="panel">
+            <section class="panel" id="booking-room">
                 <h2>2. ห้องและจำนวนผู้เข้าใช้งาน</h2>
                 <p class="section-help">แสดงห้องในหน่วยงานของคุณ พร้อมอาคาร ชั้น และความจุ ระบบไม่แสดงรายละเอียดการจองของผู้อื่น</p>
                 <p v-if="checkingRoomAvailability" class="section-help" role="status">กำลังตรวจสอบเวลาว่างของห้อง...</p>
@@ -240,7 +241,7 @@ function addCustomEquipment(): void {
                 <p v-if="form.errors.participant_count" class="error" role="alert">{{ form.errors.participant_count }}</p><p v-if="form.errors.resources" class="error" role="alert">{{ form.errors.resources }}</p>
             </section>
 
-            <section class="panel">
+            <section class="panel" id="booking-simulator">
                 <h2>3. เครื่องจำลอง (ถ้ามี)</h2>
                 <p class="section-help">เลือกประเภท แล้วเลือกเครื่องที่ต้องการใช้ รายการแนะนำจากสถานการณ์จำลองไม่บังคับการเลือก</p>
                 <p v-if="selectedScenario?.recommended_simulator_types.length" class="section-help">ประเภทที่แนะนำ: {{ selectedScenario.recommended_simulator_types.map((item) => item.name).join(', ') }}</p>
@@ -256,7 +257,7 @@ function addCustomEquipment(): void {
                 <p v-if="form.errors.simulator_asset_id" class="error" role="alert">{{ form.errors.simulator_asset_id }}</p>
             </section>
 
-            <section class="panel">
+            <section class="panel" id="booking-scenario">
                 <h2>4. รายวิชาและสถานการณ์จำลอง</h2>
                 <p class="section-help">สถานการณ์ที่สัมพันธ์กับรายวิชาจะแสดงเป็นรายการแนะนำ คุณยังเลือกสถานการณ์อื่นหรือไม่เลือกก็ได้</p>
                 <div class="field-grid">
@@ -266,7 +267,7 @@ function addCustomEquipment(): void {
                 <p v-if="form.errors.course_id" class="error">{{ form.errors.course_id }}</p><p v-if="form.errors.scenario_id" class="error">{{ form.errors.scenario_id }}</p>
             </section>
 
-            <section class="panel">
+            <section class="panel" id="booking-equipment">
                 <h2>5. อุปกรณ์จากแค็ตตาล็อก</h2>
                 <p class="section-help">รายการแนะนำเป็นค่าเริ่มต้น คุณนำออกหรือเปลี่ยนจำนวนได้ อุปกรณ์เพิ่มเติมเลือกได้ตามต้องการ</p>
                 <div v-if="recommendedEquipment.length" class="equipment-group">
@@ -307,7 +308,7 @@ function addCustomEquipment(): void {
                 <button type="button" class="secondary" :disabled="customEquipmentRows.length >= 50" @click="addCustomEquipment">เพิ่มคำขออุปกรณ์</button>
             </section>
 
-            <section class="panel">
+            <section class="panel" id="booking-contact">
                 <h2>7. ข้อมูลผู้จอง</h2>
                 <div class="field-grid">
                     <label>วิทยาลัย / หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly></label>
@@ -328,5 +329,5 @@ function addCustomEquipment(): void {
 </template>
 
 <style scoped>
-.page-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 6px;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}h1{margin:0;color:#16324f;font-size:34px}.page-heading p{color:#66788a}.booking-form{display:grid;gap:14px}.panel{border:1px solid #dfe6ee;border-radius:14px;background:#fff;padding:20px}.panel h2{margin:0;color:#17324f;font-size:18px}.panel h3{margin:10px 0 0;color:#315b7c;font-size:14px}.section-help,.empty{color:#718096;line-height:1.55}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px}.resource-card{display:grid;gap:6px;border:1px solid #d9e1e8;border-radius:12px;padding:13px;cursor:pointer}.resource-card.selected{border-color:#315b7c;background:#f4f7fa}.resource-card.unavailable{opacity:.7;cursor:not-allowed}.resource-card input{width:auto}.resource-card input[type=radio]{min-height:auto;padding:0}.resource-card span,.resource-card small{color:#718096}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.participant-field{align-items:end}label{display:grid;gap:6px;color:#44576a;font-size:13px;font-weight:800}input,textarea,select{width:100%;min-height:44px;border:1px solid #cdd7e0;border-radius:9px;background:#fff;padding:10px 11px;color:#172033;font:inherit}input[readonly]{background:#f4f6f8;color:#627386}.equipment-group{margin-top:14px}.equipment-list{display:grid;gap:8px;margin-top:6px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #edf1f4;padding:9px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:#718096;font-weight:500}.equipment-list input{width:110px}.custom-row{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:10px;align-items:end;margin:14px 0;padding-bottom:12px;border-bottom:1px solid #edf1f4}.custom-row button,.secondary{min-height:44px;border:1px solid #cdd7e0;border-radius:9px;background:#fff;color:#315b7c;padding:9px 11px;font-weight:700;cursor:pointer}.custom-row .error{grid-column:1/-1}.custom-row button:hover,.secondary:hover:not(:disabled){background:#f4f7fa}.error{margin:5px 0;color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{min-height:44px;border:0;border-radius:9px;background:#17324f;color:#fff;padding:11px 18px;font-weight:800;cursor:pointer}.form-actions button:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed} :focus-visible{outline:3px solid #557d9d;outline-offset:2px}@media(max-width:720px){.panel{padding:16px}.field-grid,.custom-row{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}.custom-row button{width:fit-content}}
-</style>
+.page-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 6px}h1{margin:0}.page-heading p{color:var(--sim-muted)}.booking-form{display:grid;gap:14px}.panel h2{margin:0}.panel h3{margin:10px 0 0;color:var(--sim-blue);font-size:14px}.section-help,.empty{color:var(--sim-muted);line-height:1.55}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px}.resource-card{display:grid;gap:6px;border:1px solid #d9e1e8;border-radius:12px;padding:13px;cursor:pointer}.resource-card.selected{border-color:var(--sim-blue);background:#f4f7fa}.resource-card.unavailable{opacity:.7;cursor:not-allowed}.resource-card input{width:auto}.resource-card input[type=radio]{min-height:auto;padding:0}.resource-card span,.resource-card small{color:var(--sim-muted)}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.participant-field{align-items:end}label{display:grid;gap:6px;color:#44576a;font-size:13px;font-weight:800}input,textarea,select{width:100%;min-height:44px}input[readonly]{background:#f4f6f8;color:#627386}.equipment-group{margin-top:14px}.equipment-list{display:grid;gap:8px;margin-top:6px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--sim-border);padding:9px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:var(--sim-muted);font-weight:500}.equipment-list input{width:110px}.custom-row{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:10px;align-items:end;margin:14px 0;padding-bottom:12px;border-bottom:1px solid var(--sim-border)}.custom-row button,.secondary{min-height:44px;border:1px solid #cdd7e0;border-radius:9px;background:#fff;color:var(--sim-blue);padding:9px 11px;font-weight:700;cursor:pointer}.custom-row .error{grid-column:1/-1}.custom-row button:hover,.secondary:hover:not(:disabled){background:#f4f7fa}.error{margin:5px 0;color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{min-height:44px;border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:11px 18px;font-weight:800;cursor:pointer}.form-actions button:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed} :focus-visible{outline:3px solid #557d9d;outline-offset:2px}@media(max-width:720px){.field-grid,.custom-row{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}.custom-row button{width:fit-content}}
+.booking-sections{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.booking-sections a{border:1px solid var(--sim-border);border-radius:999px;background:#fff;color:var(--sim-blue);font-size:13px;padding:7px 12px;text-decoration:none}.booking-form section{scroll-margin-top:16px}</style>

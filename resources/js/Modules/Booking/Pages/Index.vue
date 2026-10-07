@@ -81,15 +81,15 @@ function applyFilters(): void {
         </form>
 
         <section class="panel">
-            <div v-if="bookings.data.length" class="table-wrap">
+            <div v-if="bookings.data.length" class="table-wrap" tabindex="0" role="region" aria-label="ประวัติการจอง เลื่อนแนวนอนได้">
                 <table>
                     <thead>
                         <tr>
-                            <th>ชื่อผู้จอง</th>
-                            <th>ทรัพยากร</th>
-                            <th>ช่วงเวลา</th>
-                            <th>สถานะ</th>
-                            <th></th>
+                            <th scope="col">ชื่อผู้จอง</th>
+                            <th scope="col">ทรัพยากร</th>
+                            <th scope="col">ช่วงเวลา</th>
+                            <th scope="col">สถานะ</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,5 +118,5 @@ function applyFilters(): void {
 </template>
 
 <style scoped>
-.heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}.heading p{margin:0;color:#315b7c;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.heading h1{margin:5px 0 0;color:#17324f;font-size:34px}.primary{border-radius:10px;background:#17324f;color:#fff;padding:11px 16px;font-weight:800;text-decoration:none}.filters{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:16px;border:1px solid #dfe6ee;border-radius:14px;background:#fff;padding:16px}.filters label{display:grid;gap:6px;color:#526578;font-size:12px;font-weight:800}.filters input,.filters select{min-height:40px;border:1px solid #cfd8e1;border-radius:9px;background:#fff;padding:0 10px}.filters button{min-height:40px;border:0;border-radius:9px;background:#315b7c;color:#fff;padding:0 15px;font-weight:800}.panel{border:1px solid #dfe6ee;border-radius:16px;background:#fff;overflow:hidden}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:15px;text-align:left;border-bottom:1px solid #edf1f4;vertical-align:top}th{background:#f7f9fb;color:#66788a;font-size:12px}td{color:#263849;font-size:14px}td time,td span{display:block}td span{margin-top:3px;color:#718096;font-size:12px}td a{color:#315b7c;font-weight:800;text-decoration:none}.empty{padding:42px;text-align:center;color:#718096}.pager{display:flex;justify-content:center;gap:16px;padding:16px;color:#66788a}.pager a{color:#315b7c;font-weight:800;text-decoration:none}@media(max-width:760px){.filters{grid-template-columns:1fr}.heading{align-items:flex-start;flex-direction:column}}
+.heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}.heading p{margin:0}.heading h1{margin:5px 0 0}.filters{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px;align-items:end;margin-bottom:16px;border:1px solid var(--sim-border);border-radius:14px;background:#fff;padding:16px}.filters label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.filters input,.filters select{min-height:40px}.filters button{min-height:40px;border:0;border-radius:9px;background:var(--sim-blue);color:#fff;padding:0 15px;font-weight:800}.panel{overflow:hidden}.table-wrap{overflow-x:auto}th,td{padding:15px;text-align:left;border-bottom:1px solid var(--sim-border);vertical-align:top}td time,td span{display:block}td span{margin-top:3px;color:var(--sim-muted);font-size:12px}td a{color:var(--sim-blue);font-weight:800;text-decoration:none}.empty{padding:42px;text-align:center;color:var(--sim-muted)}.pager{display:flex;justify-content:center;gap:16px;padding:16px;color:var(--sim-muted)}.pager a{color:var(--sim-blue);font-weight:800;text-decoration:none}@media(max-width:760px){.filters{grid-template-columns:1fr}.heading{align-items:flex-start;flex-direction:column}}
 </style>

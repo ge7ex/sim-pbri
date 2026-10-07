@@ -49,8 +49,8 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
     <Head title="ทรัพยากร SIM" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
         <header class="heading"><p>SIM Resources</p><h1>ทรัพยากร SIM</h1><span v-if="!canManage">คุณมีสิทธิ์ดูข้อมูล แต่ไม่มีสิทธิ์แก้ไขทรัพยากร</span></header>
-        <section v-if="canManage" class="panel">
-            <h2>เพิ่มทรัพยากร</h2>
+        <details v-if="canManage" class="panel resource-create">
+            <summary>+ เพิ่มทรัพยากร</summary>
             <form class="resource-form" @submit.prevent="submit">
                 <label>ชื่อ<input v-model="form.name" required maxlength="255"><small v-if="form.errors.name" class="error">{{ form.errors.name }}</small></label>
                 <label>ประเภท<select v-model="form.kind" @change="handleKindChange"><option value="room">ห้องปฏิบัติการ</option><option value="equipment">อุปกรณ์เสริม</option></select></label>
@@ -65,14 +65,15 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                 <label class="wide">รายละเอียด<textarea v-model="form.description" rows="3" maxlength="2000"></textarea></label>
                 <button type="submit" :disabled="form.processing">{{ form.processing ? 'กำลังบันทึก...' : 'เพิ่มทรัพยากร' }}</button>
             </form>
-        </section>
+        </details>
         <section class="panel">
-            <div v-if="resources.length" class="table-wrap">
-                <table><thead><tr><th>ชื่อ</th><th>ประเภท</th><th>อาคาร / ชั้น</th><th>ความจุ / จำนวน</th><th>ผู้รับผิดชอบ</th><th>ตำแหน่ง</th><th>สถานะ</th><th v-if="canManage">จัดการ</th></tr></thead>
+            <div class="panel-header"><div><h2>ห้องและอุปกรณ์</h2><p>{{ resources.filter(item => item.kind === 'room').length }} ห้อง · {{ resources.filter(item => item.kind === 'equipment').length }} รายการอุปกรณ์ในหน่วยงาน</p></div></div>
+            <div v-if="resources.length" class="table-wrap" tabindex="0" role="region" aria-label="ห้องและอุปกรณ์ เลื่อนแนวนอนได้">
+                <table><thead><tr><th scope="col">ชื่อ</th><th scope="col">ประเภท</th><th scope="col">อาคาร / ชั้น</th><th scope="col">ความจุ / จำนวน</th><th scope="col">ผู้รับผิดชอบ</th><th scope="col">ตำแหน่ง</th><th scope="col">สถานะ</th><th v-if="canManage">จัดการ</th></tr></thead>
                     <tbody><template v-for="resource in resources" :key="resource.id">
                         <tr>
                             <td><strong>{{ resource.name }}</strong><span>{{ resource.description ?? '' }}</span></td>
-                            <td>{{ resource.kind === 'room' ? 'ห้องปฏิบัติการ' : 'อุปกรณ์เสริม' }}</td>
+                            <td>{{ resource.kind === 'room' ? 'ห้องปฏิบัติการ' : 'อุปกรณ์เสริม' }}<span v-if="resource.kind === 'equipment'">{{ resource.is_exclusive ? 'ใช้แยกเฉพาะการจอง' : 'แบ่งใช้ตามจำนวน' }}</span></td>
                             <td>{{ resource.kind === 'room' ? [resource.building, resource.floor ? `ชั้น ${resource.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' : '—' }}</td>
                             <td>{{ resource.kind === 'room' ? (resource.capacity === null ? 'ยังไม่กำหนด — จองไม่ได้' : `${resource.capacity} คน`) : `${resource.quantity_total} ชิ้น` }}</td>
                             <td>{{ resource.responsible_staff?.name ?? '—' }}</td>
@@ -100,5 +101,5 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
 </template>
 
 <style scoped>
-.heading{margin-bottom:18px}.heading p{margin:0;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.heading h1{margin:5px 0;color:#17324f;font-size:34px}.heading span{color:#718096}.panel{margin-bottom:14px;border:1px solid #dfe6ee;border-radius:16px;background:#fff;padding:20px}.panel h2{margin:0 0 16px;color:#17324f;font-size:18px}.resource-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.resource-form label{display:grid;gap:6px;color:#526578;font-size:12px;font-weight:800}.resource-form input,.resource-form select,.resource-form textarea,table select{border:1px solid #cfd8e1;border-radius:9px;background:#fff;padding:10px;font:inherit}.resource-form .wide{grid-column:span 2}.resource-form .checkbox{display:flex;align-items:center;gap:8px}.resource-form .checkbox input{width:auto}.resource-form button,.edit-actions button:not(.secondary){align-self:end;min-height:41px;border:0;border-radius:9px;background:#17324f;color:#fff;padding:9px 12px;font-weight:800;cursor:pointer}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:13px;border-bottom:1px solid #edf1f4;text-align:left;vertical-align:top}th{background:#f7f9fb;color:#66788a;font-size:12px}td{color:#263849;font-size:14px}td strong,td span{display:block}td span{margin-top:3px;color:#718096;font-size:12px}.secondary{border:1px solid #cfd8e1;border-radius:8px;background:#fff;color:#315b7c;padding:8px 10px;cursor:pointer}.edit-form{padding:12px}.edit-actions{display:flex;gap:8px;align-items:end}.error{color:#a43b3b;font-size:12px}.empty{padding:30px;text-align:center;color:#718096}@media(max-width:760px){.resource-form{grid-template-columns:1fr}.resource-form .wide{grid-column:auto}.panel{padding:14px}}
-</style>
+.heading{margin-bottom:18px}.heading p{margin:0}.heading h1{margin:5px 0}.panel{margin-bottom:14px}.panel h2{margin:0 0 16px}.resource-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.resource-form label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.resource-form .wide{grid-column:span 2}.resource-form .checkbox{display:flex;align-items:center;gap:8px}.resource-form .checkbox input{width:auto}.resource-form button,.edit-actions button:not(.secondary){align-self:end;min-height:41px;border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:9px 12px;font-weight:800;cursor:pointer}.table-wrap{overflow-x:auto}th,td{padding:13px;border-bottom:1px solid var(--sim-border);text-align:left;vertical-align:top}td strong,td span{display:block}td span{margin-top:3px;color:var(--sim-muted);font-size:12px}.secondary{cursor:pointer}.edit-form{padding:12px}.edit-actions{display:flex;gap:8px;align-items:end}.error{color:#a43b3b;font-size:12px}.empty{padding:30px;text-align:center;color:var(--sim-muted)}@media(max-width:760px){.resource-form{grid-template-columns:1fr}.resource-form .wide{grid-column:auto}}
+.resource-create summary{color:var(--sim-blue);font-weight:800;cursor:pointer;min-height:32px}.resource-create[open] summary{margin-bottom:20px}table{min-width:850px}</style>
