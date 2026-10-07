@@ -15,7 +15,10 @@ interface BookingDetail {
     note: string | null;
     status: string;
     review_reason: string | null;
-    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number } }>;
+    course: { id: number; code: string | null; name: string } | null;
+    scenario: { id: number; name: string } | null;
+    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean } }>;
+    custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
     status_transitions: Array<{
         id: number;
         from_status: string | null;
@@ -82,6 +85,8 @@ function recallBooking(): void {
             <div><span>เริ่มใช้งาน</span><strong>{{ new Date(booking.starts_at).toLocaleString('th-TH') }}</strong></div>
             <div><span>สิ้นสุด</span><strong>{{ new Date(booking.ends_at).toLocaleString('th-TH') }}</strong></div>
             <div><span>จำนวนผู้เข้าใช้งาน</span><strong>{{ booking.participant_count ?? '-' }}</strong></div>
+            <div><span>รายวิชา</span><strong>{{ booking.course?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
+            <div><span>สถานการณ์จำลอง</span><strong>{{ booking.scenario?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
             <div><span>ผลการตรวจสอบ</span><strong>{{ booking.review_reason ?? '-' }}</strong></div>
         </section>
 
@@ -89,8 +94,18 @@ function recallBooking(): void {
             <h2>ทรัพยากร</h2>
             <div class="resource-list">
                 <div v-for="resource in booking.resources" :key="resource.id">
-                    <strong>{{ resource.name }}</strong>
-                    <span>จำนวน {{ resource.pivot.quantity }}</span>
+                    <strong>{{ resource.name }} <small>{{ resource.kind === 'room' ? 'ห้อง' : 'อุปกรณ์จากแค็ตตาล็อก' }}</small></strong>
+                    <span>จำนวน {{ resource.pivot.quantity }}<template v-if="resource.pivot.is_auto_recommended"> · อุปกรณ์จากชุดแนะนำ</template></span>
+                </div>
+            </div>
+        </section>
+
+        <section v-if="booking.custom_equipment_requests.length" class="panel">
+            <h2>คำขออุปกรณ์เพิ่มเติม</h2>
+            <div class="resource-list">
+                <div v-for="item in booking.custom_equipment_requests" :key="item.id">
+                    <strong>{{ item.name }} <small v-if="item.note">{{ item.note }}</small></strong>
+                    <span>จำนวน {{ item.quantity }}</span>
                 </div>
             </div>
         </section>

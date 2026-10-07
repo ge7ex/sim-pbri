@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 
@@ -12,6 +12,19 @@ interface ResourceItem {
     is_exclusive: boolean;
     location: string | null;
     description: string | null;
+}
+
+interface CourseItem { id: number; code: string | null; name: string }
+interface ScenarioItem {
+    id: number;
+    course_id: number;
+    name: string;
+    description: string | null;
+    course: { id: number; name: string };
+    recommended_resources: Array<{
+        id: number; name: string; kind: 'room' | 'equipment'; status: string;
+        quantity_total: number; is_exclusive: boolean; pivot: { quantity: number };
+    }>;
 }
 
 interface SharedProps {
@@ -27,21 +40,45 @@ interface SharedProps {
     };
 }
 
-const props = defineProps<{ resources: ResourceItem[] }>();
+const props = defineProps<{ resources: ResourceItem[]; courses: CourseItem[]; scenarios: ScenarioItem[] }>();
 const page = usePage<SharedProps>();
 const selectedRoomId = ref<number | null>(null);
 const equipmentQuantities = ref<Record<number, number>>({});
+const customEquipmentRows = ref<Array<{ name: string; quantity: number; note: string }>>([]);
 
 const rooms = computed(() => props.resources.filter((item) => item.kind === 'room'));
 const equipment = computed(() => props.resources.filter((item) => item.kind === 'equipment'));
+const selectedScenario = computed(() => props.scenarios.find((item) => item.id === form.scenario_id) ?? null);
+const preferredScenarios = computed(() => props.scenarios.filter((item) => item.course_id === form.course_id));
+const otherScenarios = computed(() => props.scenarios.filter((item) => item.course_id !== form.course_id));
+const recommendedEquipmentIds = computed(() => new Set(
+    selectedScenario.value?.recommended_resources
+        .filter((item) => item.kind === 'equipment')
+        .map((item) => item.id) ?? [],
+));
+const recommendedEquipment = computed(() => equipment.value.filter((item) => recommendedEquipmentIds.value.has(item.id)));
+const additionalEquipment = computed(() => equipment.value.filter((item) => !recommendedEquipmentIds.value.has(item.id)));
+const unavailableRecommended = computed(() => (selectedScenario.value?.recommended_resources ?? [])
+    .filter((item) => item.kind === 'equipment' && item.status !== 'ready'));
 
 const form = useForm({
+    course_id: null as number | null,
+    scenario_id: null as number | null,
     resources: [] as Array<{ id: number; quantity: number }>,
+    custom_equipment: [] as Array<{ name: string; quantity: number; note: string }>,
     starts_at: '',
     ends_at: '',
     participant_count: null as number | null,
     requester_phone: '',
     note: '',
+});
+
+watch(() => form.scenario_id, () => {
+    equipmentQuantities.value = Object.fromEntries(
+        (selectedScenario.value?.recommended_resources ?? [])
+            .filter((resource) => resource.kind === 'equipment' && resource.status === 'ready' && equipment.value.some((item) => item.id === resource.id))
+            .map((resource) => [resource.id, resource.is_exclusive ? 1 : Math.min(resource.pivot.quantity, resource.quantity_total)]),
+    );
 });
 
 function handleEquipmentInput(resource: ResourceItem, event: Event): void {
@@ -55,7 +92,7 @@ function handleEquipmentInput(resource: ResourceItem, event: Event): void {
 
     equipmentQuantities.value[resource.id] = Math.min(
         quantity,
-        resource.quantity_total,
+        resource.is_exclusive ? 1 : resource.quantity_total,
     );
 }
 
@@ -73,6 +110,7 @@ function submit(): void {
     }
 
     form.resources = resources;
+    form.custom_equipment = customEquipmentRows.value.filter((item) => item.name.trim());
 
     form
         .transform((data) => ({
@@ -81,6 +119,10 @@ function submit(): void {
             ends_at: new Date(data.ends_at).toISOString(),
         }))
         .post('/app/bookings');
+}
+
+function addCustomEquipment(): void {
+    if (customEquipmentRows.value.length < 50) customEquipmentRows.value.push({ name: '', quantity: 1, note: '' });
 }
 </script>
 
@@ -97,8 +139,22 @@ function submit(): void {
 
         <form class="booking-form" @submit.prevent="submit">
             <section class="panel">
-                <h2>1. เลือกห้องปฏิบัติการ</h2>
-                <p class="section-help">แสดงเฉพาะห้องสถานะพร้อมใช้งานในหน่วยงานของคุณ</p>
+                <h2>1. รายวิชาและสถานการณ์จำลอง</h2>
+                <p class="section-help">สถานการณ์ที่สัมพันธ์กับรายวิชาจะแสดงเป็นรายการแนะนำ คุณยังเลือกสถานการณ์อื่นหรือไม่เลือกก็ได้</p>
+                <div class="field-grid">
+                    <label>รายวิชา
+                        <select v-model="form.course_id"><option :value="null">ไม่ระบุรายวิชา</option><option v-for="course in courses" :key="course.id" :value="course.id">{{ course.code ? course.code + ' · ' : '' }}{{ course.name }}</option></select>
+                    </label>
+                    <label>สถานการณ์จำลอง
+                        <select v-model="form.scenario_id"><option :value="null">ไม่เลือกสถานการณ์</option><optgroup v-if="preferredScenarios.length" label="สถานการณ์จำลองที่แนะนำ"><option v-for="scenario in preferredScenarios" :key="scenario.id" :value="scenario.id">{{ scenario.name }}</option></optgroup><optgroup v-if="otherScenarios.length" label="สถานการณ์จำลองอื่น"><option v-for="scenario in otherScenarios" :key="scenario.id" :value="scenario.id">{{ scenario.name }} · {{ scenario.course.name }}</option></optgroup></select>
+                    </label>
+                </div>
+                <p v-if="form.errors.course_id" class="error">{{ form.errors.course_id }}</p><p v-if="form.errors.scenario_id" class="error">{{ form.errors.scenario_id }}</p>
+            </section>
+
+            <section class="panel">
+                <h2>2. ห้องและวันเวลา</h2>
+                <p class="section-help">เลือกห้องที่พร้อมใช้งานในหน่วยงานของคุณ แล้วระบุช่วงเวลาใช้บริการ</p>
                 <div v-if="rooms.length" class="resource-grid">
                     <label v-for="room in rooms" :key="room.id" class="resource-card" :class="{ selected: selectedRoomId === room.id }">
                         <input v-model="selectedRoomId" type="radio" name="room" :value="room.id">
@@ -108,11 +164,6 @@ function submit(): void {
                     </label>
                 </div>
                 <p v-else class="empty">ยังไม่มีห้องที่พร้อมให้จอง</p>
-                <p v-if="form.errors.resources" class="error">{{ form.errors.resources }}</p>
-            </section>
-
-            <section class="panel">
-                <h2>2. วันเวลาและจำนวนผู้เข้าใช้งาน</h2>
                 <div class="field-grid">
                     <label>เริ่มใช้งาน<input v-model="form.starts_at" type="datetime-local" required></label>
                     <label>สิ้นสุด<input v-model="form.ends_at" type="datetime-local" required></label>
@@ -123,19 +174,49 @@ function submit(): void {
             </section>
 
             <section class="panel">
-                <h2>3. อุปกรณ์เสริมเพิ่มเติม</h2>
-                <p class="section-help">กรอกจำนวนเฉพาะอุปกรณ์ที่ต้องการ ระบบจะตรวจจำนวนคงเหลือในช่วงเวลาที่เลือกเมื่อส่งคำขอ</p>
-                <div v-if="equipment.length" class="equipment-list">
-                    <label v-for="item in equipment" :key="item.id">
-                        <span><strong>{{ item.name }}</strong><small>พร้อมให้ใช้สูงสุด {{ item.quantity_total }} หน่วย</small></span>
-                        <input type="number" min="0" :max="item.quantity_total" placeholder="0" @input="handleEquipmentInput(item, $event)">
-                    </label>
+                <h2>3. อุปกรณ์จากแค็ตตาล็อก</h2>
+                <p class="section-help">รายการแนะนำเป็นค่าเริ่มต้น คุณนำออกหรือเปลี่ยนจำนวนได้ อุปกรณ์เพิ่มเติมเลือกได้ตามต้องการ</p>
+                <div v-if="recommendedEquipment.length" class="equipment-group">
+                    <h3>อุปกรณ์จากชุดแนะนำ</h3>
+                    <div class="equipment-list">
+                        <label v-for="item in recommendedEquipment" :key="item.id">
+                            <span><strong>{{ item.name }}</strong><small>พร้อมให้ใช้สูงสุด {{ item.quantity_total }} หน่วย · แนะนำจาก {{ selectedScenario?.name }}</small></span>
+                            <input :aria-label="'จำนวน ' + item.name" type="number" min="0" :max="item.is_exclusive ? 1 : item.quantity_total" placeholder="0" :value="equipmentQuantities[item.id] ?? ''" @input="handleEquipmentInput(item, $event)">
+                        </label>
+                    </div>
                 </div>
-                <p v-else class="empty">ไม่มีอุปกรณ์เสริมที่พร้อมใช้งาน</p>
+                <p v-if="unavailableRecommended.length" class="section-help">อุปกรณ์แนะนำที่ยังไม่พร้อมให้จอง: {{ unavailableRecommended.map((item) => item.name).join(', ') }}</p>
+                <div v-if="additionalEquipment.length" class="equipment-group">
+                    <h3>{{ selectedScenario ? 'อุปกรณ์เพิ่มเติมจากแค็ตตาล็อก' : 'เลือกอุปกรณ์จากแค็ตตาล็อก' }}</h3>
+                    <div class="equipment-list">
+                        <label v-for="item in additionalEquipment" :key="item.id">
+                            <span><strong>{{ item.name }}</strong><small>พร้อมให้ใช้สูงสุด {{ item.quantity_total }} หน่วย</small></span>
+                            <input :aria-label="'จำนวน ' + item.name" type="number" min="0" :max="item.is_exclusive ? 1 : item.quantity_total" placeholder="0" :value="equipmentQuantities[item.id] ?? ''" @input="handleEquipmentInput(item, $event)">
+                        </label>
+                    </div>
+                </div>
+                <p v-if="!equipment.length" class="empty">ไม่มีอุปกรณ์ที่พร้อมให้จองในแค็ตตาล็อก</p>
+                <p v-if="form.errors.resources" class="error" role="alert">{{ form.errors.resources }}</p>
             </section>
 
             <section class="panel">
-                <h2>4. ข้อมูลผู้จอง</h2>
+                <h2>4. คำขออุปกรณ์เพิ่มเติม</h2>
+                <p class="section-help">ใช้สำหรับอุปกรณ์ที่ไม่มีในแค็ตตาล็อก เจ้าหน้าที่จะตรวจสอบคำขอนี้แยกจากจำนวนคงเหลือ</p>
+                <div v-for="(item, index) in customEquipmentRows" :key="index" class="custom-row">
+                    <label>ชื่ออุปกรณ์<input v-model="item.name" :id="'custom-name-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.name'] ? 'custom-name-error-' + index : undefined" maxlength="255" required></label>
+                    <label>จำนวน<input v-model.number="item.quantity" :id="'custom-quantity-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.quantity'] ? 'custom-quantity-error-' + index : undefined" type="number" min="1" max="10000" required></label>
+                    <label>รายละเอียด<textarea v-model="item.note" :id="'custom-note-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.note'] ? 'custom-note-error-' + index : undefined" maxlength="2000" rows="2"></textarea></label>
+                    <button type="button" :aria-label="'นำคำขออุปกรณ์ ' + (index + 1) + ' ออก'" @click="customEquipmentRows.splice(index, 1)">นำรายการออก</button>
+                    <p v-if="form.errors['custom_equipment.' + index + '.name']" :id="'custom-name-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.name'] }}</p>
+                    <p v-if="form.errors['custom_equipment.' + index + '.quantity']" :id="'custom-quantity-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.quantity'] }}</p>
+                    <p v-if="form.errors['custom_equipment.' + index + '.note']" :id="'custom-note-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.note'] }}</p>
+                </div>
+                <p v-if="form.errors.custom_equipment" class="error" role="alert">{{ form.errors.custom_equipment }}</p>
+                <button type="button" class="secondary" :disabled="customEquipmentRows.length >= 50" @click="addCustomEquipment">เพิ่มคำขออุปกรณ์</button>
+            </section>
+
+            <section class="panel">
+                <h2>5. ข้อมูลผู้จอง</h2>
                 <div class="field-grid">
                     <label>วิทยาลัย / หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly></label>
                     <label>ชื่อผู้จอง<input :value="page.props.auth.user.name" readonly></label>
@@ -155,5 +236,5 @@ function submit(): void {
 </template>
 
 <style scoped>
-.page-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 6px;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}h1{margin:0;color:#16324f;font-size:34px}.page-heading p{color:#66788a}.booking-form{display:grid;gap:18px}.panel{border:1px solid #dfe6ee;border-radius:18px;background:#fff;padding:24px}.panel h2{margin:0;color:#17324f;font-size:19px}.section-help,.empty{color:#718096;line-height:1.6}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}.resource-card{display:grid;gap:7px;border:1px solid #d9e1e8;border-radius:14px;padding:16px;cursor:pointer}.resource-card.selected{border-color:#315b7c;background:#f4f7fa}.resource-card input{width:auto}.resource-card span,.resource-card small{color:#718096}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}label{display:grid;gap:7px;color:#44576a;font-size:13px;font-weight:800}input,textarea{width:100%;border:1px solid #cdd7e0;border-radius:10px;background:#fff;padding:11px 12px;color:#172033;font:inherit}input[readonly]{background:#f4f6f8;color:#627386}.equipment-list{display:grid;gap:10px;margin-top:16px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #edf1f4;padding:10px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:#718096;font-weight:500}.equipment-list input{width:110px}.full-field{margin-top:14px}.error{color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{border:0;border-radius:11px;background:#17324f;color:#fff;padding:13px 20px;font-weight:800;cursor:pointer}.form-actions button:disabled{opacity:.55;cursor:not-allowed}@media(max-width:720px){.field-grid{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}}
+.page-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 6px;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}h1{margin:0;color:#16324f;font-size:34px}.page-heading p{color:#66788a}.booking-form{display:grid;gap:14px}.panel{border:1px solid #dfe6ee;border-radius:14px;background:#fff;padding:20px}.panel h2{margin:0;color:#17324f;font-size:18px}.panel h3{margin:10px 0 0;color:#315b7c;font-size:14px}.section-help,.empty{color:#718096;line-height:1.55}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px}.resource-card{display:grid;gap:6px;border:1px solid #d9e1e8;border-radius:12px;padding:13px;cursor:pointer}.resource-card.selected{border-color:#315b7c;background:#f4f7fa}.resource-card input{width:auto}.resource-card input[type=radio]{min-height:auto;padding:0}.resource-card span,.resource-card small{color:#718096}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}label{display:grid;gap:6px;color:#44576a;font-size:13px;font-weight:800}input,textarea,select{width:100%;min-height:44px;border:1px solid #cdd7e0;border-radius:9px;background:#fff;padding:10px 11px;color:#172033;font:inherit}input[readonly]{background:#f4f6f8;color:#627386}.equipment-group{margin-top:14px}.equipment-list{display:grid;gap:8px;margin-top:6px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #edf1f4;padding:9px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:#718096;font-weight:500}.equipment-list input{width:110px}.custom-row{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:10px;align-items:end;margin:14px 0;padding-bottom:12px;border-bottom:1px solid #edf1f4}.custom-row button,.secondary{min-height:44px;border:1px solid #cdd7e0;border-radius:9px;background:#fff;color:#315b7c;padding:9px 11px;font-weight:700;cursor:pointer}.custom-row .error{grid-column:1/-1}.custom-row button:hover,.secondary:hover:not(:disabled){background:#f4f7fa}.error{margin:5px 0;color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{min-height:44px;border:0;border-radius:9px;background:#17324f;color:#fff;padding:11px 18px;font-weight:800;cursor:pointer}.form-actions button:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed} :focus-visible{outline:3px solid #557d9d;outline-offset:2px}@media(max-width:720px){.panel{padding:16px}.field-grid,.custom-row{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}.custom-row button{width:fit-content}}
 </style>

@@ -11,7 +11,10 @@ interface BookingRow {
     ends_at: string;
     status: string;
     participant_count: number | null;
-    resources: Array<{ id: number; name: string; kind: string; status: string }>;
+    course: { id: number; code: string | null; name: string } | null;
+    scenario: { id: number; name: string } | null;
+    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { is_auto_recommended: boolean } }>;
+    custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
 }
 
 interface Pagination<T> { data: T[]; current_page: number; last_page: number }
@@ -58,8 +61,12 @@ function reject(id: number): void {
                     </div>
 
                     <dl>
-                        <div><dt>ทรัพยากร</dt><dd>{{ booking.resources.map((item) => item.name).join(', ') }}</dd></div>
+                        <div><dt>รายวิชา</dt><dd>{{ booking.course?.name ?? 'ไม่ได้ระบุ' }}</dd></div>
+                        <div><dt>สถานการณ์จำลอง</dt><dd>{{ booking.scenario?.name ?? 'ไม่ได้ระบุ' }}</dd></div>
+                        <div><dt>ห้อง</dt><dd>{{ booking.resources.filter((item) => item.kind === 'room').map((item) => item.name).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
+                        <div><dt>อุปกรณ์จากแค็ตตาล็อก</dt><dd>{{ booking.resources.filter((item) => item.kind === 'equipment').map((item) => item.name + (item.pivot.is_auto_recommended ? ' (อุปกรณ์จากชุดแนะนำ)' : '')).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
                         <div><dt>จำนวนผู้เข้าใช้งาน</dt><dd>{{ booking.participant_count ?? '-' }}</dd></div>
+                        <div v-if="booking.custom_equipment_requests.length"><dt>คำขออุปกรณ์เพิ่มเติม</dt><dd>{{ booking.custom_equipment_requests.map((item) => item.name + ' × ' + item.quantity + (item.note ? ' — ' + item.note : '')).join(', ') }}</dd></div>
                     </dl>
                     <Link :href="`/app/bookings/${booking.id}`">ดูรายละเอียดและประวัติ</Link>
                 </div>
