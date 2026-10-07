@@ -33,6 +33,7 @@ enum UserRole: string
             self::Staff => [
                 ...$booking,
                 AppPermission::BookingApprove,
+                AppPermission::SimulatorView,
                 AppPermission::ResourceView,
                 AppPermission::ScenarioView,
             ],
@@ -40,6 +41,10 @@ enum UserRole: string
                 ...$booking,
                 AppPermission::BookingApprove,
                 AppPermission::ResourceView,
+                AppPermission::SimulatorView,
+                AppPermission::SimulatorCreate,
+                AppPermission::SimulatorUpdate,
+                AppPermission::SimulatorMaintenance,
                 AppPermission::ResourceCreate,
                 AppPermission::ResourceUpdate,
                 AppPermission::ResourceDelete,

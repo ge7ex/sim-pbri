@@ -21,6 +21,7 @@ const items = computed(() => {
         { label: 'ส่งคำขอจอง', href: '/app/bookings/create', permission: 'booking.create' },
         { label: 'ปฏิทินการใช้งาน', href: '/app/calendar', permission: 'booking.view' },
         { label: 'ตรวจสอบคำขอ', href: '/app/review', permission: 'booking.approve' },
+        { label: 'หุ่นจำลองและทรัพย์สิน', href: '/app/simulators', permission: 'simulator.view' },
         { label: 'ทรัพยากร SIM', href: '/app/resources', permission: 'sim-resource.view' },
         { label: 'รายวิชาและสถานการณ์', href: '/app/scenarios', permission: 'scenario.view' },
     ].filter((item) => item.permission === null || granted.has(item.permission));
