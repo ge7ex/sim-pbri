@@ -4,6 +4,7 @@ namespace App\Modules\Scenario\Models;
 
 use App\Modules\Booking\Models\Booking;
 use App\Modules\SimResource\Models\SimResource;
+use App\Modules\Simulator\Models\SimulatorType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -48,8 +49,13 @@ final class Scenario extends Model
     }
 
     /**
-     * @return HasMany<Booking, $this>
+     * @return BelongsToMany<SimulatorType, $this>
      */
+    public function recommendedSimulatorTypes(): BelongsToMany
+    {
+        return $this->belongsToMany(SimulatorType::class, 'scenario_simulator_type')->withTimestamps();
+    }
+
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);

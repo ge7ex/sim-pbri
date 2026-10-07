@@ -4,6 +4,7 @@ namespace App\Modules\Booking\Http\Requests;
 
 use App\Core\Enums\AppPermission;
 use App\Modules\Scenario\Models\Course;
+use App\Modules\Simulator\Models\SimulatorType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,6 +37,13 @@ final class StoreBookingRequest extends FormRequest
                             ->select('id')
                             ->where('college_id', $this->user()?->college_id),
                     )),
+            ],
+            'simulator_asset_id' => [
+                'nullable', 'integer',
+                Rule::exists('simulator_assets', 'id')->where(fn ($q) => $q
+                    ->where('college_id', $this->user()?->college_id)
+                    ->where('status', 'active')
+                    ->whereIn('simulator_type_id', SimulatorType::where('college_id', $this->user()?->college_id)->where('is_active', true)->select('id'))),
             ],
             'resources' => ['required', 'array', 'min:1'],
             'resources.*.id' => [

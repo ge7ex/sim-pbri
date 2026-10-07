@@ -4,16 +4,18 @@ namespace App\Modules\Booking\Services;
 
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\SimResource\Models\SimResource;
+use App\Modules\Simulator\Models\SimulatorAsset;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 final class BookingAvailabilityResolver
 {
     /**
-     * @param Collection<int, SimResource> $resources
-     * @param array<int, int> $requestedQuantities
+     * @param  Collection<int, SimResource>  $resources
+     * @param  array<int, int>  $requestedQuantities
      */
     public function ensureAvailable(
         Collection $resources,
@@ -23,19 +25,9 @@ final class BookingAvailabilityResolver
         ?int $ignoreBookingId = null,
     ): void {
         foreach ($resources as $resource) {
-            $query = DB::table('booking_resource')
-                ->join('bookings', 'bookings.id', '=', 'booking_resource.booking_id')
-                ->where('booking_resource.sim_resource_id', $resource->id)
-                ->whereIn('bookings.status', [
-                    BookingStatus::Pending->value,
-                    BookingStatus::Approved->value,
-                ])
-                ->where('bookings.starts_at', '<', $endsAt)
-                ->where('bookings.ends_at', '>', $startsAt);
-
-            if ($ignoreBookingId !== null) {
-                $query->where('bookings.id', '!=', $ignoreBookingId);
-            }
+            $query = $this->blockingBookings($startsAt, $endsAt, $ignoreBookingId)
+                ->join('booking_resource', 'bookings.id', '=', 'booking_resource.booking_id')
+                ->where('booking_resource.sim_resource_id', $resource->id);
 
             $requestedQuantity = $requestedQuantities[$resource->id] ?? 0;
 
@@ -58,6 +50,29 @@ final class BookingAvailabilityResolver
                 ]);
             }
         }
+    }
+
+    public function ensureSimulatorAvailable(SimulatorAsset $asset, CarbonInterface $startsAt, CarbonInterface $endsAt, ?int $ignoreBookingId = null): void
+    {
+        if ($this->blockingBookings($startsAt, $endsAt, $ignoreBookingId)->where('simulator_asset_id', $asset->id)->exists()) {
+            throw ValidationException::withMessages(['simulator_asset_id' => 'หุ่นจำลองนี้มีคำขอหรือการจองในช่วงเวลาที่เลือกแล้ว']);
+        }
+    }
+
+    /** @return list<int> */
+    public function unavailableSimulatorIds(array $ids, CarbonInterface $startsAt, CarbonInterface $endsAt): array
+    {
+        return $this->blockingBookings($startsAt, $endsAt)->whereIn('simulator_asset_id', $ids)
+            ->distinct()->pluck('simulator_asset_id')->map(static fn ($id): int => (int) $id)->all();
+    }
+
+    private function blockingBookings(CarbonInterface $startsAt, CarbonInterface $endsAt, ?int $ignoreBookingId = null): Builder
+    {
+        return DB::table('bookings')
+            ->whereIn('bookings.status', [BookingStatus::Pending->value, BookingStatus::Approved->value])
+            ->where('bookings.starts_at', '<', $endsAt)
+            ->where('bookings.ends_at', '>', $startsAt)
+            ->when($ignoreBookingId !== null, fn ($q) => $q->where('bookings.id', '!=', $ignoreBookingId));
     }
 
     private function throwOverlap(): never

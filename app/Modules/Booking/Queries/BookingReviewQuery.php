@@ -26,6 +26,9 @@ final class BookingReviewQuery
                 'scenario' => fn ($query) => $query
                     ->whereHas('course', fn ($courseQuery) => $courseQuery->where('college_id', $actor->college_id))
                     ->select('id', 'name', 'course_id'),
+                'simulatorAsset' => fn ($q) => $q->where('college_id', $actor->college_id)
+                    ->select('id', 'simulator_type_id', 'asset_name', 'asset_code', 'status', 'location')
+                    ->with(['simulatorType' => fn ($typeQuery) => $typeQuery->where('college_id', $actor->college_id)->select('id', 'name', 'is_active')]),
                 'customEquipmentRequests:id,booking_id,name,quantity,note',
             ])
             ->where('college_id', $actor->college_id)

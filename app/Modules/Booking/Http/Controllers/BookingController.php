@@ -13,6 +13,9 @@ use App\Modules\Scenario\Models\Scenario;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
+use App\Modules\Simulator\Enums\SimulatorAssetStatus;
+use App\Modules\Simulator\Models\SimulatorAsset;
+use App\Modules\Simulator\Models\SimulatorType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -55,6 +58,10 @@ final class BookingController extends Controller
 
         return Inertia::render('Modules/Booking/Pages/Create', [
             'resources' => $resources,
+            'simulatorTypes' => SimulatorType::where('college_id', $user->college_id)->where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'simulatorAssets' => SimulatorAsset::where('college_id', $user->college_id)->where('status', SimulatorAssetStatus::Active)
+                ->whereHas('simulatorType', fn ($q) => $q->where('college_id', $user->college_id)->where('is_active', true))
+                ->orderBy('asset_name')->get(['id', 'simulator_type_id', 'asset_name', 'asset_code', 'status', 'location']),
             'courses' => Course::query()
                 ->where('college_id', $user->college_id)
                 ->orderBy('name')
@@ -62,6 +69,7 @@ final class BookingController extends Controller
             'scenarios' => Scenario::query()
                 ->with([
                     'course:id,college_id,name',
+                    'recommendedSimulatorTypes' => fn ($q) => $q->where('college_id', $user->college_id)->where('is_active', true)->select('simulator_types.id', 'name'),
                     'recommendedResources' => fn ($query) => $query
                         ->where('college_id', $user->college_id)
                         ->where('kind', SimResourceKind::Equipment)
@@ -102,6 +110,9 @@ final class BookingController extends Controller
             'scenario' => fn ($query) => $query
                 ->whereHas('course', fn ($courseQuery) => $courseQuery->where('college_id', $booking->college_id))
                 ->select('id', 'name', 'course_id'),
+            'simulatorAsset' => fn ($q) => $q->where('college_id', $booking->college_id)
+                ->select('id', 'simulator_type_id', 'asset_name', 'asset_code', 'status', 'location')
+                ->with(['simulatorType' => fn ($typeQuery) => $typeQuery->where('college_id', $booking->college_id)->select('id', 'name', 'is_active')]),
             'customEquipmentRequests:id,booking_id,name,quantity,note',
             'requestedBy:id,name',
             'reviewedBy:id,name',

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
+use App\Modules\Simulator\Services\SimulatorAssetLocker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -13,8 +14,8 @@ final class RecallBookingAction
 {
     public function __construct(
         private readonly BookingAvailabilityResolver $availabilityResolver,
-    ) {
-    }
+        private readonly SimulatorAssetLocker $simulatorLocker,
+    ) {}
 
     public function execute(
         Booking $booking,
@@ -63,6 +64,11 @@ final class RecallBookingAction
                 endsAt: $locked->ends_at,
                 ignoreBookingId: $locked->id,
             );
+
+            if ($locked->simulator_asset_id !== null) {
+                $simulator = $this->simulatorLocker->eligible($locked->simulator_asset_id, $locked->college_id);
+                $this->availabilityResolver->ensureSimulatorAvailable($simulator, $locked->starts_at, $locked->ends_at, $locked->id);
+            }
 
             $locked->forceFill([
                 'status' => BookingStatus::Pending,

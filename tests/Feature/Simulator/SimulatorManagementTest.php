@@ -128,6 +128,104 @@ final class SimulatorManagementTest extends TestCase
         ])->assertUnprocessable()->assertJsonValidationErrors('cost');
     }
 
+    public function test_scenario_recommendations_are_scoped_to_college_and_do_not_grant_staff_write_access(): void
+    {
+        [$admin, $type] = $this->context(UserRole::Admin);
+        [, $foreignType] = $this->context(UserRole::Admin);
+        $course = Course::query()->create(['college_id' => $admin->college_id, 'name' => 'Clinical course']);
+        $scenario = Scenario::query()->create(['course_id' => $course->id, 'name' => 'Clinical scenario', 'is_active' => true]);
+        $this->actingAs($admin)->put("/app/scenarios/{$scenario->id}/simulator-types", [
+            'simulator_type_ids' => [$type->id],
+        ])->assertRedirect();
+        $this->assertSame([$type->id], $scenario->recommendedSimulatorTypes()->pluck('simulator_types.id')->all());
+        $this->putJson("/app/scenarios/{$scenario->id}/simulator-types", [
+            'simulator_type_ids' => [$foreignType->id],
+        ])->assertUnprocessable()->assertJsonValidationErrors('simulator_type_ids.0');
+        $this->assertSame([$type->id], $scenario->recommendedSimulatorTypes()->pluck('simulator_types.id')->all());
+        $staff = User::factory()->create(['college_id' => $admin->college_id, 'role' => UserRole::Staff->value]);
+        $this->actingAs($staff)->put("/app/scenarios/{$scenario->id}/simulator-types", [])->assertForbidden();
+    }
+
+    public function test_duplicate_type_names_and_asset_codes_are_scoped_to_each_college(): void
+    {
+        [$admin, $type, $asset] = $this->context(UserRole::Admin);
+        [$otherAdmin, $otherType] = $this->context(UserRole::Admin);
+        $this->actingAs($admin)->postJson('/app/simulators/types', [
+            'name' => $type->name, 'is_active' => true,
+        ])->assertUnprocessable()->assertJsonValidationErrors('name');
+        $this->postJson('/app/simulators/assets', [
+            ...$this->assetPayload($type), 'asset_code' => $asset->asset_code,
+        ])->assertUnprocessable()->assertJsonValidationErrors('asset_code');
+
+        $this->actingAs($admin)->post('/app/simulators/types', [
+            'name' => 'Independent type', 'is_active' => true,
+        ])->assertRedirect();
+        $this->actingAs($otherAdmin)->post('/app/simulators/types', [
+            'name' => 'Independent type', 'is_active' => true,
+        ])->assertRedirect();
+        $this->post('/app/simulators/assets', [
+            ...$this->assetPayload($otherType), 'asset_code' => $asset->asset_code,
+        ])->assertRedirect();
+        $this->assertSame(2, SimulatorType::where('name', 'Independent type')->count());
+        $this->assertSame(2, SimulatorAsset::where('asset_code', $asset->asset_code)->count());
+    }
+
+    public function test_financial_metadata_must_be_complete_or_entirely_absent(): void
+    {
+        [$admin, $type] = $this->context(UserRole::Admin);
+        foreach (['purchase_year', 'purchase_price', 'useful_life_years'] as $missing) {
+            $payload = $this->assetPayload($type);
+            unset($payload[$missing]);
+            $this->actingAs($admin)->postJson('/app/simulators/assets', $payload)
+                ->assertUnprocessable()->assertJsonValidationErrors($missing);
+        }
+        $payload = $this->assetPayload($type);
+        unset($payload['purchase_year'], $payload['purchase_price'], $payload['useful_life_years']);
+        $this->post('/app/simulators/assets', $payload)->assertRedirect();
+        $created = SimulatorAsset::where('asset_code', 'SIM-NEW')->sole();
+        $this->assertNull($created->purchase_year);
+        $this->assertNull($created->purchase_price);
+        $this->assertNull($created->useful_life_years);
+    }
+
+    public function test_type_and_asset_updates_record_actor_and_before_after_values(): void
+    {
+        [$admin, $type, $asset] = $this->context(UserRole::Admin);
+        $this->actingAs($admin)->put("/app/simulators/types/{$type->id}", [
+            'name' => 'Renamed type', 'is_active' => false,
+        ])->assertRedirect();
+        $this->put("/app/simulators/assets/{$asset->id}", [
+            ...$this->assetPayload($type), 'asset_name' => 'Renamed asset', 'status' => 'disabled',
+        ])->assertRedirect();
+        $typeLog = DB::table('simulator_change_logs')->where('subject_type', 'type')->where('subject_id', $type->id)->sole();
+        $assetLog = DB::table('simulator_change_logs')->where('subject_type', 'asset')->where('subject_id', $asset->id)->sole();
+        foreach ([$typeLog, $assetLog] as $log) {
+            $this->assertSame($admin->id, (int) $log->actor_user_id);
+            $this->assertSame($admin->college_id, (int) $log->college_id);
+            $this->assertNotNull($log->created_at);
+        }
+        $this->assertSame('Clinical simulator', json_decode($typeLog->before_values, true)['name']);
+        $this->assertSame('Renamed type', json_decode($typeLog->after_values, true)['name']);
+        $this->assertTrue(json_decode($typeLog->before_values, true)['is_active']);
+        $this->assertFalse(json_decode($typeLog->after_values, true)['is_active']);
+        $this->assertSame('Training manikin', json_decode($assetLog->before_values, true)['asset_name']);
+        $this->assertSame('Renamed asset', json_decode($assetLog->after_values, true)['asset_name']);
+        $this->assertSame('active', json_decode($assetLog->before_values, true)['status']);
+        $this->assertSame('disabled', json_decode($assetLog->after_values, true)['status']);
+    }
+
+    public function test_maintenance_history_has_no_update_or_delete_endpoint(): void
+    {
+        [$admin, , $asset] = $this->context(UserRole::Admin);
+        $record = $asset->maintenanceRecords()->create($this->maintenancePayload() + ['created_by_user_id' => $admin->id]);
+        $this->actingAs($admin)->put("/app/simulators/assets/{$asset->id}/maintenance/{$record->id}", [
+            'description' => 'Rewritten history',
+        ])->assertNotFound();
+        $this->delete("/app/simulators/assets/{$asset->id}/maintenance/{$record->id}")->assertNotFound();
+        $this->assertSame('Calibration', $record->refresh()->description);
+        $this->assertDatabaseHas('simulator_maintenance_records', ['id' => $record->id]);
+    }
+
     private function context(UserRole $role): array
     {
         $college = College::factory()->create();
@@ -136,6 +234,7 @@ final class SimulatorManagementTest extends TestCase
         $asset = SimulatorAsset::query()->create([
             ...$this->assetPayload($type), 'college_id' => $college->id, 'asset_code' => 'SIM-'.$college->id,
         ]);
+
         return [$user, $type, $asset];
     }
 

@@ -15,6 +15,8 @@ interface ResourceItem {
 }
 
 interface CourseItem { id: number; code: string | null; name: string }
+interface SimulatorType { id: number; name: string }
+interface SimulatorAsset { id: number; simulator_type_id: number; asset_name: string; asset_code: string | null; status: string; location: string | null }
 interface ScenarioItem {
     id: number;
     course_id: number;
@@ -25,6 +27,7 @@ interface ScenarioItem {
         id: number; name: string; kind: 'room' | 'equipment'; status: string;
         quantity_total: number; is_exclusive: boolean; pivot: { quantity: number };
     }>;
+    recommended_simulator_types: SimulatorType[];
 }
 
 interface SharedProps {
@@ -40,11 +43,17 @@ interface SharedProps {
     };
 }
 
-const props = defineProps<{ resources: ResourceItem[]; courses: CourseItem[]; scenarios: ScenarioItem[] }>();
+const props = defineProps<{ resources: ResourceItem[]; courses: CourseItem[]; scenarios: ScenarioItem[]; simulatorTypes: SimulatorType[]; simulatorAssets: SimulatorAsset[] }>();
 const page = usePage<SharedProps>();
 const selectedRoomId = ref<number | null>(null);
 const equipmentQuantities = ref<Record<number, number>>({});
 const customEquipmentRows = ref<Array<{ name: string; quantity: number; note: string }>>([]);
+const selectedSimulatorTypeId = ref<number | null>(null);
+const simulatorAvailability = ref<Record<number, boolean>>({});
+const checkingSimulatorAvailability = ref(false);
+const simulatorAvailabilityError = ref('');
+const filteredSimulatorAssets = computed(() => props.simulatorAssets.filter((asset) => asset.simulator_type_id === selectedSimulatorTypeId.value));
+const recommendedSimulatorTypeIds = computed(() => new Set(selectedScenario.value?.recommended_simulator_types.map((item) => item.id) ?? []));
 
 const rooms = computed(() => props.resources.filter((item) => item.kind === 'room'));
 const equipment = computed(() => props.resources.filter((item) => item.kind === 'equipment'));
@@ -64,6 +73,7 @@ const unavailableRecommended = computed(() => (selectedScenario.value?.recommend
 const form = useForm({
     course_id: null as number | null,
     scenario_id: null as number | null,
+    simulator_asset_id: null as number | null,
     resources: [] as Array<{ id: number; quantity: number }>,
     custom_equipment: [] as Array<{ name: string; quantity: number; note: string }>,
     starts_at: '',
@@ -71,6 +81,35 @@ const form = useForm({
     participant_count: null as number | null,
     requester_phone: '',
     note: '',
+});
+
+watch(selectedSimulatorTypeId, () => { form.simulator_asset_id = null; });
+watch(() => [form.starts_at, form.ends_at], async ([startsAt, endsAt], _old, onCleanup) => {
+    simulatorAvailability.value = {};
+    simulatorAvailabilityError.value = '';
+    checkingSimulatorAvailability.value = false;
+    const start = new Date(startsAt);
+    const end = new Date(endsAt);
+    if (!startsAt || !endsAt || !Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start) return;
+    const controller = new AbortController();
+    let current = true;
+    onCleanup(() => { current = false; controller.abort(); });
+    checkingSimulatorAvailability.value = true;
+    try {
+        const query = new URLSearchParams({ starts_at: start.toISOString(), ends_at: end.toISOString() });
+        const response = await fetch(`/app/simulators/availability?${query}`, { credentials: 'same-origin', headers: { Accept: 'application/json' }, signal: controller.signal });
+        if (!response.ok) throw new Error('availability');
+        const data = await response.json();
+        if (!Array.isArray(data.assets) || data.assets.some((asset: any) => !Number.isInteger(asset.id) || typeof asset.available !== 'boolean')) throw new Error('availability');
+        if (current) {
+            const returnedAvailability = new Map<number, boolean>(data.assets.map((asset: { id: number; available: boolean }) => [asset.id, asset.available]));
+            simulatorAvailability.value = Object.fromEntries(props.simulatorAssets.map((asset) => [asset.id, returnedAvailability.get(asset.id) ?? false]));
+        }
+    } catch {
+        if (current) simulatorAvailabilityError.value = 'ยังตรวจสอบเวลาว่างของเครื่องจำลองไม่ได้ กรุณาลองระบุวันเวลาอีกครั้ง ระบบจะตรวจสอบซ้ำเมื่อส่งคำขอ';
+    } finally {
+        if (current) checkingSimulatorAvailability.value = false;
+    }
 });
 
 watch(() => form.scenario_id, () => {
@@ -174,7 +213,23 @@ function addCustomEquipment(): void {
             </section>
 
             <section class="panel">
-                <h2>3. อุปกรณ์จากแค็ตตาล็อก</h2>
+                <h2>3. เครื่องจำลอง (ถ้ามี)</h2>
+                <p class="section-help">เลือกประเภท แล้วเลือกเครื่องที่ต้องการใช้ รายการแนะนำจากสถานการณ์จำลองไม่บังคับการเลือก</p>
+                <p v-if="selectedScenario?.recommended_simulator_types.length" class="section-help">ประเภทที่แนะนำ: {{ selectedScenario.recommended_simulator_types.map((item) => item.name).join(', ') }}</p>
+                <div class="field-grid">
+                    <label>ประเภทเครื่องจำลอง<select v-model="selectedSimulatorTypeId"><option :value="null">ไม่เลือกเครื่องจำลอง</option><option v-for="item in simulatorTypes" :key="item.id" :value="item.id">{{ item.name }}{{ recommendedSimulatorTypeIds.has(item.id) ? ' (แนะนำ)' : '' }}</option></select></label>
+                    <label>เครื่องจำลอง<select v-model="form.simulator_asset_id" :disabled="selectedSimulatorTypeId === null"><option :value="null">ไม่เลือกเครื่องจำลอง</option><option v-for="asset in filteredSimulatorAssets" :key="asset.id" :value="asset.id" :disabled="asset.status !== 'active' || simulatorAvailability[asset.id] === false">{{ asset.asset_name }}{{ asset.asset_code ? ' · ' + asset.asset_code : '' }}{{ simulatorAvailability[asset.id] === false ? ' (ไม่ว่าง)' : '' }}</option></select></label>
+                </div>
+                <p v-if="selectedSimulatorTypeId !== null && !filteredSimulatorAssets.length" class="section-help">ยังไม่มีเครื่องจำลองที่พร้อมใช้งานในประเภทนี้</p>
+                <p v-if="checkingSimulatorAvailability" class="section-help" role="status">กำลังตรวจสอบเวลาว่างของเครื่องจำลอง...</p>
+                <p v-if="simulatorAvailabilityError" class="error" role="alert">{{ simulatorAvailabilityError }}</p>
+                <p v-if="form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === false" class="error" role="alert">เครื่องจำลองที่เลือกไม่ว่างในช่วงเวลานี้ กรุณาเลือกเครื่องอื่นหรือปรับวันเวลา</p>
+                <p v-if="form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === true" class="section-help" role="status">เครื่องจำลองที่เลือกว่างในช่วงเวลานี้ ระบบจะตรวจสอบซ้ำเมื่อส่งคำขอ</p>
+                <p v-if="form.errors.simulator_asset_id" class="error" role="alert">{{ form.errors.simulator_asset_id }}</p>
+            </section>
+
+            <section class="panel">
+                <h2>4. อุปกรณ์จากแค็ตตาล็อก</h2>
                 <p class="section-help">รายการแนะนำเป็นค่าเริ่มต้น คุณนำออกหรือเปลี่ยนจำนวนได้ อุปกรณ์เพิ่มเติมเลือกได้ตามต้องการ</p>
                 <div v-if="recommendedEquipment.length" class="equipment-group">
                     <h3>อุปกรณ์จากชุดแนะนำ</h3>
@@ -200,7 +255,7 @@ function addCustomEquipment(): void {
             </section>
 
             <section class="panel">
-                <h2>4. คำขออุปกรณ์เพิ่มเติม</h2>
+                <h2>5. คำขออุปกรณ์เพิ่มเติม</h2>
                 <p class="section-help">ใช้สำหรับอุปกรณ์ที่ไม่มีในแค็ตตาล็อก เจ้าหน้าที่จะตรวจสอบคำขอนี้แยกจากจำนวนคงเหลือ</p>
                 <div v-for="(item, index) in customEquipmentRows" :key="index" class="custom-row">
                     <label>ชื่ออุปกรณ์<input v-model="item.name" :id="'custom-name-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.name'] ? 'custom-name-error-' + index : undefined" maxlength="255" required></label>
@@ -216,7 +271,7 @@ function addCustomEquipment(): void {
             </section>
 
             <section class="panel">
-                <h2>5. ข้อมูลผู้จอง</h2>
+                <h2>6. ข้อมูลผู้จอง</h2>
                 <div class="field-grid">
                     <label>วิทยาลัย / หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly></label>
                     <label>ชื่อผู้จอง<input :value="page.props.auth.user.name" readonly></label>
@@ -227,7 +282,7 @@ function addCustomEquipment(): void {
             </section>
 
             <div class="form-actions">
-                <button type="submit" :disabled="form.processing || selectedRoomId === null">
+                <button type="submit" :disabled="form.processing || selectedRoomId === null || (form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === false)">
                     {{ form.processing ? 'กำลังส่ง...' : 'ยืนยันส่งคำขอ' }}
                 </button>
             </div>

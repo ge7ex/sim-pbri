@@ -12,6 +12,7 @@ use App\Modules\Scenario\Models\Scenario;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
+use App\Modules\Simulator\Services\SimulatorAssetLocker;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -20,6 +21,7 @@ final class CreateBookingAction
 {
     public function __construct(
         private readonly BookingAvailabilityResolver $availabilityResolver,
+        private readonly SimulatorAssetLocker $simulatorLocker,
     ) {}
 
     /**
@@ -136,11 +138,17 @@ final class CreateBookingAction
                 endsAt: $endsAt,
             );
 
+            if (! empty($data['simulator_asset_id'])) {
+                $simulator = $this->simulatorLocker->eligible((int) $data['simulator_asset_id'], $actor->college_id);
+                $this->availabilityResolver->ensureSimulatorAvailable($simulator, $startsAt, $endsAt);
+            }
+
             $booking = Booking::query()->create([
                 'college_id' => $actor->college_id,
                 'requested_by_user_id' => $actor->id,
                 'course_id' => $data['course_id'] ?? null,
                 'scenario_id' => $data['scenario_id'] ?? null,
+                'simulator_asset_id' => $data['simulator_asset_id'] ?? null,
                 'requester_name' => $actor->name,
                 'requester_phone' => $data['requester_phone'] ?? null,
                 'starts_at' => $startsAt,

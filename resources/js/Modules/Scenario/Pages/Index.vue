@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed, reactive, watch } from 'vue';
 import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 
@@ -24,6 +24,7 @@ interface ScenarioItem {
     description: string | null;
     is_active: boolean;
     recommended_resources: RecommendedEquipment[];
+    recommended_simulator_types: Array<{ id: number; name: string; is_active: boolean }>;
 }
 
 interface CourseItem {
@@ -33,14 +34,16 @@ interface CourseItem {
     scenarios: ScenarioItem[];
 }
 
-interface SharedProps { auth: { user: any; permissions: string[] } }
+interface SharedProps { auth: { user: any; permissions: string[] }; errors: Record<string, string>; flash?: { success?: string } }
 
 const props = defineProps<{
     courses: CourseItem[];
     equipment: EquipmentItem[];
+    simulatorTypes: Array<{ id: number; name: string; is_active: boolean }>;
 }>();
 
 const page = usePage<SharedProps>();
+const canUpdate = computed(() => page.props.auth.permissions.includes('scenario.update'));
 const canManage = computed(() =>
     page.props.auth.permissions.includes('scenario.create')
     && page.props.auth.permissions.includes('scenario.update'),
@@ -55,15 +58,34 @@ const scenarioForm = useForm({
 });
 
 const templateQuantities = reactive<Record<number, Record<number, number>>>({});
+const simulatorSuggestions = reactive<Record<number, number[]>>({});
+const savingSuggestions = reactive<Record<number, boolean>>({});
 
-for (const course of props.courses) {
-    for (const scenario of course.scenarios) {
-        templateQuantities[scenario.id] = {};
-
-        for (const item of scenario.recommended_resources) {
-            templateQuantities[scenario.id][item.id] = item.pivot.quantity;
+watch(() => props.courses, (courses) => {
+    for (const course of courses) {
+        for (const scenario of course.scenarios) {
+            if (!(scenario.id in simulatorSuggestions)) {
+                simulatorSuggestions[scenario.id] = scenario.recommended_simulator_types.map((item) => item.id);
+            }
+            if (!(scenario.id in templateQuantities)) {
+                templateQuantities[scenario.id] = {};
+                for (const item of scenario.recommended_resources) {
+                    templateQuantities[scenario.id][item.id] = item.pivot.quantity;
+                }
+            }
         }
     }
+}, { immediate: true });
+
+function saveSimulatorSuggestions(scenario: ScenarioItem): void {
+    if (savingSuggestions[scenario.id]) return;
+    router.put(`/app/scenarios/${scenario.id}/simulator-types`, {
+        simulator_type_ids: simulatorSuggestions[scenario.id] ?? [],
+    }, {
+        preserveScroll: true,
+        onStart: () => { savingSuggestions[scenario.id] = true; },
+        onFinish: () => { savingSuggestions[scenario.id] = false; },
+    });
 }
 
 function submitCourse(): void {
@@ -135,6 +157,8 @@ function statusLabel(status: EquipmentItem['status']): string {
             <h1>รายวิชาและสถานการณ์จำลอง</h1>
             <span>รายวิชาและชุดอุปกรณ์เป็นข้อมูลสำหรับจัดกลุ่มและแนะนำเท่านั้น ผู้ใช้ยังปรับรายการจริงได้ตอนส่งคำขอจอง</span>
         </header>
+        <p v-if="page.props.flash?.success" class="success" role="status">{{ page.props.flash.success }}</p>
+        <div v-if="Object.keys(page.props.errors).length" class="server-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
 
         <div v-if="canManage" class="form-grid">
             <section class="panel">
@@ -197,6 +221,18 @@ function statusLabel(status: EquipmentItem['status']): string {
                                 </div>
                             </div>
 
+                            <section class="template simulator-template">
+                                <div class="template-heading"><div><h3>ประเภทเครื่องจำลองที่แนะนำ</h3><p>ผู้จองเลือกเครื่องจริงเองได้ การแนะนำไม่บังคับการเลือก</p></div></div>
+                                <form v-if="canUpdate" class="suggestions-form" @submit.prevent="saveSimulatorSuggestions(scenario)">
+                                    <div v-if="simulatorTypes.length" class="simulator-options"><label v-for="item in simulatorTypes" :key="item.id"><input v-model="simulatorSuggestions[scenario.id]" type="checkbox" :value="item.id" :disabled="savingSuggestions[scenario.id]"><span>{{ item.name }}{{ item.is_active ? '' : ' (ปิดใช้งาน)' }}</span></label></div>
+                                    <p v-else class="template-empty">ยังไม่มีประเภทเครื่องจำลองในหน่วยงานนี้</p>
+                                    <p class="suggestions-help">นำเครื่องหมายออกทั้งหมดแล้วบันทึก เพื่อล้างรายการแนะนำ</p>
+                                    <button type="submit" class="save-template" :disabled="savingSuggestions[scenario.id]">{{ savingSuggestions[scenario.id] ? 'กำลังบันทึก...' : 'บันทึกประเภทแนะนำ' }}</button>
+                                </form>
+                                <div v-else-if="scenario.recommended_simulator_types.length" class="readonly-equipment"><span v-for="item in scenario.recommended_simulator_types" :key="item.id"><strong>{{ item.name }}</strong><small v-if="!item.is_active">ปิดใช้งาน</small></span></div>
+                                <p v-else class="template-empty">ยังไม่ได้กำหนดประเภทเครื่องจำลองที่แนะนำ</p>
+                            </section>
+
                             <div class="template">
                                 <div class="template-heading">
                                     <div>
@@ -252,5 +288,6 @@ function statusLabel(status: EquipmentItem['status']): string {
 </template>
 
 <style scoped>
+.success,.server-errors{margin:0 0 14px;border:1px solid #b9d8c4;border-radius:10px;padding:12px 16px;background:#edf7f0;color:#2f6f4e}.server-errors{border-color:#e5c1c1;background:#fff;color:#a43b3b}.server-errors p{margin:4px 0}.simulator-options{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}.simulator-options label{display:flex;align-items:center;gap:6px;color:#40566b;font-size:13px}.simulator-options input{width:16px;height:16px}.suggestions-help{color:#718096;font-size:12px;margin:10px 0}.suggestions-form button:disabled{opacity:.55;cursor:not-allowed}
 .heading{margin-bottom:20px}.heading p{margin:0;color:#315b7c;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.heading h1{margin:5px 0;color:#17324f;font-size:34px}.heading span{color:#718096;line-height:1.6}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}.panel{border:1px solid #dfe6ee;border-radius:16px;background:#fff;padding:20px}.panel h2{margin:0;color:#17324f}.stack{display:grid;gap:12px;margin-top:16px}.stack label{display:grid;gap:6px;color:#526578;font-size:12px;font-weight:800}.stack input,.stack select,.stack textarea{border:1px solid #cfd8e1;border-radius:9px;background:#fff;padding:10px;font:inherit}.stack .checkbox{display:flex;align-items:center;gap:8px}.stack .checkbox input{width:auto}.stack button,.status-actions button,.save-template{border:0;border-radius:9px;background:#17324f;color:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.stack button:disabled{opacity:.55;cursor:not-allowed}.error{margin:0;color:#a43b3b;font-size:12px}.course-list{display:grid;gap:14px}.course-card{border:1px solid #e3e9ef;border-radius:13px;padding:16px}.course-card>header{display:flex;align-items:center;justify-content:space-between;gap:16px}.course-card small{color:#718096}.course-card h2{margin:3px 0 0;font-size:18px}.course-card>header>span{border-radius:999px;background:#f3f6f8;color:#526578;padding:6px 10px;font-size:12px;font-weight:800}.scenario-list{display:grid;gap:12px;margin-top:14px;border-top:1px solid #edf1f4;padding-top:14px}.scenario-card{border:1px solid #e4eaf0;border-radius:12px;padding:15px}.scenario-summary{display:flex;align-items:center;justify-content:space-between;gap:20px}.scenario-summary>div>strong{color:#263849}.scenario-summary p{margin:4px 0 0;color:#718096;font-size:13px}.status-actions{display:flex;align-items:center;gap:10px;white-space:nowrap}.status-actions span{font-size:12px;font-weight:800}.status-actions .active{color:#2f6f4e}.status-actions .inactive{color:#8a6262}.status-actions button{padding:7px 10px;background:#fff;color:#17324f;border:1px solid #cfd8e1}.template{margin-top:14px;border-top:1px solid #edf1f4;padding-top:14px}.template-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}.template-heading h3{margin:0;color:#30475d;font-size:14px}.template-heading p{margin:3px 0 0;color:#7a8a99;font-size:12px}.save-template{padding:8px 11px;font-size:12px}.equipment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}.equipment-item{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #edf1f4;border-radius:10px;padding:10px}.equipment-item>span{display:grid;gap:2px}.equipment-item strong{color:#34495e;font-size:13px}.equipment-item small{color:#7a8a99;font-size:11px}.equipment-item input{width:78px;border:1px solid #cfd8e1;border-radius:8px;padding:8px;text-align:right}.readonly-equipment{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.readonly-equipment span{display:flex;gap:8px;border-radius:999px;background:#f3f6f8;padding:7px 10px;color:#40566b;font-size:12px}.readonly-equipment small{color:#718096}.template-empty,.empty{margin:0;padding:18px;color:#718096;text-align:center}@media(max-width:760px){.form-grid,.equipment-grid{grid-template-columns:1fr}.scenario-summary,.template-heading{align-items:flex-start;flex-direction:column}.course-card>header{align-items:flex-start}.save-template{width:100%}}
 </style>

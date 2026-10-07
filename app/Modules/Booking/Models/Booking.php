@@ -8,6 +8,7 @@ use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Scenario\Models\Course;
 use App\Modules\Scenario\Models\Scenario;
 use App\Modules\SimResource\Models\SimResource;
+use App\Modules\Simulator\Models\SimulatorAsset;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +24,7 @@ final class Booking extends Model
         'requested_by_user_id',
         'course_id',
         'scenario_id',
+        'simulator_asset_id',
         'requester_name',
         'requester_phone',
         'starts_at',
@@ -92,8 +94,13 @@ final class Booking extends Model
     }
 
     /**
-     * @return BelongsToMany<SimResource, $this>
+     * @return BelongsTo<SimulatorAsset, $this>
      */
+    public function simulatorAsset(): BelongsTo
+    {
+        return $this->belongsTo(SimulatorAsset::class);
+    }
+
     public function resources(): BelongsToMany
     {
         return $this->belongsToMany(
