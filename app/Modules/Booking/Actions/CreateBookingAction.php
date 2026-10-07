@@ -8,6 +8,7 @@ use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
 use App\Modules\Booking\Models\BookingCustomEquipmentRequest;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
+use App\Modules\Booking\Services\RoomBookingEligibility;
 use App\Modules\Scenario\Models\Scenario;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
@@ -21,6 +22,7 @@ final class CreateBookingAction
 {
     public function __construct(
         private readonly BookingAvailabilityResolver $availabilityResolver,
+        private readonly RoomBookingEligibility $roomEligibility,
         private readonly SimulatorAssetLocker $simulatorLocker,
     ) {}
 
@@ -104,6 +106,9 @@ final class CreateBookingAction
                     'resources' => 'คำขอจองต้องเลือกห้องปฏิบัติการ 1 ห้อง',
                 ]);
             }
+
+            $room = $resources->firstWhere('kind', SimResourceKind::Room);
+            $this->roomEligibility->assertEligible($room, $actor->college_id, isset($data['participant_count']) ? (int) $data['participant_count'] : null);
 
             foreach ($resources as $resource) {
                 if (

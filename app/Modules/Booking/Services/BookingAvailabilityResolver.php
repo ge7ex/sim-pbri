@@ -66,6 +66,19 @@ final class BookingAvailabilityResolver
             ->distinct()->pluck('simulator_asset_id')->map(static fn ($id): int => (int) $id)->all();
     }
 
+    /** @return list<int> */
+    public function unavailableResourceIds(array $ids, CarbonInterface $startsAt, CarbonInterface $endsAt): array
+    {
+        return $this->blockingBookings($startsAt, $endsAt)
+            ->join('booking_resource', 'bookings.id', '=', 'booking_resource.booking_id')
+            ->whereIn('booking_resource.sim_resource_id', $ids)
+            ->distinct()
+            ->orderBy('booking_resource.sim_resource_id')
+            ->pluck('booking_resource.sim_resource_id')
+            ->map(static fn ($id): int => (int) $id)
+            ->all();
+    }
+
     private function blockingBookings(CarbonInterface $startsAt, CarbonInterface $endsAt, ?int $ignoreBookingId = null): Builder
     {
         return DB::table('bookings')

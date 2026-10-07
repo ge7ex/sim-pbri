@@ -2,12 +2,21 @@
 
 namespace App\Modules\SimResource\Http\Controllers;
 
+use App\Core\Enums\AppPermission;
+use App\Core\Enums\UserRole;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Modules\Booking\Services\BookingAvailabilityResolver;
 use App\Modules\SimResource\Actions\CreateSimResourceAction;
 use App\Modules\SimResource\Actions\UpdateSimResourceAction;
+use App\Modules\SimResource\Enums\SimResourceKind;
+use App\Modules\SimResource\Enums\SimResourceStatus;
+use App\Modules\SimResource\Http\Requests\SimulatorRoomAvailabilityRequest;
 use App\Modules\SimResource\Http\Requests\StoreSimResourceRequest;
 use App\Modules\SimResource\Http\Requests\UpdateSimResourceRequest;
 use App\Modules\SimResource\Models\SimResource;
+use Carbon\CarbonImmutable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,15 +26,32 @@ final class SimResourceController extends Controller
 {
     public function index(Request $request): Response
     {
+        $actor = $request->user();
         $resources = SimResource::query()
-            ->where('college_id', $request->user()->college_id)
+            ->where('college_id', $actor->college_id)
+            ->with(['responsibleStaff' => fn ($query) => $query->where('college_id', $actor->college_id)->select('id', 'name')])
             ->orderBy('kind')
             ->orderBy('name')
             ->get();
 
         return Inertia::render('Modules/SimResource/Pages/Index', [
             'resources' => $resources,
+            'responsibleStaff' => $actor->canAccess(AppPermission::ResourceUpdate)
+                ? User::query()->where('college_id', $actor->college_id)->where('role', UserRole::Staff->value)->orderBy('name')->get(['id', 'name'])
+                : [],
         ]);
+    }
+
+    public function roomAvailability(SimulatorRoomAvailabilityRequest $request, BookingAvailabilityResolver $resolver): JsonResponse
+    {
+        $collegeId = $request->user()->college_id;
+        $ids = SimResource::query()->where('college_id', $collegeId)
+            ->where('kind', SimResourceKind::Room)->where('status', SimResourceStatus::Ready)
+            ->where('quantity_total', 1)->where('is_exclusive', true)->whereNotNull('capacity')
+            ->orderBy('id')->pluck('id')->all();
+        $blocked = $resolver->unavailableResourceIds($ids, CarbonImmutable::parse($request->validated('starts_at')), CarbonImmutable::parse($request->validated('ends_at')));
+
+        return response()->json(['rooms' => array_map(static fn ($id) => ['id' => $id, 'available' => ! in_array($id, $blocked, true)], $ids)]);
     }
 
     public function store(
@@ -50,6 +76,7 @@ final class SimResourceController extends Controller
         $action->execute(
             resource: $simResource,
             data: $request->validated(),
+            actor: $request->user(),
         );
 
         return back()->with('success', 'ปรับปรุงทรัพยากรเรียบร้อยแล้ว');

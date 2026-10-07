@@ -3,6 +3,7 @@
 namespace App\Modules\SimResource\Models;
 
 use App\Models\College;
+use App\Models\User;
 use App\Modules\Booking\Models\Booking;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
@@ -24,6 +25,10 @@ final class SimResource extends Model
         'is_exclusive',
         'location',
         'description',
+        'building',
+        'floor',
+        'capacity',
+        'responsible_staff_user_id',
     ];
 
     /**
@@ -32,6 +37,12 @@ final class SimResource extends Model
     public function college(): BelongsTo
     {
         return $this->belongsTo(College::class);
+    }
+
+    /** @return BelongsTo<User, $this> */
+    public function responsibleStaff(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'responsible_staff_user_id');
     }
 
     /**
@@ -55,6 +66,8 @@ final class SimResource extends Model
             'status' => SimResourceStatus::class,
             'quantity_total' => 'integer',
             'is_exclusive' => 'boolean',
+            'capacity' => 'integer',
+            'responsible_staff_user_id' => 'integer',
         ];
     }
 }

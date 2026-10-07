@@ -53,12 +53,15 @@ final class BookingStateTransitionTest extends TestCase
             'status' => SimResourceStatus::Ready,
             'quantity_total' => 1,
             'is_exclusive' => true,
+            'capacity' => 20,
         ]);
 
         $other = Booking::query()->create([
             'college_id' => $requester->college_id,
             'requested_by_user_id' => $requester->id,
             'requester_name' => $requester->name,
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => $booking->starts_at,
             'ends_at' => $booking->ends_at,
             'status' => BookingStatus::Pending,
@@ -76,6 +79,36 @@ final class BookingStateTransitionTest extends TestCase
             ->assertSessionHasErrors('resources');
 
         $this->assertSame(BookingStatus::Pending, $booking->refresh()->status);
+    }
+
+    public function test_approval_is_blocked_when_room_capacity_drops_below_the_requested_participant_count(): void
+    {
+        [$booking, $staff, , $room] = $this->pendingBooking();
+        $room->update(['capacity' => 5]);
+
+        $this->actingAs($staff)->from('/app/review')
+            ->post("/app/bookings/{$booking->id}/approve")
+            ->assertSessionHasErrors('participant_count');
+
+        $this->assertSame(BookingStatus::Pending, $booking->refresh()->status);
+    }
+
+    public function test_recall_is_blocked_when_room_is_no_longer_ready_or_large_enough(): void
+    {
+        [$booking, $staff, , $room] = $this->pendingBooking();
+        $booking->update(['status' => BookingStatus::Rejected]);
+        $room->update(['status' => SimResourceStatus::Maintenance]);
+
+        $this->actingAs($staff)->from('/app/review')->post("/app/bookings/{$booking->id}/recall", [
+            'confirmed' => true, 'reason' => 'ตรวจสอบห้อง',
+        ])->assertSessionHasErrors('resources');
+        $this->assertSame(BookingStatus::Rejected, $booking->refresh()->status);
+
+        $room->update(['status' => SimResourceStatus::Ready, 'capacity' => 5]);
+        $this->actingAs($staff)->from('/app/review')->post("/app/bookings/{$booking->id}/recall", [
+            'confirmed' => true, 'reason' => 'ตรวจสอบความจุ',
+        ])->assertSessionHasErrors('participant_count');
+        $this->assertSame(BookingStatus::Rejected, $booking->refresh()->status);
     }
 
     public function test_rejection_requires_reason_and_is_audited(): void
@@ -138,6 +171,8 @@ final class BookingStateTransitionTest extends TestCase
             'college_id' => $requester->college_id,
             'requested_by_user_id' => $requester->id,
             'requester_name' => $requester->name,
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => $booking->starts_at,
             'ends_at' => $booking->ends_at,
             'status' => BookingStatus::Pending,
@@ -205,12 +240,15 @@ final class BookingStateTransitionTest extends TestCase
             'status' => SimResourceStatus::Ready,
             'quantity_total' => $quantityTotal,
             'is_exclusive' => $isExclusive,
+            'capacity' => $resourceKind === SimResourceKind::Room ? 20 : null,
         ]);
 
         $booking = Booking::query()->create([
             'college_id' => $college->id,
             'requested_by_user_id' => $requester->id,
             'requester_name' => $requester->name,
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-08 09:00:00',
             'ends_at' => '2026-10-08 11:00:00',
             'status' => BookingStatus::Pending,

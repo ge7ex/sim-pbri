@@ -12,6 +12,10 @@ Route::middleware(['auth', 'access-profile'])
             ->middleware('permission:'.AppPermission::ResourceView->value)
             ->name('index');
 
+        Route::get('/availability', [SimResourceController::class, 'roomAvailability'])
+            ->middleware('permission:'.AppPermission::BookingCreate->value)
+            ->name('availability');
+
         Route::post('/', [SimResourceController::class, 'store'])
             ->middleware('permission:'.AppPermission::ResourceCreate->value)
             ->name('store');

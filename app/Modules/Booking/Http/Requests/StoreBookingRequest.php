@@ -63,8 +63,8 @@ final class StoreBookingRequest extends FormRequest
             'custom_equipment.*.note' => ['nullable', 'string', 'max:2000'],
             'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
-            'participant_count' => ['nullable', 'integer', 'min:1', 'max:10000'],
-            'requester_phone' => ['nullable', 'string', 'max:32'],
+            'participant_count' => ['required', 'integer', 'min:1', 'max:10000'],
+            'requester_phone' => ['required', 'string', 'min:7', 'max:32', 'regex:/\A(?=(?:.*[0-9๐-๙]){7})[+()0-9๐-๙.\-\s]+\z/u'],
             'note' => ['nullable', 'string', 'max:2000'],
         ];
     }

@@ -42,7 +42,7 @@ final class BookingController extends Controller
 
         $resources = SimResource::query()
             ->where('college_id', $user->college_id)
-            ->where('status', SimResourceStatus::Ready)
+            ->where(fn ($query) => $query->where('kind', SimResourceKind::Room)->orWhere('status', SimResourceStatus::Ready))
             ->orderBy('kind')
             ->orderBy('name')
             ->get([
@@ -54,6 +54,9 @@ final class BookingController extends Controller
                 'is_exclusive',
                 'location',
                 'description',
+                'building',
+                'floor',
+                'capacity',
             ]);
 
         return Inertia::render('Modules/Booking/Pages/Create', [

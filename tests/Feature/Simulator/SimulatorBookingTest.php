@@ -313,7 +313,7 @@ final class SimulatorBookingTest extends TestCase
     {
         return SimResource::query()->create([
             'college_id' => $collegeId, 'name' => $name, 'kind' => SimResourceKind::Room,
-            'status' => SimResourceStatus::Ready, 'quantity_total' => 1, 'is_exclusive' => true,
+            'status' => SimResourceStatus::Ready, 'quantity_total' => 1, 'is_exclusive' => true, 'capacity' => 40,
         ]);
     }
 
@@ -328,6 +328,7 @@ final class SimulatorBookingTest extends TestCase
             'resources' => [['id' => $room->id, 'quantity' => 1]],
             'simulator_asset_id' => $asset?->id,
             'starts_at' => '2026-10-12 09:00:00', 'ends_at' => '2026-10-12 11:00:00',
+            'participant_count' => 10, 'requester_phone' => '0812345678',
         ];
     }
 
@@ -337,6 +338,7 @@ final class SimulatorBookingTest extends TestCase
             'college_id' => $user->college_id, 'requested_by_user_id' => $user->id,
             'requester_name' => $user->name, 'simulator_asset_id' => $asset->id,
             'starts_at' => '2026-10-12 09:00:00', 'ends_at' => '2026-10-12 11:00:00', 'status' => $status,
+            'participant_count' => 10, 'requester_phone' => '0812345678',
         ]);
         $booking->resources()->attach($room->id, ['quantity' => 1]);
 

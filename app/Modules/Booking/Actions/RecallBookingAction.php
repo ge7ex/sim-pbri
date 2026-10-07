@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
+use App\Modules\Booking\Services\RoomBookingEligibility;
+use App\Modules\SimResource\Enums\SimResourceKind;
+use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\Simulator\Services\SimulatorAssetLocker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -14,6 +17,7 @@ final class RecallBookingAction
 {
     public function __construct(
         private readonly BookingAvailabilityResolver $availabilityResolver,
+        private readonly RoomBookingEligibility $roomEligibility,
         private readonly SimulatorAssetLocker $simulatorLocker,
     ) {}
 
@@ -48,6 +52,16 @@ final class RecallBookingAction
                 ->orderBy('sim_resources.id')
                 ->lockForUpdate()
                 ->get();
+
+            if ($resources->contains(fn ($resource): bool => $resource->status !== SimResourceStatus::Ready)) {
+                throw ValidationException::withMessages(['resources' => 'มีทรัพยากรในคำขอที่ไม่พร้อมใช้งาน']);
+            }
+
+            $room = $resources->firstWhere('kind', SimResourceKind::Room);
+            if (! $room) {
+                throw ValidationException::withMessages(['resources' => 'ไม่พบห้องสำหรับคำขอนี้']);
+            }
+            $this->roomEligibility->assertEligible($room, $locked->college_id, $locked->participant_count);
 
             $quantities = $resources
                 ->mapWithKeys(

@@ -38,6 +38,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
                 ['id' => $recommended->id, 'quantity' => 3, 'is_auto_recommended' => false],
                 ['id' => $manual->id, 'quantity' => 1, 'is_auto_recommended' => true],
             ],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
             'custom_equipment' => [[
@@ -84,6 +86,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
             'resources' => [
                 ['id' => $room->id, 'quantity' => 1, 'is_auto_recommended' => true],
             ],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
         ])->assertRedirect(route('bookings.index'));
@@ -107,6 +111,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
         $inactive = $this->scenario($ownCourse, 'สถานการณ์ปิดใช้งาน', false);
         $payload = [
             'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
         ];
@@ -134,6 +140,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
         [$user, $room] = $this->bookingContext();
         $payload = [
             'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
         ];
@@ -196,6 +204,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
             'course_id' => $course->id,
             'scenario_id' => $scenario->id,
             'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
             'custom_equipment' => [[
@@ -228,6 +238,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
             'course_id' => $course->id,
             'scenario_id' => $scenario->id,
             'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
         ])->assertRedirect();
@@ -256,6 +268,8 @@ final class ScenarioBookingWorkflowTest extends TestCase
             'course_id' => $otherCourse->id,
             'scenario_id' => $otherScenario->id,
             'requester_name' => $user->name,
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-12 09:00:00',
             'ends_at' => '2026-10-12 11:00:00',
             'status' => BookingStatus::Pending,
@@ -301,6 +315,7 @@ final class ScenarioBookingWorkflowTest extends TestCase
             'status' => SimResourceStatus::Ready,
             'quantity_total' => 1,
             'is_exclusive' => true,
+            'capacity' => 40,
         ]);
 
         return [$user, $room, $college];

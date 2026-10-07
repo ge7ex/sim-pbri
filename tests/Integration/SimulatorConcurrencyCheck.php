@@ -72,6 +72,7 @@ try {
                     'resources' => [['id' => (int) $roomId, 'quantity' => 1]],
                     'simulator_asset_id' => (int) $assetId,
                     'starts_at' => '2030-01-10 09:00:00', 'ends_at' => '2030-01-10 11:00:00',
+                    'participant_count' => 1, 'requester_phone' => '0812345678',
                 ], $actor);
             } elseif ($flow === 'recall') {
                 $app->make(RecallBookingAction::class)->execute(Booking::findOrFail((int) $bookingId), $actor, 'Concurrency regression');
@@ -97,10 +98,10 @@ try {
         $asset = SimulatorAsset::create(['college_id' => $college->id, 'simulator_type_id' => $type->id, 'asset_name' => 'Concurrency asset']);
         $rooms = [];
         foreach (['A', 'B'] as $name) {
-            $rooms[] = SimResource::create(['college_id' => $college->id, 'name' => $name, 'kind' => 'room', 'status' => 'ready', 'quantity_total' => 1, 'is_exclusive' => true]);
+            $rooms[] = SimResource::create(['college_id' => $college->id, 'name' => $name, 'kind' => 'room', 'status' => 'ready', 'quantity_total' => 1, 'is_exclusive' => true, 'capacity' => 1]);
         }
         $base = ['college_id' => $college->id, 'requested_by_user_id' => $lecturer->id, 'requester_name' => $lecturer->name,
-            'simulator_asset_id' => $asset->id, 'starts_at' => '2030-01-10 09:00:00', 'ends_at' => '2030-01-10 11:00:00'];
+            'simulator_asset_id' => $asset->id, 'starts_at' => '2030-01-10 09:00:00', 'ends_at' => '2030-01-10 11:00:00', 'participant_count' => 1, 'requester_phone' => '0812345678'];
         $recalled = null;
         if ($flow === 'recall') {
             $recalled = Booking::create([...$base, 'status' => 'rejected']);

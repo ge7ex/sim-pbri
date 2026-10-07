@@ -57,6 +57,8 @@ final class CreateBookingTest extends TestCase
             'resources' => [
                 ['id' => $room->id, 'quantity' => 1],
             ],
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => '2026-10-07 09:00:00',
             'ends_at' => '2026-10-07 11:00:00',
         ])->assertRedirect(route('bookings.index'));
@@ -86,12 +88,84 @@ final class CreateBookingTest extends TestCase
                 'resources' => [
                     ['id' => $equipment->id, 'quantity' => 1],
                 ],
+                'participant_count' => 10,
+                'requester_phone' => '0812345678',
                 'starts_at' => '2026-10-07 09:00:00',
                 'ends_at' => '2026-10-07 11:00:00',
             ])
             ->assertSessionHasErrors('resources');
 
         $this->assertDatabaseCount('bookings', 0);
+    }
+
+    public function test_booking_requires_participant_count_and_phone_and_enforces_room_capacity(): void
+    {
+        [$user, $room] = $this->bookingContext();
+        $base = [
+            'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'starts_at' => '2026-10-07 09:00:00',
+            'ends_at' => '2026-10-07 11:00:00',
+        ];
+
+        $this->actingAs($user)->from('/app/bookings/create')->post('/app/bookings', [
+            ...$base, 'participant_count' => 10,
+        ])->assertSessionHasErrors('requester_phone');
+
+        $this->actingAs($user)->from('/app/bookings/create')->post('/app/bookings', [
+            ...$base, 'requester_phone' => '0812345678',
+        ])->assertSessionHasErrors('participant_count');
+
+        $this->actingAs($user)->from('/app/bookings/create')->post('/app/bookings', [
+            ...$base, 'participant_count' => 10, 'requester_phone' => '-------',
+        ])->assertSessionHasErrors('requester_phone');
+
+        $this->actingAs($user)->from('/app/bookings/create')->post('/app/bookings', [
+            ...$base, 'participant_count' => 41, 'requester_phone' => '0812345678',
+        ])->assertSessionHasErrors('participant_count');
+
+        $this->assertDatabaseCount('bookings', 0);
+    }
+
+    public function test_legacy_room_without_capacity_is_readable_but_cannot_be_booked(): void
+    {
+        [$user, $room] = $this->bookingContext();
+        $room->update(['capacity' => null]);
+
+        $this->actingAs($user)->from('/app/bookings/create')->post('/app/bookings', [
+            'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'starts_at' => '2026-10-07 09:00:00',
+            'ends_at' => '2026-10-07 11:00:00',
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
+        ])->assertSessionHasErrors('resources');
+
+        $this->assertDatabaseCount('bookings', 0);
+    }
+
+    public function test_formatted_thai_phone_is_accepted_and_preserved(): void
+    {
+        [$user, $room] = $this->bookingContext();
+        $phone = '+66 (81) 234-5678';
+
+        $this->actingAs($user)->post('/app/bookings', [
+            'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'starts_at' => '2026-10-07 09:00:00', 'ends_at' => '2026-10-07 11:00:00',
+            'participant_count' => 12, 'requester_phone' => $phone,
+        ])->assertRedirect(route('bookings.index'));
+
+        $this->assertSame($phone, Booking::query()->sole()->requester_phone);
+    }
+
+    public function test_room_availability_only_returns_eligible_own_college_ids_and_boolean_status(): void
+    {
+        [$user, $room] = $this->bookingContext();
+        $other = $this->createResource(College::factory()->create(), 'ห้องต่างหน่วยงาน');
+        $this->createViaHttp($user, $room, '09:00', '11:00');
+
+        $this->actingAs($user)->get('/app/resources/availability?starts_at=2026-10-07T10:00:00Z&ends_at=2026-10-07T12:00:00Z')
+            ->assertOk()
+            ->assertExactJson(['rooms' => [['id' => $room->id, 'available' => false]]])
+            ->assertJsonMissing(['id' => $other->id]);
     }
 
     public function test_non_ready_resource_cannot_be_booked(): void
@@ -104,6 +178,8 @@ final class CreateBookingTest extends TestCase
                 'resources' => [
                     ['id' => $room->id, 'quantity' => 1],
                 ],
+                'participant_count' => 10,
+                'requester_phone' => '0812345678',
                 'starts_at' => '2026-10-07 09:00:00',
                 'ends_at' => '2026-10-07 11:00:00',
             ])
@@ -128,6 +204,8 @@ final class CreateBookingTest extends TestCase
                 'resources' => [
                     ['id' => $room->id, 'quantity' => 1],
                 ],
+                'participant_count' => 10,
+                'requester_phone' => '0812345678',
                 'starts_at' => '2026-10-07 09:00:00',
                 'ends_at' => '2026-10-07 11:00:00',
             ])
@@ -148,6 +226,8 @@ final class CreateBookingTest extends TestCase
                 'resources' => [
                     ['id' => $room->id, 'quantity' => 1],
                 ],
+                'participant_count' => 10,
+                'requester_phone' => '0812345678',
                 'starts_at' => '2026-10-07 10:00:00',
                 'ends_at' => '2026-10-07 12:00:00',
             ])
@@ -207,6 +287,8 @@ final class CreateBookingTest extends TestCase
                     ['id' => $secondRoom->id, 'quantity' => 1],
                     ['id' => $equipment->id, 'quantity' => 2],
                 ],
+                'participant_count' => 10,
+                'requester_phone' => '0812345678',
                 'starts_at' => '2026-10-07 10:00:00',
                 'ends_at' => '2026-10-07 12:00:00',
             ])
@@ -264,6 +346,7 @@ final class CreateBookingTest extends TestCase
             'status' => $status,
             'quantity_total' => $quantityTotal,
             'is_exclusive' => $isExclusive,
+            'capacity' => $kind === SimResourceKind::Room ? 40 : null,
         ]);
     }
 
@@ -289,6 +372,8 @@ final class CreateBookingTest extends TestCase
 
         return $this->actingAs($user)->post('/app/bookings', [
             'resources' => $resources,
+            'participant_count' => 10,
+            'requester_phone' => '0812345678',
             'starts_at' => "2026-10-07 {$startTime}:00",
             'ends_at' => "2026-10-07 {$endTime}:00",
         ]);
