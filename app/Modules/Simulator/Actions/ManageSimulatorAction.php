@@ -36,14 +36,17 @@ final class ManageSimulatorAction
         abort_unless($asset ? $actor->can('update', $asset) : $actor->can('create', SimulatorAsset::class), 403);
 
         return DB::transaction(function () use ($data, $actor, $asset) {
+            // Existing assets are the mutex shared with booking writers.
+            // No plain reads may precede the lock in a booking transaction.
+            $record = $asset ? SimulatorAsset::whereKey($asset->id)->lockForUpdate()->firstOrFail() : new SimulatorAsset;
+            abort_if($record->exists && $record->college_id !== $actor->college_id, 403);
+
             $type = SimulatorType::whereKey($data['simulator_type_id'])
                 ->where('college_id', $actor->college_id)->lockForUpdate()->first();
             if (! $type) {
                 throw ValidationException::withMessages(['simulator_type_id' => 'ประเภทไม่อยู่ในหน่วยงานของคุณ']);
             }
 
-            $record = $asset ? SimulatorAsset::whereKey($asset->id)->lockForUpdate()->firstOrFail() : new SimulatorAsset;
-            abort_if($record->exists && $record->college_id !== $actor->college_id, 403);
             $fields = ['simulator_type_id', 'asset_name', 'asset_code', 'purchase_year', 'purchase_price', 'useful_life_years', 'status', 'location', 'description'];
             $before = $record->exists ? $record->only($fields) : null;
             $record->fill([

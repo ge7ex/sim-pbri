@@ -53,6 +53,10 @@ final class ApproveBookingAction
                 )
                 ->all();
 
+            if ($locked->simulator_asset_id !== null) {
+                $simulator = $this->simulatorLocker->eligible($locked->simulator_asset_id, $locked->college_id);
+            }
+
             $this->availabilityResolver->ensureAvailable(
                 resources: $resources,
                 requestedQuantities: $quantities,
@@ -62,7 +66,6 @@ final class ApproveBookingAction
             );
 
             if ($locked->simulator_asset_id !== null) {
-                $simulator = $this->simulatorLocker->eligible($locked->simulator_asset_id, $locked->college_id);
                 $this->availabilityResolver->ensureSimulatorAvailable($simulator, $locked->starts_at, $locked->ends_at, $locked->id);
             }
 

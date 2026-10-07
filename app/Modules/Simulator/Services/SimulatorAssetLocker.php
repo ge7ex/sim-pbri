@@ -9,18 +9,19 @@ use Illuminate\Validation\ValidationException;
 
 final class SimulatorAssetLocker
 {
-    /** Called within the booking transaction after resource locks.
-     * Lock Type before Asset, matching the asset-management write order.
+    /** Called within the booking transaction after resource locks, before any
+     * nonlocking availability read. Asset then Type is also the management order.
+     * Under REPEATABLE READ, an earlier plain read would retain a stale snapshot
+     * even after waiting for these locks. Do not introduce a preliminary lookup.
      */
     public function eligible(int $assetId, int $collegeId): SimulatorAsset
     {
-        $snapshot = SimulatorAsset::whereKey($assetId)->where('college_id', $collegeId)->first();
-        if (! $snapshot) {
+        $asset = SimulatorAsset::whereKey($assetId)->where('college_id', $collegeId)->lockForUpdate()->first();
+        if (! $asset) {
             $this->unavailable();
         }
-        $type = SimulatorType::whereKey($snapshot->simulator_type_id)
+        $type = SimulatorType::whereKey($asset->simulator_type_id)
             ->where('college_id', $collegeId)->lockForUpdate()->first();
-        $asset = SimulatorAsset::whereKey($assetId)->where('college_id', $collegeId)->lockForUpdate()->first();
         if (! $type || ! $asset || ! $type->is_active
             || $asset->simulator_type_id !== $type->id || $asset->status !== SimulatorAssetStatus::Active) {
             $this->unavailable();

@@ -131,6 +131,10 @@ final class CreateBookingAction
                 }
             }
 
+            if (! empty($data['simulator_asset_id'])) {
+                $simulator = $this->simulatorLocker->eligible((int) $data['simulator_asset_id'], $actor->college_id);
+            }
+
             $this->availabilityResolver->ensureAvailable(
                 resources: $resources,
                 requestedQuantities: $quantities,
@@ -139,7 +143,6 @@ final class CreateBookingAction
             );
 
             if (! empty($data['simulator_asset_id'])) {
-                $simulator = $this->simulatorLocker->eligible((int) $data['simulator_asset_id'], $actor->college_id);
                 $this->availabilityResolver->ensureSimulatorAvailable($simulator, $startsAt, $endsAt);
             }
 
