@@ -2,6 +2,7 @@
 import { computed, reactive } from 'vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 
 interface CalendarEvent {
@@ -61,8 +62,8 @@ function applyFilters(): void {
             <section v-for="group in eventDays" :key="group.day" class="schedule-day"><h2>{{ group.day }}</h2>
             <article v-for="(event, index) in group.events" :key="event.id ?? `private-${index}`" class="event">
                 <div class="time">
-                    <strong>{{ new Date(event.starts_at).toLocaleString('th-TH') }}</strong>
-                    <span>ถึง {{ new Date(event.ends_at).toLocaleString('th-TH') }}</span>
+                    <strong>{{ formatBookingDateTime(event.starts_at) }}</strong>
+                    <span>ถึง {{ formatBookingDateTime(event.ends_at) }}</span>
                 </div>
                 <div class="detail">
                     <strong>{{ event.title }}</strong>

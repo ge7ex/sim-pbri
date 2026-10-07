@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 
 interface BookingRow {
@@ -97,8 +98,8 @@ function applyFilters(): void {
                             <td>{{ booking.requester_name }}</td>
                             <td>{{ booking.resources.map((item) => item.name).join(', ') || '-' }}</td>
                             <td>
-                                <time>{{ new Date(booking.starts_at).toLocaleString('th-TH') }}</time>
-                                <span>ถึง {{ new Date(booking.ends_at).toLocaleString('th-TH') }}</span>
+                                <time>{{ formatBookingDateTime(booking.starts_at) }}</time>
+                                <span>ถึง {{ formatBookingDateTime(booking.ends_at) }}</span>
                             </td>
                             <td><BookingStatusBadge :status="booking.status" /></td>
                             <td><Link :href="`/app/bookings/${booking.id}`">ดูรายละเอียด</Link></td>

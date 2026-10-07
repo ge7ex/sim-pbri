@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 
 interface BookingDetail {
@@ -94,8 +95,8 @@ function recallBooking(): void {
         <section class="panel detail-grid">
             <div><span>ชื่อผู้จอง</span><strong>{{ booking.requester_name }}</strong></div>
             <div><span>เบอร์ติดต่อ</span><strong>{{ booking.requester_phone ?? '-' }}</strong></div>
-            <div><span>เริ่มใช้งาน</span><strong>{{ new Date(booking.starts_at).toLocaleString('th-TH') }}</strong></div>
-            <div><span>สิ้นสุด</span><strong>{{ new Date(booking.ends_at).toLocaleString('th-TH') }}</strong></div>
+            <div><span>เริ่มใช้งาน</span><strong>{{ formatBookingDateTime(booking.starts_at) }}</strong></div>
+            <div><span>สิ้นสุด</span><strong>{{ formatBookingDateTime(booking.ends_at) }}</strong></div>
             <div><span>จำนวนผู้เข้าใช้งาน</span><strong>{{ booking.participant_count ?? '-' }}</strong></div>
             <div><span>รายวิชา</span><strong>{{ booking.course?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
             <div><span>สถานการณ์จำลอง</span><strong>{{ booking.scenario?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
@@ -118,7 +119,7 @@ function recallBooking(): void {
             <h2>ประวัติการเติมจำนวนผู้เข้าใช้งาน</h2>
             <ul class="timeline"><li v-for="amendment in booking.participant_amendments" :key="amendment.id">
                 <strong>ยังไม่ระบุ → {{ amendment.participant_count }} คน</strong>
-                <p>{{ amendment.actor.name }} · {{ new Date(amendment.created_at).toLocaleString('th-TH') }}</p>
+                <p>{{ amendment.actor.name }} · {{ formatBookingDateTime(amendment.created_at, true) }}</p>
                 <p>{{ amendment.reason }}</p>
             </li></ul>
         </section>
@@ -161,7 +162,7 @@ function recallBooking(): void {
                 <li v-for="transition in booking.status_transitions" :key="transition.id">
                     <div>
                         <strong>{{ transition.from_status ?? 'เริ่มต้น' }} → {{ transition.to_status }}</strong>
-                        <span>{{ transition.actor.name }} · {{ new Date(transition.created_at).toLocaleString('th-TH') }}</span>
+                        <span>{{ transition.actor.name }} · {{ formatBookingDateTime(transition.created_at, true) }}</span>
                     </div>
                     <p v-if="transition.reason">{{ transition.reason }}</p>
                 </li>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import AppLayout from '../Layouts/AppLayout.vue';
+import { formatBookingDateTime } from '../Support/dateTime';
 import PageHeader from '../Components/PageHeader.vue';
 import MetricCard from '../Components/MetricCard.vue';
 import BookingStatusBadge from '../Modules/Booking/Components/BookingStatusBadge.vue';
@@ -9,7 +10,7 @@ interface RecentBooking { id: number; requester_name: string; rooms: string[]; s
 const props = defineProps<{ dashboard: { scope_label: string; summary: { total: number; pending: number; approved: number; rejected: number }; recent_bookings: RecentBooking[] } }>();
 const page = usePage<{ auth: { user: any; permissions: string[] } }>();
 const metrics = [ { key: 'total', label: 'คำขอทั้งหมด', helper: 'รวมทุกสถานะ' }, { key: 'pending', label: 'รอตรวจสอบ', helper: 'รอเจ้าหน้าที่พิจารณา' }, { key: 'approved', label: 'อนุมัติแล้ว', helper: 'ได้รับอนุมัติให้ใช้งาน' }, { key: 'rejected', label: 'ไม่อนุมัติ', helper: 'ดูเหตุผลในรายละเอียดคำขอ' } ] as const;
-function dateLabel(value: string): string { return new Date(value).toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short' }); }
+const dateLabel = formatBookingDateTime;
 </script>
 <template>
     <Head title="ภาพรวมระบบ" />

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { computed, reactive, ref, watch } from 'vue';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import Time24Field from '../../../Components/Time24Field.vue';
 
 interface ResourceItem {
     id: number;
@@ -61,7 +62,8 @@ const simulatorAvailabilityError = ref('');
 const filteredSimulatorAssets = computed(() => props.simulatorAssets.filter((asset) => asset.simulator_type_id === selectedSimulatorTypeId.value));
 const recommendedSimulatorTypeIds = computed(() => new Set(selectedScenario.value?.recommended_simulator_types.map((item) => item.id) ?? []));
 
-const rooms = computed(() => props.resources.filter((item) => item.kind === 'room'));
+const rooms = computed(() => props.resources.filter((item) => item.kind === 'room')
+    .sort((a, b) => Number(b.status === 'ready' && b.capacity !== null) - Number(a.status === 'ready' && a.capacity !== null)));
 const selectedRoom = computed(() => rooms.value.find((item) => item.id === selectedRoomId.value) ?? null);
 const equipment = computed(() => props.resources.filter((item) => item.kind === 'equipment'));
 const selectedScenario = computed(() => props.scenarios.find((item) => item.id === form.scenario_id) ?? null);
@@ -89,6 +91,53 @@ const form = useForm({
     requester_phone: '',
     note: '',
 });
+
+const dates = reactive({ startDate: '', startTime: '', endDate: '', endTime: '' });
+const activeRoomIndex = ref(0);
+const roomPickerOpen = ref(true);
+const visibleRoom = computed(() => rooms.value[activeRoomIndex.value] ?? rooms.value[0] ?? null);
+const additionalEquipmentId = ref<number | null>(null);
+const additionalEquipmentQuantity = ref(1);
+const selectedAdditionalEquipment = computed(() => additionalEquipment.value.filter(item => (equipmentQuantities.value[item.id] ?? 0) > 0));
+const dateTimeValid = computed(() => !!form.starts_at && !!form.ends_at && new Date(form.ends_at) > new Date(form.starts_at));
+const canSubmit = computed(() => !form.processing && dateTimeValid.value && selectedRoomId.value !== null
+    && roomAvailability.value[selectedRoomId.value] === true && !!selectedRoom.value?.capacity
+    && Number.isInteger(form.participant_count) && form.participant_count! > 0
+    && form.participant_count! <= selectedRoom.value.capacity && form.requester_phone.trim().length >= 7
+    && !(form.simulator_asset_id !== null && simulatorAvailability.value[form.simulator_asset_id] === false));
+watch(() => [dates.startDate, dates.startTime, dates.endDate, dates.endTime], () => {
+    form.starts_at = dates.startDate && dates.startTime ? `${dates.startDate}T${dates.startTime}:00` : '';
+    form.ends_at = dates.endDate && dates.endTime ? `${dates.endDate}T${dates.endTime}:00` : '';
+});
+function roomSelectable(room: ResourceItem): boolean { return room.status === 'ready' && room.capacity !== null; }
+function chooseRoom(room: ResourceItem): void {
+    if (!roomSelectable(room)) return;
+    selectedRoomId.value = room.id;
+    roomPickerOpen.value = false;
+}
+function changeRoom(): void { roomPickerOpen.value = true; }
+function nextRoom(direction: number): void { activeRoomIndex.value = (activeRoomIndex.value + direction + rooms.value.length) % rooms.value.length; }
+function roomStatusLabel(room: ResourceItem): string {
+    if (room.status !== 'ready') return room.status === 'maintenance' ? 'ปิดปรับปรุง' : 'รอตรวจสอบ';
+    if (room.capacity === null) return 'ยังไม่กำหนดความจุ';
+    return 'พร้อมใช้งาน';
+}
+function availabilityLabel(room: ResourceItem): string {
+    if (!roomSelectable(room)) return 'ยังไม่พร้อมให้จอง';
+    if (checkingRoomAvailability.value) return 'กำลังตรวจสอบเวลาว่าง';
+    if (roomAvailabilityError.value) return 'ยังตรวจสอบเวลาว่างไม่ได้';
+    if (!dateTimeValid.value) return 'เลือกห้อง แล้วระบุวันเวลาเพื่อตรวจสอบเวลาว่าง';
+    return roomAvailability.value[room.id] === true ? 'ว่างในช่วงเวลาที่เลือก' : 'ไม่ว่างในช่วงเวลาที่เลือก';
+}
+function addEquipment(): void {
+    const item = additionalEquipment.value.find(item => item.id === additionalEquipmentId.value);
+    const amount = additionalEquipmentQuantity.value;
+    if (!item || !Number.isInteger(amount) || amount < 1) return;
+    equipmentQuantities.value[item.id] = Math.min((equipmentQuantities.value[item.id] ?? 0) + amount, item.is_exclusive ? 1 : item.quantity_total);
+    additionalEquipmentId.value = null;
+    additionalEquipmentQuantity.value = 1;
+}
+function removeEquipment(id: number): void { delete equipmentQuantities.value[id]; }
 
 watch(selectedSimulatorTypeId, () => { form.simulator_asset_id = null; });
 watch(() => [form.starts_at, form.ends_at], async ([startsAt, endsAt], _old, onCleanup) => {
@@ -202,132 +251,87 @@ function addCustomEquipment(): void {
 </script>
 
 <template>
-    <Head title="ส่งคำขอจอง" />
+    <Head title="สร้างคำขอจอง" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
-        <div class="page-heading">
-            <div>
-                <p class="eyebrow">Booking Request</p>
-                <h1>ส่งคำขอจอง</h1>
-                <p>เลือกทรัพยากรที่พร้อมใช้งาน ระบุช่วงเวลา และส่งให้เจ้าหน้าที่ตรวจสอบ</p>
-            </div>
-        </div>
-
-        <nav class="booking-sections" aria-label="ส่วนของคำขอ"><a href="#booking-time">วันเวลา</a><a href="#booking-room">ห้อง / จำนวนคน</a><a href="#booking-simulator">เครื่องจำลอง</a><a href="#booking-scenario">รายวิชา / Scenario</a><a href="#booking-equipment">อุปกรณ์</a><a href="#booking-contact">ข้อมูลผู้จอง</a></nav>
+        <header class="page-header"><div><p class="eyebrow">Booking Request</p><h1>สร้างคำขอจองห้อง Simulation</h1><p>เลือกห้อง วันเวลา และทรัพยากรที่ต้องการใช้ แล้วส่งให้เจ้าหน้าที่ตรวจสอบ</p></div><Link class="button-secondary" href="/app/calendar">ดูปฏิทินการใช้ห้อง</Link></header>
         <form class="booking-form" @submit.prevent="submit">
-            <section class="panel" id="booking-time">
-                <h2>1. วันที่และเวลา</h2>
-                <p class="section-help">ระบุช่วงเวลาเพื่อให้ระบบตรวจสอบห้องและเครื่องจำลองที่ว่าง</p>
-                <div class="field-grid"><label>เริ่มใช้งาน<input v-model="form.starts_at" type="datetime-local" required></label><label>สิ้นสุด<input v-model="form.ends_at" type="datetime-local" required></label></div>
-                <p v-if="form.errors.starts_at" class="error">{{ form.errors.starts_at }}</p><p v-if="form.errors.ends_at" class="error">{{ form.errors.ends_at }}</p>
-            </section>
-
-            <section class="panel" id="booking-room">
-                <h2>2. ห้องและจำนวนผู้เข้าใช้งาน</h2>
-                <p class="section-help">แสดงห้องในหน่วยงานของคุณ พร้อมอาคาร ชั้น และความจุ ระบบไม่แสดงรายละเอียดการจองของผู้อื่น</p>
-                <p v-if="checkingRoomAvailability" class="section-help" role="status">กำลังตรวจสอบเวลาว่างของห้อง...</p>
-                <p v-if="roomAvailabilityError" class="error" role="alert">{{ roomAvailabilityError }}</p>
-                <div v-if="rooms.length" class="resource-grid">
-                    <label v-for="room in rooms" :key="room.id" class="resource-card" :class="{ selected: selectedRoomId === room.id, unavailable: room.status !== 'ready' || room.capacity === null || roomAvailability[room.id] !== true }">
-                        <input v-model="selectedRoomId" type="radio" name="room" :value="room.id" :disabled="room.status !== 'ready' || room.capacity === null || roomAvailability[room.id] !== true || checkingRoomAvailability || !!roomAvailabilityError">
-                        <strong>{{ room.name }}</strong>
-                        <span>{{ [room.building, room.floor ? `ชั้น ${room.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุอาคารและชั้น' }}</span>
-                        <span>{{ room.capacity === null ? 'ยังไม่กำหนดความจุ — จองไม่ได้' : `ความจุ ${room.capacity} คน` }}</span>
-                        <span>{{ room.location ?? 'ไม่ระบุตำแหน่ง' }}</span>
-                        <small>{{ roomAvailabilityError ? 'ตรวจสอบเวลาไม่ได้' : room.status !== 'ready' ? 'ห้องยังไม่พร้อมใช้งาน' : room.capacity === null ? 'รอผู้ดูแลกำหนดความจุ' : roomAvailability[room.id] === true ? 'ว่างในช่วงเวลานี้' : checkingRoomAvailability ? 'กำลังตรวจสอบ...' : form.starts_at && form.ends_at ? 'ไม่ว่างในช่วงเวลานี้' : (room.description ?? 'ระบุวันเวลาเพื่อตรวจสอบ') }}</small>
-                    </label>
+            <section class="panel booking-step-panel room-picker-panel" aria-labelledby="room-title">
+                <div class="panel-header"><div><h2 id="room-title">1) เลือกห้อง</h2><p>ห้องในวิทยาลัยของคุณ · เลือกห้องก่อน แล้วระบบจะตรวจเวลาว่างตามวันเวลาที่ระบุ</p></div></div>
+                <div v-if="selectedRoom && !roomPickerOpen" class="selected-room-summary">
+                    <div><span>ห้องที่เลือก</span><strong>{{ selectedRoom.name }}</strong><p>{{ [selectedRoom.building, selectedRoom.floor ? `ชั้น ${selectedRoom.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุอาคารและชั้น' }} · ความจุ {{ selectedRoom.capacity ?? 'ยังไม่กำหนด' }} คน</p><small role="status">{{ availabilityLabel(selectedRoom) }}</small></div>
+                    <button type="button" class="button-secondary" @click="changeRoom">เปลี่ยนห้อง</button>
                 </div>
-                <p v-else class="empty">ยังไม่มีห้องที่พร้อมให้จอง</p>
-                <div class="field-grid participant-field"><label>จำนวนผู้เข้าใช้งาน<input v-model.number="form.participant_count" type="number" min="1" :max="selectedRoom?.capacity ?? 10000" required :disabled="!selectedRoom?.capacity"></label><p v-if="selectedRoom" class="section-help">ห้องนี้รองรับได้สูงสุด {{ selectedRoom.capacity ?? 'ไม่ทราบ' }} คน</p></div>
-                <p v-if="form.errors.participant_count" class="error" role="alert">{{ form.errors.participant_count }}</p><p v-if="form.errors.resources" class="error" role="alert">{{ form.errors.resources }}</p>
+                <div v-else-if="visibleRoom" class="room-carousel" aria-label="เลือกห้อง Simulation">
+                    <button v-if="rooms.length > 1" class="room-carousel-control" type="button" aria-label="ดูห้องก่อนหน้า" @click="nextRoom(-1)">‹</button>
+                    <article class="room-card" :class="{ unavailable: !roomSelectable(visibleRoom) }">
+                        <div class="room-visual" aria-label="ยังไม่มีภาพห้อง">
+                            <svg viewBox="0 0 240 130" fill="none" aria-hidden="true"><path d="M30 105V25h180v80M30 105h180M60 105V60h45v45M132 47h51v34h-51z" stroke="currentColor" stroke-width="2"/><path d="M140 64h34M157 49v28M40 25l15-10h140l15 10" stroke="currentColor" stroke-width="2"/></svg>
+                            <strong>{{ visibleRoom.name }}</strong><small>ยังไม่มีภาพห้อง</small>
+                        </div>
+                        <div class="room-card-content">
+                            <div class="room-card-heading"><div><h3>{{ visibleRoom.name }}</h3><p>{{ visibleRoom.description || 'ห้องปฏิบัติการ Simulation ของหน่วยงาน' }}</p></div><span class="room-status" :class="{ ready: roomSelectable(visibleRoom) }">{{ roomStatusLabel(visibleRoom) }}</span></div>
+                            <dl class="room-meta-grid"><div><dt>อาคาร / ชั้น</dt><dd>{{ [visibleRoom.building, visibleRoom.floor ? `ชั้น ${visibleRoom.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' }}</dd></div><div><dt>ความจุ</dt><dd>{{ visibleRoom.capacity === null ? 'ยังไม่กำหนด' : `${visibleRoom.capacity} คน` }}</dd></div><div><dt>ตำแหน่ง</dt><dd>{{ visibleRoom.location || 'ไม่ระบุ' }}</dd></div></dl>
+                            <p class="room-availability" role="status">{{ availabilityLabel(visibleRoom) }}</p>
+                            <button class="button-primary room-select-button" type="button" :disabled="!roomSelectable(visibleRoom)" @click="chooseRoom(visibleRoom)">เลือกห้องนี้</button>
+                        </div>
+                    </article>
+                    <button v-if="rooms.length > 1" class="room-carousel-control" type="button" aria-label="ดูห้องถัดไป" @click="nextRoom(1)">›</button>
+                </div>
+                <p v-else class="empty-state">ขณะนี้ไม่มีห้องในหน่วยงาน กรุณาติดต่อเจ้าหน้าที่ศูนย์ SIM</p>
+                <p v-if="roomPickerOpen && rooms.length > 1" class="room-position" aria-live="polite">ห้อง {{ activeRoomIndex + 1 }} จาก {{ rooms.length }}</p>
+                <p v-if="form.errors.resources" class="error" role="alert">{{ form.errors.resources }}</p>
             </section>
 
-            <section class="panel" id="booking-simulator">
-                <h2>3. เครื่องจำลอง (ถ้ามี)</h2>
-                <p class="section-help">เลือกประเภท แล้วเลือกเครื่องที่ต้องการใช้ รายการแนะนำจากสถานการณ์จำลองไม่บังคับการเลือก</p>
-                <p v-if="selectedScenario?.recommended_simulator_types.length" class="section-help">ประเภทที่แนะนำ: {{ selectedScenario.recommended_simulator_types.map((item) => item.name).join(', ') }}</p>
+            <section class="panel booking-step-panel" aria-labelledby="time-title">
+                <div class="panel-header"><div><h2 id="time-title">2) วัน เวลา และจำนวนผู้เข้าใช้งาน</h2><p>เวลาแบบ 24 ชั่วโมง · ระบบตรวจความจุห้องและเวลาว่างก่อนส่งคำขอ</p></div></div>
+                <div class="date-time-grid">
+                    <label class="field">วันที่เริ่ม<input v-model="dates.startDate" type="date" required></label>
+                    <div class="field"><span>เวลาเริ่มต้น</span><Time24Field v-model="dates.startTime" label="เวลาเริ่มต้น" /></div>
+                    <label class="field">วันที่สิ้นสุด<input v-model="dates.endDate" type="date" required></label>
+                    <div class="field"><span>เวลาสิ้นสุด</span><Time24Field v-model="dates.endTime" label="เวลาสิ้นสุด" /></div>
+                    <label class="field participant-field">จำนวนผู้เข้าใช้งาน<input v-model.number="form.participant_count" aria-label="จำนวนผู้เข้าใช้งาน" type="number" min="1" :max="selectedRoom?.capacity ?? 10000" required :disabled="!selectedRoom?.capacity"><small v-if="selectedRoom">ห้องที่เลือกรองรับได้สูงสุด {{ selectedRoom.capacity ?? 'ยังไม่กำหนด' }} คน</small><small v-else>เลือกห้องก่อนระบุจำนวนผู้เข้าใช้งาน</small></label>
+                </div>
+                <p v-if="dates.startDate && dates.startTime && dates.endDate && dates.endTime && !dateTimeValid" class="error" role="alert">วันเวลาสิ้นสุดต้องอยู่หลังวันเวลาเริ่ม</p>
+                <p v-if="form.errors.starts_at" class="error" role="alert">{{ form.errors.starts_at }}</p><p v-if="form.errors.ends_at" class="error" role="alert">{{ form.errors.ends_at }}</p><p v-if="form.errors.participant_count" class="error" role="alert">{{ form.errors.participant_count }}</p>
+                <p v-if="checkingRoomAvailability" class="section-help" role="status">กำลังตรวจสอบเวลาว่างของห้อง...</p><p v-if="roomAvailabilityError" class="error" role="alert">{{ roomAvailabilityError }}</p>
+                <p v-if="selectedRoom && dateTimeValid && !checkingRoomAvailability" class="section-help" role="status">{{ selectedRoom.name }} · {{ availabilityLabel(selectedRoom) }}</p>
+            </section>
+
+            <section class="panel booking-step-panel" aria-labelledby="teaching-title">
+                <div class="panel-header"><div><h2 id="teaching-title">รายวิชา สถานการณ์จำลอง และเครื่องจำลอง (ถ้ามี)</h2><p>ชุดแนะนำช่วยจัดเตรียมทรัพยากร คุณยังปรับรายการได้ก่อนส่งคำขอ</p></div></div>
                 <div class="field-grid">
-                    <label>ประเภทเครื่องจำลอง<select v-model="selectedSimulatorTypeId"><option :value="null">ไม่เลือกเครื่องจำลอง</option><option v-for="item in simulatorTypes" :key="item.id" :value="item.id">{{ item.name }}{{ recommendedSimulatorTypeIds.has(item.id) ? ' (แนะนำ)' : '' }}</option></select></label>
-                    <label>เครื่องจำลอง<select v-model="form.simulator_asset_id" :disabled="selectedSimulatorTypeId === null"><option :value="null">ไม่เลือกเครื่องจำลอง</option><option v-for="asset in filteredSimulatorAssets" :key="asset.id" :value="asset.id" :disabled="asset.status !== 'active' || simulatorAvailability[asset.id] === false">{{ asset.asset_name }}{{ asset.asset_code ? ' · ' + asset.asset_code : '' }}{{ simulatorAvailability[asset.id] === false ? ' (ไม่ว่าง)' : '' }}</option></select></label>
+                    <label class="field">รายวิชา<select v-model="form.course_id"><option :value="null">ไม่ระบุรายวิชา</option><option v-for="course in courses" :key="course.id" :value="course.id">{{ course.code ? course.code + ' · ' : '' }}{{ course.name }}</option></select></label>
+                    <label class="field">สถานการณ์จำลอง<select v-model="form.scenario_id"><option :value="null">ไม่เลือกสถานการณ์</option><optgroup v-if="preferredScenarios.length" label="สถานการณ์จำลองที่แนะนำ"><option v-for="scenario in preferredScenarios" :key="scenario.id" :value="scenario.id">{{ scenario.name }}</option></optgroup><optgroup v-if="otherScenarios.length" label="สถานการณ์จำลองอื่น"><option v-for="scenario in otherScenarios" :key="scenario.id" :value="scenario.id">{{ scenario.name }} · {{ scenario.course.name }}</option></optgroup></select></label>
+                    <label class="field">ประเภทเครื่องจำลอง<select v-model="selectedSimulatorTypeId"><option :value="null">ไม่เลือกเครื่องจำลอง</option><option v-for="item in simulatorTypes" :key="item.id" :value="item.id">{{ item.name }}{{ recommendedSimulatorTypeIds.has(item.id) ? ' (แนะนำ)' : '' }}</option></select></label>
+                    <label class="field">เครื่องจำลอง<select v-model="form.simulator_asset_id" :disabled="selectedSimulatorTypeId === null"><option :value="null">ไม่เลือกเครื่องจำลอง</option><option v-for="asset in filteredSimulatorAssets" :key="asset.id" :value="asset.id" :disabled="asset.status !== 'active' || simulatorAvailability[asset.id] === false">{{ asset.asset_name }}{{ asset.asset_code ? ' · ' + asset.asset_code : '' }}{{ simulatorAvailability[asset.id] === false ? ' (ไม่ว่าง)' : '' }}</option></select></label>
                 </div>
                 <p v-if="selectedSimulatorTypeId !== null && !filteredSimulatorAssets.length" class="section-help">ยังไม่มีเครื่องจำลองที่พร้อมใช้งานในประเภทนี้</p>
-                <p v-if="checkingSimulatorAvailability" class="section-help" role="status">กำลังตรวจสอบเวลาว่างของเครื่องจำลอง...</p>
-                <p v-if="simulatorAvailabilityError" class="error" role="alert">{{ simulatorAvailabilityError }}</p>
-                <p v-if="form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === false" class="error" role="alert">เครื่องจำลองที่เลือกไม่ว่างในช่วงเวลานี้ กรุณาเลือกเครื่องอื่นหรือปรับวันเวลา</p>
                 <p v-if="form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === true" class="section-help" role="status">เครื่องจำลองที่เลือกว่างในช่วงเวลานี้ ระบบจะตรวจสอบซ้ำเมื่อส่งคำขอ</p>
-                <p v-if="form.errors.simulator_asset_id" class="error" role="alert">{{ form.errors.simulator_asset_id }}</p>
+                <p v-if="selectedScenario?.recommended_simulator_types.length" class="section-help">ประเภทที่แนะนำ: {{ selectedScenario.recommended_simulator_types.map(item => item.name).join(', ') }}</p>
+                <p v-if="form.errors.course_id" class="error">{{ form.errors.course_id }}</p><p v-if="form.errors.scenario_id" class="error">{{ form.errors.scenario_id }}</p><p v-if="form.errors.simulator_asset_id" class="error" role="alert">{{ form.errors.simulator_asset_id }}</p>
+                <p v-if="checkingSimulatorAvailability" class="section-help" role="status">กำลังตรวจสอบเวลาว่างของเครื่องจำลอง...</p><p v-if="simulatorAvailabilityError" class="error" role="alert">{{ simulatorAvailabilityError }}</p><p v-if="form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === false" class="error" role="alert">เครื่องจำลองที่เลือกไม่ว่างในช่วงเวลานี้ กรุณาเลือกเครื่องอื่นหรือปรับวันเวลา</p>
             </section>
 
-            <section class="panel" id="booking-scenario">
-                <h2>4. รายวิชาและสถานการณ์จำลอง</h2>
-                <p class="section-help">สถานการณ์ที่สัมพันธ์กับรายวิชาจะแสดงเป็นรายการแนะนำ คุณยังเลือกสถานการณ์อื่นหรือไม่เลือกก็ได้</p>
-                <div class="field-grid">
-                    <label>รายวิชา<select v-model="form.course_id"><option :value="null">ไม่ระบุรายวิชา</option><option v-for="course in courses" :key="course.id" :value="course.id">{{ course.code ? course.code + ' · ' : '' }}{{ course.name }}</option></select></label>
-                    <label>สถานการณ์จำลอง<select v-model="form.scenario_id"><option :value="null">ไม่เลือกสถานการณ์</option><optgroup v-if="preferredScenarios.length" label="สถานการณ์จำลองที่แนะนำ"><option v-for="scenario in preferredScenarios" :key="scenario.id" :value="scenario.id">{{ scenario.name }}</option></optgroup><optgroup v-if="otherScenarios.length" label="สถานการณ์จำลองอื่น"><option v-for="scenario in otherScenarios" :key="scenario.id" :value="scenario.id">{{ scenario.name }} · {{ scenario.course.name }}</option></optgroup></select></label>
-                </div>
-                <p v-if="form.errors.course_id" class="error">{{ form.errors.course_id }}</p><p v-if="form.errors.scenario_id" class="error">{{ form.errors.scenario_id }}</p>
+            <section class="panel booking-step-panel" aria-labelledby="equipment-title">
+                <div class="panel-header"><div><h2 id="equipment-title">3) อุปกรณ์เสริมเพิ่มเติม</h2><p>เลือกจากแค็ตตาล็อกและปรับจำนวนอุปกรณ์จากชุดแนะนำได้</p></div></div>
+                <div v-if="recommendedEquipment.length" class="equipment-group"><h3>อุปกรณ์จากชุดแนะนำ</h3><div class="equipment-list"><div v-for="item in recommendedEquipment" :key="item.id" class="equipment-row"><div><strong>{{ item.name }}</strong><small>แนะนำจาก {{ selectedScenario?.name }} · สูงสุด {{ item.is_exclusive ? 1 : item.quantity_total }} หน่วย</small></div><input :aria-label="'จำนวน ' + item.name" type="number" min="0" :max="item.is_exclusive ? 1 : item.quantity_total" :value="equipmentQuantities[item.id] ?? 0" @input="handleEquipmentInput(item, $event)"><button type="button" class="button-secondary" @click="removeEquipment(item.id)">เอาออก</button></div></div></div>
+                <p v-if="unavailableRecommended.length" class="section-help">อุปกรณ์แนะนำที่ยังไม่พร้อมให้จอง: {{ unavailableRecommended.map(item => item.name).join(', ') }}</p>
+                <p v-if="!equipment.length" class="section-help">ไม่มีอุปกรณ์ที่พร้อมให้จองในแค็ตตาล็อก</p>
+                <div class="additional-equipment-controls"><label class="field">เลือกอุปกรณ์<select v-model="additionalEquipmentId"><option :value="null">เลือกอุปกรณ์เพิ่มเติม</option><option v-for="item in additionalEquipment" :key="item.id" :value="item.id">{{ item.name }} · สูงสุด {{ item.is_exclusive ? 1 : item.quantity_total }} หน่วย</option></select></label><label class="field">จำนวน<input v-model.number="additionalEquipmentQuantity" type="number" min="1" :max="additionalEquipment.find(item => item.id === additionalEquipmentId)?.is_exclusive ? 1 : additionalEquipment.find(item => item.id === additionalEquipmentId)?.quantity_total ?? 10000"></label><button type="button" class="button-secondary" :disabled="additionalEquipmentId === null" @click="addEquipment">เพิ่มอุปกรณ์</button></div>
+                <div v-if="selectedAdditionalEquipment.length" class="equipment-list"><div v-for="item in selectedAdditionalEquipment" :key="item.id" class="equipment-row"><div><strong>{{ item.name }}</strong><small>สูงสุด {{ item.is_exclusive ? 1 : item.quantity_total }} หน่วย</small></div><input :aria-label="'จำนวน ' + item.name" type="number" min="0" :max="item.is_exclusive ? 1 : item.quantity_total" :value="equipmentQuantities[item.id]" @input="handleEquipmentInput(item, $event)"><button type="button" class="button-secondary" @click="removeEquipment(item.id)">เอาออก</button></div></div><p v-else class="empty-state">ยังไม่มีอุปกรณ์เสริมเพิ่มเติม</p>
+                <h3 class="custom-equipment-title">คำขออุปกรณ์นอกแค็ตตาล็อก</h3><p class="section-help">เจ้าหน้าที่จะตรวจสอบรายการเหล่านี้แยกจากจำนวนคงเหลือ</p>
+                <div v-for="(item, index) in customEquipmentRows" :key="index" class="custom-row"><label class="field">ชื่ออุปกรณ์<input v-model="item.name" :id="'custom-name-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.name'] ? 'custom-name-error-' + index : undefined" maxlength="255" required></label><label class="field">จำนวน<input v-model.number="item.quantity" :id="'custom-quantity-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.quantity'] ? 'custom-quantity-error-' + index : undefined" type="number" min="1" max="10000" required></label><label class="field">รายละเอียด<textarea v-model="item.note" :id="'custom-note-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.note'] ? 'custom-note-error-' + index : undefined" maxlength="2000" rows="2"></textarea></label><button type="button" class="button-secondary" :aria-label="'นำคำขออุปกรณ์ ' + (index + 1) + ' ออก'" @click="customEquipmentRows.splice(index, 1)">นำรายการออก</button><p v-for="field in ['name','quantity','note']" v-show="form.errors['custom_equipment.' + index + '.' + field]" :key="field" :id="'custom-' + field + '-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.' + field] }}</p></div>
+                <p v-if="form.errors.custom_equipment" class="error" role="alert">{{ form.errors.custom_equipment }}</p><p v-if="form.errors.resources" class="error" role="alert">{{ form.errors.resources }}</p><button type="button" class="button-secondary" :disabled="customEquipmentRows.length >= 50" @click="addCustomEquipment">เพิ่มคำขออุปกรณ์</button>
             </section>
 
-            <section class="panel" id="booking-equipment">
-                <h2>5. อุปกรณ์จากแค็ตตาล็อก</h2>
-                <p class="section-help">รายการแนะนำเป็นค่าเริ่มต้น คุณนำออกหรือเปลี่ยนจำนวนได้ อุปกรณ์เพิ่มเติมเลือกได้ตามต้องการ</p>
-                <div v-if="recommendedEquipment.length" class="equipment-group">
-                    <h3>อุปกรณ์จากชุดแนะนำ</h3>
-                    <div class="equipment-list">
-                        <label v-for="item in recommendedEquipment" :key="item.id">
-                            <span><strong>{{ item.name }}</strong><small>พร้อมให้ใช้สูงสุด {{ item.quantity_total }} หน่วย · แนะนำจาก {{ selectedScenario?.name }}</small></span>
-                            <input :aria-label="'จำนวน ' + item.name" type="number" min="0" :max="item.is_exclusive ? 1 : item.quantity_total" placeholder="0" :value="equipmentQuantities[item.id] ?? ''" @input="handleEquipmentInput(item, $event)">
-                        </label>
-                    </div>
-                </div>
-                <p v-if="unavailableRecommended.length" class="section-help">อุปกรณ์แนะนำที่ยังไม่พร้อมให้จอง: {{ unavailableRecommended.map((item) => item.name).join(', ') }}</p>
-                <div v-if="additionalEquipment.length" class="equipment-group">
-                    <h3>{{ selectedScenario ? 'อุปกรณ์เพิ่มเติมจากแค็ตตาล็อก' : 'เลือกอุปกรณ์จากแค็ตตาล็อก' }}</h3>
-                    <div class="equipment-list">
-                        <label v-for="item in additionalEquipment" :key="item.id">
-                            <span><strong>{{ item.name }}</strong><small>พร้อมให้ใช้สูงสุด {{ item.quantity_total }} หน่วย</small></span>
-                            <input :aria-label="'จำนวน ' + item.name" type="number" min="0" :max="item.is_exclusive ? 1 : item.quantity_total" placeholder="0" :value="equipmentQuantities[item.id] ?? ''" @input="handleEquipmentInput(item, $event)">
-                        </label>
-                    </div>
-                </div>
-                <p v-if="!equipment.length" class="empty">ไม่มีอุปกรณ์ที่พร้อมให้จองในแค็ตตาล็อก</p>
-            </section>
-
-            <section class="panel">
-                <h2>6. คำขออุปกรณ์เพิ่มเติม</h2>
-                <p class="section-help">ใช้สำหรับอุปกรณ์ที่ไม่มีในแค็ตตาล็อก เจ้าหน้าที่จะตรวจสอบคำขอนี้แยกจากจำนวนคงเหลือ</p>
-                <div v-for="(item, index) in customEquipmentRows" :key="index" class="custom-row">
-                    <label>ชื่ออุปกรณ์<input v-model="item.name" :id="'custom-name-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.name'] ? 'custom-name-error-' + index : undefined" maxlength="255" required></label>
-                    <label>จำนวน<input v-model.number="item.quantity" :id="'custom-quantity-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.quantity'] ? 'custom-quantity-error-' + index : undefined" type="number" min="1" max="10000" required></label>
-                    <label>รายละเอียด<textarea v-model="item.note" :id="'custom-note-' + index" :aria-describedby="form.errors['custom_equipment.' + index + '.note'] ? 'custom-note-error-' + index : undefined" maxlength="2000" rows="2"></textarea></label>
-                    <button type="button" :aria-label="'นำคำขออุปกรณ์ ' + (index + 1) + ' ออก'" @click="customEquipmentRows.splice(index, 1)">นำรายการออก</button>
-                    <p v-if="form.errors['custom_equipment.' + index + '.name']" :id="'custom-name-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.name'] }}</p>
-                    <p v-if="form.errors['custom_equipment.' + index + '.quantity']" :id="'custom-quantity-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.quantity'] }}</p>
-                    <p v-if="form.errors['custom_equipment.' + index + '.note']" :id="'custom-note-error-' + index" class="error" role="alert">{{ form.errors['custom_equipment.' + index + '.note'] }}</p>
-                </div>
-                <p v-if="form.errors.custom_equipment" class="error" role="alert">{{ form.errors.custom_equipment }}</p>
-                <button type="button" class="secondary" :disabled="customEquipmentRows.length >= 50" @click="addCustomEquipment">เพิ่มคำขออุปกรณ์</button>
-            </section>
-
-            <section class="panel" id="booking-contact">
-                <h2>7. ข้อมูลผู้จอง</h2>
-                <div class="field-grid">
-                    <label>วิทยาลัย / หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly></label>
-                    <label>ชื่อผู้จอง<input :value="page.props.auth.user.name" readonly></label>
-                    <label>เบอร์ติดต่อ<input v-model="form.requester_phone" type="tel" inputmode="tel" minlength="7" maxlength="32" autocomplete="tel" required><small v-if="form.errors.requester_phone" class="error">{{ form.errors.requester_phone }}</small></label>
-                </div>
-                <label class="full-field">หมายเหตุ<textarea v-model="form.note" rows="4" maxlength="2000"></textarea></label>
-                <p class="section-help">ระบบบันทึกผู้ส่งคำขอตามบัญชีที่เข้าสู่ระบบ การจองแทนบุคคลอื่นยังไม่เปิดใช้งานจนกว่าจะมีสิทธิ์เฉพาะรองรับ</p>
-            </section>
-
-            <div class="form-actions">
-                <button type="submit" :disabled="form.processing || selectedRoomId === null || roomAvailability[selectedRoomId] !== true || !selectedRoom?.capacity || !form.participant_count || form.participant_count > (selectedRoom?.capacity ?? 0) || (form.simulator_asset_id !== null && simulatorAvailability[form.simulator_asset_id] === false)">
-                    {{ form.processing ? 'กำลังส่ง...' : 'ยืนยันส่งคำขอ' }}
-                </button>
-            </div>
+            <section class="panel booking-step-panel" aria-labelledby="requester-title"><div class="panel-header"><div><h2 id="requester-title">4) ข้อมูลผู้จอง</h2><p>ข้อมูลบัญชีและหน่วยงานตามผู้เข้าสู่ระบบ</p></div></div><div class="requester-grid"><label class="field">หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly><small>ตามวิทยาลัย / หน่วยงานของคุณ</small></label><label class="field">ชื่อผู้จอง<input :value="page.props.auth.user.name" readonly><small>บันทึกตามบัญชีที่เข้าสู่ระบบ</small></label><label class="field">เบอร์ติดต่อ<input v-model="form.requester_phone" type="tel" inputmode="tel" minlength="7" maxlength="32" autocomplete="tel" required><small v-if="form.errors.requester_phone" class="error">{{ form.errors.requester_phone }}</small></label></div></section>
+            <section class="panel booking-step-panel"><div class="panel-header"><div><h2>หมายเหตุเพิ่มเติม</h2><p>ระบุข้อมูลที่ต้องการให้เจ้าหน้าที่ทราบ</p></div></div><label class="field">หมายเหตุ<textarea v-model="form.note" rows="4" maxlength="2000"></textarea></label><p v-if="form.errors.note" class="error">{{ form.errors.note }}</p></section>
+            <div class="form-actions"><Link href="/app/bookings" class="button-secondary">กลับประวัติการจอง</Link><button class="button-primary" type="submit" :disabled="!canSubmit">{{ form.processing ? 'กำลังส่ง...' : 'ยืนยันส่งคำขอ' }}</button></div>
         </form>
     </AppLayout>
 </template>
-
 <style scoped>
-.page-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:24px}.eyebrow{margin:0 0 6px}h1{margin:0}.page-heading p{color:var(--sim-muted)}.booking-form{display:grid;gap:14px}.panel h2{margin:0}.panel h3{margin:10px 0 0;color:var(--sim-blue);font-size:14px}.section-help,.empty{color:var(--sim-muted);line-height:1.55}.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px}.resource-card{display:grid;gap:6px;border:1px solid #d9e1e8;border-radius:12px;padding:13px;cursor:pointer}.resource-card.selected{border-color:var(--sim-blue);background:#f4f7fa}.resource-card.unavailable{opacity:.7;cursor:not-allowed}.resource-card input{width:auto}.resource-card input[type=radio]{min-height:auto;padding:0}.resource-card span,.resource-card small{color:var(--sim-muted)}.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.participant-field{align-items:end}label{display:grid;gap:6px;color:#44576a;font-size:13px;font-weight:800}input,textarea,select{width:100%;min-height:44px}input[readonly]{background:#f4f6f8;color:#627386}.equipment-group{margin-top:14px}.equipment-list{display:grid;gap:8px;margin-top:6px}.equipment-list label{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--sim-border);padding:9px 0}.equipment-list span{display:grid;gap:3px}.equipment-list small{color:var(--sim-muted);font-weight:500}.equipment-list input{width:110px}.custom-row{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:10px;align-items:end;margin:14px 0;padding-bottom:12px;border-bottom:1px solid var(--sim-border)}.custom-row button,.secondary{min-height:44px;border:1px solid #cdd7e0;border-radius:9px;background:#fff;color:var(--sim-blue);padding:9px 11px;font-weight:700;cursor:pointer}.custom-row .error{grid-column:1/-1}.custom-row button:hover,.secondary:hover:not(:disabled){background:#f4f7fa}.error{margin:5px 0;color:#a43b3b;font-size:13px}.form-actions{display:flex;justify-content:flex-end}.form-actions button{min-height:44px;border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:11px 18px;font-weight:800;cursor:pointer}.form-actions button:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed} :focus-visible{outline:3px solid #557d9d;outline-offset:2px}@media(max-width:720px){.field-grid,.custom-row{grid-template-columns:1fr}.equipment-list label{align-items:flex-start}.resource-grid{grid-template-columns:1fr}.custom-row button{width:fit-content}}
-.booking-sections{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.booking-sections a{border:1px solid var(--sim-border);border-radius:999px;background:#fff;color:var(--sim-blue);font-size:13px;padding:7px 12px;text-decoration:none}.booking-form section{scroll-margin-top:16px}</style>
+.booking-form{display:grid;gap:20px}.booking-step-panel{padding:24px!important}.room-picker-panel{overflow:hidden}.room-carousel{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:12px;align-items:stretch}.room-carousel>.room-card:only-child{grid-column:1/-1}.room-carousel-control{border:1px solid var(--sim-border);border-radius:14px;background:var(--sim-soft);color:var(--sim-navy);font-size:32px;min-height:44px}.room-card{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1fr);gap:24px;min-width:0;border:1px solid var(--sim-border);border-radius:18px;padding:18px}.room-card.unavailable{opacity:.7}.room-visual{display:flex;flex-direction:column;justify-content:flex-end;min-height:245px;border-radius:14px;background:var(--sim-blue);color:#fff;padding:24px}.room-visual svg{width:100%;max-height:140px;margin:auto 0;opacity:.65}.room-visual strong{font-size:24px;line-height:1.4}.room-visual small{color:#dbeafe;font-size:12px}.room-card-content{display:grid;gap:16px;min-width:0}.room-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.room-card-heading h3{margin:0;font-size:26px;color:var(--sim-navy)}.room-card-heading p{margin:6px 0 0;color:var(--sim-muted)}.room-status{flex:none;border-radius:999px;background:var(--sim-warning-bg);color:var(--sim-warning);padding:6px 10px;font-size:12px;font-weight:800}.room-status.ready{background:var(--sim-success-bg);color:var(--sim-success)}.room-meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0}.room-meta-grid>div{border:1px solid var(--sim-border);border-radius:12px;background:var(--sim-soft);padding:12px}.room-meta-grid dt{font-size:12px;color:var(--sim-muted)}.room-meta-grid dd{margin:3px 0 0;color:var(--sim-text);font-weight:700}.room-select-button{width:100%}.room-availability,.room-position{margin:0;color:var(--sim-muted);font-size:13px}.room-position{text-align:center;margin-top:12px}.selected-room-summary{display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid var(--sim-border);border-radius:14px;background:var(--sim-soft);padding:18px}.selected-room-summary span,.selected-room-summary small{display:block;color:var(--sim-muted);font-size:12px}.selected-room-summary strong{display:block;color:var(--sim-navy);font-size:20px}.selected-room-summary p{margin:4px 0;color:var(--sim-text)}.date-time-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.field{display:grid;gap:8px;align-content:start;font-weight:700}.field input,.field select,.field textarea{width:100%}.field small{color:var(--sim-muted);font-size:12px;font-weight:500}.participant-field{grid-column:span 2}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.equipment-group{margin-bottom:20px}.equipment-group h3{margin:0 0 12px}.equipment-list{display:grid;gap:10px;margin:12px 0}.equipment-row{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:center;gap:16px;border:1px solid var(--sim-border);border-radius:14px;background:var(--sim-soft);padding:14px}.equipment-row strong,.equipment-row small{display:block}.equipment-row small{color:var(--sim-muted);font-size:12px;margin-top:4px}.equipment-row input{width:100%;text-align:right}.additional-equipment-controls{display:grid;grid-template-columns:minmax(0,1.4fr) 140px auto;gap:14px;align-items:end}.empty-state{display:grid;min-height:86px;place-items:center;border:1px dashed #cbd5e1;border-radius:14px;background:var(--sim-soft);color:var(--sim-muted);padding:16px;text-align:center}.custom-equipment-title{margin-top:24px!important}.custom-row{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:12px;align-items:end;border-bottom:1px solid var(--sim-border);padding:12px 0;margin-bottom:12px}.custom-row .error{grid-column:1/-1}.requester-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.form-actions{display:flex;justify-content:flex-end;gap:12px}.error{margin:8px 0;color:var(--sim-danger);font-size:13px}.section-help{margin:12px 0;color:var(--sim-muted);font-size:13px}.booking-form .button-primary,.booking-form .button-secondary{min-height:46px}
+@media(max-width:1180px){.date-time-grid,.requester-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.room-card{grid-template-columns:1fr}.room-visual{min-height:200px}}
+@media(max-width:760px){.booking-step-panel{padding:16px!important}.date-time-grid,.field-grid,.requester-grid,.additional-equipment-controls,.custom-row,.equipment-row{grid-template-columns:1fr}.participant-field{grid-column:auto}.room-carousel{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.room-carousel>.room-card{grid-column:1/-1;grid-row:1}.room-carousel-control{grid-row:2;min-height:44px}.room-card{padding:12px;gap:16px}.room-card-heading,.selected-room-summary{flex-direction:column;align-items:flex-start}.room-meta-grid{grid-template-columns:1fr}.room-card-heading h3{font-size:22px}.room-visual{min-height:180px;padding:16px}.form-actions{flex-direction:column-reverse}.form-actions>*{width:100%}.equipment-row input{text-align:left}.selected-room-summary .button-secondary{width:100%}}
+</style>

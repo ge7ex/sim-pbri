@@ -2,6 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 
 interface BookingRow {
@@ -67,7 +68,7 @@ function reject(id: number): void {
             <section class="panel request-list" aria-label="เลือกคำขอที่รอตรวจสอบ">
                 <h2>รายการรอตรวจสอบ</h2>
                 <button v-for="item in bookings.data" :key="item.id" type="button" class="request-option" :class="{ selected: selectedBooking?.id === item.id }" :aria-pressed="selectedBooking?.id === item.id" @click="selectedId = item.id">
-                    <strong>#{{ item.id }} · {{ item.requester_name }}</strong><span>{{ new Date(item.starts_at).toLocaleString('th-TH') }}</span>
+                    <strong>#{{ item.id }} · {{ item.requester_name }}</strong><span>{{ formatBookingDateTime(item.starts_at) }}</span>
                 </button>
             </section>
             <div class="review-list">
@@ -76,7 +77,7 @@ function reject(id: number): void {
                     <div class="review-title">
                         <div>
                             <strong>#{{ booking.id }} · {{ booking.requester_name }}</strong>
-                            <span>{{ new Date(booking.starts_at).toLocaleString('th-TH') }} — {{ new Date(booking.ends_at).toLocaleString('th-TH') }}</span>
+                            <span>{{ formatBookingDateTime(booking.starts_at) }} — {{ formatBookingDateTime(booking.ends_at) }}</span>
                         </div>
                         <BookingStatusBadge :status="booking.status" />
                     </div>
