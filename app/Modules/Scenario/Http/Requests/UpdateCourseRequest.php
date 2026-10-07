@@ -2,7 +2,6 @@
 
 namespace App\Modules\Scenario\Http\Requests;
 
-use App\Core\Enums\AppPermission;
 use App\Modules\Scenario\Models\Course;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -11,7 +10,12 @@ final class UpdateCourseRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->canAccess(AppPermission::ScenarioUpdate) === true;
+        $user = $this->user();
+        $course = $this->route('course');
+
+        return $user !== null
+            && $course instanceof Course
+            && $user->can('update', $course);
     }
 
     /**
