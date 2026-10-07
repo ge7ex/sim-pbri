@@ -2,7 +2,6 @@
 
 namespace App\Modules\Scenario\Http\Requests;
 
-use App\Core\Enums\AppPermission;
 use App\Modules\Scenario\Models\Scenario;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,7 +11,12 @@ final class UpdateScenarioEquipmentTemplateRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->canAccess(AppPermission::ScenarioUpdate) === true;
+        $user = $this->user();
+        $scenario = $this->route('scenario');
+
+        return $user !== null
+            && $scenario instanceof Scenario
+            && $user->can('update', $scenario);
     }
 
     /**
