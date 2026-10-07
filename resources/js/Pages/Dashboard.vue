@@ -1,244 +1,35 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import AppLayout from '../Layouts/AppLayout.vue';
+import PageHeader from '../Components/PageHeader.vue';
+import MetricCard from '../Components/MetricCard.vue';
+import BookingStatusBadge from '../Modules/Booking/Components/BookingStatusBadge.vue';
 
-interface SharedProps {
-    auth: {
-        user: {
-            id: number;
-            name: string;
-            email: string;
-            role: string | null;
-            role_label: string | null;
-            college: { id: number; name: string } | null;
-            has_access_profile: boolean;
-        };
-        permissions: string[];
-    };
-}
-
-const page = usePage<SharedProps>();
-const permissions = computed(() => new Set(page.props.auth.permissions));
-
-const quickActions = computed(() => [
-    {
-        title: 'ส่งคำขอจอง',
-        description: 'เริ่มสร้างคำขอใช้ห้องและทรัพยากร SIM',
-        href: '/app/bookings/create',
-        permission: 'booking.create',
-    },
-    {
-        title: 'ประวัติการจอง',
-        description: 'ติดตามคำขอและสถานะการดำเนินการของคุณ',
-        href: '/app/bookings',
-        permission: 'booking.view',
-    },
-    {
-        title: 'ปฏิทินการใช้งาน',
-        description: 'ตรวจสอบช่วงเวลาที่มีการใช้งานและถูกจองแล้ว',
-        href: '/app/calendar',
-        permission: 'booking.view',
-    },
-    {
-        title: 'ตรวจสอบคำขอ',
-        description: 'พิจารณาคำขอที่รอการตรวจสอบและอนุมัติ',
-        href: '/app/review',
-        permission: 'booking.approve',
-    },
-    {
-        title: 'จัดการทรัพยากร',
-        description: 'ดูแลข้อมูลห้องและทรัพยากรสำหรับงาน SIM',
-        href: '/app/resources',
-        permission: 'sim-resource.update',
-    },
-].filter((item) => permissions.value.has(item.permission)));
+interface RecentBooking { id: number; requester_name: string; rooms: string[]; scenario_name: string | null; starts_at: string; ends_at: string; status: string }
+const props = defineProps<{ dashboard: { scope_label: string; summary: { total: number; pending: number; approved: number; rejected: number }; recent_bookings: RecentBooking[] } }>();
+const page = usePage<{ auth: { user: any; permissions: string[] } }>();
+const metrics = [ { key: 'total', label: 'คำขอทั้งหมด', helper: 'รวมทุกสถานะ' }, { key: 'pending', label: 'รอตรวจสอบ', helper: 'รอเจ้าหน้าที่พิจารณา' }, { key: 'approved', label: 'อนุมัติแล้ว', helper: 'ได้รับอนุมัติให้ใช้งาน' }, { key: 'rejected', label: 'ไม่อนุมัติ', helper: 'ดูเหตุผลในรายละเอียดคำขอ' } ] as const;
+function dateLabel(value: string): string { return new Date(value).toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short' }); }
 </script>
-
 <template>
-    <Head title="หน้าหลักระบบ" />
-
-    <AppLayout
-        :user="page.props.auth.user"
-        :permissions="page.props.auth.permissions"
-    >
-        <section class="dashboard-head" aria-labelledby="dashboard-title">
-            <div>
-                <p class="dashboard-eyebrow">SIM PBRI</p>
-                <h1 id="dashboard-title">หน้าหลักระบบ</h1>
-                <p>
-                    เลือกงานที่ต้องการดำเนินการ ระบบจะแสดงเฉพาะเมนูที่บัญชีนี้ได้รับสิทธิ์
-                </p>
+    <Head title="ภาพรวมระบบ" />
+    <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
+        <PageHeader eyebrow="Dashboard" title="ภาพรวมระบบจองศูนย์ Simulation" :description="`${page.props.auth.user.name} · ${page.props.auth.user.role_label} · ${page.props.auth.user.college?.name ?? ''}`">
+            <Link v-if="page.props.auth.permissions.includes('booking.create')" class="primary" href="/app/bookings/create">+ สร้างคำขอจอง</Link>
+        </PageHeader>
+        <p class="scope-caption">{{ dashboard.scope_label }} · จำนวนทั้งหมดรวมรายการที่ยกเลิก</p>
+        <section class="metric-grid" aria-label="สรุปสถานะคำขอ"><MetricCard v-for="metric in metrics" :key="metric.key" :label="metric.label" :value="dashboard.summary[metric.key]" :helper="metric.helper" /></section>
+        <section class="panel" aria-labelledby="recent-title">
+            <div class="panel-header"><div><h2 id="recent-title">รายการคำขอล่าสุด</h2><p>แสดงสูงสุด 8 รายการ ตามเวลาสร้างคำขอ</p></div><Link href="/app/bookings" class="button-secondary">ดูประวัติการจอง</Link></div>
+            <div v-if="dashboard.recent_bookings.length" class="table-wrap" tabindex="0" role="region" aria-label="รายการคำขอล่าสุด เลื่อนแนวนอนได้">
+                <table><caption class="sr-only">{{ dashboard.scope_label }}</caption><thead><tr><th scope="col">รหัสคำขอ</th><th scope="col">ผู้ขอจอง</th><th scope="col">ห้อง</th><th scope="col">Scenario</th><th scope="col">วันเวลา</th><th scope="col">สถานะ</th></tr></thead>
+                    <tbody><tr v-for="booking in dashboard.recent_bookings" :key="booking.id"><td><Link :href="`/app/bookings/${booking.id}`">#{{ booking.id }}</Link></td><td>{{ booking.requester_name }}</td><td>{{ booking.rooms.join(', ') || 'ไม่ได้ระบุ' }}</td><td>{{ booking.scenario_name ?? 'ไม่ได้ระบุ' }}</td><td><time :datetime="booking.starts_at">{{ dateLabel(booking.starts_at) }}</time><span class="end-time">ถึง {{ dateLabel(booking.ends_at) }}</span></td><td><BookingStatusBadge :status="booking.status" /></td></tr></tbody>
+                </table>
             </div>
-
-            <div class="dashboard-identity">
-                <span>กำลังใช้งานในนาม</span>
-                <strong>{{ page.props.auth.user.college?.name }}</strong>
-                <small>{{ page.props.auth.user.role_label }}</small>
-            </div>
-        </section>
-
-        <section class="dashboard-grid" aria-label="เมนูงาน">
-            <Link
-                v-for="action in quickActions"
-                :key="action.href"
-                :href="action.href"
-                class="dashboard-action"
-            >
-                <span class="dashboard-action-mark" aria-hidden="true"></span>
-                <div>
-                    <h2>{{ action.title }}</h2>
-                    <p>{{ action.description }}</p>
-                </div>
-                <span class="dashboard-action-arrow" aria-hidden="true">→</span>
-            </Link>
-        </section>
-
-        <section class="dashboard-note">
-            <strong>สิทธิ์การใช้งานถูกควบคุมจากระบบ</strong>
-            <p>
-                เมนูที่เห็นเป็นผลจากสิทธิ์ของบทบาทที่กำหนดให้บัญชีนี้
-                และทุกเส้นทางสำคัญมีการตรวจสิทธิ์ซ้ำที่ฝั่งเซิร์ฟเวอร์
-            </p>
+            <div v-else class="empty"><p>ยังไม่มีคำขอในขอบเขตนี้</p><Link v-if="page.props.auth.permissions.includes('booking.create')" href="/app/bookings/create">สร้างคำขอจองแรก</Link></div>
         </section>
     </AppLayout>
 </template>
-
 <style scoped>
-.dashboard-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 28px;
-    margin-bottom: 28px;
-}
-
-.dashboard-eyebrow {
-    margin: 0 0 7px;
-    color: #315b7c;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: .08em;
-}
-
-.dashboard-head h1 {
-    margin: 0;
-    color: #17324f;
-    font-size: clamp(30px, 4vw, 44px);
-    line-height: 1.15;
-}
-
-.dashboard-head > div > p:last-child {
-    max-width: 620px;
-    margin: 10px 0 0;
-    color: #66788a;
-    line-height: 1.7;
-}
-
-.dashboard-identity {
-    display: grid;
-    min-width: 220px;
-    gap: 3px;
-    border-left: 3px solid #315b7c;
-    background: #fff;
-    padding: 14px 18px;
-}
-
-.dashboard-identity span,
-.dashboard-identity small {
-    color: #718096;
-    font-size: 11px;
-}
-
-.dashboard-identity strong {
-    color: #17324f;
-    font-size: 15px;
-}
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-}
-
-.dashboard-action {
-    display: grid;
-    grid-template-columns: 12px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 18px;
-    min-height: 132px;
-    border: 1px solid #dfe6ee;
-    border-radius: 16px;
-    background: #fff;
-    color: inherit;
-    padding: 22px;
-    text-decoration: none;
-    transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease;
-}
-
-.dashboard-action:hover {
-    transform: translateY(-1px);
-    border-color: #aebfce;
-    box-shadow: 0 10px 24px rgba(29, 50, 72, .06);
-}
-
-.dashboard-action-mark {
-    width: 8px;
-    height: 38px;
-    border-radius: 999px;
-    background: #315b7c;
-}
-
-.dashboard-action h2 {
-    margin: 0 0 6px;
-    color: #17324f;
-    font-size: 17px;
-}
-
-.dashboard-action p {
-    margin: 0;
-    color: #6a7b8c;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.dashboard-action-arrow {
-    color: #315b7c;
-    font-size: 22px;
-}
-
-.dashboard-note {
-    margin-top: 22px;
-    border: 1px solid #dfe6ee;
-    border-radius: 14px;
-    background: #f8fafb;
-    padding: 18px 20px;
-}
-
-.dashboard-note strong {
-    color: #17324f;
-    font-size: 14px;
-}
-
-.dashboard-note p {
-    margin: 4px 0 0;
-    color: #718096;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-@media (max-width: 760px) {
-    .dashboard-head {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .dashboard-identity {
-        min-width: 0;
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-}
+.scope-caption{margin:0 0 12px;color:var(--sim-muted);font-size:13px}.end-time{display:block;color:var(--sim-muted);font-size:12px}table{min-width:720px}.page-header-actions{flex-shrink:0}
 </style>
