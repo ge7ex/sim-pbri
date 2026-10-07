@@ -5,14 +5,18 @@ namespace App\Modules\Scenario\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Scenario\Actions\CreateCourseAction;
 use App\Modules\Scenario\Actions\CreateScenarioAction;
+use App\Modules\Scenario\Actions\SyncScenarioEquipmentTemplateAction;
 use App\Modules\Scenario\Actions\UpdateCourseAction;
 use App\Modules\Scenario\Actions\UpdateScenarioAction;
 use App\Modules\Scenario\Http\Requests\StoreCourseRequest;
 use App\Modules\Scenario\Http\Requests\StoreScenarioRequest;
 use App\Modules\Scenario\Http\Requests\UpdateCourseRequest;
+use App\Modules\Scenario\Http\Requests\UpdateScenarioEquipmentTemplateRequest;
 use App\Modules\Scenario\Http\Requests\UpdateScenarioRequest;
 use App\Modules\Scenario\Models\Course;
 use App\Modules\Scenario\Models\Scenario;
+use App\Modules\SimResource\Enums\SimResourceKind;
+use App\Modules\SimResource\Models\SimResource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,14 +26,33 @@ final class ScenarioManagementController extends Controller
 {
     public function index(Request $request): Response
     {
+        $collegeId = $request->user()->college_id;
+
         $courses = Course::query()
-            ->where('college_id', $request->user()->college_id)
-            ->with(['scenarios' => fn ($query) => $query->orderBy('name')])
+            ->where('college_id', $collegeId)
+            ->with([
+                'scenarios' => fn ($query) => $query
+                    ->with(['recommendedResources' => fn ($resourceQuery) => $resourceQuery->orderBy('name')])
+                    ->orderBy('name'),
+            ])
             ->orderBy('name')
             ->get();
 
+        $equipment = SimResource::query()
+            ->where('college_id', $collegeId)
+            ->where('kind', SimResourceKind::Equipment)
+            ->orderBy('name')
+            ->get([
+                'id',
+                'name',
+                'status',
+                'quantity_total',
+                'location',
+            ]);
+
         return Inertia::render('Modules/Scenario/Pages/Index', [
             'courses' => $courses,
+            'equipment' => $equipment,
         ]);
     }
 
@@ -79,5 +102,20 @@ final class ScenarioManagementController extends Controller
         $action->execute($scenario, $preferredCourse, $request->validated());
 
         return back()->with('success', 'ปรับปรุงสถานการณ์จำลองเรียบร้อยแล้ว');
+    }
+
+    public function updateEquipmentTemplate(
+        UpdateScenarioEquipmentTemplateRequest $request,
+        Scenario $scenario,
+        SyncScenarioEquipmentTemplateAction $action,
+    ): RedirectResponse {
+        $this->authorize('update', $scenario);
+
+        /** @var list<array{id: int, quantity: int}> $equipment */
+        $equipment = $request->validated('equipment');
+
+        $action->execute($scenario, $equipment);
+
+        return back()->with('success', 'ปรับปรุงอุปกรณ์แนะนำเรียบร้อยแล้ว');
     }
 }

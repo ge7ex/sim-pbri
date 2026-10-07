@@ -24,6 +24,10 @@ Route::middleware(['auth', 'access-profile'])
             ->middleware('permission:'.AppPermission::ScenarioCreate->value)
             ->name('store');
 
+        Route::put('/{scenario}/equipment-template', [ScenarioManagementController::class, 'updateEquipmentTemplate'])
+            ->middleware('permission:'.AppPermission::ScenarioUpdate->value)
+            ->name('equipment-template.update');
+
         Route::put('/{scenario}', [ScenarioManagementController::class, 'updateScenario'])
             ->middleware('permission:'.AppPermission::ScenarioUpdate->value)
             ->name('update');
