@@ -84,6 +84,14 @@ final class Booking extends Model
     }
 
     /**
+     * @return HasMany<BookingCustomEquipmentRequest, $this>
+     */
+    public function customEquipmentRequests(): HasMany
+    {
+        return $this->hasMany(BookingCustomEquipmentRequest::class);
+    }
+
+    /**
      * @return BelongsToMany<SimResource, $this>
      */
     public function resources(): BelongsToMany
