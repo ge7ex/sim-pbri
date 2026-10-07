@@ -6,7 +6,9 @@ use App\Core\Enums\AppPermission;
 use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
+use App\Modules\Booking\Models\BookingCustomEquipmentRequest;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
+use App\Modules\Scenario\Models\Scenario;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
@@ -18,11 +20,10 @@ final class CreateBookingAction
 {
     public function __construct(
         private readonly BookingAvailabilityResolver $availabilityResolver,
-    ) {
-    }
+    ) {}
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function execute(array $data, User $actor): Booking
     {
@@ -50,6 +51,28 @@ final class CreateBookingAction
 
         $startsAt = CarbonImmutable::parse((string) $data['starts_at']);
         $endsAt = CarbonImmutable::parse((string) $data['ends_at']);
+        $recommendedIds = [];
+
+        if (! empty($data['scenario_id'])) {
+            $scenario = Scenario::query()
+                ->whereKey($data['scenario_id'])
+                ->where('is_active', true)
+                ->whereHas('course', fn ($query) => $query->where('college_id', $actor->college_id))
+                ->first();
+
+            if (! $scenario) {
+                throw ValidationException::withMessages([
+                    'scenario_id' => 'สถานการณ์จำลองที่เลือกไม่พร้อมใช้งาน',
+                ]);
+            }
+
+            $recommendedIds = $scenario->recommendedResources()
+                ->where('sim_resources.kind', SimResourceKind::Equipment)
+                ->where('sim_resources.college_id', $actor->college_id)
+                ->pluck('sim_resources.id')
+                ->map(static fn (int $id): int => $id)
+                ->all();
+        }
 
         return DB::transaction(function () use (
             $data,
@@ -58,6 +81,7 @@ final class CreateBookingAction
             $quantities,
             $startsAt,
             $endsAt,
+            $recommendedIds,
         ): Booking {
             $resources = SimResource::query()
                 ->whereIn('id', $resourceIds)
@@ -115,6 +139,8 @@ final class CreateBookingAction
             $booking = Booking::query()->create([
                 'college_id' => $actor->college_id,
                 'requested_by_user_id' => $actor->id,
+                'course_id' => $data['course_id'] ?? null,
+                'scenario_id' => $data['scenario_id'] ?? null,
                 'requester_name' => $actor->name,
                 'requester_phone' => $data['requester_phone'] ?? null,
                 'starts_at' => $startsAt,
@@ -128,11 +154,23 @@ final class CreateBookingAction
                 collect($quantities)
                     ->mapWithKeys(
                         static fn (int $quantity, int $resourceId): array => [
-                            $resourceId => ['quantity' => $quantity],
+                            $resourceId => [
+                                'quantity' => $quantity,
+                                'is_auto_recommended' => in_array($resourceId, $recommendedIds, true),
+                            ],
                         ],
                     )
                     ->all(),
             );
+
+            foreach ($data['custom_equipment'] ?? [] as $customEquipment) {
+                BookingCustomEquipmentRequest::query()->create([
+                    'booking_id' => $booking->id,
+                    'name' => $customEquipment['name'],
+                    'quantity' => $customEquipment['quantity'],
+                    'note' => $customEquipment['note'] ?? null,
+                ]);
+            }
 
             $booking->statusTransitions()->create([
                 'from_status' => null,

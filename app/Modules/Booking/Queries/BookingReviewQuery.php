@@ -16,8 +16,17 @@ final class BookingReviewQuery
     {
         return Booking::query()
             ->with([
-                'resources:id,name,kind,status',
+                'resources' => fn ($query) => $query
+                    ->where('college_id', $actor->college_id)
+                    ->select('sim_resources.id', 'name', 'kind', 'status'),
                 'requestedBy:id,name',
+                'course' => fn ($query) => $query
+                    ->where('college_id', $actor->college_id)
+                    ->select('id', 'code', 'name'),
+                'scenario' => fn ($query) => $query
+                    ->whereHas('course', fn ($courseQuery) => $courseQuery->where('college_id', $actor->college_id))
+                    ->select('id', 'name', 'course_id'),
+                'customEquipmentRequests:id,booking_id,name,quantity,note',
             ])
             ->where('college_id', $actor->college_id)
             ->where('status', BookingStatus::Pending)

@@ -8,6 +8,9 @@ use App\Modules\Booking\Http\Requests\BookingFilterRequest;
 use App\Modules\Booking\Http\Requests\StoreBookingRequest;
 use App\Modules\Booking\Models\Booking;
 use App\Modules\Booking\Queries\BookingIndexQuery;
+use App\Modules\Scenario\Models\Course;
+use App\Modules\Scenario\Models\Scenario;
+use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
 use Illuminate\Http\RedirectResponse;
@@ -52,6 +55,22 @@ final class BookingController extends Controller
 
         return Inertia::render('Modules/Booking/Pages/Create', [
             'resources' => $resources,
+            'courses' => Course::query()
+                ->where('college_id', $user->college_id)
+                ->orderBy('name')
+                ->get(['id', 'code', 'name']),
+            'scenarios' => Scenario::query()
+                ->with([
+                    'course:id,college_id,name',
+                    'recommendedResources' => fn ($query) => $query
+                        ->where('college_id', $user->college_id)
+                        ->where('kind', SimResourceKind::Equipment)
+                        ->select('sim_resources.id', 'name', 'kind', 'status', 'quantity_total', 'is_exclusive'),
+                ])
+                ->whereHas('course', fn ($query) => $query->where('college_id', $user->college_id))
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(['id', 'course_id', 'name', 'description']),
         ]);
     }
 
@@ -74,7 +93,16 @@ final class BookingController extends Controller
         $this->authorize('view', $booking);
 
         $booking->load([
-            'resources:id,name,kind,status',
+            'resources' => fn ($query) => $query
+                ->where('college_id', $booking->college_id)
+                ->select('sim_resources.id', 'name', 'kind', 'status'),
+            'course' => fn ($query) => $query
+                ->where('college_id', $booking->college_id)
+                ->select('id', 'code', 'name'),
+            'scenario' => fn ($query) => $query
+                ->whereHas('course', fn ($courseQuery) => $courseQuery->where('college_id', $booking->college_id))
+                ->select('id', 'name', 'course_id'),
+            'customEquipmentRequests:id,booking_id,name,quantity,note',
             'requestedBy:id,name',
             'reviewedBy:id,name',
             'statusTransitions.actor:id,name',
