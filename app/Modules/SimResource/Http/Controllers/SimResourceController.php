@@ -7,20 +7,22 @@ use App\Core\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
-use App\Modules\SimResource\Actions\CreateSimResourceAction;
-use App\Modules\SimResource\Actions\UpdateSimResourceAction;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Http\Requests\SimulatorRoomAvailabilityRequest;
 use App\Modules\SimResource\Http\Requests\StoreSimResourceRequest;
 use App\Modules\SimResource\Http\Requests\UpdateSimResourceRequest;
 use App\Modules\SimResource\Models\SimResource;
+use App\Modules\SimResource\Services\RoomImageStorage;
+use App\Modules\SimResource\Services\SaveResourceWithImage;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 final class SimResourceController extends Controller
 {
@@ -54,9 +56,22 @@ final class SimResourceController extends Controller
         return response()->json(['rooms' => array_map(static fn ($id) => ['id' => $id, 'available' => ! in_array($id, $blocked, true)], $ids)]);
     }
 
+    public function image(SimResource $simResource, RoomImageStorage $images): BinaryFileResponse
+    {
+        $this->authorize('viewImage', $simResource);
+        abort_unless($images->validPath($simResource->image_path, $simResource->college_id), 404);
+        $disk = Storage::disk('room-images');
+        abort_unless($disk->exists($simResource->image_path), 404);
+
+        return response()->file($disk->path($simResource->image_path), [
+            'Content-Type' => 'image/jpeg', 'X-Content-Type-Options' => 'nosniff',
+            'Cache-Control' => 'private, no-store', 'Content-Disposition' => 'inline; filename="room.jpg"',
+        ]);
+    }
+
     public function store(
         StoreSimResourceRequest $request,
-        CreateSimResourceAction $action,
+        SaveResourceWithImage $action,
     ): RedirectResponse {
         $action->execute(
             data: $request->validated(),
@@ -69,7 +84,7 @@ final class SimResourceController extends Controller
     public function update(
         UpdateSimResourceRequest $request,
         SimResource $simResource,
-        UpdateSimResourceAction $action,
+        SaveResourceWithImage $action,
     ): RedirectResponse {
         $this->authorize('update', $simResource);
 

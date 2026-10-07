@@ -29,7 +29,19 @@ final class SimResource extends Model
         'floor',
         'capacity',
         'responsible_staff_user_id',
+        'image_path',
     ];
+
+    protected $hidden = ['image_path'];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->kind === SimResourceKind::Room && $this->image_path
+            ? route('resources.image', $this->id).'?v='.substr(hash('sha256', $this->image_path), 0, 16)
+            : null;
+    }
 
     /**
      * @return BelongsTo<College, $this>

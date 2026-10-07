@@ -30,6 +30,13 @@ return [
 
     'disks' => [
 
+        'room-images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/room-images'),
+            'serve' => false,
+            'throw' => true,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

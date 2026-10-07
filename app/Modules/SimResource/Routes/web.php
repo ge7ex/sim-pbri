@@ -16,6 +16,8 @@ Route::middleware(['auth', 'access-profile'])
             ->middleware('permission:'.AppPermission::BookingCreate->value)
             ->name('availability');
 
+        Route::get('/{simResource}/image', [SimResourceController::class, 'image'])->name('image');
+
         Route::post('/', [SimResourceController::class, 'store'])
             ->middleware('permission:'.AppPermission::ResourceCreate->value)
             ->name('store');

@@ -57,6 +57,7 @@ final class BookingController extends Controller
                 'building',
                 'floor',
                 'capacity',
+                'image_path',
             ]);
 
         return Inertia::render('Modules/Booking/Pages/Create', [

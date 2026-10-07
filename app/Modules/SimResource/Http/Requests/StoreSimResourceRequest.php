@@ -23,6 +23,8 @@ final class StoreSimResourceRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => ['bail', 'nullable', Rule::prohibitedIf(fn () => $this->input('kind') !== 'room' || $this->boolean('remove_image')), 'image', 'mimes:jpg,jpeg,png,webp', 'mimetypes:image/jpeg,image/png,image/webp', 'max:5120', Rule::dimensions()->maxWidth(3000)->maxHeight(3000)],
+            'remove_image' => ['sometimes', 'boolean', Rule::prohibitedIf(fn () => $this->boolean('remove_image') && $this->input('kind') !== 'room')],
             'name' => ['required', 'string', 'max:255'],
             'kind' => ['required', Rule::enum(SimResourceKind::class)],
             'status' => ['required', Rule::enum(SimResourceStatus::class)],

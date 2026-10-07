@@ -2,9 +2,11 @@
 import { computed, ref } from 'vue';
 import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import RoomImageInput from '../../../Components/RoomImageInput.vue';
 
 interface StaffItem { id: number; name: string }
 interface ResourceItem {
+    image_url: string | null;
     id: number; name: string; kind: 'room' | 'equipment'; status: 'ready' | 'pending' | 'maintenance';
     quantity_total: number; is_exclusive: boolean; location: string | null; description: string | null;
     building: string | null; floor: string | null; capacity: number | null;
@@ -15,15 +17,15 @@ interface SharedProps { auth: { user: any; permissions: string[] } }
 const props = defineProps<{ resources: ResourceItem[]; responsibleStaff: StaffItem[] }>();
 const page = usePage<SharedProps>();
 const canManage = computed(() => page.props.auth.permissions.includes('sim-resource.create') && page.props.auth.permissions.includes('sim-resource.update'));
-const form = useForm({ name: '', kind: 'room' as 'room' | 'equipment', status: 'ready', quantity_total: 1, is_exclusive: true, location: '', description: '', building: '', floor: '', capacity: null as number | null, responsible_staff_user_id: null as number | null });
+const form = useForm({ name: '', kind: 'room' as 'room' | 'equipment', status: 'ready', quantity_total: 1, is_exclusive: true, location: '', description: '', building: '', floor: '', capacity: null as number | null, responsible_staff_user_id: null as number | null, image: null as File | null, remove_image: false });
 const editingRoomId = ref<number | null>(null);
-const roomEdit = useForm({ name: '', kind: 'room' as 'room' | 'equipment', status: 'ready', quantity_total: 1, is_exclusive: true, location: '', description: '', building: '', floor: '', capacity: null as number | null, responsible_staff_user_id: null as number | null });
+const roomEdit = useForm({ name: '', kind: 'room' as 'room' | 'equipment', status: 'ready', quantity_total: 1, is_exclusive: true, location: '', description: '', building: '', floor: '', capacity: null as number | null, responsible_staff_user_id: null as number | null, image: null as File | null, remove_image: false });
 
-function handleKindChange(): void { if (form.kind === 'room') { form.quantity_total = 1; form.is_exclusive = true; } }
+function handleKindChange(): void { if (form.kind === 'room') { form.quantity_total = 1; form.is_exclusive = true; } else { form.image = null; } }
 function submit(): void { form.post('/app/resources', { onSuccess: () => form.reset() }); }
 function startRoomEdit(resource: ResourceItem): void {
     editingRoomId.value = resource.id;
-    roomEdit.clearErrors();
+    roomEdit.clearErrors(); roomEdit.image = null; roomEdit.remove_image = false;
     roomEdit.name = resource.name; roomEdit.kind = resource.kind; roomEdit.status = resource.status;
     roomEdit.quantity_total = resource.quantity_total; roomEdit.is_exclusive = resource.is_exclusive;
     roomEdit.location = resource.location ?? ''; roomEdit.description = resource.description ?? '';
@@ -32,7 +34,7 @@ function startRoomEdit(resource: ResourceItem): void {
 }
 function saveRoom(): void {
     if (editingRoomId.value === null) return;
-    roomEdit.put(`/app/resources/${editingRoomId.value}`, { preserveScroll: true, onSuccess: () => { editingRoomId.value = null; } });
+    roomEdit.transform(data => ({ ...data, _method: 'put' })).post(`/app/resources/${editingRoomId.value}`, { preserveScroll: true, onSuccess: () => { editingRoomId.value = null; } });
 }
 function handleStatusChange(resource: ResourceItem, event: Event): void {
     const status = (event.target as HTMLSelectElement).value as ResourceItem['status'];
@@ -63,6 +65,8 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                 <label>ตำแหน่ง<input v-model="form.location" maxlength="255"></label>
                 <label v-if="form.kind === 'equipment'" class="checkbox"><input v-model="form.is_exclusive" type="checkbox"> กันเวลาแบบ exclusive</label>
                 <label class="wide">รายละเอียด<textarea v-model="form.description" rows="3" maxlength="2000"></textarea></label>
+                <RoomImageInput v-if="form.kind === 'room'" v-model="form.image" :error="form.errors.image" :disabled="form.processing" />
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100" aria-label="ความคืบหน้าการอัปโหลด"></progress>
                 <button type="submit" :disabled="form.processing">{{ form.processing ? 'กำลังบันทึก...' : 'เพิ่มทรัพยากร' }}</button>
             </form>
         </details>
@@ -72,7 +76,7 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                 <table><thead><tr><th scope="col">ชื่อ</th><th scope="col">ประเภท</th><th scope="col">อาคาร / ชั้น</th><th scope="col">ความจุ / จำนวน</th><th scope="col">ผู้รับผิดชอบ</th><th scope="col">ตำแหน่ง</th><th scope="col">สถานะ</th><th v-if="canManage">จัดการ</th></tr></thead>
                     <tbody><template v-for="resource in resources" :key="resource.id">
                         <tr>
-                            <td><strong>{{ resource.name }}</strong><span>{{ resource.description ?? '' }}</span></td>
+                            <td><img v-if="resource.image_url" :src="resource.image_url" :alt="`รูปห้อง ${resource.name}`" class="room-thumb" loading="lazy"><strong>{{ resource.name }}</strong><span>{{ resource.description ?? '' }}</span></td>
                             <td>{{ resource.kind === 'room' ? 'ห้องปฏิบัติการ' : 'อุปกรณ์เสริม' }}<span v-if="resource.kind === 'equipment'">{{ resource.is_exclusive ? 'ใช้แยกเฉพาะการจอง' : 'แบ่งใช้ตามจำนวน' }}</span></td>
                             <td>{{ resource.kind === 'room' ? [resource.building, resource.floor ? `ชั้น ${resource.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' : '—' }}</td>
                             <td>{{ resource.kind === 'room' ? (resource.capacity === null ? 'ยังไม่กำหนด — จองไม่ได้' : `${resource.capacity} คน`) : `${resource.quantity_total} ชิ้น` }}</td>
@@ -90,6 +94,8 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                             <label>ตำแหน่ง<input v-model="roomEdit.location" maxlength="255"></label>
                             <label>สถานะ<select v-model="roomEdit.status"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option></select></label>
                             <label class="wide">รายละเอียด<textarea v-model="roomEdit.description" rows="2" maxlength="2000"></textarea></label>
+                            <RoomImageInput v-model="roomEdit.image" v-model:remove="roomEdit.remove_image" :current-url="resource.image_url" :error="roomEdit.errors.image || roomEdit.errors.remove_image" :disabled="roomEdit.processing" />
+                            <progress v-if="roomEdit.progress" :value="roomEdit.progress.percentage" max="100" aria-label="ความคืบหน้าการอัปโหลด"></progress>
                             <div class="edit-actions"><button type="submit" :disabled="roomEdit.processing">บันทึกข้อมูลห้อง</button><button type="button" class="secondary" @click="editingRoomId = null">ยกเลิก</button></div>
                         </form></td></tr>
                     </template></tbody>
@@ -101,5 +107,5 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
 </template>
 
 <style scoped>
-.heading{margin-bottom:18px}.heading p{margin:0}.heading h1{margin:5px 0}.panel{margin-bottom:14px}.panel h2{margin:0 0 16px}.resource-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.resource-form label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.resource-form .wide{grid-column:span 2}.resource-form .checkbox{display:flex;align-items:center;gap:8px}.resource-form .checkbox input{width:auto}.resource-form button,.edit-actions button:not(.secondary){align-self:end;min-height:41px;border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:9px 12px;font-weight:800;cursor:pointer}.table-wrap{overflow-x:auto}th,td{padding:13px;border-bottom:1px solid var(--sim-border);text-align:left;vertical-align:top}td strong,td span{display:block}td span{margin-top:3px;color:var(--sim-muted);font-size:12px}.secondary{cursor:pointer}.edit-form{padding:12px}.edit-actions{display:flex;gap:8px;align-items:end}.error{color:#a43b3b;font-size:12px}.empty{padding:30px;text-align:center;color:var(--sim-muted)}@media(max-width:760px){.resource-form{grid-template-columns:1fr}.resource-form .wide{grid-column:auto}}
+.room-thumb{width:100px;height:65px;object-fit:cover;border-radius:8px;margin-bottom:8px}.heading{margin-bottom:18px}.heading p{margin:0}.heading h1{margin:5px 0}.panel{margin-bottom:14px}.panel h2{margin:0 0 16px}.resource-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.resource-form label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.resource-form .wide{grid-column:span 2}.resource-form .checkbox{display:flex;align-items:center;gap:8px}.resource-form .checkbox input{width:auto}.resource-form button,.edit-actions button:not(.secondary){align-self:end;min-height:41px;border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:9px 12px;font-weight:800;cursor:pointer}.table-wrap{overflow-x:auto}th,td{padding:13px;border-bottom:1px solid var(--sim-border);text-align:left;vertical-align:top}td strong,td span{display:block}td span{margin-top:3px;color:var(--sim-muted);font-size:12px}.secondary{cursor:pointer}.edit-form{padding:12px}.edit-actions{display:flex;gap:8px;align-items:end}.error{color:#a43b3b;font-size:12px}.empty{padding:30px;text-align:center;color:var(--sim-muted)}@media(max-width:760px){.resource-form{grid-template-columns:1fr}.resource-form .wide{grid-column:auto}}
 .resource-create summary{color:var(--sim-blue);font-weight:800;cursor:pointer;min-height:32px}.resource-create[open] summary{margin-bottom:20px}table{min-width:850px}</style>
