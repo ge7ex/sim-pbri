@@ -101,6 +101,11 @@ final class Booking extends Model
         return $this->belongsTo(SimulatorAsset::class);
     }
 
+    public function participantAmendments(): HasMany
+    {
+        return $this->hasMany(BookingParticipantAmendment::class)->orderBy('id');
+    }
+
     public function resources(): BelongsToMany
     {
         return $this->belongsToMany(

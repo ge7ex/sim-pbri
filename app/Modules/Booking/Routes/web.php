@@ -4,6 +4,7 @@ use App\Core\Enums\AppPermission;
 use App\Modules\Booking\Http\Controllers\BookingCalendarController;
 use App\Modules\Booking\Http\Controllers\BookingCancellationController;
 use App\Modules\Booking\Http\Controllers\BookingController;
+use App\Modules\Booking\Http\Controllers\BookingParticipantController;
 use App\Modules\Booking\Http\Controllers\BookingReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,10 @@ Route::middleware(['auth', 'access-profile'])
         Route::post('/bookings/{booking}/cancel', BookingCancellationController::class)
             ->middleware('permission:'.AppPermission::BookingCancel->value)
             ->name('bookings.cancel');
+
+        Route::post('/bookings/{booking}/participant-count', BookingParticipantController::class)
+            ->middleware('permission:'.AppPermission::BookingApprove->value)
+            ->name('bookings.participant-count');
 
         Route::get('/calendar', BookingCalendarController::class)
             ->middleware('permission:'.AppPermission::BookingView->value)

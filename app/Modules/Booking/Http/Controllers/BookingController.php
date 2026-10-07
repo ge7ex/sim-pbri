@@ -120,10 +120,12 @@ final class BookingController extends Controller
             'requestedBy:id,name',
             'reviewedBy:id,name',
             'statusTransitions.actor:id,name',
+            'participantAmendments.actor:id,name',
         ]);
 
         return Inertia::render('Modules/Booking/Pages/Show', [
             'booking' => $booking,
+            'canFillParticipantCount' => request()->user()->can('fillParticipantCount', $booking),
         ]);
     }
 }

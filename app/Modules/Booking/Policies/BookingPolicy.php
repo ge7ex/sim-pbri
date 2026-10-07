@@ -39,6 +39,15 @@ final class BookingPolicy
         return $this->approve($user, $booking);
     }
 
+    public function fillParticipantCount(User $user, Booking $booking): bool
+    {
+        return $user->college_id !== null
+            && $user->canAccess(AppPermission::BookingApprove)
+            && $booking->college_id === $user->college_id
+            && $booking->participant_count === null
+            && in_array($booking->status, [BookingStatus::Pending, BookingStatus::Approved, BookingStatus::Rejected], true);
+    }
+
     public function recall(User $user, Booking $booking): bool
     {
         return $user->canAccess(AppPermission::BookingApprove)

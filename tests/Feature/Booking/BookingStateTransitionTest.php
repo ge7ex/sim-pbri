@@ -56,6 +56,11 @@ final class BookingStateTransitionTest extends TestCase
             'capacity' => 20,
         ]);
 
+        $ownRoom = $room->replicate();
+        $ownRoom->name = 'SIM Lab 1';
+        $ownRoom->save();
+        $booking->resources()->attach($ownRoom->id, ['quantity' => 1]);
+
         $other = Booking::query()->create([
             'college_id' => $requester->college_id,
             'requested_by_user_id' => $requester->id,
@@ -76,9 +81,14 @@ final class BookingStateTransitionTest extends TestCase
         $this->actingAs($staff)
             ->from('/app/review')
             ->post("/app/bookings/{$booking->id}/approve")
-            ->assertSessionHasErrors('resources');
+            ->assertSessionHasErrors(['resources' => 'ทรัพยากร "Resource 1" มีจำนวนคงเหลือไม่เพียงพอในช่วงเวลาที่เลือก']);
 
         $this->assertSame(BookingStatus::Pending, $booking->refresh()->status);
+        $this->assertSame(0, $booking->statusTransitions()->count());
+
+        $resource->update(['quantity_total' => 5]);
+        $this->actingAs($staff)->post("/app/bookings/{$booking->id}/approve")->assertSessionHasNoErrors();
+        $this->assertSame(BookingStatus::Approved, $booking->refresh()->status);
     }
 
     public function test_approval_is_blocked_when_room_capacity_drops_below_the_requested_participant_count(): void

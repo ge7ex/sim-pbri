@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 
@@ -20,6 +20,7 @@ interface BookingDetail {
     simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } } | null;
     resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean } }>;
     custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
+    participant_amendments: Array<{ id: number; participant_count: number; reason: string; created_at: string; actor: { name: string } }>;
     status_transitions: Array<{
         id: number;
         from_status: string | null;
@@ -38,9 +39,13 @@ interface SharedProps {
     };
 }
 
-const props = defineProps<{ booking: BookingDetail }>();
+const props = defineProps<{ booking: BookingDetail; canFillParticipantCount: boolean }>();
 const page = usePage<SharedProps>();
 const recallReason = ref('');
+const participantForm = useForm({ participant_count: null as number | null, reason: '' });
+function fillParticipantCount(): void {
+    participantForm.post(`/app/bookings/${props.booking.id}/participant-count`, { preserveScroll: true });
+}
 function simulatorStatusLabel(status: string): string {
     const labels: Record<string, string> = { active: 'พร้อมใช้งาน', disabled: 'ปิดใช้งาน', maintenance: 'อยู่ระหว่างบำรุงรักษา' };
     return labels[status] ?? status;
@@ -95,6 +100,27 @@ function recallBooking(): void {
             <div><span>รายวิชา</span><strong>{{ booking.course?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
             <div><span>สถานการณ์จำลอง</span><strong>{{ booking.scenario?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
             <div><span>ผลการตรวจสอบ</span><strong>{{ booking.review_reason ?? '-' }}</strong></div>
+        </section>
+
+        <section v-if="canFillParticipantCount" class="panel">
+            <h2>เติมจำนวนผู้เข้าใช้งานของคำขอเดิม</h2>
+            <p>ตรวจสอบจำนวนกับผู้จองก่อนบันทึก ระบบจะตรวจความจุห้องและเก็บประวัติการแก้ไข</p>
+            <form class="recall" @submit.prevent="fillParticipantCount">
+                <label>จำนวนผู้เข้าใช้งาน (คน)<input v-model.number="participantForm.participant_count" type="number" min="1" max="10000" required></label>
+                <label>เหตุผลและแหล่งยืนยันจำนวน<textarea v-model="participantForm.reason" rows="3" maxlength="2000" required></textarea></label>
+                <p v-if="participantForm.errors.participant_count" role="alert">{{ participantForm.errors.participant_count }}</p>
+                <p v-if="participantForm.errors.reason" role="alert">{{ participantForm.errors.reason }}</p>
+                <button type="submit" :disabled="participantForm.processing">บันทึกจำนวนผู้เข้าใช้งาน</button>
+            </form>
+        </section>
+
+        <section v-if="booking.participant_amendments.length" class="panel">
+            <h2>ประวัติการเติมจำนวนผู้เข้าใช้งาน</h2>
+            <ul class="timeline"><li v-for="amendment in booking.participant_amendments" :key="amendment.id">
+                <strong>ยังไม่ระบุ → {{ amendment.participant_count }} คน</strong>
+                <p>{{ amendment.actor.name }} · {{ new Date(amendment.created_at).toLocaleString('th-TH') }}</p>
+                <p>{{ amendment.reason }}</p>
+            </li></ul>
         </section>
 
         <section class="panel">
@@ -154,5 +180,5 @@ function recallBooking(): void {
 
 <style scoped>
 .action-errors{margin-bottom:14px;border:1px solid #e5c1c1;border-radius:10px;padding:12px 16px;color:#a43b3b;background:#fff}.action-errors p{margin:4px 0}
-.heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}.heading a{color:#315b7c;font-size:13px;font-weight:800;text-decoration:none}.heading h1{margin:8px 0 0;color:#17324f;font-size:32px}.panel{margin-bottom:14px;border:1px solid #dfe6ee;border-radius:16px;background:#fff;padding:20px}.panel h2{margin:0 0 14px;color:#17324f;font-size:18px}.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.detail-grid div{display:grid;gap:5px}.detail-grid span{color:#718096;font-size:12px}.detail-grid strong{color:#263849}.resource-list{display:grid;gap:8px}.resource-list div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #edf1f4;padding:9px 0}.resource-list span{color:#718096}.timeline{display:grid;gap:12px;margin:0;padding-left:20px}.timeline li{padding-left:6px}.timeline li>div{display:flex;justify-content:space-between;gap:16px}.timeline span{color:#718096;font-size:12px}.timeline p{margin:5px 0 0;color:#53677a}.actions{display:flex;gap:16px;align-items:flex-start}.actions button{border:1px solid #cfd8e1;border-radius:9px;background:#fff;color:#7c3434;padding:10px 14px;font-weight:800;cursor:pointer}.recall{display:grid;gap:8px;flex:1}.recall label{display:grid;gap:6px;color:#526578;font-size:12px;font-weight:800}.recall textarea{border:1px solid #cfd8e1;border-radius:9px;padding:10px;font:inherit}.recall button{width:fit-content;color:#315b7c}.recall button:disabled{opacity:.5}@media(max-width:760px){.detail-grid{grid-template-columns:1fr}.timeline li>div,.actions{display:grid}}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}.heading a{color:#315b7c;font-size:13px;font-weight:800;text-decoration:none}.heading h1{margin:8px 0 0;color:#17324f;font-size:32px}.panel{margin-bottom:14px;border:1px solid #dfe6ee;border-radius:16px;background:#fff;padding:20px}.panel h2{margin:0 0 14px;color:#17324f;font-size:18px}.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.detail-grid div{display:grid;gap:5px}.detail-grid span{color:#718096;font-size:12px}.detail-grid strong{color:#263849}.resource-list{display:grid;gap:8px}.resource-list div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #edf1f4;padding:9px 0}.resource-list span{color:#718096}.timeline{display:grid;gap:12px;margin:0;padding-left:20px}.timeline li{padding-left:6px}.timeline li>div{display:flex;justify-content:space-between;gap:16px}.timeline span{color:#718096;font-size:12px}.timeline p{margin:5px 0 0;color:#53677a}.actions{display:flex;gap:16px;align-items:flex-start}.actions button{border:1px solid #cfd8e1;border-radius:9px;background:#fff;color:#7c3434;padding:10px 14px;font-weight:800;cursor:pointer}.recall{display:grid;gap:8px;flex:1}.recall label{display:grid;gap:6px;color:#526578;font-size:12px;font-weight:800}.recall input,.recall textarea{border:1px solid #cfd8e1;border-radius:9px;padding:10px;font:inherit}.recall button{width:fit-content;color:#315b7c}.recall button:disabled{opacity:.5}@media(max-width:760px){.detail-grid{grid-template-columns:1fr}.timeline li>div,.actions{display:grid}}
 </style>

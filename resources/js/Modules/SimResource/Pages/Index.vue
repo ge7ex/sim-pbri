@@ -68,13 +68,13 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
         </section>
         <section class="panel">
             <div v-if="resources.length" class="table-wrap">
-                <table><thead><tr><th>ชื่อ</th><th>ประเภท</th><th>อาคาร / ชั้น</th><th>ความจุ</th><th>ผู้รับผิดชอบ</th><th>ตำแหน่ง</th><th>สถานะ</th><th v-if="canManage">จัดการ</th></tr></thead>
+                <table><thead><tr><th>ชื่อ</th><th>ประเภท</th><th>อาคาร / ชั้น</th><th>ความจุ / จำนวน</th><th>ผู้รับผิดชอบ</th><th>ตำแหน่ง</th><th>สถานะ</th><th v-if="canManage">จัดการ</th></tr></thead>
                     <tbody><template v-for="resource in resources" :key="resource.id">
                         <tr>
                             <td><strong>{{ resource.name }}</strong><span>{{ resource.description ?? '' }}</span></td>
                             <td>{{ resource.kind === 'room' ? 'ห้องปฏิบัติการ' : 'อุปกรณ์เสริม' }}</td>
                             <td>{{ resource.kind === 'room' ? [resource.building, resource.floor ? `ชั้น ${resource.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' : '—' }}</td>
-                            <td>{{ resource.kind === 'room' ? (resource.capacity ?? 'ยังไม่กำหนด — จองไม่ได้') : '—' }}</td>
+                            <td>{{ resource.kind === 'room' ? (resource.capacity === null ? 'ยังไม่กำหนด — จองไม่ได้' : `${resource.capacity} คน`) : `${resource.quantity_total} ชิ้น` }}</td>
                             <td>{{ resource.responsible_staff?.name ?? '—' }}</td>
                             <td>{{ resource.location ?? '—' }}</td>
                             <td><select v-if="canManage" :value="resource.status" :aria-label="`สถานะ ${resource.name}`" @change="handleStatusChange(resource, $event)"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option></select><span v-else>{{ resource.status }}</span></td>
