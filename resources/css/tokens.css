@@ -1,0 +1,22 @@
+:root {
+    --sim-navy: #0f2742;
+    --sim-blue: #1f4f7a;
+    --sim-text: #334155;
+    --sim-muted: #64748b;
+    --sim-border: #e2e8f0;
+    --sim-surface: #ffffff;
+    --sim-soft: #f8fafc;
+    --sim-page: #f1f5f9;
+    --sim-tint: #e0ecf8;
+    --sim-success: #25623d;
+    --sim-success-bg: #e8f6ee;
+    --sim-danger: #8a3a3a;
+    --sim-danger-bg: #f7ecec;
+    --sim-warning: #78581c;
+    --sim-warning-bg: #fff4dd;
+    --sim-radius: 16px;
+    --sim-control-radius: 9px;
+    --sim-space-sm: 8px;
+    --sim-space-md: 16px;
+    --sim-space-lg: 24px;
+}
