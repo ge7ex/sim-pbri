@@ -12,6 +12,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 final class Scenario extends Model
 {
     /**
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
+    /**
      * @var list<string>
      */
     protected $fillable = [
