@@ -1,0 +1,1111 @@
+[
+  {
+    "role": "ผู้ดูแลระบบ",
+    "checks": 36,
+    "pageErrors": [],
+    "results": [
+      {
+        "path": "/app",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "เพิ่มทรัพยากร",
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "เพิ่มทรัพยากร",
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "เพิ่มทรัพยากร",
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "เพิ่มทรัพยากร",
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "เพิ่มประเภทเครื่องจำลอง",
+          "เพิ่มทรัพย์สิน",
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "เพิ่มประเภทเครื่องจำลอง",
+          "เพิ่มทรัพย์สิน",
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "เพิ่มประเภทเครื่องจำลอง",
+          "เพิ่มทรัพย์สิน",
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "เพิ่มประเภทเครื่องจำลอง",
+          "เพิ่มทรัพย์สิน",
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "เพิ่มรายวิชา",
+          "เพิ่มสถานการณ์จำลอง",
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "เพิ่มรายวิชา",
+          "เพิ่มสถานการณ์จำลอง",
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "เพิ่มรายวิชา",
+          "เพิ่มสถานการณ์จำลอง",
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "เพิ่มรายวิชา",
+          "เพิ่มสถานการณ์จำลอง",
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      }
+    ]
+  },
+  {
+    "role": "เจ้าหน้าที่",
+    "checks": 36,
+    "pageErrors": [],
+    "results": [
+      {
+        "path": "/app",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/review",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "คำขอที่รอตรวจสอบ",
+          "รายละเอียดคำขอ"
+        ],
+        "active": "ตรวจสอบคำขอ",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/resources",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ทรัพยากรของหน่วยงาน"
+        ],
+        "active": "ทรัพยากร SIM",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/simulators",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ประเภทเครื่องจำลอง",
+          "ทะเบียนทรัพย์สิน"
+        ],
+        "active": "หุ่นจำลองและทรัพย์สิน",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      },
+      {
+        "path": "/app/scenarios",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "รายวิชาและสถานการณ์"
+        ],
+        "active": "รายวิชาและสถานการณ์",
+        "labels": true
+      }
+    ]
+  },
+  {
+    "role": "อาจารย์ / ผู้สอน",
+    "checks": 20,
+    "pageErrors": [],
+    "results": [
+      {
+        "path": "/app",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ภาพรวมคำขอ",
+          "รายการคำขอล่าสุด"
+        ],
+        "active": "หน้าหลัก",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/create",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "1) ห้องและช่วงเวลา",
+          "2) ข้อมูลการใช้งาน",
+          "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+          "4) อุปกรณ์",
+          "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        ],
+        "active": "ส่งคำขอจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ค้นหาคำขอ",
+          "รายการคำขอจอง"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ",
+          "การดำเนินการ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ",
+          "การดำเนินการ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ",
+          "การดำเนินการ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/bookings/1",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ข้อมูลคำขอและช่วงเวลา",
+          "เครื่องจำลอง",
+          "ห้องและอุปกรณ์",
+          "คำขออุปกรณ์เพิ่มเติม",
+          "ประวัติสถานะ",
+          "การดำเนินการ"
+        ],
+        "active": "ประวัติการจอง",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 1440,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 1024,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 768,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      },
+      {
+        "path": "/app/calendar",
+        "width": 390,
+        "overflow": false,
+        "headings": [
+          "ตารางการใช้ห้องและทรัพยากร"
+        ],
+        "active": "ปฏิทินการใช้งาน",
+        "labels": true
+      }
+    ]
+  }
+]
