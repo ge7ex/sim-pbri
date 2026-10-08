@@ -1,0 +1,99 @@
+{
+  "admin": {
+    "checks": [
+      {
+        "editTemporaryRoom": true
+      },
+      {
+        "width": 1440,
+        "confirmationCancel": true,
+        "historicalDeleteBlocked": true,
+        "privateImageUnchanged": true,
+        "noDocumentOverflow": true
+      },
+      {
+        "width": 390,
+        "confirmationCancel": true,
+        "historicalDeleteBlocked": true,
+        "privateImageUnchanged": true,
+        "noDocumentOverflow": true
+      },
+      {
+        "unusedDeleted": true,
+        "repeatedSubmissionDisabled": true,
+        "postDeleteFocus": true
+      }
+    ]
+  },
+  "staff": {
+    "role": "staff",
+    "widths": [
+      {
+        "width": 1440,
+        "readOnly": true,
+        "noDelete": true,
+        "noOverflow": true
+      },
+      {
+        "width": 390,
+        "readOnly": true,
+        "noDelete": true,
+        "noOverflow": true
+      }
+    ],
+    "directDelete": 403,
+    "reviewAccessible": true,
+    "financialFieldsRedacted": true
+  },
+  "lecturer": {
+    "role": "lecturer",
+    "checks": [
+      {
+        "width": 1440,
+        "denied": {
+          "/app/resources": 403,
+          "/app/review": 403,
+          "/app/simulators": 403,
+          "/app/scenarios": 403
+        },
+        "bookingRoomSelection": true,
+        "noOverflow": true
+      },
+      {
+        "width": 390,
+        "denied": {
+          "/app/resources": 403,
+          "/app/review": 403,
+          "/app/simulators": 403,
+          "/app/scenarios": 403
+        },
+        "bookingRoomSelection": true,
+        "noOverflow": true
+      }
+    ],
+    "bookingNotSubmitted": true
+  },
+  "runtime": {
+    "origin": "http://127.0.0.1:8000",
+    "environment": "local",
+    "driver": "mysql",
+    "database": "sim_pbri",
+    "college_id": 9,
+    "normal_form_login": true,
+    "final_counts": {
+      "users": 3,
+      "resources": 1,
+      "bookings": 0
+    },
+    "temporary_resources_remaining": 0,
+    "bookings_submitted_by_qa": 0,
+    "runtime_asset_count": 0,
+    "runtime_image_removed_during_qa": true,
+    "image_change_provenance_confirmed": false
+  },
+  "limits": [
+    "Historical booking statuses, college isolation, FK race and private-image cleanup were verified on guarded SQLite :memory:.",
+    "Runtime has no simulator assets; nonempty financial-field redaction remains covered by the existing automated suite.",
+    "Original room image was removed during QA by Admin ID 18; the provenance of this separate edit is unconfirmed. No restoration or status reversal was performed."
+  ]
+}
