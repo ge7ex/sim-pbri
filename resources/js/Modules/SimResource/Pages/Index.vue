@@ -14,11 +14,26 @@ interface ResourceItem {
     building: string | null; floor: string | null; capacity: number | null;
     responsible_staff_user_id: number | null; responsible_staff: StaffItem | null;
 }
-interface SharedProps { auth: { user: any; permissions: string[] } }
+interface SharedProps { auth: { user: any; permissions: string[] }; flash?: { success?: string } }
 
 const props = defineProps<{ resources: ResourceItem[]; responsibleStaff: StaffItem[] }>();
 const page = usePage<SharedProps>();
 const canManage = computed(() => page.props.auth.permissions.includes('sim-resource.create') && page.props.auth.permissions.includes('sim-resource.update'));
+const canDelete = computed(() => page.props.auth.permissions.includes('sim-resource.delete'));
+const deletion = useForm({});
+const deletionError = computed(() => Object.values(deletion.errors).join(' '));
+const resourceList = ref<HTMLElement | null>(null);
+function deleteResource(resource: ResourceItem): void {
+    if (deletion.processing || !window.confirm(`ต้องการลบ “${resource.name}” ใช่หรือไม่
+ทรัพยากรที่มีประวัติการจอง รูปห้อง หรือข้อมูลชุดแนะนำจะไม่สามารถลบได้`)) return;
+    deletion.delete(`/app/resources/${resource.id}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+            if (editingRoomId.value === resource.id) editingRoomId.value = null;
+            nextTick(() => resourceList.value?.focus({ preventScroll: true }));
+        },
+    });
+}
 const form = useForm({ name: '', kind: 'room' as 'room' | 'equipment', status: 'ready', quantity_total: 1, is_exclusive: true, location: '', description: '', building: '', floor: '', capacity: null as number | null, responsible_staff_user_id: null as number | null, image: null as File | null, remove_image: false });
 const editingRoomId = ref<number | null>(null);
 const editingRoom = computed(() => props.resources.find(resource => resource.id === editingRoomId.value) ?? null);
@@ -62,6 +77,8 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
     <Head title="ทรัพยากร SIM" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
         <PageHeader title="ทรัพยากร SIM" description="ห้องและอุปกรณ์ของหน่วยงาน จัดการข้อมูลตามสิทธิ์ของคุณ"></PageHeader>
+        <p v-if="page.props.flash?.success" class="section-help" role="status">{{ page.props.flash.success }}</p>
+        <p v-if="deletionError" class="error" role="alert">{{ deletionError }}</p>
         <p v-if="!canManage" class="section-help">คุณมีสิทธิ์ดูข้อมูล แต่ไม่มีสิทธิ์แก้ไขทรัพยากร</p>
         <details v-if="canManage" class="panel resource-create">
             <summary>+ เพิ่มทรัพยากร</summary>
@@ -84,10 +101,10 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                 <button type="submit" :disabled="form.processing">{{ form.processing ? 'กำลังบันทึก...' : 'เพิ่มทรัพยากร' }}</button>
             </form>
         </details>
-        <section class="panel">
-            <SectionHeader title="ทรัพยากรของหน่วยงาน" :description="`${resources.filter(item => item.kind === 'room').length} ห้อง · ${resources.filter(item => item.kind === 'equipment').length} รายการอุปกรณ์`" />
+        <section ref="resourceList" class="panel" tabindex="-1" aria-labelledby="resource-list-title">
+            <SectionHeader id="resource-list-title" title="ทรัพยากรของหน่วยงาน" :description="`${resources.filter(item => item.kind === 'room').length} ห้อง · ${resources.filter(item => item.kind === 'equipment').length} รายการอุปกรณ์`" />
             <div v-if="resources.length" class="table-wrap" tabindex="0" role="region" aria-label="ห้องและอุปกรณ์ เลื่อนแนวนอนได้">
-                <table><thead><tr><th scope="col">ชื่อ</th><th scope="col">ประเภท</th><th scope="col">อาคาร / ชั้น</th><th scope="col">ความจุ / จำนวน</th><th scope="col">ผู้รับผิดชอบ</th><th scope="col">ตำแหน่ง</th><th scope="col">สถานะ</th><th v-if="canManage">จัดการ</th></tr></thead>
+                <table><thead><tr><th scope="col">ชื่อ</th><th scope="col">ประเภท</th><th scope="col">อาคาร / ชั้น</th><th scope="col">ความจุ / จำนวน</th><th scope="col">ผู้รับผิดชอบ</th><th scope="col">ตำแหน่ง</th><th scope="col">สถานะ</th><th v-if="canManage || canDelete">จัดการ</th></tr></thead>
                     <tbody><template v-for="resource in resources" :key="resource.id">
                         <tr>
                             <td><img v-if="resource.image_url" :src="resource.image_url" :alt="`รูปห้อง ${resource.name}`" class="room-thumb" loading="lazy"><strong>{{ resource.name }}</strong><span>{{ resource.description ?? '' }}</span></td>
@@ -97,7 +114,7 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                             <td>{{ resource.responsible_staff?.name ?? '—' }}</td>
                             <td>{{ resource.location ?? '—' }}</td>
                             <td><select v-if="canManage" :value="resource.status" :aria-label="`สถานะ ${resource.name}`" @change="handleStatusChange(resource, $event)"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option></select><span v-else>{{ resource.status }}</span></td>
-                            <td v-if="canManage"><button v-if="resource.kind === 'room'" type="button" class="secondary" :aria-expanded="editingRoomId === resource.id" aria-controls="room-edit-panel" @click="startRoomEdit(resource, $event)">แก้ไขข้อมูลห้อง</button></td>
+                            <td v-if="canManage || canDelete"><div class="resource-actions"><button v-if="canManage && resource.kind === 'room'" type="button" class="secondary" :disabled="deletion.processing" :aria-expanded="editingRoomId === resource.id" aria-controls="room-edit-panel" @click="startRoomEdit(resource, $event)">แก้ไขข้อมูลห้อง</button><button v-if="canDelete" type="button" class="secondary resource-delete" :aria-label="`ลบ ${resource.name}`" :disabled="deletion.processing" @click="deleteResource(resource)">{{ deletion.processing ? 'กำลังลบ…' : 'ลบ' }}</button></div></td>
                         </tr>
 
                     </template></tbody>
@@ -124,4 +141,5 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
 
 <style scoped>
 .room-thumb{width:100px;height:65px;object-fit:cover;border-radius:8px;margin-bottom:8px}.heading{margin-bottom:18px}.heading p{margin:0}.heading h1{margin:5px 0}.panel{margin-bottom:14px}.panel h2{margin:0 0 16px}.resource-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.resource-form label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.resource-form .wide{grid-column:1/-1}.resource-form .checkbox{display:flex;align-items:center;gap:8px}.resource-form .checkbox input{width:auto}.resource-form button,.edit-actions button:not(.secondary){align-self:end;min-height:41px;border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:9px 12px;font-weight:800;cursor:pointer}.table-wrap{overflow-x:auto}th,td{padding:13px;border-bottom:1px solid var(--sim-border);text-align:left;vertical-align:top}td strong,td span{display:block}td span{margin-top:3px;color:var(--sim-muted);font-size:12px}.secondary{cursor:pointer}.edit-form{padding:12px}.edit-actions{display:flex;gap:8px;align-items:end}.error{color:#a43b3b;font-size:12px}.empty{padding:30px;text-align:center;color:var(--sim-muted)}@media(max-width:760px){.resource-form{grid-template-columns:1fr}.resource-form .wide{grid-column:auto}}
-.resource-create summary{color:var(--sim-blue);font-weight:800;cursor:pointer;min-height:32px}.resource-create[open] summary{margin-bottom:20px}table{min-width:850px}</style>
+.resource-create summary{color:var(--sim-blue);font-weight:800;cursor:pointer;min-height:32px}.resource-create[open] summary{margin-bottom:20px}table{min-width:850px}.resource-actions{display:flex;flex-wrap:wrap;gap:var(--sim-space-sm)}.resource-actions .resource-delete{color:var(--sim-danger);font-weight:500}
+</style>

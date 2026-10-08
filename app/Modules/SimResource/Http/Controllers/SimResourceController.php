@@ -7,6 +7,7 @@ use App\Core\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Booking\Services\BookingAvailabilityResolver;
+use App\Modules\SimResource\Actions\DeleteSimResourceAction;
 use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Http\Requests\SimulatorRoomAvailabilityRequest;
@@ -79,6 +80,14 @@ final class SimResourceController extends Controller
         );
 
         return back()->with('success', 'เพิ่มทรัพยากรเรียบร้อยแล้ว');
+    }
+
+    public function destroy(Request $request, SimResource $simResource, DeleteSimResourceAction $action): RedirectResponse
+    {
+        $this->authorize('delete', $simResource);
+        $action->execute($simResource, $request->user());
+
+        return back()->with('success', 'ลบทรัพยากรเรียบร้อยแล้ว');
     }
 
     public function update(

@@ -22,6 +22,10 @@ Route::middleware(['auth', 'access-profile'])
             ->middleware('permission:'.AppPermission::ResourceCreate->value)
             ->name('store');
 
+        Route::delete('/{simResource}', [SimResourceController::class, 'destroy'])
+            ->middleware('permission:'.AppPermission::ResourceDelete->value)
+            ->name('destroy');
+
         Route::put('/{simResource}', [SimResourceController::class, 'update'])
             ->middleware('permission:'.AppPermission::ResourceUpdate->value)
             ->name('update');

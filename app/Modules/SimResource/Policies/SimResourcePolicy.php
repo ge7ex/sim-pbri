@@ -28,6 +28,13 @@ final class SimResourcePolicy
         return $user->canAccess(AppPermission::ResourceCreate);
     }
 
+    public function delete(User $user, SimResource $resource): bool
+    {
+        return $user->college_id !== null
+            && $user->canAccess(AppPermission::ResourceDelete)
+            && $resource->college_id === $user->college_id;
+    }
+
     public function update(User $user, SimResource $resource): bool
     {
         return $user->canAccess(AppPermission::ResourceUpdate)
