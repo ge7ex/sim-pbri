@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import PageHeader from '../../../Components/PageHeader.vue';
+import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 
 interface SimulatorType { id: number; name: string; description: string | null; is_active: boolean }
@@ -27,6 +29,12 @@ const editingType = ref<number | null>(null);
 const editingAsset = ref<number | null>(null);
 const maintenanceAsset = ref<Asset | null>(null);
 const expandedAssets = ref<number[]>([]);
+const typePanel = ref<HTMLElement | null>(null);
+const assetPanel = ref<HTMLElement | null>(null);
+const maintenancePanel = ref<HTMLElement | null>(null);
+function focusPanel(panel: { value: HTMLElement | null }): void {
+    nextTick(() => { panel.value?.focus({ preventScroll: true }); panel.value?.scrollIntoView({ block: 'start' }); });
+}
 function toggleDetails(id: number): void {
     expandedAssets.value = expandedAssets.value.includes(id)
         ? expandedAssets.value.filter((assetId) => assetId !== id) : [...expandedAssets.value, id];
@@ -44,10 +52,12 @@ const showAssetForm = computed(() => editingAsset.value === null ? canCreate.val
 function resetType(): void { editingType.value = null; typeForm.reset(); typeForm.clearErrors(); }
 function resetAsset(): void { editingAsset.value = null; assetForm.reset(); assetForm.clearErrors(); }
 function editType(item: SimulatorType): void {
+    focusPanel(typePanel);
     typeForm.clearErrors(); editingType.value = item.id;
     Object.assign(typeForm, { name: item.name, description: item.description ?? '', is_active: item.is_active });
 }
 function editAsset(item: Asset): void {
+    focusPanel(assetPanel);
     assetForm.clearErrors(); editingAsset.value = item.id;
     Object.assign(assetForm, {
         simulator_type_id: item.simulator_type_id, asset_name: item.asset_name, asset_code: item.asset_code ?? '',
@@ -73,6 +83,7 @@ function submitAsset(): void {
 }
 function openMaintenance(item: Asset): void {
     maintenanceForm.reset(); maintenanceForm.clearErrors(); maintenanceAsset.value = item;
+    focusPanel(maintenancePanel);
 }
 function submitMaintenance(): void {
     if (!maintenanceAsset.value) return;
@@ -99,17 +110,12 @@ function paginationLabel(label: string, index: number): string {
 <template>
     <Head title="ทะเบียนเครื่องจำลองและทรัพย์สิน" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
-        <header class="heading">
-            <p>Simulator / Asset Management</p>
-            <h1>ทะเบียนเครื่องจำลองและทรัพย์สิน</h1>
-            <span>จัดการประเภทเครื่องจำลอง รายการทรัพย์สิน และประวัติการบำรุงรักษาของหน่วยงาน</span>
-        </header>
+        <PageHeader title="ทะเบียนเครื่องจำลองและทรัพย์สิน" description="ประเภทเครื่องจำลอง ทะเบียนทรัพย์สิน และประวัติการบำรุงรักษาของหน่วยงาน"></PageHeader>
         <p v-if="page.props.flash?.success" class="success" role="status">{{ page.props.flash.success }}</p>
 
-        <p class="management-context">ทะเบียนประเภทและทรัพย์สิน · การบำรุงรักษาแสดงในรายละเอียดแต่ละรายการ</p>
         <div v-if="showTypeForm || showAssetForm" class="form-grid">
-            <section v-if="showTypeForm" class="panel">
-                <h2>{{ editingType === null ? 'เพิ่มประเภทเครื่องจำลอง' : 'แก้ไขประเภทเครื่องจำลอง' }}</h2>
+            <section v-if="showTypeForm" ref="typePanel" class="panel" tabindex="-1" aria-labelledby="type-form-title">
+                <SectionHeader id="type-form-title" :title="editingType === null ? 'เพิ่มประเภทเครื่องจำลอง' : 'แก้ไขประเภทเครื่องจำลอง'" />
                 <form class="stack" @submit.prevent="submitType">
                     <label>ชื่อประเภท<input v-model="typeForm.name" required maxlength="255"></label>
                     <label>รายละเอียด<textarea v-model="typeForm.description" rows="3" maxlength="2000"></textarea></label>
@@ -118,8 +124,8 @@ function paginationLabel(label: string, index: number): string {
                     <div class="actions"><button :disabled="typeForm.processing" type="submit">{{ editingType === null ? 'เพิ่มประเภท' : 'บันทึกประเภท' }}</button><button v-if="editingType !== null" type="button" class="secondary" :disabled="typeForm.processing" @click="resetType">ยกเลิกการแก้ไข</button></div>
                 </form>
             </section>
-            <section v-if="showAssetForm" class="panel">
-                <h2>{{ editingAsset === null ? 'เพิ่มทรัพย์สิน' : 'แก้ไขทรัพย์สินและสถานะ' }}</h2>
+            <section v-if="showAssetForm" ref="assetPanel" class="panel" tabindex="-1" aria-labelledby="asset-form-title">
+                <SectionHeader id="asset-form-title" :title="editingAsset === null ? 'เพิ่มทรัพย์สิน' : 'แก้ไขทรัพย์สินและสถานะ'" />
                 <form class="stack" @submit.prevent="submitAsset">
                     <label>ประเภทเครื่องจำลอง<select v-model="assetForm.simulator_type_id" required><option :value="null" disabled>เลือกประเภท</option><option v-for="item in types" :key="item.id" :value="item.id">{{ item.name }}{{ item.is_active ? '' : ' (ปิดใช้งาน)' }}</option></select></label>
                     <div class="fields"><label>ชื่อทรัพย์สิน<input v-model="assetForm.asset_name" required maxlength="255"></label><label>รหัสทรัพย์สิน (ถ้ามี)<input v-model="assetForm.asset_code" maxlength="64"></label></div>
@@ -133,13 +139,13 @@ function paginationLabel(label: string, index: number): string {
         </div>
 
         <section class="panel type-panel">
-            <h2>ประเภทเครื่องจำลอง</h2>
+            <SectionHeader title="ประเภทเครื่องจำลอง" />
             <div v-if="types.length" class="type-list"><article v-for="item in types" :key="item.id" class="type-item"><div><strong>{{ item.name }}</strong><p>{{ item.description || 'ไม่มีรายละเอียดเพิ่มเติม' }}</p></div><div class="actions"><span class="badge" :class="item.is_active ? 'active' : 'disabled'">{{ item.is_active ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}</span><button v-if="canUpdate" type="button" class="secondary" :disabled="typeForm.processing" @click="editType(item)">แก้ไข</button></div></article></div>
             <p v-else class="empty">ยังไม่มีประเภทเครื่องจำลอง</p>
         </section>
 
-        <section v-if="maintenanceAsset && canMaintain" class="panel maintenance-panel">
-            <h2>เพิ่มประวัติการบำรุงรักษา · {{ maintenanceAsset.asset_name }}</h2>
+        <section v-if="maintenanceAsset && canMaintain" ref="maintenancePanel" class="panel maintenance-panel" tabindex="-1" aria-labelledby="maintenance-form-title">
+            <SectionHeader id="maintenance-form-title" title="เพิ่มประวัติการบำรุงรักษา" :description="maintenanceAsset.asset_name" />
             <form class="stack" @submit.prevent="submitMaintenance">
                 <div class="fields"><label>วันที่บำรุงรักษา<input v-model="maintenanceForm.maintenance_date" type="date" required></label><label>ผู้ดำเนินการ<input v-model="maintenanceForm.performed_by" maxlength="255"></label></div>
                 <label>รายละเอียดการบำรุงรักษา<textarea v-model="maintenanceForm.description" required rows="3" maxlength="2000"></textarea></label>
@@ -151,7 +157,7 @@ function paginationLabel(label: string, index: number): string {
         </section>
 
         <section class="panel">
-            <h2>รายการทรัพย์สิน</h2>
+            <SectionHeader title="ทะเบียนทรัพย์สิน" description="เปิดรายละเอียดเพื่อดูข้อมูล แก้ไข หรือเพิ่มประวัติบำรุงรักษาตามสิทธิ์" />
             <div v-if="assets.data.length" class="table-scroll" role="region" aria-label="ทะเบียนทรัพย์สิน" tabindex="0">
                 <table class="asset-table">
                     <thead><tr><th scope="col">ทรัพย์สิน</th><th scope="col">ประเภท</th><th scope="col">รหัส</th><th scope="col">สถานที่จัดเก็บ</th><th scope="col">สถานะ</th><th v-if="canSeeFinancial" scope="col">ปีที่ซื้อ (ค.ศ.)</th><th v-if="canSeeFinancial" scope="col">อายุ (ปี)</th><th scope="col">รายละเอียด</th></tr></thead>
@@ -161,10 +167,10 @@ function paginationLabel(label: string, index: number): string {
                     </tr>
                     <tr v-if="expandedAssets.includes(item.id)" :id="`asset-details-${item.id}`" class="details-row"><td :colspan="canSeeFinancial ? 8 : 6">
                     <p class="description">{{ item.description || 'ไม่มีรายละเอียดเพิ่มเติม' }}</p>
-                    <dl v-if="canSeeFinancial" class="financial-summary"><div><dt>ปีที่ซื้อ (ค.ศ.)</dt><dd>{{ item.purchase_year ?? 'ไม่ระบุ' }}</dd></div><div><dt>ราคาซื้อ</dt><dd>{{ money(item.purchase_price) }}</dd></div><div><dt>อายุการใช้งาน</dt><dd>{{ item.useful_life_years == null ? 'ไม่ระบุ' : item.useful_life_years + ' ปี' }}</dd></div><template v-if="item.depreciation"><div><dt>ค่าเสื่อมรายปี</dt><dd>{{ money(item.depreciation.annual_amount) }}</dd></div><div><dt>ค่าเสื่อมสะสม ปี {{ item.depreciation.year }}</dt><dd>{{ money(item.depreciation.accumulated_amount) }}</dd></div><div><dt>มูลค่าตามบัญชี</dt><dd>{{ money(item.depreciation.book_value) }}</dd></div></template></dl>
+                    <SectionHeader v-if="canSeeFinancial" :level="3" title="ข้อมูลการจัดซื้อและค่าเสื่อม" /><dl v-if="canSeeFinancial" class="financial-summary"><div><dt>ปีที่ซื้อ (ค.ศ.)</dt><dd>{{ item.purchase_year ?? 'ไม่ระบุ' }}</dd></div><div><dt>ราคาซื้อ</dt><dd>{{ money(item.purchase_price) }}</dd></div><div><dt>อายุการใช้งาน</dt><dd>{{ item.useful_life_years == null ? 'ไม่ระบุ' : item.useful_life_years + ' ปี' }}</dd></div><template v-if="item.depreciation"><div><dt>ค่าเสื่อมรายปี</dt><dd>{{ money(item.depreciation.annual_amount) }}</dd></div><div><dt>ค่าเสื่อมสะสม ปี {{ item.depreciation.year }}</dt><dd>{{ money(item.depreciation.accumulated_amount) }}</dd></div><div><dt>มูลค่าตามบัญชี</dt><dd>{{ money(item.depreciation.book_value) }}</dd></div></template></dl>
                     <p v-if="canSeeFinancial" class="hint">ค่าเสื่อมราคาเป็นค่าประมาณแบบเส้นตรง มูลค่าคงเหลือเป็นศูนย์ เริ่มคำนวณตั้งแต่ปีถัดจากปีที่ซื้อ</p>
                     <div v-if="canUpdate || canMaintain" class="actions asset-actions"><button v-if="canUpdate" type="button" class="secondary" :disabled="assetForm.processing" @click="editAsset(item)">แก้ไขทรัพย์สิน / สถานะ</button><button v-if="canMaintain" type="button" class="secondary" :disabled="maintenanceForm.processing" @click="openMaintenance(item)">เพิ่มประวัติบำรุงรักษา</button></div>
-                    <section class="history"><h3>ประวัติการบำรุงรักษา ({{ item.maintenance_records.length }})</h3><ol v-if="item.maintenance_records.length"><li v-for="record in item.maintenance_records" :key="record.id"><strong>{{ record.maintenance_date }}</strong><p>{{ record.description }}</p><small>ผู้ดำเนินการ: {{ record.performed_by || 'ไม่ระบุ' }}<template v-if="canSeeFinancial"> · ค่าใช้จ่าย: {{ money(record.cost) }}</template></small><p v-if="canSeeFinancial && record.note" class="note">หมายเหตุ: {{ record.note }}</p></li></ol><p v-else class="empty">ยังไม่มีประวัติการบำรุงรักษา</p></section>
+                    <section class="history"><SectionHeader :level="3" title="ประวัติการบำรุงรักษา" :description="`${item.maintenance_records.length} รายการ`" /><ol v-if="item.maintenance_records.length"><li v-for="record in item.maintenance_records" :key="record.id"><strong>{{ record.maintenance_date }}</strong><p>{{ record.description }}</p><small>ผู้ดำเนินการ: {{ record.performed_by || 'ไม่ระบุ' }}<template v-if="canSeeFinancial"> · ค่าใช้จ่าย: {{ money(record.cost) }}</template></small><p v-if="canSeeFinancial && record.note" class="note">หมายเหตุ: {{ record.note }}</p></li></ol><p v-else class="empty">ยังไม่มีประวัติการบำรุงรักษา</p></section>
                     </td></tr>
                     </template></tbody>
                 </table>

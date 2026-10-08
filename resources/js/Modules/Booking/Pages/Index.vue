@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
+import PageHeader from '../../../Components/PageHeader.vue';
+import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
@@ -56,16 +58,9 @@ function applyFilters(): void {
 <template>
     <Head title="ประวัติการจอง" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
-        <header class="heading">
-            <div>
-                <p>Booking History</p>
-                <h1>ประวัติการจอง</h1>
-            </div>
-            <Link v-if="page.props.auth.permissions.includes('booking.create')" class="primary" href="/app/bookings/create">
-                ส่งคำขอจอง
-            </Link>
-        </header>
+        <PageHeader title="ประวัติการจอง" description="ติดตามสถานะและเปิดรายละเอียดคำขอในขอบเขตที่คุณมีสิทธิ์ดู"><Link v-if="page.props.auth.permissions.includes('booking.create')" class="primary" href="/app/bookings/create">ส่งคำขอจอง</Link></PageHeader>
 
+        <section class="section" aria-labelledby="filter-title"><SectionHeader id="filter-title" title="ค้นหาคำขอ" />
         <form class="filters" @submit.prevent="applyFilters">
             <label>สถานะ
                 <select v-model="filters.status">
@@ -79,9 +74,9 @@ function applyFilters(): void {
             <label>จากวันที่<input v-model="filters.date_from" type="date"></label>
             <label>ถึงวันที่<input v-model="filters.date_to" type="date"></label>
             <button type="submit">กรองรายการ</button>
-        </form>
+        </form></section>
 
-        <section class="panel">
+        <section class="panel section" aria-labelledby="booking-list-title"><SectionHeader id="booking-list-title" title="รายการคำขอจอง" />
             <div v-if="bookings.data.length" class="table-wrap" tabindex="0" role="region" aria-label="ประวัติการจอง เลื่อนแนวนอนได้">
                 <table>
                     <thead>
@@ -90,7 +85,7 @@ function applyFilters(): void {
                             <th scope="col">ทรัพยากร</th>
                             <th scope="col">ช่วงเวลา</th>
                             <th scope="col">สถานะ</th>
-                            <th scope="col"></th>
+                            <th scope="col">รายละเอียด</th>
                         </tr>
                     </thead>
                     <tbody>

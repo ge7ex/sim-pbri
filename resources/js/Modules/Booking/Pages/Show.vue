@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
+import PageHeader from '../../../Components/PageHeader.vue';
+import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
+import { bookingStatusLabel } from '../../../Support/bookingStatus';
 import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 
@@ -83,16 +86,10 @@ function recallBooking(): void {
 <template>
     <Head :title="`รายละเอียดคำขอ #${booking.id}`" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
-        <header class="heading">
-            <div>
-                <Link href="/app/bookings">← กลับประวัติการจอง</Link>
-                <h1>รายละเอียดคำขอ #{{ booking.id }}</h1>
-            </div>
-            <BookingStatusBadge :status="booking.status" />
-        </header>
+        <PageHeader :title="`รายละเอียดคำขอ #${booking.id}`"><Link class="button-secondary" href="/app/bookings">กลับประวัติการจอง</Link><BookingStatusBadge :status="booking.status" /></PageHeader>
         <div v-if="Object.keys(page.props.errors).length" class="action-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
 
-        <section class="panel detail-grid">
+        <section class="panel"><SectionHeader title="ข้อมูลคำขอและช่วงเวลา" /><div class="detail-grid">
             <div><span>ชื่อผู้จอง</span><strong>{{ booking.requester_name }}</strong></div>
             <div><span>เบอร์ติดต่อ</span><strong>{{ booking.requester_phone ?? '-' }}</strong></div>
             <div><span>เริ่มใช้งาน</span><strong>{{ formatBookingDateTime(booking.starts_at) }}</strong></div>
@@ -101,10 +98,10 @@ function recallBooking(): void {
             <div><span>รายวิชา</span><strong>{{ booking.course?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
             <div><span>สถานการณ์จำลอง</span><strong>{{ booking.scenario?.name ?? 'ไม่ได้ระบุ' }}</strong></div>
             <div><span>ผลการตรวจสอบ</span><strong>{{ booking.review_reason ?? '-' }}</strong></div>
-        </section>
+        </div></section>
 
         <section v-if="canFillParticipantCount" class="panel">
-            <h2>เติมจำนวนผู้เข้าใช้งานของคำขอเดิม</h2>
+            <SectionHeader title="เติมจำนวนผู้เข้าใช้งานของคำขอเดิม" />
             <p>ตรวจสอบจำนวนกับผู้จองก่อนบันทึก ระบบจะตรวจความจุห้องและเก็บประวัติการแก้ไข</p>
             <form class="recall" @submit.prevent="fillParticipantCount">
                 <label>จำนวนผู้เข้าใช้งาน (คน)<input v-model.number="participantForm.participant_count" type="number" min="1" max="10000" required></label>
@@ -116,7 +113,7 @@ function recallBooking(): void {
         </section>
 
         <section v-if="booking.participant_amendments.length" class="panel">
-            <h2>ประวัติการเติมจำนวนผู้เข้าใช้งาน</h2>
+            <SectionHeader title="ประวัติการเติมจำนวนผู้เข้าใช้งาน" />
             <ul class="timeline"><li v-for="amendment in booking.participant_amendments" :key="amendment.id">
                 <strong>ยังไม่ระบุ → {{ amendment.participant_count }} คน</strong>
                 <p>{{ amendment.actor.name }} · {{ formatBookingDateTime(amendment.created_at, true) }}</p>
@@ -125,7 +122,7 @@ function recallBooking(): void {
         </section>
 
         <section class="panel">
-            <h2>เครื่องจำลอง</h2>
+            <SectionHeader title="เครื่องจำลอง" />
             <div v-if="booking.simulator_asset" class="detail-grid">
                 <div><span>ประเภท</span><strong>{{ booking.simulator_asset.simulator_type.name }}{{ booking.simulator_asset.simulator_type.is_active ? '' : ' (ปิดใช้งานประเภท)' }}</strong></div>
                 <div><span>เครื่องจำลอง</span><strong>{{ booking.simulator_asset.asset_name }}</strong></div>
@@ -137,7 +134,7 @@ function recallBooking(): void {
         </section>
 
         <section class="panel">
-            <h2>ทรัพยากร</h2>
+            <SectionHeader title="ห้องและอุปกรณ์" />
             <div class="resource-list">
                 <div v-for="resource in booking.resources" :key="resource.id">
                     <strong>{{ resource.name }} <small>{{ resource.kind === 'room' ? 'ห้อง' : 'อุปกรณ์จากแค็ตตาล็อก' }}</small></strong>
@@ -147,7 +144,7 @@ function recallBooking(): void {
         </section>
 
         <section v-if="booking.custom_equipment_requests.length" class="panel">
-            <h2>คำขออุปกรณ์เพิ่มเติม</h2>
+            <SectionHeader title="คำขออุปกรณ์เพิ่มเติม" />
             <div class="resource-list">
                 <div v-for="item in booking.custom_equipment_requests" :key="item.id">
                     <strong>{{ item.name }} <small v-if="item.note">{{ item.note }}</small></strong>
@@ -157,11 +154,11 @@ function recallBooking(): void {
         </section>
 
         <section class="panel">
-            <h2>ประวัติสถานะ</h2>
+            <SectionHeader title="ประวัติสถานะ" />
             <ol class="timeline">
                 <li v-for="transition in booking.status_transitions" :key="transition.id">
                     <div>
-                        <strong>{{ transition.from_status ?? 'เริ่มต้น' }} → {{ transition.to_status }}</strong>
+                        <strong>{{ bookingStatusLabel(transition.from_status) }} → {{ bookingStatusLabel(transition.to_status) }}</strong>
                         <span>{{ transition.actor.name }} · {{ formatBookingDateTime(transition.created_at, true) }}</span>
                     </div>
                     <p v-if="transition.reason">{{ transition.reason }}</p>
@@ -169,13 +166,13 @@ function recallBooking(): void {
             </ol>
         </section>
 
-        <section v-if="canCancel || canRecall" class="panel actions">
+        <section v-if="canCancel || canRecall" class="panel"><SectionHeader title="การดำเนินการ" description="ยกเลิกหรือเรียกกลับตามสิทธิ์และสถานะปัจจุบันของคำขอ" /><div class="actions">
             <button v-if="canCancel" type="button" @click="cancelBooking">ยกเลิกคำขอ</button>
             <div v-if="canRecall" class="recall">
                 <label>เหตุผลที่เรียกกลับ<textarea v-model="recallReason" rows="3" maxlength="2000"></textarea></label>
                 <button type="button" :disabled="!recallReason.trim()" @click="recallBooking">เรียกกลับเพื่อตรวจสอบใหม่</button>
             </div>
-        </section>
+        </div></section>
     </AppLayout>
 </template>
 

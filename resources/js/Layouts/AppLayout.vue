@@ -16,19 +16,25 @@ const menuToggle = ref<HTMLButtonElement | null>(null);
 function closeMenu(): void { menuOpen.value = false; menuToggle.value?.focus(); }
 watch(() => page.url, () => { menuOpen.value = false; });
 
-const items = computed(() => {
+const sections = computed(() => {
     const granted = new Set(props.permissions);
-
     return [
-        { label: 'หน้าหลัก', href: '/app', permission: null },
-        { label: 'ประวัติการจอง', href: '/app/bookings', permission: 'booking.view' },
-        { label: 'ส่งคำขอจอง', href: '/app/bookings/create', permission: 'booking.create' },
-        { label: 'ปฏิทินการใช้งาน', href: '/app/calendar', permission: 'booking.view' },
-        { label: 'ตรวจสอบคำขอ', href: '/app/review', permission: 'booking.approve' },
-        { label: 'หุ่นจำลองและทรัพย์สิน', href: '/app/simulators', permission: 'simulator.view' },
-        { label: 'ทรัพยากร SIM', href: '/app/resources', permission: 'sim-resource.view' },
-        { label: 'รายวิชาและสถานการณ์', href: '/app/scenarios', permission: 'scenario.view' },
-    ].filter((item) => item.permission === null || granted.has(item.permission));
+        { key: 'overview', label: 'ภาพรวม', items: [
+            { label: 'หน้าหลัก', href: '/app', permission: null },
+        ] },
+        { key: 'booking', label: 'การจอง', items: [
+            { label: 'ปฏิทินการใช้งาน', href: '/app/calendar', permission: 'booking.view' },
+            { label: 'ประวัติการจอง', href: '/app/bookings', permission: 'booking.view' },
+            { label: 'ส่งคำขอจอง', href: '/app/bookings/create', permission: 'booking.create' },
+            { label: 'ตรวจสอบคำขอ', href: '/app/review', permission: 'booking.approve' },
+        ] },
+        { key: 'management', label: 'การจัดการข้อมูล', items: [
+            { label: 'ทรัพยากร SIM', href: '/app/resources', permission: 'sim-resource.view' },
+            { label: 'หุ่นจำลองและทรัพย์สิน', href: '/app/simulators', permission: 'simulator.view' },
+            { label: 'รายวิชาและสถานการณ์', href: '/app/scenarios', permission: 'scenario.view' },
+        ] },
+    ].map(section => ({ ...section, items: section.items.filter(item => item.permission === null || granted.has(item.permission)) }))
+        .filter(section => section.items.length > 0);
 });
 
 function isActive(href: string): boolean {
@@ -55,7 +61,12 @@ function logout(): void {
                 <button ref="menuToggle" class="app-menu-toggle" type="button" :aria-expanded="menuOpen" aria-controls="app-navigation" @click="menuOpen = !menuOpen">{{ menuOpen ? 'ปิดเมนู' : 'เมนู' }}</button>
             </div>
             <nav id="app-navigation" class="app-nav" :class="{ 'is-open': menuOpen }" aria-label="งานในระบบ" @keydown.esc="closeMenu">
-                <Link v-for="item in items" :key="item.href" :href="item.href" class="app-nav-link" :class="{ 'is-active': isActive(item.href) }" :aria-current="isActive(item.href) ? 'page' : undefined">{{ item.label }}</Link>
+                <div v-for="section in sections" :key="section.key" class="app-nav-section" role="group" :aria-labelledby="`nav-section-${section.key}`">
+                    <p :id="`nav-section-${section.key}`" class="app-nav-section-label">{{ section.label }}</p>
+                    <ul class="app-nav-list"><li v-for="item in section.items" :key="item.href">
+                        <Link :href="item.href" class="app-nav-link" :class="{ 'is-active': isActive(item.href) }" :aria-current="isActive(item.href) ? 'page' : undefined">{{ item.label }}</Link>
+                    </li></ul>
+                </div>
             </nav>
             <div class="app-context" :class="{ 'is-open': menuOpen }">
                 <span>{{ user.role_label }}</span><strong>{{ user.name }}</strong><p>{{ user.college?.name ?? 'ยังไม่ได้กำหนดหน่วยงาน' }}</p>

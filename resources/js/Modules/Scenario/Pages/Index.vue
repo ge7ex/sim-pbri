@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue';
 import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+import PageHeader from '../../../Components/PageHeader.vue';
+import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 
 interface EquipmentItem {
@@ -152,18 +154,13 @@ function statusLabel(status: EquipmentItem['status']): string {
 <template>
     <Head title="รายวิชาและสถานการณ์จำลอง" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
-        <header class="heading">
-            <p>Scenario Library</p>
-            <h1>รายวิชาและสถานการณ์จำลอง</h1>
-            <span>รายวิชาและชุดอุปกรณ์เป็นข้อมูลสำหรับจัดกลุ่มและแนะนำเท่านั้น ผู้ใช้ยังปรับรายการจริงได้ตอนส่งคำขอจอง</span>
-        </header>
+        <PageHeader title="รายวิชาและสถานการณ์จำลอง" description="รายวิชาและชุดแนะนำช่วยจัดเตรียมทรัพยากร ผู้จองปรับรายการจริงได้ก่อนส่งคำขอ"></PageHeader>
         <p v-if="page.props.flash?.success" class="success" role="status">{{ page.props.flash.success }}</p>
         <div v-if="Object.keys(page.props.errors).length" class="server-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
 
-        <p class="management-context">คลังรายวิชาและสถานการณ์ · ชุดแนะนำปรับได้ก่อนส่งคำขอจอง</p>
         <div v-if="canManage" class="form-grid">
             <section class="panel">
-                <h2>เพิ่มรายวิชา</h2>
+                <SectionHeader title="เพิ่มรายวิชา" />
                 <form class="stack" @submit.prevent="submitCourse">
                     <label>รหัสรายวิชา<input v-model="courseForm.code" maxlength="64" placeholder="เช่น NUR-201"></label>
                     <label>ชื่อรายวิชา<input v-model="courseForm.name" required maxlength="255"></label>
@@ -174,9 +171,9 @@ function statusLabel(status: EquipmentItem['status']): string {
             </section>
 
             <section class="panel">
-                <h2>เพิ่ม Scenario</h2>
+                <SectionHeader title="เพิ่มสถานการณ์จำลอง" />
                 <form class="stack" @submit.prevent="submitScenario">
-                    <label>รายวิชาแนะนำ
+                    <label>รายวิชาของสถานการณ์
                         <select v-model="scenarioForm.course_id" required>
                             <option :value="null" disabled>เลือกรายวิชา</option>
                             <option v-for="course in courses" :key="course.id" :value="course.id">
@@ -195,12 +192,13 @@ function statusLabel(status: EquipmentItem['status']): string {
         </div>
 
         <section class="panel">
+            <SectionHeader title="รายวิชาและสถานการณ์" description="เลือกชุดแนะนำภายใต้สถานการณ์ของแต่ละรายวิชา" />
             <div v-if="courses.length" class="course-list">
                 <article v-for="course in courses" :key="course.id" class="course-card">
                     <header>
                         <div>
                             <small>{{ course.code ?? 'ไม่ระบุรหัส' }}</small>
-                            <h2>{{ course.name }}</h2>
+                            <h3>{{ course.name }}</h3>
                         </div>
                         <span>{{ course.scenarios.length }} Scenario</span>
                     </header>
@@ -209,7 +207,7 @@ function statusLabel(status: EquipmentItem['status']): string {
                         <div v-for="scenario in course.scenarios" :key="scenario.id" class="scenario-card">
                             <div class="scenario-summary">
                                 <div>
-                                    <strong>{{ scenario.name }}</strong>
+                                    <h3 class="scenario-name">{{ scenario.name }}</h3>
                                     <p>{{ scenario.description ?? 'ไม่มีรายละเอียดเพิ่มเติม' }}</p>
                                 </div>
                                 <div class="status-actions">
@@ -223,7 +221,7 @@ function statusLabel(status: EquipmentItem['status']): string {
                             </div>
 
                             <section class="template simulator-template">
-                                <div class="template-heading"><div><h3>ประเภทเครื่องจำลองที่แนะนำ</h3><p>ผู้จองเลือกเครื่องจริงเองได้ การแนะนำไม่บังคับการเลือก</p></div></div>
+                                <SectionHeader :level="3" title="ประเภทเครื่องจำลองที่แนะนำ" description="ผู้จองเลือกเครื่องจริงเองได้ การแนะนำไม่บังคับการเลือก" />
                                 <form v-if="canUpdate" class="suggestions-form" @submit.prevent="saveSimulatorSuggestions(scenario)">
                                     <div v-if="simulatorTypes.length" class="simulator-options"><label v-for="item in simulatorTypes" :key="item.id"><input v-model="simulatorSuggestions[scenario.id]" type="checkbox" :value="item.id" :disabled="savingSuggestions[scenario.id]"><span>{{ item.name }}{{ item.is_active ? '' : ' (ปิดใช้งาน)' }}</span></label></div>
                                     <p v-else class="template-empty">ยังไม่มีประเภทเครื่องจำลองในหน่วยงานนี้</p>
@@ -235,11 +233,7 @@ function statusLabel(status: EquipmentItem['status']): string {
                             </section>
 
                             <div class="template">
-                                <div class="template-heading">
-                                    <div>
-                                        <h3>อุปกรณ์แนะนำ</h3>
-                                        <p>เป็นค่าเริ่มต้นสำหรับผู้จอง ไม่ได้ล็อกรายการสุดท้าย</p>
-                                    </div>
+                                <SectionHeader :level="3" title="ชุดอุปกรณ์แนะนำ" description="เป็นค่าเริ่มต้น ผู้จองปรับรายการได้ก่อนส่งคำขอ"><template #actions>
                                     <button
                                         v-if="canManage && equipment.length"
                                         type="button"
@@ -248,7 +242,7 @@ function statusLabel(status: EquipmentItem['status']): string {
                                     >
                                         บันทึกชุดแนะนำ
                                     </button>
-                                </div>
+                                </template></SectionHeader>
 
                                 <div v-if="canManage && equipment.length" class="equipment-grid">
                                     <label v-for="item in equipment" :key="item.id" class="equipment-item">
@@ -261,7 +255,7 @@ function statusLabel(status: EquipmentItem['status']): string {
                                             min="0"
                                             max="100000"
                                             :value="quantityFor(scenario.id, item.id)"
-                                            aria-label="จำนวนอุปกรณ์แนะนำ"
+                                            :aria-label="`จำนวนแนะนำ ${item.name} สำหรับ ${scenario.name}`"
                                             @input="updateQuantity(scenario.id, item.id, $event)"
                                         >
                                     </label>
@@ -291,4 +285,5 @@ function statusLabel(status: EquipmentItem['status']): string {
 <style scoped>
 .success,.server-errors{margin:0 0 14px;border:1px solid #b9d8c4;border-radius:10px;padding:12px 16px;background:#edf7f0;color:#2f6f4e}.server-errors{border-color:#e5c1c1;background:#fff;color:#a43b3b}.server-errors p{margin:4px 0}.simulator-options{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}.simulator-options label{display:flex;align-items:center;gap:6px;color:#40566b;font-size:13px}.simulator-options input{width:16px;height:16px}.suggestions-help{color:var(--sim-muted);font-size:12px;margin:10px 0}.suggestions-form button:disabled{opacity:.55;cursor:not-allowed}
 .heading{margin-bottom:20px}.heading p{margin:0}.heading h1{margin:5px 0}.heading span{line-height:1.6}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}.panel h2{margin:0}.stack{display:grid;gap:12px;margin-top:16px}.stack label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.stack .checkbox{display:flex;align-items:center;gap:8px}.stack .checkbox input{width:auto}.stack button,.status-actions button,.save-template{border:0;border-radius:9px;background:var(--sim-navy);color:#fff;padding:10px 14px;font-weight:800;cursor:pointer}.stack button:disabled{opacity:.55;cursor:not-allowed}.error{margin:0;color:#a43b3b;font-size:12px}.course-list{display:grid;gap:14px}.course-card{border:1px solid #e3e9ef;border-radius:13px;padding:16px}.course-card>header{display:flex;align-items:center;justify-content:space-between;gap:16px}.course-card small{color:var(--sim-muted)}.course-card h2{margin:3px 0 0;font-size:18px}.course-card>header>span{border-radius:999px;background:#f3f6f8;color:var(--sim-text);padding:6px 10px;font-size:12px;font-weight:800}.scenario-list{display:grid;gap:12px;margin-top:14px;border-top:1px solid var(--sim-border);padding-top:14px}.scenario-card{border:1px solid #e4eaf0;border-radius:12px;padding:15px}.scenario-summary{display:flex;align-items:center;justify-content:space-between;gap:20px}.scenario-summary>div>strong{color:var(--sim-text)}.scenario-summary p{margin:4px 0 0;color:var(--sim-muted);font-size:13px}.status-actions{display:flex;align-items:center;gap:10px;white-space:nowrap}.status-actions span{font-size:12px;font-weight:800}.status-actions .active{color:#2f6f4e}.status-actions .inactive{color:#8a6262}.status-actions button{padding:7px 10px;background:#fff;color:var(--sim-navy);border:1px solid #cfd8e1}.template{margin-top:14px;border-top:1px solid var(--sim-border);padding-top:14px}.template-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}.template-heading h3{margin:0;color:#30475d;font-size:14px}.template-heading p{margin:3px 0 0;color:var(--sim-muted);font-size:12px}.save-template{padding:8px 11px;font-size:12px}.equipment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}.equipment-item{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--sim-border);border-radius:10px;padding:10px}.equipment-item>span{display:grid;gap:2px}.equipment-item strong{color:#34495e;font-size:13px}.equipment-item small{color:var(--sim-muted);font-size:11px}.equipment-item input{width:78px;border:1px solid #cfd8e1;border-radius:8px;padding:8px;text-align:right}.readonly-equipment{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.readonly-equipment span{display:flex;gap:8px;border-radius:999px;background:#f3f6f8;padding:7px 10px;color:#40566b;font-size:12px}.readonly-equipment small{color:var(--sim-muted)}.template-empty,.empty{margin:0;padding:18px;color:var(--sim-muted);text-align:center}@media(max-width:760px){.form-grid,.equipment-grid{grid-template-columns:1fr}.scenario-summary,.template-heading{align-items:flex-start;flex-direction:column}.course-card>header{align-items:flex-start}.save-template{width:100%}}
-.management-context{font-size:13px;color:var(--sim-muted);margin:0 0 16px}</style>
+.management-context{font-size:13px;color:var(--sim-muted);margin:0 0 16px}.course-card{border:0;border-radius:0;padding:var(--sim-space-md) 0}.course-card+ .course-card{border-top:1px solid var(--sim-border)}.course-card>header h3{margin:4px 0;font-size:18px}.scenario-name{margin:0;font-size:16px!important}.scenario-card{border:0;border-radius:0;padding:var(--sim-space-md) 0}.scenario-card+.scenario-card{border-top:1px solid var(--sim-border)}.scenario-list{gap:0}.equipment-item small{font-size:12px}.status-actions button{min-height:44px}
+</style>

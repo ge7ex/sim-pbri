@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, reactive } from 'vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
+import PageHeader from '../../../Components/PageHeader.vue';
+import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 import { formatBookingDateTime } from '../../../Support/dateTime';
 import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
@@ -46,12 +48,9 @@ function applyFilters(): void {
 <template>
     <Head title="ปฏิทินการใช้งาน" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
-        <header class="heading">
-            <p>Calendar</p>
-            <h1>ปฏิทินการใช้งาน</h1>
-            <span>รายการของวิทยาลัยอื่นจะแสดงเฉพาะช่วงเวลาและข้อความ “ถูกจองแล้ว”</span>
-        </header>
+        <PageHeader title="ปฏิทินการใช้งาน" description="รายการของวิทยาลัยอื่นแสดงเฉพาะช่วงเวลาและข้อความ “ถูกจองแล้ว”"></PageHeader>
 
+        <section class="section" aria-labelledby="schedule-title"><SectionHeader id="schedule-title" title="ตารางการใช้ห้องและทรัพยากร" description="เลือกช่วงวันที่เพื่อดูรายการใช้งานตามวัน" />
         <form class="filters" @submit.prevent="applyFilters">
             <label>จากวันที่<input v-model="filters.date_from" type="date"></label>
             <label>ถึงวันที่<input v-model="filters.date_to" type="date"></label>
@@ -59,7 +58,7 @@ function applyFilters(): void {
         </form>
 
         <section class="schedule" aria-label="ตารางการใช้งานตามวัน">
-            <section v-for="group in eventDays" :key="group.day" class="schedule-day"><h2>{{ group.day }}</h2>
+            <section v-for="group in eventDays" :key="group.day" class="schedule-day"><h3>{{ group.day }}</h3>
             <article v-for="(event, index) in group.events" :key="event.id ?? `private-${index}`" class="event">
                 <div class="time">
                     <strong>{{ formatBookingDateTime(event.starts_at) }}</strong>
@@ -74,10 +73,10 @@ function applyFilters(): void {
             </article>
             </section>
             <p v-if="events.length === 0" class="empty">ไม่พบรายการในช่วงเวลาที่เลือก</p>
-        </section>
+        </section></section>
     </AppLayout>
 </template>
 
 <style scoped>
 .heading{margin-bottom:20px}.heading p{margin:0}.heading h1{margin:5px 0}.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:16px;border:1px solid var(--sim-border);border-radius:14px;background:#fff;padding:16px}.filters label{display:grid;gap:6px;color:var(--sim-text);font-size:12px;font-weight:800}.filters input{min-height:40px}.filters button{min-height:40px;border:0;border-radius:9px;background:var(--sim-blue);color:#fff;padding:0 15px;font-weight:800}.schedule{display:grid;gap:10px}.event{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(220px,1.4fr) auto;gap:18px;align-items:center;border:1px solid var(--sim-border);border-radius:14px;background:#fff;padding:16px}.time,.detail{display:grid;gap:4px}.time span,.detail span{color:var(--sim-muted);font-size:12px}.private-badge{border-radius:999px;background:#eef2f6;color:var(--sim-muted);padding:5px 9px;font-size:12px;font-weight:800}.empty{padding:42px;text-align:center;color:var(--sim-muted)}@media(max-width:720px){.event{grid-template-columns:1fr}}
-.schedule-day{display:grid;gap:10px}.schedule-day h2{font-size:16px;font-weight:800;margin:12px 0 4px}.schedule .empty{background:#fff;border:1px solid var(--sim-border);border-radius:16px}</style>
+.schedule-day{display:grid;gap:10px}.schedule-day h3{font-size:16px;font-weight:800;margin:12px 0 4px}.schedule .empty{background:#fff;border:1px solid var(--sim-border);border-radius:16px}</style>
