@@ -21,6 +21,7 @@ const sections = computed(() => {
     return [
         { key: 'overview', label: 'ภาพรวม', items: [
             { label: 'หน้าหลัก', href: '/app', permission: null },
+            { label: 'รายงานและสถิติ', href: '/app/reports', permission: 'report.view' },
         ] },
         { key: 'booking', label: 'การจอง', items: [
             { label: 'ปฏิทินการใช้งาน', href: '/app/calendar', permission: 'booking.view' },
