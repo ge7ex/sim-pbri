@@ -21,17 +21,17 @@ interface BookingDetail {
     review_reason: string | null;
     course: { id: number; code: string | null; name: string } | null;
     scenario: { id: number; name: string } | null;
-    simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } } | null;
+    simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } | null } | null;
     resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean } }>;
     custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
-    participant_amendments: Array<{ id: number; participant_count: number; reason: string; created_at: string; actor: { name: string } }>;
+    participant_amendments: Array<{ id: number; participant_count: number; reason: string; created_at: string; actor: { name: string } | null }>;
     status_transitions: Array<{
         id: number;
         from_status: string | null;
         to_status: string;
         reason: string | null;
         created_at: string;
-        actor: { id: number; name: string };
+        actor: { id: number; name: string } | null;
     }>;
 }
 
@@ -116,7 +116,7 @@ function recallBooking(): void {
             <SectionHeader title="ประวัติการเติมจำนวนผู้เข้าใช้งาน" />
             <ul class="timeline"><li v-for="amendment in booking.participant_amendments" :key="amendment.id">
                 <strong>ยังไม่ระบุ → {{ amendment.participant_count }} คน</strong>
-                <p>{{ amendment.actor.name }} · {{ formatBookingDateTime(amendment.created_at, true) }}</p>
+                <p>{{ amendment.actor?.name ?? 'ไม่พบผู้ดำเนินการที่เข้าถึงได้' }} · {{ formatBookingDateTime(amendment.created_at, true) }}</p>
                 <p>{{ amendment.reason }}</p>
             </li></ul>
         </section>
@@ -124,7 +124,7 @@ function recallBooking(): void {
         <section class="panel">
             <SectionHeader title="เครื่องจำลอง" />
             <div v-if="booking.simulator_asset" class="detail-grid">
-                <div><span>ประเภท</span><strong>{{ booking.simulator_asset.simulator_type.name }}{{ booking.simulator_asset.simulator_type.is_active ? '' : ' (ปิดใช้งานประเภท)' }}</strong></div>
+                <div><span>ประเภท</span><strong>{{ booking.simulator_asset.simulator_type?.name ?? 'ไม่พบประเภทที่เข้าถึงได้' }}{{ booking.simulator_asset.simulator_type && !booking.simulator_asset.simulator_type.is_active ? ' (ปิดใช้งานประเภท)' : '' }}</strong></div>
                 <div><span>เครื่องจำลอง</span><strong>{{ booking.simulator_asset.asset_name }}</strong></div>
                 <div><span>รหัสทรัพย์สิน</span><strong>{{ booking.simulator_asset.asset_code || 'ไม่ระบุ' }}</strong></div>
                 <div><span>สถานที่จัดเก็บ</span><strong>{{ booking.simulator_asset.location || 'ไม่ระบุ' }}</strong></div>
@@ -159,7 +159,7 @@ function recallBooking(): void {
                 <li v-for="transition in booking.status_transitions" :key="transition.id">
                     <div>
                         <strong>{{ bookingStatusLabel(transition.from_status) }} → {{ bookingStatusLabel(transition.to_status) }}</strong>
-                        <span>{{ transition.actor.name }} · {{ formatBookingDateTime(transition.created_at, true) }}</span>
+                        <span>{{ transition.actor?.name ?? 'ไม่พบผู้ดำเนินการที่เข้าถึงได้' }} · {{ formatBookingDateTime(transition.created_at, true) }}</span>
                     </div>
                     <p v-if="transition.reason">{{ transition.reason }}</p>
                 </li>

@@ -16,7 +16,7 @@ interface BookingRow {
     participant_count: number | null;
     course: { id: number; code: string | null; name: string } | null;
     scenario: { id: number; name: string } | null;
-    simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } } | null;
+    simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } | null } | null;
     resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean } }>;
     custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
 }
@@ -83,7 +83,7 @@ function reject(id: number): void {
                     <SectionHeader :level="3" title="ทรัพยากรที่ขอใช้" />
                     <dl>
                         <div><dt>ห้อง</dt><dd>{{ booking.resources.filter((item) => item.kind === 'room').map((item) => item.name).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
-                        <div><dt>เครื่องจำลอง</dt><dd v-if="booking.simulator_asset">{{ booking.simulator_asset.simulator_type.name }}{{ booking.simulator_asset.simulator_type.is_active ? '' : ' (ปิดใช้งานประเภท)' }} · {{ booking.simulator_asset.asset_name }}{{ booking.simulator_asset.asset_code ? ' · ' + booking.simulator_asset.asset_code : '' }}<br>สถานะปัจจุบัน: {{ simulatorStatusLabel(booking.simulator_asset.status) }} · สถานที่: {{ booking.simulator_asset.location || 'ไม่ระบุ' }}</dd><dd v-else>ไม่ได้เลือกเครื่องจำลอง</dd></div>
+                        <div><dt>เครื่องจำลอง</dt><dd v-if="booking.simulator_asset">{{ booking.simulator_asset.simulator_type?.name ?? 'ไม่พบประเภทที่เข้าถึงได้' }}{{ booking.simulator_asset.simulator_type && !booking.simulator_asset.simulator_type.is_active ? ' (ปิดใช้งานประเภท)' : '' }} · {{ booking.simulator_asset.asset_name }}{{ booking.simulator_asset.asset_code ? ' · ' + booking.simulator_asset.asset_code : '' }}<br>สถานะปัจจุบัน: {{ simulatorStatusLabel(booking.simulator_asset.status) }} · สถานที่: {{ booking.simulator_asset.location || 'ไม่ระบุ' }}</dd><dd v-else>ไม่ได้เลือกเครื่องจำลอง</dd></div>
                         <div><dt>อุปกรณ์จากแค็ตตาล็อก</dt><dd>{{ booking.resources.filter((item) => item.kind === 'equipment').map((item) => item.name + ' × ' + item.pivot.quantity + (item.pivot.is_auto_recommended ? ' (อุปกรณ์จากชุดแนะนำ)' : '')).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
 
                         <div v-if="booking.custom_equipment_requests.length"><dt>คำขออุปกรณ์เพิ่มเติม</dt><dd>{{ booking.custom_equipment_requests.map((item) => item.name + ' × ' + item.quantity + (item.note ? ' — ' + item.note : '')).join(', ') }}</dd></div>
