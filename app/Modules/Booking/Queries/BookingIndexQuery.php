@@ -10,16 +10,16 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 final class BookingIndexQuery
 {
     /**
-     * @param array<string, mixed> $filters
+     * @param  array<string, mixed>  $filters
      * @return LengthAwarePaginator<int, Booking>
      */
     public function paginate(User $actor, array $filters): LengthAwarePaginator
     {
         $query = Booking::query()
             ->with([
-                'resources:id,name,kind',
-                'requestedBy:id,name',
-                'reviewedBy:id,name',
+                'resources' => fn ($query) => $query->where('college_id', $actor->college_id)->select('sim_resources.id', 'name', 'kind'),
+                'requestedBy' => fn ($query) => $query->where('college_id', $actor->college_id)->select('id', 'name'),
+                'reviewedBy' => fn ($query) => $query->where('college_id', $actor->college_id)->select('id', 'name'),
             ])
             ->where('college_id', $actor->college_id)
             ->latest('starts_at');

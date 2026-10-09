@@ -118,10 +118,10 @@ final class BookingController extends Controller
                 ->select('id', 'simulator_type_id', 'asset_name', 'asset_code', 'status', 'location')
                 ->with(['simulatorType' => fn ($typeQuery) => $typeQuery->where('college_id', $booking->college_id)->select('id', 'name', 'is_active')]),
             'customEquipmentRequests:id,booking_id,name,quantity,note',
-            'requestedBy:id,name',
-            'reviewedBy:id,name',
-            'statusTransitions.actor:id,name',
-            'participantAmendments.actor:id,name',
+            'requestedBy' => fn ($query) => $query->where('college_id', $booking->college_id)->select('id', 'name'),
+            'reviewedBy' => fn ($query) => $query->where('college_id', $booking->college_id)->select('id', 'name'),
+            'statusTransitions.actor' => fn ($query) => $query->where('college_id', $booking->college_id)->select('id', 'name'),
+            'participantAmendments.actor' => fn ($query) => $query->where('college_id', $booking->college_id)->select('id', 'name'),
         ]);
 
         return Inertia::render('Modules/Booking/Pages/Show', [

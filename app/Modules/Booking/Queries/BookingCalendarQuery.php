@@ -9,13 +9,13 @@ use App\Modules\Booking\Models\Booking;
 final class BookingCalendarQuery
 {
     /**
-     * @param array<string, mixed> $filters
+     * @param  array<string, mixed>  $filters
      * @return list<array<string, mixed>>
      */
     public function get(User $actor, array $filters): array
     {
         $query = Booking::query()
-            ->with('resources:id,name,kind')
+            ->with(['resources' => fn ($query) => $query->where('college_id', $actor->college_id)->select('sim_resources.id', 'name', 'kind')])
             ->where(function ($query) use ($actor): void {
                 $query
                     ->where('college_id', $actor->college_id)

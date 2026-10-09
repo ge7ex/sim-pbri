@@ -36,7 +36,8 @@ final class ScenarioManagementController extends Controller
             ->with([
                 'scenarios' => fn ($query) => $query
                     ->with([
-                        'recommendedResources' => fn ($resourceQuery) => $resourceQuery->orderBy('name'),
+                        'recommendedResources' => fn ($resourceQuery) => $resourceQuery
+                            ->where('college_id', $collegeId)->where('kind', SimResourceKind::Equipment)->orderBy('name'),
                         'recommendedSimulatorTypes' => fn ($typeQuery) => $typeQuery->where('college_id', $collegeId)->select('simulator_types.id', 'name', 'is_active'),
                     ])
                     ->orderBy('name'),

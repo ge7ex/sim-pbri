@@ -13,7 +13,7 @@ interface MaintenanceRecord {
 interface Asset {
     id: number; simulator_type_id: number; asset_name: string; asset_code: string | null;
     status: 'active' | 'disabled' | 'maintenance'; location: string | null; description: string | null;
-    simulator_type: { id: number; name: string; is_active: boolean };
+    simulator_type: { id: number; name: string; is_active: boolean } | null;
     maintenance_records: MaintenanceRecord[];
     purchase_year?: number | null; purchase_price?: number | string | null; useful_life_years?: number | null;
     depreciation?: { year: number; annual_amount: number | string; accumulated_amount: number | string; book_value: number | string } | null;
@@ -163,7 +163,7 @@ function paginationLabel(label: string, index: number): string {
                     <thead><tr><th scope="col">ทรัพย์สิน</th><th scope="col">ประเภท</th><th scope="col">รหัส</th><th scope="col">สถานที่จัดเก็บ</th><th scope="col">สถานะ</th><th v-if="canSeeFinancial" scope="col">ปีที่ซื้อ (ค.ศ.)</th><th v-if="canSeeFinancial" scope="col">อายุ (ปี)</th><th scope="col">รายละเอียด</th></tr></thead>
                     <tbody><template v-for="item in assets.data" :key="item.id">
                     <tr>
-                        <th scope="row">{{ item.asset_name }}</th><td>{{ item.simulator_type.name }}<small v-if="!item.simulator_type.is_active" class="type-disabled">ปิดใช้งานประเภท</small></td><td>{{ item.asset_code || 'ไม่ระบุ' }}</td><td>{{ item.location || 'ไม่ระบุ' }}</td><td><span class="badge" :class="item.status">{{ statusLabel(item.status) }}</span></td><td v-if="canSeeFinancial">{{ item.purchase_year ?? 'ไม่ระบุ' }}</td><td v-if="canSeeFinancial">{{ item.useful_life_years ?? 'ไม่ระบุ' }}</td><td><button type="button" class="secondary detail-toggle" :aria-expanded="expandedAssets.includes(item.id)" :aria-controls="`asset-details-${item.id}`" @click="toggleDetails(item.id)">{{ expandedAssets.includes(item.id) ? 'ปิดรายละเอียด' : 'ดูรายละเอียด' }}</button></td>
+                        <th scope="row">{{ item.asset_name }}</th><td>{{ item.simulator_type?.name ?? 'ไม่พบประเภทที่เข้าถึงได้' }}<small v-if="item.simulator_type && !item.simulator_type.is_active" class="type-disabled">ปิดใช้งานประเภท</small></td><td>{{ item.asset_code || 'ไม่ระบุ' }}</td><td>{{ item.location || 'ไม่ระบุ' }}</td><td><span class="badge" :class="item.status">{{ statusLabel(item.status) }}</span></td><td v-if="canSeeFinancial">{{ item.purchase_year ?? 'ไม่ระบุ' }}</td><td v-if="canSeeFinancial">{{ item.useful_life_years ?? 'ไม่ระบุ' }}</td><td><button type="button" class="secondary detail-toggle" :aria-expanded="expandedAssets.includes(item.id)" :aria-controls="`asset-details-${item.id}`" @click="toggleDetails(item.id)">{{ expandedAssets.includes(item.id) ? 'ปิดรายละเอียด' : 'ดูรายละเอียด' }}</button></td>
                     </tr>
                     <tr v-if="expandedAssets.includes(item.id)" :id="`asset-details-${item.id}`" class="details-row"><td :colspan="canSeeFinancial ? 8 : 6">
                     <p class="description">{{ item.description || 'ไม่มีรายละเอียดเพิ่มเติม' }}</p>

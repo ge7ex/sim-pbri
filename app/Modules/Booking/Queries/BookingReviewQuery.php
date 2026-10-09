@@ -19,7 +19,7 @@ final class BookingReviewQuery
                 'resources' => fn ($query) => $query
                     ->where('college_id', $actor->college_id)
                     ->select('sim_resources.id', 'name', 'kind', 'status'),
-                'requestedBy:id,name',
+                'requestedBy' => fn ($query) => $query->where('college_id', $actor->college_id)->select('id', 'name'),
                 'course' => fn ($query) => $query
                     ->where('college_id', $actor->college_id)
                     ->select('id', 'code', 'name'),
