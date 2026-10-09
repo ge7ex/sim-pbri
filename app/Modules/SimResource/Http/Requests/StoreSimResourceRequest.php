@@ -27,7 +27,8 @@ final class StoreSimResourceRequest extends FormRequest
             'remove_image' => ['sometimes', 'boolean', Rule::prohibitedIf(fn () => $this->boolean('remove_image') && $this->input('kind') !== 'room')],
             'name' => ['required', 'string', 'max:255'],
             'kind' => ['required', Rule::enum(SimResourceKind::class)],
-            'status' => ['required', Rule::enum(SimResourceStatus::class)],
+            'status' => ['required', Rule::enum(SimResourceStatus::class)
+                ->except($this->input('kind') === SimResourceKind::Room->value ? [] : [SimResourceStatus::Disabled])],
             'quantity_total' => ['required', 'integer', 'min:1', 'max:100000'],
             'is_exclusive' => ['required', 'boolean'],
             'location' => ['nullable', 'string', 'max:255'],

@@ -9,7 +9,7 @@ import RoomImageInput from '../../../Components/RoomImageInput.vue';
 interface StaffItem { id: number; name: string }
 interface ResourceItem {
     image_url: string | null;
-    id: number; name: string; kind: 'room' | 'equipment'; status: 'ready' | 'pending' | 'maintenance';
+    id: number; name: string; kind: 'room' | 'equipment'; status: 'ready' | 'pending' | 'maintenance' | 'disabled';
     quantity_total: number; is_exclusive: boolean; location: string | null; description: string | null;
     building: string | null; floor: string | null; capacity: number | null;
     responsible_staff_user_id: number | null; responsible_staff: StaffItem | null;
@@ -45,7 +45,10 @@ function closeRoomEdit(): void {
 }
 const roomEdit = useForm({ name: '', kind: 'room' as 'room' | 'equipment', status: 'ready', quantity_total: 1, is_exclusive: true, location: '', description: '', building: '', floor: '', capacity: null as number | null, responsible_staff_user_id: null as number | null, image: null as File | null, remove_image: false });
 
-function handleKindChange(): void { if (form.kind === 'room') { form.quantity_total = 1; form.is_exclusive = true; } else { form.image = null; } }
+function handleKindChange(): void { if (form.kind === 'room') { form.quantity_total = 1; form.is_exclusive = true; } else { form.image = null; if (form.status === 'disabled') form.status = 'ready'; } }
+function statusLabel(status: ResourceItem['status']): string {
+    return { ready: 'พร้อมใช้งาน', pending: 'รอตรวจสอบ', maintenance: 'ปิดปรับปรุง', disabled: 'ปิดการใช้งาน' }[status];
+}
 function submit(): void { form.post('/app/resources', { onSuccess: () => form.reset() }); }
 function startRoomEdit(resource: ResourceItem, event: Event): void {
     roomEditTrigger.value = event.currentTarget as HTMLButtonElement;
@@ -86,7 +89,7 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
             <form class="resource-form" @submit.prevent="submit">
                 <label>ชื่อ<input v-model="form.name" required maxlength="255"><small v-if="form.errors.name" class="error">{{ form.errors.name }}</small></label>
                 <label>ประเภท<select v-model="form.kind" @change="handleKindChange"><option value="room">ห้องปฏิบัติการ</option><option value="equipment">อุปกรณ์เสริม</option></select></label>
-                <label>สถานะ<select v-model="form.status"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option></select></label>
+                <label>สถานะ<select v-model="form.status"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option><option v-if="form.kind === 'room'" value="disabled">ปิดการใช้งาน</option></select><small v-if="form.errors.status" class="error">{{ form.errors.status }}</small></label>
                 <label>จำนวน<input v-model.number="form.quantity_total" type="number" min="1" :readonly="form.kind === 'room'"></label>
 
 
@@ -113,7 +116,7 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
                             <td>{{ resource.kind === 'room' ? (resource.capacity === null ? 'ยังไม่กำหนด — จองไม่ได้' : `${resource.capacity} คน`) : `${resource.quantity_total} ชิ้น` }}</td>
                             <td>{{ resource.responsible_staff?.name ?? '—' }}</td>
                             <td>{{ resource.location ?? '—' }}</td>
-                            <td><select v-if="canManage" :value="resource.status" :aria-label="`สถานะ ${resource.name}`" @change="handleStatusChange(resource, $event)"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option></select><span v-else>{{ resource.status }}</span></td>
+                            <td><select v-if="canManage" :value="resource.status" :aria-label="`สถานะ ${resource.name}`" @change="handleStatusChange(resource, $event)"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option><option v-if="resource.kind === 'room'" value="disabled">ปิดการใช้งาน</option></select><span v-else>{{ statusLabel(resource.status) }}</span></td>
                             <td v-if="canManage || canDelete"><div class="resource-actions"><button v-if="canManage && resource.kind === 'room'" type="button" class="secondary" :disabled="deletion.processing" :aria-expanded="editingRoomId === resource.id" aria-controls="room-edit-panel" @click="startRoomEdit(resource, $event)">แก้ไขข้อมูลห้อง</button><button v-if="canDelete" type="button" class="secondary resource-delete" :aria-label="`ลบ ${resource.name}`" :disabled="deletion.processing" @click="deleteResource(resource)">{{ deletion.processing ? 'กำลังลบ…' : 'ลบ' }}</button></div></td>
                         </tr>
 
@@ -129,7 +132,7 @@ function handleStatusChange(resource: ResourceItem, event: Event): void {
 
 
                             <label>ตำแหน่ง<input v-model="roomEdit.location" maxlength="255"></label>
-                            <label>สถานะ<select v-model="roomEdit.status"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option></select></label>
+                            <label>สถานะ<select v-model="roomEdit.status"><option value="ready">พร้อมใช้งาน</option><option value="pending">รอตรวจสอบ</option><option value="maintenance">ปิดปรับปรุง</option><option value="disabled">ปิดการใช้งาน</option></select><small>ห้องที่ปิดการใช้งานจองใหม่ไม่ได้ เปิดกลับได้โดยเลือกพร้อมใช้งาน ข้อมูลและประวัติเดิมยังคงอยู่</small><small v-if="roomEdit.errors.status" class="error">{{ roomEdit.errors.status }}</small></label>
                             <label class="wide">รายละเอียด<textarea v-model="roomEdit.description" rows="2" maxlength="2000"></textarea></label>
                 <fieldset class="section-fieldset"><legend>ข้อมูลห้อง</legend><div class="section-field-grid"><label>อาคาร<input v-model="roomEdit.building" maxlength="120"><small v-if="roomEdit.errors.building" class="error">{{ roomEdit.errors.building }}</small></label><label>ชั้น<input v-model="roomEdit.floor" maxlength="64"><small v-if="roomEdit.errors.floor" class="error">{{ roomEdit.errors.floor }}</small></label><label>ความจุสูงสุด (คน)<input v-model.number="roomEdit.capacity" type="number" min="1" max="10000"><small v-if="roomEdit.errors.capacity" class="error">{{ roomEdit.errors.capacity }}</small></label><label>ผู้รับผิดชอบ<select v-model="roomEdit.responsible_staff_user_id"><option :value="null">ไม่ระบุ</option><option v-for="staff in responsibleStaff" :key="staff.id" :value="staff.id">{{ staff.name }}</option></select><small v-if="roomEdit.errors.responsible_staff_user_id" class="error">{{ roomEdit.errors.responsible_staff_user_id }}</small></label><RoomImageInput v-model="roomEdit.image" v-model:remove="roomEdit.remove_image" :current-url="editingRoom.image_url" :error="roomEdit.errors.image || roomEdit.errors.remove_image" :disabled="roomEdit.processing" /></div></fieldset>
 

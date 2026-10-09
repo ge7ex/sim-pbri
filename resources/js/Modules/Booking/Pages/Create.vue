@@ -130,6 +130,7 @@ function chooseRoom(room: ResourceItem): void {
 function changeRoom(): void { roomPickerOpen.value = true; }
 function nextRoom(direction: number): void { activeRoomIndex.value = (activeRoomIndex.value + direction + rooms.value.length) % rooms.value.length; }
 function roomStatusLabel(room: ResourceItem): string {
+    if (room.status === 'disabled') return 'ปิดการใช้งาน';
     if (room.status !== 'ready') return room.status === 'maintenance' ? 'ปิดปรับปรุง' : 'รอตรวจสอบ';
     if (room.capacity === null) return 'ยังไม่กำหนดความจุ';
     return 'พร้อมใช้งาน';
