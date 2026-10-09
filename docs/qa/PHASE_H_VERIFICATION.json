@@ -1,0 +1,1433 @@
+{
+  "starting_head": "e595d7e03da212780b07d790c34cfe49628ca051",
+  "source_head": "69be805410f1ca04b612900509c6f17877744368",
+  "tests": {
+    "passed": 156,
+    "assertions": 1408,
+    "database": "guarded SQLite :memory:"
+  },
+  "build": {
+    "modules": 680,
+    "result": "PASS"
+  },
+  "pint": "PASS",
+  "composer_audit": "CLEAN",
+  "npm_audit": 0,
+  "reports_admin": {
+    "checks": [
+      {
+        "role": "admin",
+        "width": 1440,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      },
+      {
+        "role": "admin",
+        "width": 1024,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      },
+      {
+        "role": "admin",
+        "width": 768,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      },
+      {
+        "role": "admin",
+        "width": 390,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      }
+    ],
+    "filterCycles": {
+      "pendingExcludesUsage": true,
+      "emptyState": true,
+      "invalidRange": true,
+      "reset": true,
+      "keyboard": true,
+      "reducedMotion": "0s"
+    },
+    "pageErrors": []
+  },
+  "reports_staff": {
+    "checks": [
+      {
+        "role": "staff",
+        "width": 1440,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      },
+      {
+        "role": "staff",
+        "width": 1024,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      },
+      {
+        "role": "staff",
+        "width": 768,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      },
+      {
+        "role": "staff",
+        "width": 390,
+        "populated": true,
+        "financialVisibility": true,
+        "noOverflow": true,
+        "labelledFilters": true,
+        "accessibleChart": true,
+        "noExport": true
+      }
+    ],
+    "filterCycles": {
+      "pendingExcludesUsage": true,
+      "emptyState": true,
+      "invalidRange": true,
+      "reset": true,
+      "keyboard": true,
+      "reducedMotion": "0s"
+    },
+    "pageErrors": []
+  },
+  "lecturer": {
+    "checks": [
+      {
+        "width": 1440,
+        "status": 403,
+        "reportNavAbsent": true
+      },
+      {
+        "width": 1024,
+        "status": 403,
+        "reportNavAbsent": true
+      },
+      {
+        "width": 768,
+        "status": 403,
+        "reportNavAbsent": true
+      },
+      {
+        "width": 390,
+        "status": 403,
+        "reportNavAbsent": true
+      }
+    ]
+  },
+  "room_cycle": {
+    "closed": true,
+    "disabledLabel": true,
+    "historyRetained": true,
+    "reopened": true,
+    "metadataPreserved": true
+  },
+  "simulator_null": {
+    "fallback": 1,
+    "errors": []
+  },
+  "regression": {
+    "admin": {
+      "role": "ผู้ดูแลระบบ",
+      "checks": 36,
+      "pageErrors": [],
+      "results": [
+        {
+          "path": "/app",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "เพิ่มทรัพยากร",
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "เพิ่มทรัพยากร",
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "เพิ่มทรัพยากร",
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "เพิ่มทรัพยากร",
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "เพิ่มประเภทเครื่องจำลอง",
+            "เพิ่มทรัพย์สิน",
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "เพิ่มประเภทเครื่องจำลอง",
+            "เพิ่มทรัพย์สิน",
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "เพิ่มประเภทเครื่องจำลอง",
+            "เพิ่มทรัพย์สิน",
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "เพิ่มประเภทเครื่องจำลอง",
+            "เพิ่มทรัพย์สิน",
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "เพิ่มรายวิชา",
+            "เพิ่มสถานการณ์จำลอง",
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "เพิ่มรายวิชา",
+            "เพิ่มสถานการณ์จำลอง",
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "เพิ่มรายวิชา",
+            "เพิ่มสถานการณ์จำลอง",
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "เพิ่มรายวิชา",
+            "เพิ่มสถานการณ์จำลอง",
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        }
+      ]
+    },
+    "staff": {
+      "role": "เจ้าหน้าที่",
+      "checks": 36,
+      "pageErrors": [],
+      "results": [
+        {
+          "path": "/app",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เติมจำนวนผู้เข้าใช้งานของคำขอเดิม",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/review",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "คำขอที่รอตรวจสอบ",
+            "รายละเอียดคำขอ"
+          ],
+          "active": "ตรวจสอบคำขอ",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/resources",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ทรัพยากรของหน่วยงาน"
+          ],
+          "active": "ทรัพยากร SIM",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/simulators",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ประเภทเครื่องจำลอง",
+            "ทะเบียนทรัพย์สิน"
+          ],
+          "active": "หุ่นจำลองและทรัพย์สิน",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        },
+        {
+          "path": "/app/scenarios",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "รายวิชาและสถานการณ์"
+          ],
+          "active": "รายวิชาและสถานการณ์",
+          "labels": true
+        }
+      ]
+    },
+    "lecturer": {
+      "role": "อาจารย์ / ผู้สอน",
+      "checks": 20,
+      "pageErrors": [],
+      "results": [
+        {
+          "path": "/app",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ภาพรวมคำขอ",
+            "รายการคำขอล่าสุด"
+          ],
+          "active": "หน้าหลัก",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/create",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "1) ห้องและช่วงเวลา",
+            "2) ข้อมูลการใช้งาน",
+            "3) รายวิชาและสถานการณ์ (ถ้ามี)",
+            "4) อุปกรณ์",
+            "5) หมายเหตุและตรวจสอบก่อนส่ง"
+          ],
+          "active": "ส่งคำขอจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ค้นหาคำขอ",
+            "รายการคำขอจอง"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ",
+            "การดำเนินการ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ",
+            "การดำเนินการ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ",
+            "การดำเนินการ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/bookings/1",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ข้อมูลคำขอและช่วงเวลา",
+            "เครื่องจำลอง",
+            "ห้องและอุปกรณ์",
+            "ประวัติสถานะ",
+            "การดำเนินการ"
+          ],
+          "active": "ประวัติการจอง",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 1440,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 1024,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 768,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        },
+        {
+          "path": "/app/calendar",
+          "width": 390,
+          "overflow": false,
+          "headings": [
+            "ตารางการใช้ห้องและทรัพยากร"
+          ],
+          "active": "ปฏิทินการใช้งาน",
+          "labels": true
+        }
+      ]
+    }
+  },
+  "mysql_read_only": {
+    "driver": "mysql",
+    "database": "sim_pbri",
+    "role_checks": {
+      "staff": {
+        "workflow": {
+          "total": 0,
+          "pending": 0,
+          "approved": 0,
+          "rejected": 0,
+          "cancelled": 0
+        },
+        "trend_days": 31,
+        "has_financial_section": false
+      },
+      "admin": {
+        "workflow": {
+          "total": 0,
+          "pending": 0,
+          "approved": 0,
+          "rejected": 0,
+          "cancelled": 0
+        },
+        "trend_days": 31,
+        "has_financial_section": true
+      }
+    },
+    "counts_before": {
+      "users": 3,
+      "resources": 1,
+      "bookings": 0
+    },
+    "counts_after": {
+      "users": 3,
+      "resources": 1,
+      "bookings": 0
+    },
+    "derived_row_clipped_hours": 2,
+    "aggregate_query_explain": [
+      [
+        {
+          "table": "b",
+          "type": "ref",
+          "possible_keys": "bookings_college_status_starts_idx,bookings_college_course_scenario_idx",
+          "key": "bookings_college_status_starts_idx",
+          "estimated_rows": "1"
+        }
+      ],
+      [
+        {
+          "table": "b",
+          "type": "ref",
+          "possible_keys": "bookings_college_status_starts_idx,bookings_college_course_scenario_idx",
+          "key": "bookings_college_status_starts_idx",
+          "estimated_rows": "1"
+        }
+      ],
+      [
+        {
+          "table": "r",
+          "type": "ref",
+          "possible_keys": "PRIMARY,sim_resources_kind_status_idx,sim_resources_kind_index,sim_resources_college_kind_status_idx",
+          "key": "sim_resources_kind_status_idx",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "br",
+          "type": "ref",
+          "possible_keys": "booking_resource_unique,booking_resource_lookup_idx",
+          "key": "booking_resource_lookup_idx",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "b",
+          "type": "eq_ref",
+          "possible_keys": "PRIMARY,bookings_college_status_starts_idx,bookings_blocking_window_idx,bookings_college_course_scenario_idx",
+          "key": "PRIMARY",
+          "estimated_rows": "1"
+        }
+      ],
+      [
+        {
+          "table": "b",
+          "type": "ref",
+          "possible_keys": "bookings_college_status_starts_idx,bookings_blocking_window_idx,bookings_college_course_scenario_idx,booking_simulator_availability_idx",
+          "key": "bookings_college_status_starts_idx",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "a",
+          "type": "eq_ref",
+          "possible_keys": "PRIMARY,simulator_assets_college_id_asset_code_unique,simulator_assets_college_id_status_index",
+          "key": "PRIMARY",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "t",
+          "type": "eq_ref",
+          "possible_keys": "PRIMARY,simulator_types_college_id_name_unique,simulator_types_id_college_id_unique",
+          "key": "PRIMARY",
+          "estimated_rows": "1"
+        }
+      ],
+      [
+        {
+          "table": "b",
+          "type": "ref",
+          "possible_keys": "PRIMARY,bookings_college_status_starts_idx,bookings_blocking_window_idx,bookings_college_course_scenario_idx",
+          "key": "bookings_college_status_starts_idx",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "br",
+          "type": "ref",
+          "possible_keys": "booking_resource_unique,booking_resource_lookup_idx",
+          "key": "booking_resource_unique",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "r",
+          "type": "eq_ref",
+          "possible_keys": "PRIMARY,sim_resources_kind_status_idx,sim_resources_kind_index,sim_resources_college_kind_status_idx",
+          "key": "PRIMARY",
+          "estimated_rows": "1"
+        }
+      ],
+      [
+        {
+          "table": "c",
+          "type": "ref",
+          "possible_keys": "PRIMARY,courses_college_code_unique,courses_college_name_idx",
+          "key": "courses_college_name_idx",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "b",
+          "type": "ref",
+          "possible_keys": "bookings_college_status_starts_idx,bookings_blocking_window_idx,bookings_course_id_foreign,bookings_college_course_scenario_idx",
+          "key": "bookings_college_status_starts_idx",
+          "estimated_rows": "1"
+        }
+      ],
+      [
+        {
+          "table": "b",
+          "type": "ref",
+          "possible_keys": "bookings_college_status_starts_idx,bookings_blocking_window_idx,bookings_scenario_id_foreign,bookings_college_course_scenario_idx",
+          "key": "bookings_college_status_starts_idx",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "s",
+          "type": "eq_ref",
+          "possible_keys": "PRIMARY,scenarios_course_name_unique",
+          "key": "PRIMARY",
+          "estimated_rows": "1"
+        },
+        {
+          "table": "c",
+          "type": "eq_ref",
+          "possible_keys": "PRIMARY,courses_college_code_unique,courses_college_name_idx",
+          "key": "PRIMARY",
+          "estimated_rows": "1"
+        }
+      ]
+    ]
+  },
+  "single_day_chart": {
+    "visible_points": 2,
+    "text_alternative": true
+  },
+  "qa_cleanup": {
+    "server_8765_stopped": true,
+    "isolated_sqlite_removed": true,
+    "runtime_8000_untouched": true
+  },
+  "no_export_routes": true
+}
