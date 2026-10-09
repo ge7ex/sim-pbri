@@ -170,6 +170,30 @@ final class ReportStatisticsTest extends TestCase
         $this->assertSame(['date' => '2026-10-01', 'total' => 2, 'approved' => 2], $data['statistics']['trend'][0]);
     }
 
+    public function test_last_used_timestamps_include_timezone_for_the_shared_booking_display(): void
+    {
+        $previousTimezone = date_default_timezone_get();
+        try {
+            foreach (['UTC', 'Asia/Bangkok'] as $timezone) {
+                config(['app.timezone' => $timezone]);
+                date_default_timezone_set($timezone);
+                $actor = $this->actor(College::factory()->create(), UserRole::Staff);
+                $room = $this->resource($actor, 'room');
+                $type = SimulatorType::create(['college_id' => $actor->college_id, 'name' => 'Type']);
+                $asset = SimulatorAsset::create(['college_id' => $actor->college_id, 'simulator_type_id' => $type->id, 'asset_name' => 'Asset']);
+                $booking = $this->booking($actor, 'approved', ['simulator_asset_id' => $asset->id]);
+                $booking->resources()->attach($room->id, ['quantity' => 1]);
+                $data = $this->report($actor)['statistics'];
+                $expected = CarbonImmutable::parse('2026-10-01 09:00:00', $timezone)->toISOString();
+                $this->assertSame($expected, $data['rooms'][0]['last_used_at']);
+                $this->assertSame($expected, $data['simulators'][0]['last_used_at']);
+                $this->assertSame(2.0, $data['rooms'][0]['hours']);
+            }
+        } finally {
+            date_default_timezone_set($previousTimezone);
+        }
+    }
+
     private function actor(College $college, UserRole $role): User
     {
         return User::factory()->create(['college_id' => $college->id, 'role' => $role->value]);

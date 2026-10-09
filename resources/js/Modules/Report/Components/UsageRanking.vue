@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import SectionHeader from '../../../Components/SectionHeader.vue';
+import { formatBookingDateTime } from '../../../Support/dateTime';
 interface Usage { id: number; name: string; bookings: number; hours?: number; participants?: number; average_participants?: number | null; capacity?: number | null; average_capacity_percent?: number | null; last_used_at?: string | null; type_name?: string; status?: string; quantity?: number; course_name?: string }
 defineProps<{ title: string; description: string; kind: 'rooms' | 'simulators' | 'equipment' | 'courses' | 'scenarios'; items: Usage[] }>();
 const number = (value: number) => Number(value).toLocaleString('th-TH', { maximumFractionDigits: 2 });
-const date = (value: string) => value.slice(0, 16).replace('T', ' ');
+const date = formatBookingDateTime;
 const status = (value: string) => ({ active: 'พร้อมใช้งาน', maintenance: 'อยู่ระหว่างบำรุงรักษา', disabled: 'ปิดการใช้งาน' }[value] ?? value);
 </script>
 <template>
