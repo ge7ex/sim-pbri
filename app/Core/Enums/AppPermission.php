@@ -4,6 +4,8 @@ namespace App\Core\Enums;
 
 enum AppPermission: string
 {
+    case ReportView = 'report.view';
+
     case BookingView = 'booking.view';
     case BookingCreate = 'booking.create';
     case BookingCancel = 'booking.cancel';
