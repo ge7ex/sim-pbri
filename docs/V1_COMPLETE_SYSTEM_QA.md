@@ -22,6 +22,7 @@ The feature suite and frontend build pass on `2332b11`; the route list contains 
 | `composer audit --no-interaction` | No security advisories | Fresh 12 Oct 2026 check |
 | `npm audit --no-fund` | 0 vulnerabilities | Fresh 12 Oct 2026 check |
 | `php artisan migrate:status --no-ansi` | 21 Ran, 0 Pending | Fresh read-only status inspection on 12 Oct; no migration executed and no application rows queried |
+| Current MySQL aggregate row counts | PASS: users=3, colleges=1, sim_resources=1, bookings=0, simulator_assets=0, booking_drafts=0 | Read-only counts only; no record contents or mutations |
 | Export/download source and route scan | PASS: 0 user-facing source matches and 0 route matches across 51 registered routes | `resources/js`, `app`, and `routes` scanned for download, Thai Export labels, and CSV/XLSX/PDF export terms; registered URI/name scan |
 | MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Prior 12 Oct check; literal-only `DATE_ADD`; no table queried or changed |
 | `git diff --check` | PASS | Source and QA documentation patch |

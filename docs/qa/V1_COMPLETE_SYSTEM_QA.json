@@ -99,6 +99,19 @@
       "scope": "resources/js, app, routes searched for download, Thai export labels, and CSV/XLSX/PDF export terms",
       "status": "pass",
       "matches": 0
+    },
+    "current_mysql_aggregate_counts": {
+      "status": "pass",
+      "database": "current configured MySQL",
+      "mode": "read-only COUNT(*) only",
+      "users": 3,
+      "colleges": 1,
+      "sim_resources": 1,
+      "bookings": 0,
+      "simulator_assets": 0,
+      "booking_drafts": 0,
+      "record_contents_read": false,
+      "writes": false
     }
   },
   "browser": {
