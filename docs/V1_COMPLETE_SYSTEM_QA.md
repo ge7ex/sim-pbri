@@ -2,14 +2,14 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Code under QA: `a306551` (`docs: record current MySQL readiness evidence`), pushed to `origin/backend/inertia-foundation`.
+Code under QA: `47552b4f0e1592bda303d3c8ac6d439dd1832e3e` (`fix: seed demo bookings in Bangkok time`), pushed to `origin/backend/inertia-foundation`.
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite and frontend build pass on the current branch HEAD `a306551`; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
+The feature suite passes on current branch HEAD `47552b4`; frontend build passed on 12 Oct and no frontend code changed in this fixture-only commit; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
 
 ## Automated evidence refreshed on 12 October 2026
 
@@ -22,6 +22,7 @@ The feature suite and frontend build pass on the current branch HEAD `a306551`; 
 | `composer audit --no-interaction` | No security advisories | Fresh 12 Oct 2026 check |
 | `npm audit --no-fund` | 0 vulnerabilities | Fresh 12 Oct 2026 check |
 | `php artisan migrate:status --no-ansi` | 21 Ran, 0 Pending | Fresh read-only status inspection on 12 Oct; no migration executed and no application rows queried |
+| `php artisan test --no-ansi` after demo seed timezone correction | PASS: 187 tests / 1,672 assertions | PHPUnit config and DatabaseSafety guard force SQLite `:memory:`; no MySQL test access |
 | Current MySQL aggregate row counts | PASS: users=3, colleges=1, sim_resources=1, bookings=0, simulator_assets=0, booking_drafts=0 | Aggregate counts only; no record contents queried |
 | Temporary MySQL encrypted backup/restore drill | PASS: AES-256-GCM encrypted dump (41,058 bytes), authenticated decrypt, restore into a newly created isolated schema, exact row counts matched across 27 tables, and source `sim_pbri` row counts matched before/after | User-authorized local one-time drill; encrypted file and temporary schema removed; does not verify institutional production backup policy, scheduled backups, permissions, or disaster recovery |
 | Export/download source and route scan | PASS: 0 user-facing source matches and 0 route matches across 51 registered routes | `resources/js`, `app`, and `routes` scanned for download, Thai Export labels, and CSV/XLSX/PDF export terms; registered URI/name scan |
@@ -52,7 +53,8 @@ All browser flows used the temporary synthetic SQLite demo created by `scripts/q
 | Staff rejected-history zero state | PASS: role-filtered synthetic history displayed the empty-state message with zero results | Staff role, isolated SQLite only |
 | Staff keyboard and form labels | PASS: Tab focus reached skip link, brand, menu and grouped navigation; review focus indicator visible; status/date filters have associated labels; no console errors on review page | Spot check, not a complete keyboard or screen-reader run |
 | Lecturer booking form accessibility and capacity guard | PASS: all visible controls expose accessible names; keyboard focus outline is visible (2.4px solid); selecting 25 people for a 24-person room exposes the capacity status and leaves Submit disabled | Synthetic SQLite only; no request submitted; keyboard walk was a spot check, not an assistive-technology run |
-| Keyboard/screen reader | Not verified end-to-end | Source labels and test evidence exist; no full assistive-tech run |
+| Admin → Staff rehearsal after timezone fixture correction | PARTIAL: Admin reports showed approved-only usage and Admin-only financial section; time rendered as Bangkok 09:00–11:00 and 13:00–15:00. Staff then saw the same pending request, contact and booking-time room snapshot, without user-management navigation. | Staff approval uses native `window.confirm`; CUA CDP input timed out on this path before a POST. Read-only SQLite counts remained 1 approved / 1 pending; cleanup removed isolated DB. Earlier same-run Lecturer Draft→Staff approval evidence remains |
+| Keyboard/screen reader | Not verified end-to-end | Spot checks verified labels/focus; full keyboard/assistive-tech run remains open |
 
 The first Playwright wrapper was blocked by WSL and `npx --no-install` found no installed executable. A cached Playwright CLI completed the flows above; session access was intermittent earlier in the run and later recovered. No app bug was inferred from browser-control failures.
 
@@ -68,8 +70,8 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 ## Remaining gates
 
 1. Obtain `project_sim_flow_v12.md` or an approved full requirements source and reconcile the traceability matrix.
-2. Complete end-to-end keyboard/screen-reader and zero/error/loading checks across remaining role journeys. Mobile Escape close/focus return now passes; the remaining matrix is not complete.
+2. Complete end-to-end keyboard/screen-reader and zero/error/loading checks across remaining role journeys. Mobile Escape close/focus return and Lecturer capacity/status guard pass; the remaining matrix is not complete.
 3. Verify the institution-approved backup schedule, access controls, retention, off-host copy, and recovery-time objectives. A one-time local MySQL encrypted restore drill passed, but does not establish production operational readiness.
-4. Complete the final Admin-led Senior walkthrough and owner acceptance before marking a Senior Review Candidate or real Pilot ready. Lecturer-to-Staff booking handoff now passes in the isolated demo.
+4. Rehearse the complete repeatable Admin/Staff/Lecturer walkthrough before issuing the Senior Review Candidate. Senior feedback is gathered after delivery, per the active handoff; owner acceptance remains a Real Pilot gate, not a prerequisite for Senior review. The Lecturer-to-Staff booking handoff already passes in isolated demo data.
 
 No Export feature was enabled, `main` was not merged, no production deployment occurred, and no real Master Data was invented or seeded.
