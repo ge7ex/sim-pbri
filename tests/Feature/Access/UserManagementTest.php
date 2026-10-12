@@ -60,6 +60,43 @@ final class UserManagementTest extends TestCase
         }
     }
 
+    public function test_user_management_page_shares_the_current_post_login_csrf_token(): void
+    {
+        [$admin] = $this->admin();
+
+        $this->get('/login')->assertOk();
+        $csrfTokenBeforeLogin = session()->token();
+
+        $this->post('/login', [
+            'email' => $admin->email,
+            'password' => 'password',
+        ])->assertRedirect('/app');
+
+        $csrfTokenAfterLogin = session()->token();
+        $this->assertNotSame($csrfTokenBeforeLogin, $csrfTokenAfterLogin);
+
+        $this->get('/app/users')->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->component('Modules/Access/Pages/Users/Index')
+            ->where('csrfToken', $csrfTokenAfterLogin));
+    }
+
+    public function test_duplicate_email_error_is_localized_for_the_admin_form(): void
+    {
+        [$admin, $college] = $this->admin();
+        User::factory()->create([
+            'college_id' => $college->id,
+            'email' => 'existing-user@example.test',
+        ]);
+
+        $this->actingAs($admin)->postJson('/app/users', [
+            'name' => 'Duplicate User',
+            'email' => 'existing-user@example.test',
+            'role' => UserRole::Lecturer->value,
+        ])->assertUnprocessable()
+            ->assertJsonValidationErrors('email')
+            ->assertJsonPath('errors.email.0', 'อีเมลนี้มีบัญชีอยู่แล้ว');
+    }
+
     public function test_admin_user_list_and_mutations_are_scoped_to_own_college(): void
     {
         [$admin, $college] = $this->admin();

@@ -17,6 +17,7 @@ interface ManagedUser {
 }
 interface Credential { userId: number; name: string; email: string; password: string }
 interface UserPageProps {
+    csrfToken: string;
     users: { data: ManagedUser[]; current_page: number; last_page: number; prev_page_url: string | null; next_page_url: string | null; total: number };
     roles: RoleOption[];
     collegeName: string;
@@ -40,10 +41,6 @@ const resetErrors = ref<Record<string, string[]>>({});
 const requestError = ref('');
 const notice = ref('');
 
-function csrfToken(): string {
-    return document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? '';
-}
-
 async function postJson(url: string, data: Record<string, string>): Promise<JsonResult | null> {
     requestError.value = '';
     const response = await fetch(url, {
@@ -52,7 +49,7 @@ async function postJson(url: string, data: Record<string, string>): Promise<Json
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken(),
+            'X-CSRF-TOKEN': props.csrfToken,
             'X-Requested-With': 'XMLHttpRequest',
         },
         cache: 'no-store',

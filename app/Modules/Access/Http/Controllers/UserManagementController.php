@@ -34,6 +34,7 @@ final class UserManagementController extends Controller
         }
 
         return Inertia::render('Modules/Access/Pages/Users/Index', [
+            'csrfToken' => $request->session()->token(),
             'users' => $query
                 ->orderByDesc('id')
                 ->paginate(25)
