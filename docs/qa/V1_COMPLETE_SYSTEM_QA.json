@@ -227,7 +227,7 @@
   "current_follow_up": {
     "date": "2026-10-12",
     "code_baseline": "25d8a20",
-    "commit_status": "committed_locally_branch_ahead_of_origin_by_2_not_merged_to_main",
+    "commit_status": "committed_locally_unpushed_not_merged_to_main",
     "committed_change_scope": [
       "app/Modules/Access/Http/Controllers/UserManagementController.php",
       "app/Modules/Access/Http/Requests/StoreUserRequest.php",
@@ -251,6 +251,15 @@
     },
     "pint_changed_php": "pass",
     "git_diff_check": "pass",
+    "codex_security_diff_scan": {
+      "status": "complete",
+      "scan_id": "3bb54aee-bdf1-41bd-a7ec-d3d2b90d587a",
+      "base": "883b7440d6140eeed5885a8590844d03c6f1f79d",
+      "head": "048828fcfa3255dd26109cc8be1cef57ab9d2f6e",
+      "reviewed_source_files": 3,
+      "findings": 0,
+      "scope": "branch diff only; not a full-repository security scan"
+    },
     "composer_audit": "not_run_auto_review_rejected_429",
     "npm_audit": "not_rerun_lockfiles_unchanged",
     "browser": {

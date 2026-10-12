@@ -2,14 +2,14 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Code under QA: `47552b4f0e1592bda303d3c8ac6d439dd1832e3e` (`fix: seed demo bookings in Bangkok time`), pushed to `origin/backend/inertia-foundation`.
+Product code under QA: `25d8a20f3c8badf9f829df664d59b47d742fbf49` (`fix: refresh account management csrf token`). QA documentation is maintained on `backend/inertia-foundation`; no changes were merged to `main`.
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite passes on current branch HEAD `47552b4`; frontend build passed on 12 Oct and no frontend code changed in this fixture-only commit; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
+The feature suite passed on product-code commit `25d8a20`; frontend build passed on 12 Oct and no frontend code changed in the fixture-only follow-up; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
 
 ## Automated evidence refreshed on 12 October 2026
 
@@ -75,7 +75,7 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 4. Rehearse the complete repeatable Admin/Staff/Lecturer walkthrough before issuing the Senior Review Candidate. Senior feedback is gathered after delivery, per the active handoff; owner acceptance remains a Real Pilot gate, not a prerequisite for Senior review. The Lecturer-to-Staff booking handoff already passes in isolated demo data.
 
 No Export feature was enabled, `main` was not merged, no production deployment occurred, and no real Master Data was invented or seeded.
-## Follow-up verification on current branch HEAD 883b744
+## Earlier follow-up verification at origin branch baseline 883b744
 
 The earlier QA snapshot was based on `47552b4`. This follow-up found and fixed the account-management CSRF defect; the current product-code commit is `25d8a20`.
 
@@ -111,4 +111,4 @@ Code baseline: `25d8a20` (`fix: refresh account management csrf token`), committ
 - The Staff login attempt in this run did not authenticate from the generated TEMP credential file, so Staff role checks were not repeated in this slice. No credential reset was performed. Cleanup confirmed port 8766 was closed and removed the isolated TEMP demo.
 - No MySQL connection or data change occurred. Composer audit was rejected before execution by automatic review rate limiting (429); npm audit was not rerun. Prior dependency-audit results apply to unchanged lockfiles, but are not fresh results for this follow-up.
 
-Full screen-reader coverage, complete cross-role keyboard/error/loading checks, source-complete v12 traceability, the current-revision Codex Security report, and the full Admin/Staff/Lecturer Senior walkthrough remain open. Verdicts remain **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY** and **REAL PILOT READY: NOT YET READY**. The branch is two commits ahead of origin; no merge to `main` was made.
+Full screen-reader coverage, complete cross-role keyboard/error/loading checks, source-complete v12 traceability, a full-repository Codex Security scan, and the integrated Admin/Staff/Lecturer Senior walkthrough remain open. The diff-only Codex Security scan `3bb54aee-bdf1-41bd-a7ec-d3d2b90d587a` reviewed the three changed source files from `883b744` through `048828f` and completed with 0 findings; it does not replace a full-repository scan. Verdicts remain **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY** and **REAL PILOT READY: NOT YET READY**. At this report's baseline the branch was three commits ahead of origin; no merge to `main` was made.

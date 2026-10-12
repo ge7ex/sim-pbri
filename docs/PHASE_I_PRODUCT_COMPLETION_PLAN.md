@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Latest verified product-code commit: `47552b4f0e1592bda303d3c8ac6d439dd1832e3e` on `backend/inertia-foundation`, pushed to origin. The QA evidence snapshot began at branch HEAD `697635d5442c266602b0d113a468f7490f7f81b2` (documentation only); changes in the current audit are being recorded separately.
+Latest verified product-code commit: `25d8a20f3c8badf9f829df664d59b47d742fbf49` (`fix: refresh account management csrf token`) on `backend/inertia-foundation`. The branch has local commits not yet pushed and has not been merged to `main`. The CSRF fix and duplicate-email localization are covered by 189 tests / 1,690 assertions; a separate Codex Security diff scan of `883b744..048828f` completed with 0 findings across the three changed source files. This is not a full-repository scan.
 
 ## Evidence boundary
 
