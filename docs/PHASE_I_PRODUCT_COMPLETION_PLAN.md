@@ -53,7 +53,7 @@ No uncommitted user changes were present at the original baseline. The branch an
 
 ### Follow-up QA on 12 October 2026
 
-- `php artisan test --no-ansi`: 187 passed / 1,672 assertions on guarded SQLite `:memory:`; `npm run build`: pass, 686 modules; registered route scan: 0 Export/download matches among 51 routes.
+- `php artisan test --no-ansi`: 187 passed / 1,672 assertions on guarded SQLite `:memory:`; `npm run build`: pass, 686 modules; registered route scan: 0 Export/download matches among 51 routes; user-facing source scan: 0 matching UI/control terms.
 - Synthetic SQLite browser: Staff approved the pending fixture and a resumed Lecturer Draft after submission; the new booking appeared in Approved history. The earlier Staff-report privacy/empty-state checks remain recorded in the QA report.
 - Reproduced and fixed mobile sidebar Escape behavior. At 390px, Escape closes the open menu, returns focus to the toggle, and keeps `:focus-visible` true.
 - Demo cleanup closed port 8766 and removed `%TEMP%\sim-pbri-phase-i-demo`; this slice made no MySQL data changes.

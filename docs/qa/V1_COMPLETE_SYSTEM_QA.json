@@ -85,6 +85,11 @@
       "status": "pass",
       "result": "2026-10-16",
       "scope": "literal-only SELECT DATE(DATE_ADD(... INTERVAL 7 HOUR)); no table read or write"
+    },
+    "export_ui_source_scan": {
+      "scope": "resources/js, app, routes searched for download, Thai export labels, and CSV/XLSX/PDF export terms",
+      "status": "pass",
+      "matches": 0
     }
   },
   "browser": {
@@ -184,7 +189,8 @@
     "staff_queue_empty_state": "pending count moved from 1 to 0 after synthetic approval",
     "runbook_timezone_and_migration_facts": "updated to Asia/Bangkok booking/report semantics and 21 migration read-only QA snapshot",
     "lecturer_to_staff_workflow": "pass_same_synthetic_sqlite_demo_staff_approved_and_history_showed_request",
-    "senior_walkthrough": "partial; Admin-led final walkthrough and owner feedback remain"
+    "senior_walkthrough": "partial; Admin-led final walkthrough and owner feedback remain",
+    "export_source_scan": "0 matching user-facing source terms in resources/js, app, routes"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false
