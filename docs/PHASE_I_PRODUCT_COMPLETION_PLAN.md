@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Latest verified implementation commit: `a306551822c990e6000e2aa25dc35e6904803722` on `backend/inertia-foundation`, pushed to origin. QA evidence refresh is being recorded against this HEAD.
+Latest verified product-code commit: `47552b4f0e1592bda303d3c8ac6d439dd1832e3e` on `backend/inertia-foundation`, pushed to origin. The QA evidence snapshot began at branch HEAD `697635d5442c266602b0d113a468f7490f7f81b2` (documentation only); changes in the current audit are being recorded separately.
 
 ## Evidence boundary
 
@@ -14,7 +14,7 @@ No uncommitted user changes were present at the original baseline. The branch an
 
 | Increment | Scope | Entry evidence | Ready condition | Status |
 |---|---|---|---|---|
-| I-0 | Baseline and traceability | Current base `f3660f3`; fresh suite 187 tests / 1,672 assertions; v12 source absent; secondary 60-check report found | Every v12 core requirement mapped to evidence/decision | In progress: handoff and secondary-report gaps mapped; exact v12 wording and full gap analysis remain unavailable |
+| I-0 | Baseline and traceability | Audit starting HEAD `697635d`; fresh suite 187 tests / 1,672 assertions; v12 source absent; secondary 60-check report found | Every v12 core requirement mapped to evidence/decision | In progress: handoff and secondary-report gaps mapped; exact v12 wording and full gap analysis remain unavailable |
 | I-1 | Real account operations | Route inventory had login/logout only; local dev seeder is environment-guarded | College-scoped Admin account create/edit/disable/reset; bootstrap/recovery; forced password change; last-Admin protection; feature tests and isolated browser QA | Done for code: 11 focused tests within fresh full suite; Admin login/menu/create/one-time-secret-hide verified in isolated Chrome. Browser password-rotation flow not performed; feature tests cover it. |
 | I-2 | Room, booking, and review gaps | Editable requester display, room snapshots, review contact, Drafts, and room dimensions implemented | Implement clear safe requirements; document owner-dependent retention; retain no-auto-classification rule | In progress: dimensions remain stored but are hidden from every page, including Admin, by explicit owner instruction; Drafts persist until owner submits/deletes, confirmed by owner; timezone is Asia/Bangkok by explicit owner confirmation |
 | I-3 | End-to-end UX and reliability | Role-specific route and test inventory plus I-1/I-2 | Admin, Staff, Lecturer flows verified in isolated browser at 1440/1024/768/390; responsive/accessibility defects fixed | In progress: prior Admin flows remain evidenced; this refresh verified Lecturer Draft save/resume/submit, Staff approval and Approved history in the same synthetic database, as well as mobile Escape close + focus return at 390px. Staff report privacy is documented from the previous isolated run. This slice also verified Staff rejected-history zero state, keyboard navigation from skip link through navigation, labeled status/date filters, no console errors on the Staff review page, and Lecturer form accessible names/capacity status; error/loading and full keyboard/screen-reader checks remain open. |

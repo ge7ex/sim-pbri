@@ -1,66 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIM PBRI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+SIM PBRI is an internal Simulation Center booking and resource-management application for authorized Lecturer, Staff, and College Admin accounts. It uses Laravel 12, PHP, Vue 3, Inertia, TypeScript, and MySQL in its intended runtime configuration. College scope and permissions are enforced by the server.
 
-## About Laravel
+## Product workflows
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Lecturers create, save, resume, submit, and track room/resource booking requests.
+- Staff review, approve, or reject requests and view the operational details needed to coordinate them.
+- College Admins manage rooms, equipment, simulator assets, courses, scenarios, and personnel access.
+- Availability, history, room snapshots, and usage statistics support the request and review workflows.
+- User-facing Export and report-download features are intentionally not provided.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Run an isolated Senior demo
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The recommended local walkthrough uses fictional accounts and a dedicated SQLite database under the current user's temporary directory. It does not connect to the configured MySQL database or add demo records to an existing database.
 
-## Learning Laravel
+From PowerShell at the repository root:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```powershell
+.\scripts\qa\phase-i-demo.ps1 -Action Setup
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Open `http://127.0.0.1:8766` and read the random credentials from the local path printed by the setup script. Do not copy those credentials into chat, reports, tickets, or Git. After the walkthrough, clean up the server, database, and credentials:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```powershell
+.\scripts\qa\phase-i-demo.ps1 -Action Cleanup
+```
 
-## Laravel Sponsors
+The cleanup script stops only the recorded demo server and refuses to remove the temporary data while port 8766 remains in use. The synthetic SQLite backup check is:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```powershell
+php scripts/qa/verify-phase-i-demo-restore.php
+```
 
-### Premium Partners
+This verifies the demo SQLite file only. It is not a production MySQL backup or disaster-recovery procedure.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Development checks
 
-## Contributing
+Install dependencies from the committed lockfiles, configure a local-only `.env`, and ensure that `DB_CONNECTION` points to an isolated development database before applying migrations. Never point automated tests or demo seeders at the existing `sim_pbri` database.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```powershell
+composer install
+npm ci
+php artisan test --no-ansi
+npm run build
+php vendor/bin/pint --test --dirty
+```
 
-## Code of Conduct
+The PHPUnit configuration forces SQLite `:memory:` and `DatabaseSafety` rejects non-isolated connections. Keep that guard in place.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Operations and account setup
 
-## Security Vulnerabilities
+- Read [`docs/DEPLOYMENT_RUNBOOK_V1.md`](docs/DEPLOYMENT_RUNBOOK_V1.md) before preparing a deployment. It is preparation guidance, not approval to deploy.
+- Read [`docs/ACCESS_MANAGEMENT_OPERATIONS.md`](docs/ACCESS_MANAGEMENT_OPERATIONS.md) for first-Admin bootstrap, College-scoped account management, and recovery. There is no public sign-up or configured email-recovery service.
+- Read [`docs/SENIOR_DEMO_SCRIPT.md`](docs/SENIOR_DEMO_SCRIPT.md) for the repeatable role walkthrough and cleanup process.
+- Current verification and open gates are recorded in [`docs/V1_COMPLETE_SYSTEM_QA.md`](docs/V1_COMPLETE_SYSTEM_QA.md) and [`docs/REAL_PILOT_READINESS_GATES.md`](docs/REAL_PILOT_READINESS_GATES.md).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Senior Review and Real Pilot readiness decisions are separate. Check the current QA report for their status; do not treat synthetic demo data, local restore checks, or passing automated tests as real-user acceptance or production readiness.
