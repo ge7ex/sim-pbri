@@ -2,19 +2,20 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Product code under QA: `25d8a20f3c8badf9f829df664d59b47d742fbf49` (`fix: refresh account management csrf token`). QA documentation is maintained on `backend/inertia-foundation`; no changes were merged to `main`.
+Product code under QA: `bebd6de4d0368c09438a937091826cf848179aa3` (`fix: confirm staff booking approval in review queue`). QA documentation is maintained on `backend/inertia-foundation`; no changes were merged to `main`.
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite passed on product-code commit `25d8a20`; frontend build passed on 12 Oct and no frontend code changed in the fixture-only follow-up; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
+The feature suite passed on product-code commit `bebd6de`; frontend build passed on 12 Oct; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval confirmation, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
 
 ## Automated evidence refreshed on 12 October 2026
 
 | Check | Result | Scope / limit |
 |---|---|---|
+| Latest full suite `php artisan test --no-ansi` | PASS: 189 tests / 1,700 assertions | Guarded SQLite `:memory:`; refreshed after Staff approval feedback fix |
 | Full PHPUnit suite via direct runner | PASS: 187 tests / 1,672 assertions | SQLite `:memory:`; explicit PHPUnit environment; Composer autoload preloaded because Artisan bootstrap path was not accepted in this sandbox; Laravel storage isolated in a unique temporary workspace directory and removed after run |
 | `php artisan test --no-ansi` with `SESSION_ENCRYPT=true` | PASS: 187 tests / 1,672 assertions | Fresh standard Artisan/PHPUnit run on 12 Oct; PHPUnit config forced SQLite `:memory:`; isolated temporary storage removed after run |
 | `npm run build` | PASS, 686 modules | Fresh production frontend compilation on 12 Oct 2026 |
@@ -38,6 +39,7 @@ All browser flows used the temporary synthetic SQLite demo created by `scripts/q
 | Admin resource list and add/edit room forms | PASS: no dimension inputs, dimensions or derived area visible | Synthetic SQLite fixture |
 | Staff review | PASS: same-College contact and booking-time room snapshot visible; no Admin user link | Synthetic fixture only |
 | Staff approve/reject | PASS: approval moved fixture to approved history; rejection with reason removed it from queue and set rejected status | Synthetic SQLite fixtures |
+| Staff approval confirmation | PASS: accepted native confirmation; POST returned 302; visible `role=status` text “อนุมัติคำขอเรียบร้อยแล้ว”; queue empty state and Lecturer approved history verified | Fresh isolated synthetic SQLite fixture; no real accounts or institutional data |
 | Lecturer booking room picker | PASS: dimensions/area absent; 24-hour time controls visible | Synthetic fixture |
 | Lecturer Draft to Staff approval | PASS: saved Draft, resumed at `2026-10-16 09:00–11:00`, added course/scenario/simulator, submitted as Pending, Draft disappeared, Staff reviewed and approved it, and Approved history showed the booking | Synthetic single-College SQLite; owner-delete path not exercised in browser |
 | Draft privacy | PASS: Staff queue did not show Lecturer Draft | Synthetic fixture |
@@ -55,6 +57,8 @@ All browser flows used the temporary synthetic SQLite demo created by `scripts/q
 | Lecturer booking form accessibility and capacity guard | PASS: all visible controls expose accessible names; keyboard focus outline is visible (2.4px solid); selecting 25 people for a 24-person room exposes the capacity status and leaves Submit disabled | Synthetic SQLite only; no request submitted; keyboard walk was a spot check, not an assistive-technology run |
 | Admin → Staff rehearsal after timezone fixture correction | PARTIAL: Admin reports showed approved-only usage and Admin-only financial section; time rendered as Bangkok 09:00–11:00 and 13:00–15:00. Staff then saw the same pending request, contact and booking-time room snapshot, without user-management navigation. | Staff approval uses native `window.confirm`; CUA CDP input timed out on this path before a POST. Read-only SQLite counts remained 1 approved / 1 pending; cleanup removed isolated DB. Earlier same-run Lecturer Draft→Staff approval evidence remains |
 | Keyboard/screen reader | Not verified end-to-end | Spot checks verified labels/focus; full keyboard/assistive-tech run remains open |
+
+A later fresh Staff browser run accepted the native confirmation dialog, verified the success status and approved history, and measured no overflow at 390px; the earlier Admin→Staff browser-control timeout remains an incomplete run rather than a failed app action.
 
 The first Playwright wrapper was blocked by WSL and `npx --no-install` found no installed executable. A cached Playwright CLI completed the flows above; session access was intermittent earlier in the run and later recovered. No app bug was inferred from browser-control failures.
 
@@ -98,7 +102,7 @@ The earlier QA snapshot was based on `47552b4`. This follow-up found and fixed t
 - The approval confirmation dialog was reached, but the browser-control bridge timed out while handling it. A read-only query of the temporary SQLite demo still showed one Approved and one Pending fixture; this run did not record a new approval and the approval click was not retried.
 - Demo Cleanup confirmed port 8766 was closed, then removed the isolated TEMP SQLite directory.
 
-No source code or MySQL data changed during this follow-up. Full screen-reader coverage, keyboard/error/loading coverage across every role journey, and the source-complete requirements matrix remain open. The Senior Review and Real Pilot verdicts remain **NOT YET READY**.
+No source code or MySQL data changed during this follow-up. Full screen-reader coverage, keyboard/error/loading coverage across every role journey, and the source-complete requirements matrix remain open. The Staff approval feedback defect was fixed in commit `bebd6de` and verified in the browser and feature suite (189 tests / 1,700 assertions). The Senior Review and Real Pilot verdicts remain **NOT YET READY**.
 
 ### Follow-up QA — 12 October 2026
 

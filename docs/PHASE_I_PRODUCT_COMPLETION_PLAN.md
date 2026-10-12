@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Latest verified product-code commit: `25d8a20f3c8badf9f829df664d59b47d742fbf49` (`fix: refresh account management csrf token`) on `backend/inertia-foundation`. The branch has local commits not yet pushed and has not been merged to `main`. The CSRF fix and duplicate-email localization are covered by 189 tests / 1,690 assertions; a separate Codex Security diff scan of `883b744..048828f` completed with 0 findings across the three changed source files. This is not a full-repository scan.
+Latest verified product-code commit: `bebd6de4d0368c09438a937091826cf848179aa3` (`fix: confirm staff booking approval in review queue`) on `backend/inertia-foundation`. The branch has local commits not yet pushed and has not been merged to `main`. The CSRF fix, duplicate-email localization, and approval confirmation are covered by 189 tests / 1,700 assertions; a separate Codex Security diff scan of `883b744..048828f` completed with 0 findings across the three changed source files. This is not a full-repository scan.
 
 ## Evidence boundary
 
@@ -26,8 +26,8 @@ No uncommitted user changes were present at the original baseline. The branch an
 - Synthetic Admin UAT reproduced a 419 on account POST immediately after login because the account form read a stale CSRF token from the root HTML meta tag after Laravel regenerated the session token. `UserManagementController::index` now supplies the active session token in the page props, and the account page submits that current value.
 - `StoreUserRequest` now reports duplicate email in Thai. Browser validation after a post-login submission exposed the inline message and its `aria-invalid` / `aria-describedby` relationship.
 - Regression coverage and current full suite: 189 tests / 1,690 assertions. Production Vite build: 686 modules. Pint and `git diff --check` pass.
-- Browser validation and Admin report checks used only synthetic SQLite. This slice did not repeat Staff or Lecturer login; see `V1_COMPLETE_SYSTEM_QA.md` for the failed synthetic Staff login attempt and cleanup evidence.
-- The current Codex Security scan and fresh Composer audit remain incomplete; neither is represented as a clean result. MySQL was not accessed or changed.
+- Browser validation and Admin report checks used only synthetic SQLite. A fresh synthetic browser fixture completed Staff approval after accepting the native confirmation dialog; the visible success status and approved Lecturer history were verified.
+- The recorded Codex Security diff scan covers only its stated earlier base/head and does not include this UI-only patch; no claim is made that this patch had a new Codex Security scan. Fresh Composer audit was not run in this slice. The temporary browser fixture used SQLite and was removed; MySQL was not accessed or changed.
 
 ## Work rules
 
@@ -68,3 +68,10 @@ No uncommitted user changes were present at the original baseline. The branch an
 - The Senior Review Candidate remains NOT YET READY; see `V1_COMPLETE_SYSTEM_QA.md` for open gates.
 
 - Authorized local MySQL drill on 12 Oct: an AES-256-GCM encrypted mysqldump was decrypted/authenticated in memory, restored into a uniquely named separate schema, and exact row counts matched across 27 tables. The source sim_pbri counts matched before and after. The temporary backup and schema were removed; institutional backup schedule, off-host retention and recovery targets remain unverified.
+
+### Staff approval feedback fix — 12 October 2026
+
+- Staff approval previously redirected successfully but the review page did not display the flashed success message. The review page now renders the confirmation as an accessible `role="status"`; a feature test asserts the session message and next-page Inertia prop.
+- Browser UAT on the guarded synthetic SQLite fixture confirmed the approval POST redirected (302), the status “อนุมัติคำขอเรียบร้อยแล้ว” appeared, the queue empty state rendered, and the Lecturer approved history contained the request. No browser JavaScript errors; 390px layout had no horizontal overflow.
+- Fresh verification: 189 tests / 1,700 assertions, Vite build 686 modules, Pint, and `git diff --check` pass. The temporary fixture was removed and port 8766 closed.
+- Implemented and committed locally as `bebd6de`; branch is five commits ahead of origin. Not pushed or merged. The prior Codex Security scan does not cover this patch.

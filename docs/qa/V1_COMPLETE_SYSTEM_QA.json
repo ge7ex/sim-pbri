@@ -226,18 +226,16 @@
   "candidate_uncommitted": false,
   "current_follow_up": {
     "date": "2026-10-12",
-    "code_baseline": "25d8a20",
-    "commit_status": "committed_locally_unpushed_not_merged_to_main",
+    "code_baseline": "bebd6de4d0368c09438a937091826cf848179aa3",
+    "commit_status": "committed_locally_unpushed_not_merged_to_main; branch ahead 5",
     "committed_change_scope": [
-      "app/Modules/Access/Http/Controllers/UserManagementController.php",
-      "app/Modules/Access/Http/Requests/StoreUserRequest.php",
-      "resources/js/Modules/Access/Pages/Users/Index.vue",
-      "tests/Feature/Access/UserManagementTest.php"
+      "resources/js/Modules/Booking/Pages/Review.vue",
+      "tests/Feature/Booking/BookingStateTransitionTest.php"
     ],
     "php_artisan_test": {
       "status": "pass",
       "tests": 189,
-      "assertions": 1690,
+      "assertions": 1700,
       "database": "guarded sqlite :memory:"
     },
     "user_management_test": {
@@ -263,12 +261,13 @@
     "composer_audit": "not_run_auto_review_rejected_429",
     "npm_audit": "not_rerun_lockfiles_unchanged",
     "browser": {
-      "admin_post_login_csrf": "pass_duplicate_email_request_after_login_without_hard_reload_returned_validation_not_419",
-      "duplicate_email_validation": "pass_thai_message_aria_invalid_true_describedby_resolves",
-      "admin_report": "pass_approved_usage_and_admin_only_financial_statistics_visible",
-      "staff_login": "not_verified_synthetic_temp_credential_rejected",
+      "staff_approval_confirmation": "pass_native_confirmation_accepted_POST_302_visible_role_status_queue_empty_approved_history",
+      "staff_approval_responsive": "pass_390px_no_horizontal_overflow",
+      "page_errors": "none",
       "demo_cleanup": "pass_port_8766_closed_and_temp_directory_removed"
     },
-    "mysql": "not_accessed_no_changes"
+    "mysql": "not accessed or changed during this slice",
+    "codex_security_diff_scan_patch": "not_run; earlier scan does not cover this UI-only patch",
+    "senior_review_candidate": "not_yet_ready; traceability source and end-to-end accessibility/error/loading gates remain"
   }
 }
