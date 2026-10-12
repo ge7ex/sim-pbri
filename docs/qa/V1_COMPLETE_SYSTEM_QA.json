@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "4cddbafc0baa9b5da7674b430e7391486516d5ec",
+  "application_head": "2332b11855c4a8bb5d1c798cf1036bbfe1ad28d8",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -45,7 +45,8 @@
     "export_route_scan": {
       "status": "pass",
       "matches": 0,
-      "scope": "route name and URI export/download scan"
+      "scope": "route name and URI export/download scan",
+      "registered_routes": 51
     },
     "demo_setup_cleanup": {
       "status": "pass",
@@ -112,7 +113,10 @@
     "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
     "keyboard_screen_reader": "not_verified_end_to_end",
     "admin_resource_validation_error_accessibility": "pass_server_validation_role_alert_aria_invalid_and_describedby_target_resolves",
-    "keyboard_focus_spot_check": "pass_sampled_tab_focus_outline_2_4px_solid; not_full_keyboard_or_screen_reader_run"
+    "keyboard_focus_spot_check": "pass_sampled_tab_focus_outline_2_4px_solid; not_full_keyboard_or_screen_reader_run",
+    "mobile_navigation_escape": "pass_390px_escape_closes_menu_aria_expanded_false_focus_returned_with_visible_indicator",
+    "staff_queue_empty_after_approval": "pass_pending_count_1_to_0_empty_state_displayed_in_synthetic_sqlite",
+    "staff_report_finance_redaction": "pass_approved_usage_populated_no_financial_labels_or_export_links"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -130,7 +134,7 @@
     "Production backup/restore process is not verified; prior restore check covered synthetic SQLite only.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY.",
-    "Keyboard/screen-reader and complete zero/error/loading browser-state checks were not completed."
+    "End-to-end keyboard/screen-reader and complete cross-role zero/error/loading browser checks remain incomplete; the 390px mobile-menu Escape/focus-return path, sampled focus, and one server validation path passed."
   ],
   "verification_refresh": {
     "date": "2026-10-12",
@@ -155,10 +159,10 @@
     "timezone": "Asia/Bangkok confirmed by owner; UTC persisted; no timestamp conversion",
     "room_dimensions": "hidden from all UI and omitted from Admin/booking page props; schema and values preserved",
     "runtime_migrations": "21 ran; read-only migrate:status rerun",
-    "export_download_route_scan": "0 matches; rerun",
+    "export_download_route_scan": "0 matches among 51 registered routes",
     "browser_workflows_repeated": true,
     "runtime_mysql_changes_this_slice": false,
-    "implementation_commit": "cafca43",
+    "implementation_commit": "2332b11",
     "branch_ahead_of_origin_before_push": 1,
     "admin_dimension_forms": "browser verified on isolated synthetic SQLite",
     "staff_approval": "browser verified; pending queue moved to approved history",
@@ -168,7 +172,14 @@
     "mysql_date_add_literal_select": "pass; expected Bangkok date; no table queried",
     "demo_cleanup": "pass; port 8766 closed and TEMP demo removed",
     "admin_responsive": "pass_no_overflow_1440_1024_768_390",
-    "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel"
+    "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
+    "application_head": "2332b11855c4a8bb5d1c798cf1036bbfe1ad28d8",
+    "branch_ahead_after_push": 0,
+    "full_suite_after_mobile_escape_fix": "187 passed / 1672 assertions; guarded sqlite :memory:",
+    "mobile_menu_escape": "390px: aria-expanded=false, focus returned to toggle, focus-visible true",
+    "staff_report_privacy": "approved usage populated; no financial labels or export/download links",
+    "staff_queue_empty_state": "pending count moved from 1 to 0 after synthetic approval",
+    "runbook_timezone_and_migration_facts": "updated to Asia/Bangkok booking/report semantics and 21 migration read-only QA snapshot"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false

@@ -2,33 +2,33 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Code under QA: `cafca43` (`fix: announce validation errors accessibly`); QA documentation follows in this branch.
+Code under QA: `2332b11` (`fix: close mobile navigation on escape`), pushed to `origin/backend/inertia-foundation`.
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite, frontend build, scoped style check, dependency audits, migration-status inspection, and synthetic role workflows pass. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Browser coverage includes Admin responsive breakpoints and synthetic approval, rejection and cancellation flows; keyboard/screen-reader and zero/error/loading browser-state checks remain outstanding. Production MySQL backup/restore and real Master Data are not verified.
+The feature suite and frontend build pass on `2332b11`; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
 
-## Fresh automated evidence
+## Automated evidence refreshed on 12 October 2026
 
 | Check | Result | Scope / limit |
 |---|---|---|
 | `php artisan test --no-ansi` | 187 passed / 1,672 assertions | Guarded SQLite `:memory:` only |
-| Same suite with `SESSION_ENCRYPT=true` | 187 passed / 1,672 assertions | Guarded SQLite `:memory:` only |
+| Same suite with `SESSION_ENCRYPT=true` | 187 passed / 1,672 assertions | Prior 12 Oct QA snapshot; guarded SQLite `:memory:`; not rerun at `2332b11` |
 | `npm run build` | PASS, 686 modules | Production frontend compilation |
-| Scoped `php vendor/bin/pint --test --dirty` | PASS | Changed PHP files |
-| `composer audit --no-interaction` | No advisories | Current lockfile |
-| `npm audit --no-fund` | 0 vulnerabilities | Current lockfile |
-| `php artisan migrate:status` | 21 migrations Ran | Read-only status inspection; no migration executed |
-| Export/download route scan | 0 URI/name matches | Registered route list; source scan finds only TypeScript `export` syntax |
-| MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Validated `DATE(DATE_ADD(..., INTERVAL 7 HOUR))`; no table queried or changed |
+| Scoped `php vendor/bin/pint --test --dirty` | PASS | Prior 12 Oct QA snapshot; no PHP changed in this slice |
+| `composer audit --no-interaction` | No advisories | Prior 12 Oct QA snapshot; lockfile unchanged in this slice |
+| `npm audit --no-fund` | 0 vulnerabilities | Prior 12 Oct QA snapshot; lockfile unchanged in this slice |
+| `php artisan migrate:status` | 21 migrations Ran | Prior 12 Oct read-only status inspection; not rerun in this slice |
+| Export/download route scan | 0 URI/name matches across 51 registered routes | Registered route names and URIs |
+| MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Prior 12 Oct check; literal-only `DATE_ADD`; no table queried or changed |
 | `git diff --check` | PASS | Source and QA documentation patch |
 
 ## Isolated browser evidence
 
-All flows used the temporary synthetic SQLite demo created by `scripts/qa/phase-i-demo.ps1`; the MySQL runtime was not used by browser tests. The demo was cleaned up and port 8766 was confirmed closed.
+All browser flows used the temporary synthetic SQLite demo created by `scripts/qa/phase-i-demo.ps1`; MySQL was not used. The latest demo was cleaned up and port 8766 was confirmed closed. Some role/browser rows below are prior verified runs; rows added in this refresh identify the current slice.
 
 | Role / flow | Result | Limit |
 |---|---|---|
@@ -44,6 +44,9 @@ All flows used the temporary synthetic SQLite demo created by `scripts/qa/phase-
 | Admin resource validation error | PASS: server-side missing-name error renders as alert; field has `aria-invalid=true` and `aria-describedby` resolves to that alert | One Admin field verified in synthetic SQLite browser |
 | Keyboard focus spot check | PASS: sampled Tab stop showed a 2.4px solid outline | Spot check only; not a complete keyboard or screen-reader run |
 | Lecturer cancel | PASS: confirmation accepted; booking changed to cancelled and status history recorded | Synthetic SQLite fixture |
+| Staff queue empty state after approval | PASS: pending count changed from 1 to 0 and empty-state message displayed | Synthetic fixture; same-College scope only |
+| Staff report privacy | PASS: approved-activity statistics populated; no finance labels or export/download links in report page | Synthetic Staff account; current route scan also found 0 matches across 51 routes |
+| Mobile navigation Escape | PASS at 390px: Escape closes menu, sets `aria-expanded=false`, returns focus to toggle, and leaves visible focus indicator | Synthetic Staff account; tested from menu toggle; screen-reader run not performed |
 | Keyboard/screen reader | Not verified end-to-end | Source labels and test evidence exist; no full assistive-tech run |
 
 The first Playwright wrapper was blocked by WSL and `npx --no-install` found no installed executable. A cached Playwright CLI completed the flows above; session access was intermittent earlier in the run and later recovered. No app bug was inferred from browser-control failures.
@@ -60,7 +63,7 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 ## Remaining gates
 
 1. Obtain `project_sim_flow_v12.md` or an approved full requirements source and reconcile the traceability matrix.
-2. Complete keyboard, accessibility and zero/error/loading checks across remaining role journeys.
+2. Complete end-to-end keyboard/screen-reader and zero/error/loading checks across remaining role journeys. Mobile Escape close/focus return now passes; the remaining matrix is not complete.
 3. Verify the approved production MySQL backup/restore process; the existing isolated restore drill covers SQLite only.
 4. Complete final Senior walkthrough and owner acceptance before marking a Senior Review Candidate or real Pilot ready.
 
