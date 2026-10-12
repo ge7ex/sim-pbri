@@ -34,13 +34,27 @@ php scripts/qa/verify-phase-i-demo-restore.php
 
 This verifies the demo SQLite file only. It is not a production MySQL backup or disaster-recovery procedure.
 
-## Development checks
+## Local development
 
-Install dependencies from the committed lockfiles, configure a local-only `.env`, and ensure that `DB_CONNECTION` points to an isolated development database before applying migrations. Never point automated tests or demo seeders at the existing `sim_pbri` database.
+Prerequisites: PHP 8.2+, Composer, Node.js/npm, and MySQL for a normal shared runtime. PHP GD is required for room image uploads. The isolated Senior demo uses SQLite and does not need real application data.
+
+Install dependencies and prepare a new local-only SQLite environment from PowerShell. These commands create `.env` only when absent, keep the database file local, and generate a local app key:
 
 ```powershell
 composer install
 npm ci
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+if (-not (Test-Path database/database.sqlite)) { New-Item -ItemType File database/database.sqlite | Out-Null }
+php artisan key:generate
+php artisan migrate --no-interaction
+npm run dev
+```
+
+Run `php artisan serve` in a second terminal. Apply migrations only after confirming `.env` targets a disposable local development database. Never point the demo seeder or automated tests at the existing `sim_pbri` database.
+
+Run the verification checks separately:
+
+```powershell
 php artisan test --no-ansi
 npm run build
 php vendor/bin/pint --test --dirty
