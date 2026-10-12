@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Base HEAD: `f3660f3b484d19a376fab0337d41c23258906168`; current candidate includes uncommitted timezone and dimension-privacy changes.
+Implementation commit: `4cddbafc0baa9b5da7674b430e7391486516d5ec` on `backend/inertia-foundation`; QA documentation is finalized in a following commit.
 
 ## Verdict
 

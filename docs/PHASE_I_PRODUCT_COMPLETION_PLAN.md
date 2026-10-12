@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Current implementation base: `f3660f3b484d19a376fab0337d41c23258906168`; verified code changes are currently uncommitted on `backend/inertia-foundation`.
+Latest implementation commit: `4cddbafc0baa9b5da7674b430e7391486516d5ec` on `backend/inertia-foundation`; QA documentation is being finalized in a follow-up commit.
 
 ## Evidence boundary
 
@@ -38,7 +38,7 @@ No uncommitted user changes were present at the original baseline. The branch an
 - Approval flow reached the browser confirmation modal, but Chrome automation could not operate the modal after focus-emulation timeouts. No claim of browser approval is made; feature tests cover state transitions.
 - Runtime migrations 000015 and 000016 were applied after confirming the pending SQL with `php artisan migrate --pretend`; `migrate:status` then showed all 21 migrations applied. No fixtures or institutional data were seeded into runtime MySQL.
 - Added a guarded Senior demo setup/cleanup pair under `scripts/qa`; the setup refuses MySQL and uses a TEMP-only synthetic SQLite database with random credentials.
-- The earlier QA-helper and dimensions changes are committed; current code candidate contains timezone and dimension-privacy changes and is not yet committed. Cleanup checks process identity and refuses deletion while port 8766 remains open.
+- The current timezone and dimension-privacy implementation is committed as `4cddbafc0baa9b5da7674b430e7391486516d5ec`; QA docs capture the remaining browser and source-traceability gates. Cleanup checks process identity and refuses deletion while port 8766 remains open.
 - Fresh checks on 12 October 2026: 187 tests / 1,672 assertions; Vite 686 modules; scoped Pint, Composer audit, and npm audit pass. Migration status was not rerun in this slice. Browser review covered Lecturer Draft resume and Staff queue; approval action did not complete due to browser-control timeout.
 - Owner confirmed Asia/Bangkok. Booking input/display, calendar date grouping, booking filters and report boundaries now use Bangkok while persisted instants and global app timezone remain UTC. No existing timestamp was converted.
 - `scripts/qa/verify-phase-i-demo-restore.php` passed against synthetic demo data: SQLite integrity passed and table row counts matched across 26 tables after backup and restore-copy. This does not verify production MySQL backup/restore.

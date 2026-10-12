@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "f3660f3b484d19a376fab0337d41c23258906168",
+  "application_head": "4cddbafc0baa9b5da7674b430e7391486516d5ec",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -118,10 +118,8 @@
   ],
   "verification_refresh": {
     "date": "2026-10-12",
-    "base_head": "f3660f3b484d19a376fab0337d41c23258906168",
-    "candidate_uncommitted": true,
+    "candidate_uncommitted": false,
     "branch": "backend/inertia-foundation",
-    "branch_matches_origin_at_base": true,
     "test_default": {
       "status": "pass",
       "tests": 187,
@@ -143,8 +141,10 @@
     "runtime_migrations": "21 ran; read-only migrate:status rerun",
     "export_download_route_scan": "0 matches; rerun",
     "browser_workflows_repeated": false,
-    "runtime_mysql_changes_this_slice": false
+    "runtime_mysql_changes_this_slice": false,
+    "implementation_commit": "4cddbafc0baa9b5da7674b430e7391486516d5ec",
+    "branch_ahead_of_origin_before_push": 1
   },
   "secrets_or_personal_data_included": false,
-  "candidate_uncommitted": true
+  "candidate_uncommitted": false
 }
