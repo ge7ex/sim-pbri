@@ -18,7 +18,7 @@ final class ReportFilterRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $now = CarbonImmutable::now(config('app.timezone'));
+        $now = CarbonImmutable::now('Asia/Bangkok');
         $this->merge([
             'date_from' => $this->input('date_from') ?: $now->startOfMonth()->toDateString(),
             'date_to' => $this->input('date_to') ?: $now->endOfMonth()->toDateString(),
@@ -46,8 +46,8 @@ final class ReportFilterRequest extends FormRequest
             if ($validator->errors()->has('date_from') || $validator->errors()->has('date_to')) {
                 return;
             }
-            $from = CarbonImmutable::parse($this->input('date_from'), config('app.timezone'));
-            $to = CarbonImmutable::parse($this->input('date_to'), config('app.timezone'));
+            $from = CarbonImmutable::parse($this->input('date_from'), 'Asia/Bangkok');
+            $to = CarbonImmutable::parse($this->input('date_to'), 'Asia/Bangkok');
             if ($from->diffInDays($to) > 365) {
                 $validator->errors()->add('date_to', 'กรุณาเลือกช่วงวันที่ไม่เกิน 366 วัน');
             }

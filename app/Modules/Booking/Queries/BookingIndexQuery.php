@@ -5,6 +5,7 @@ namespace App\Modules\Booking\Queries;
 use App\Models\User;
 use App\Modules\Booking\Enums\BookingStatus;
 use App\Modules\Booking\Models\Booking;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 final class BookingIndexQuery
@@ -34,7 +35,7 @@ final class BookingIndexQuery
             $query->where(
                 'ends_at',
                 '>=',
-                $filters['date_from'].' 00:00:00',
+                CarbonImmutable::parse($filters['date_from'], 'Asia/Bangkok')->startOfDay()->utc()->toDateTimeString(),
             );
         }
 
@@ -42,7 +43,7 @@ final class BookingIndexQuery
             $query->where(
                 'starts_at',
                 '<=',
-                $filters['date_to'].' 23:59:59',
+                CarbonImmutable::parse($filters['date_to'], 'Asia/Bangkok')->endOfDay()->utc()->toDateTimeString(),
             );
         }
 

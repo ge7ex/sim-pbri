@@ -5,6 +5,7 @@ import PageHeader from '../../../Components/PageHeader.vue';
 import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
 import Time24Field from '../../../Components/Time24Field.vue';
+import { bookingDateTimeInput, bookingDateTimeToIso, parseBookingDateTime } from '../../../Support/dateTime';
 
 interface ResourceItem {
     image_url: string | null;
@@ -19,8 +20,6 @@ interface ResourceItem {
     building: string | null;
     floor: string | null;
     capacity: number | null;
-    room_width_m: string | null;
-    room_length_m: string | null;
 }
 
 interface CourseItem { id: number; code: string | null; name: string }
@@ -85,11 +84,6 @@ const recommendedEquipment = computed(() => equipment.value.filter((item) => rec
 const additionalEquipment = computed(() => equipment.value.filter((item) => !recommendedEquipmentIds.value.has(item.id)));
 const unavailableRecommended = computed(() => (selectedScenario.value?.recommended_resources ?? [])
     .filter((item) => item.kind === 'equipment' && item.status !== 'ready'));
-function roomArea(room: ResourceItem): string {
-    if (room.room_width_m === null || room.room_length_m === null) return 'ไม่ระบุ';
-    return `${(Number(room.room_width_m) * Number(room.room_length_m)).toFixed(2)} ตร.ม.`;
-}
-
 const form = useForm({
     course_id: null as number | null,
     scenario_id: null as number | null,
@@ -114,7 +108,7 @@ const additionalEquipmentId = ref<number | null>(null);
 const additionalEquipmentQuantity = ref(1);
 const selectedAdditionalEquipment = computed(() => additionalEquipment.value.filter(item => (equipmentQuantities.value[item.id] ?? 0) > 0));
 const savingDraft = ref(false);
-const dateTimeValid = computed(() => !!form.starts_at && !!form.ends_at && new Date(form.ends_at) > new Date(form.starts_at));
+const dateTimeValid = computed(() => !!form.starts_at && !!form.ends_at && parseBookingDateTime(form.ends_at) > parseBookingDateTime(form.starts_at));
 const canSubmit = computed(() => !form.processing && dateTimeValid.value && selectedRoomId.value !== null
     && roomAvailability.value[selectedRoomId.value] === true && !!selectedRoom.value?.capacity
     && Number.isInteger(form.participant_count) && form.participant_count! > 0
@@ -170,8 +164,8 @@ watch(() => [form.starts_at, form.ends_at], async ([startsAt, endsAt], _old, onC
     roomAvailability.value = {};
     roomAvailabilityError.value = '';
     checkingRoomAvailability.value = false;
-    const start = new Date(startsAt);
-    const end = new Date(endsAt);
+    const start = parseBookingDateTime(startsAt);
+    const end = parseBookingDateTime(endsAt);
     if (!startsAt || !endsAt || !Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start) return;
     const controller = new AbortController();
     let current = true;
@@ -197,8 +191,8 @@ watch(() => [form.starts_at, form.ends_at], async ([startsAt, endsAt], _old, onC
     simulatorAvailability.value = {};
     simulatorAvailabilityError.value = '';
     checkingSimulatorAvailability.value = false;
-    const start = new Date(startsAt);
-    const end = new Date(endsAt);
+    const start = parseBookingDateTime(startsAt);
+    const end = parseBookingDateTime(endsAt);
     if (!startsAt || !endsAt || !Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start) return;
     const controller = new AbortController();
     let current = true;
@@ -229,22 +223,14 @@ watch(() => form.scenario_id, () => {
     );
 });
 
-function dateTimeInput(value: unknown): string {
-    if (typeof value !== 'string' || !value) return '';
-    const date = new Date(value);
-    if (!Number.isFinite(date.getTime())) return '';
-    const pad = (part: number) => String(part).padStart(2, '0');
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
-
 onMounted(async () => {
     const payload = props.draft?.payload;
     if (!payload) return;
     form.course_id = props.courses.some((item) => item.id === payload.course_id) ? payload.course_id : null;
     form.scenario_id = props.scenarios.some((item) => item.id === payload.scenario_id) ? payload.scenario_id : null;
     form.simulator_asset_id = props.simulatorAssets.some((item) => item.id === payload.simulator_asset_id) ? payload.simulator_asset_id : null;
-    form.starts_at = dateTimeInput(payload.starts_at);
-    form.ends_at = dateTimeInput(payload.ends_at);
+    form.starts_at = bookingDateTimeInput(payload.starts_at);
+    form.ends_at = bookingDateTimeInput(payload.ends_at);
     form.participant_count = payload.participant_count ?? null;
     form.requester_phone = payload.requester_phone ?? '';
     form.requester_name = payload.requester_name ?? page.props.auth.user.name;
@@ -301,8 +287,8 @@ function submit(): void {
     form
         .transform((data) => ({
             ...data,
-            starts_at: new Date(data.starts_at).toISOString(),
-            ends_at: new Date(data.ends_at).toISOString(),
+            starts_at: bookingDateTimeToIso(data.starts_at),
+            ends_at: bookingDateTimeToIso(data.ends_at),
         }))
         .post('/app/bookings');
 }
@@ -365,7 +351,7 @@ function addCustomEquipment(): void {
                         </div>
                         <div class="room-card-content">
                             <div class="room-card-heading"><div><h3>{{ visibleRoom.name }}</h3><p>{{ visibleRoom.description || 'ห้องปฏิบัติการ Simulation ของหน่วยงาน' }}</p></div><span class="room-status" :class="{ ready: roomSelectable(visibleRoom) }">{{ roomStatusLabel(visibleRoom) }}</span></div>
-                            <dl class="room-meta-grid"><div><dt>อาคาร / ชั้น</dt><dd>{{ [visibleRoom.building, visibleRoom.floor ? `ชั้น ${visibleRoom.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' }}</dd></div><div><dt>ความจุ</dt><dd>{{ visibleRoom.capacity === null ? 'ยังไม่กำหนด' : `${visibleRoom.capacity} คน` }}</dd></div><div><dt>ตำแหน่ง</dt><dd>{{ visibleRoom.location || 'ไม่ระบุ' }}</dd></div><div><dt>พื้นที่</dt><dd>{{ roomArea(visibleRoom) }}</dd></div></dl>
+                            <dl class="room-meta-grid"><div><dt>อาคาร / ชั้น</dt><dd>{{ [visibleRoom.building, visibleRoom.floor ? `ชั้น ${visibleRoom.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' }}</dd></div><div><dt>ความจุ</dt><dd>{{ visibleRoom.capacity === null ? 'ยังไม่กำหนด' : `${visibleRoom.capacity} คน` }}</dd></div><div><dt>ตำแหน่ง</dt><dd>{{ visibleRoom.location || 'ไม่ระบุ' }}</dd></div></dl>
                             <p class="room-availability" role="status">{{ availabilityLabel(visibleRoom) }}</p>
                             <button class="button-primary room-select-button" type="button" :disabled="!roomSelectable(visibleRoom)" @click="chooseRoom(visibleRoom)">เลือกห้องนี้</button>
                         </div>

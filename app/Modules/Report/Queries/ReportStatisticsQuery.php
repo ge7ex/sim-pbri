@@ -17,10 +17,10 @@ final class ReportStatisticsQuery
     {
         abort_unless($actor->canAccess(AppPermission::ReportView), 403);
         $college = $actor->college_id;
-        $from = CarbonImmutable::parse($filters['date_from'], config('app.timezone'))->startOfDay();
-        $until = CarbonImmutable::parse($filters['date_to'], config('app.timezone'))->addDay()->startOfDay();
-        $fromSql = $from->toDateTimeString();
-        $untilSql = $until->toDateTimeString();
+        $from = CarbonImmutable::parse($filters['date_from'], 'Asia/Bangkok')->startOfDay();
+        $until = CarbonImmutable::parse($filters['date_to'], 'Asia/Bangkok')->addDay()->startOfDay();
+        $fromSql = $from->utc()->toDateTimeString();
+        $untilSql = $until->utc()->toDateTimeString();
         $scope = DB::table('bookings as b')->where('b.college_id', $college)
             ->where('b.starts_at', '<', $untilSql)->where('b.ends_at', '>', $fromSql);
         if ($filters['status']) {
@@ -41,7 +41,10 @@ final class ReportStatisticsQuery
         }
         $approved = (clone $scope)->where('b.status', 'approved');
         // Bind range boundaries; DATE works on both supported MySQL and isolated SQLite.
-        $trendRows = (clone $scope)->selectRaw('DATE(CASE WHEN b.starts_at < ? THEN ? ELSE b.starts_at END) AS date, COUNT(*) AS total, SUM(CASE WHEN b.status = ? THEN 1 ELSE 0 END) AS approved', [$fromSql, $fromSql, 'approved'])->groupBy('date')->orderBy('date')->get()->keyBy('date');
+        $localTrendDate = DB::getDriverName() === 'sqlite'
+            ? "DATE(datetime(CASE WHEN b.starts_at < ? THEN ? ELSE b.starts_at END, '+7 hours'))"
+            : 'DATE(DATE_ADD(CASE WHEN b.starts_at < ? THEN ? ELSE b.starts_at END, INTERVAL 7 HOUR))';
+        $trendRows = (clone $scope)->selectRaw($localTrendDate.' AS date, COUNT(*) AS total, SUM(CASE WHEN b.status = ? THEN 1 ELSE 0 END) AS approved', [$fromSql, $fromSql, 'approved'])->groupBy('date')->orderBy('date')->get()->keyBy('date');
         $trend = [];
         for ($date = $from; $date->lt($until); $date = $date->addDay()) {
             $key = $date->toDateString();

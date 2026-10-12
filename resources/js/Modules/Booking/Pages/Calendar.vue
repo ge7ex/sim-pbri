@@ -27,7 +27,7 @@ const page = usePage<SharedProps>();
 const eventDays = computed(() => {
     const groups = new Map<string, CalendarEvent[]>();
     for (const event of props.events) {
-        const day = new Date(event.starts_at).toLocaleDateString('th-TH', { dateStyle: 'full' });
+        const day = new Date(event.starts_at).toLocaleDateString('th-TH', { dateStyle: 'full', timeZone: 'Asia/Bangkok' });
         groups.set(day, [...(groups.get(day) ?? []), event]);
     }
     return Array.from(groups, ([day, events]) => ({ day, events }));

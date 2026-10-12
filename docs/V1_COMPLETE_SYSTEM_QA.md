@@ -2,86 +2,47 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Application HEAD under review: `4d3fcb40d9e7242791a73d9d29e202034342b463` (verified 12 October 2026; branch equals origin; worktree clean)
+Base HEAD: `f3660f3b484d19a376fab0337d41c23258906168`; current candidate includes uncommitted timezone and dimension-privacy changes.
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite, production frontend build, dependency audits, schema migration status and demo setup/cleanup pass. The original `project_sim_flow_v12.md` and full gap analyses remain unavailable; a secondary 60-check HTML report was found, but its code evidence is from `d2e84e7`, so traceability is not source-complete. The current review reran automated checks but did not perform browser workflows. Browser approval, the 1440/1024/768/390 matrix and whole-system role walkthrough remain incomplete.
+The automated suite/build and scoped security checks pass. The original `project_sim_flow_v12.md` and full gap analysis are unavailable, so traceability is not source-complete. Browser approval could not be completed because the control bridge timed out. The latest dimensions UI hiding was verified by feature tests and source/build inspection, not a fresh Admin browser visual pass.
 
-## Fresh automated evidence
+## Fresh automated evidence for this candidate
 
 | Check | Result | Scope / limit |
 |---|---|---|
-| `php artisan test --no-ansi` | 186 passed / 1,663 assertions | Tests use guarded SQLite `:memory:`; no MySQL test run |
-| `php artisan test --no-ansi` with `SESSION_ENCRYPT=true` | 186 passed / 1,663 assertions | Confirms auth/session feature suite still passes with session payload encryption enabled |
-| `npm run build` | PASS, 686 modules | Frontend production compilation |
-| `php vendor/bin/pint --test --dirty` | PASS | Changed PHP files |
+| `php artisan test --no-ansi` | 187 passed / 1,672 assertions | Guarded SQLite `:memory:` only; includes Bangkok filters and Admin/booking dimensions-payload omission |
+| `npm run build` | PASS, 686 modules | Production frontend compilation |
+| Scoped `php vendor/bin/pint --test ...` | PASS | Changed PHP files only |
 | `composer audit --no-interaction` | No advisories | Current lockfile |
 | `npm audit --no-fund` | 0 vulnerabilities | Current lockfile |
-| `php artisan migrate:status` | All 21 migrations applied | Local runtime MySQL; migrations 000017/000018 added an empty Draft table and nullable dimensions without populating existing records |
-| Deployment runbook | Drafted from repository config/migrations | Not exercised on a target host; no deployment authorization |
-| `php artisan route:list --json` + source label scan | No Export/download routes or UI labels found | Does not claim an exhaustive semantic review of every third-party dependency |
-| `php scripts/qa/verify-phase-i-demo-restore.php` | PASS; integrity and row counts match across 26 tables | Synthetic SQLite only; does not verify a production MySQL backup |
-| `phase-i-demo.ps1` caller environment restoration | PASS | Sentinel APP/DB values were restored after setup; server retained isolated SQLite settings |
-| PowerShell parser for `phase-i-demo.ps1` | PASS | After process identity and environment restoration changes |
-| `git diff --check` | PASS | Verified on the pre-commit diff; committed branch is clean |
+| `git diff --check` | PASS | Candidate patch |
+| JS timezone self-check | PASS | 09:00 Bangkok maps to 02:00Z and resumes/displays at 09:00 under UTC and America/Los_Angeles host zones |
+| Export/download route scan | Prior result: 0 matches | Not rerun in this slice |
+| `php artisan migrate:status` | Prior result: 21 migrations applied | Not rerun in this slice; no migration or MySQL write in this slice |
+| MySQL data | No changes in this slice | No reset, seed, backfill, restore, or timestamp conversion |
 
-The prior additive MySQL schema change created `user_access_events`, added account flags, and added nullable booking-resource snapshots. This review applied migration 000017 (empty `booking_drafts`, 0 rows) and 000018 (nullable room dimensions). No existing app row was updated/deleted or populated; no fixture seed or snapshot backfill was run. Existing booking pivot snapshot columns remain null; no historical values were inferred from current Master Data.
+## Isolated browser evidence
 
-## Browser evidence (isolated synthetic SQLite only)
+Previous isolated synthetic-SQLite browser run exercised Lecturer Draft save/resume and Staff review queue. Responsive overflow checks for Lecturer dashboard and booking form passed at 1440, 1024, 768, and 390 CSS pixels. The Staff approval confirmation was reached, but the browser-control bridge timed out at the click; no approval action is claimed. Browser credentials/password change were not submitted. The current dimension-hiding change has a server-payload regression test for Admin and Lecturer booking pages; it has not been visually rechecked in the browser after this change. No real accounts or institutional master data were used.
 
-| Role / flow | Result | Evidence / limitation |
-|---|---|---|
-| Admin | PASS: login, College label, user-management navigation, account creation, one-time credential visibility and hide action | Synthetic Chrome test database under TEMP; credential was hidden before screenshot; database removed after test |
-| Staff | PASS: no user-management navigation; direct `/app/users` request returns 403; review displays requester and phone for same-College pending booking | Synthetic Chrome test database; no foreign College booking appears |
-| Lecturer | PASS: 24-hour booking form, room availability, editable room user/coordinator, course/scenario/equipment selection, Pending submission, history and detail | Synthetic Chrome test database; room snapshot remains visible after changing Master Data in automated test |
-| Staff approve | NOT VERIFIED in browser | Approval button opened a JavaScript confirmation; Chrome control timed out and the action was not completed. Automated transition tests pass. |
-| Responsive breakpoints | NOT VERIFIED | The requested 1440, 1024, 768 and 390 CSS-pixel matrix was not completed in this run. |
-| Password change/reset | NOT VERIFIED in browser | Feature tests pass; browser did not submit credential changes. |
-| Draft browser flow | NOT VERIFIED | Draft save/resume/delete and Staff non-visibility are covered by feature tests, but the new UI was not exercised in a browser. |
-| Room-dimension UI | NOT VERIFIED | Validation/persistence and build pass; room create/edit, derived area and Lecturer display were not exercised in a browser. |
-| Current review browser run | NOT RUN | Browser workflows were not repeated in this review; earlier computer-use policy rejection is recorded above as prior evidence only. |
+## Verified decisions and data boundary
 
-No real user accounts or credentials were entered. The isolated Senior demo helper creates random credentials in a current-user-only TEMP directory and is not a MySQL seed path. Setup and cleanup passed end-to-end after cleanup began verifying the recorded process name, command line, and exact creation ticks, and requiring port 8766 to be closed before removing TEMP data. The first cleanup attempt safely refused to stop an unverified PID; after verifying the current server identity, only the isolated TEMP directory was removed. Setup also restored caller APP/DB environment values after launching the server.
+- Owner confirmed `Asia/Bangkok`. Booking input, validation, Draft resume, user-facing formatting, calendar day grouping, booking filters, and report day boundaries now use Bangkok semantics. Database instants and the application-wide timezone remain UTC. No timestamp data was converted.
+- Owner confirmed Drafts remain until the owner submits or deletes them; no automatic expiry.
+- Owner directed room dimensions be hidden on every page, including Admin. The nullable width/length columns and any existing values remain preserved; Admin and booking Inertia props omit them. The UI has no dimension input or derived-area display. No migration/data change was made for this choice.
+- MySQL migrations 000017/000018 were previously recorded as applied, including empty Draft table and nullable dimension columns. This slice did not rerun migrations or mutate runtime MySQL.
+- The original v12 document remains unavailable; the secondary 60-check report is a historical gap aid, not authoritative wording.
 
-## Code and UX review
+## Remaining gates
 
-Ponytail and Ponytail Review instructions were available and used for code/change review. Impeccable and UI/UX Pro Max skills were present; `.impeccable.md` supplied the established institutional design context. Impeccable’s referenced `references/pro-rules.md` is absent. UI/UX Pro Max guidance for this review emphasized keyboard focus, complete keyboard navigation, visible submit feedback, and responsive form inspection. The Vue-specific lookup returned no match on the first query and three relevant form/component/testing entries on a single broader retry. UI source changed to add Draft controls and Room Master dimensions; browser observations below are prior isolated-browser evidence, not a fresh browser run in this review.
+1. Obtain original v12/full gap analysis and reconcile source-complete traceability.
+2. Complete isolated browser role journeys after the latest UI changes, including Admin resource page, keyboard/accessibility, error/zero/loading states, and Staff approval.
+3. Verify the approved production MySQL backup/restore mechanism; synthetic SQLite restore does not cover it.
+4. Complete final full-system review and Senior walkthrough before calling this a Senior Review Candidate or real Pilot ready.
 
-## Product gap decisions
-
-- Implemented editable booking display name, preserving the immutable session-derived `requested_by_user_id` and College.
-- Implemented same-College reviewer contact display on the permission-protected review page.
-- Added future-only room/resource snapshots for name, location, building, floor, and capacity. Legacy requests remain readable and are marked as using current Master Data where shown.
-- The secondary report records a Draft requirement and width/length/area in the v12 model example. Drafts are private to the owner, capped at 10, and remain until submission or owner deletion; automatic expiry is pending owner retention policy. Room width/length use an accepted metric assumption, with area derived; original v12 remains needed to validate this convention. Existing rooms were not backfilled.
-- `config/app.php` sets UTC; booking inputs are local `datetime-local` values parsed without an explicit timezone, and JS renders in browser-local time. This can shift displayed times for Thai users. Timezone confirmation is pending; no timestamp interpretation or schema was changed.
-- `php artisan tinker --execute 'echo config("app.timezone");'` returned `UTC`; parsing 09:00 as UTC and rendering that ISO value in an Asia/Bangkok browser produces 16:00. This reproduces the seven-hour risk, but does not establish the institution's approved timezone.
-- Email invitations and self-service recovery remain unavailable because no approved mail or identity provider was configured. Admin provisioning uses a one-time credential delivered through an institution-approved private channel.
-- Changed only `.env.example` to enable session payload encryption for new environment setup. The local `.env` and database were not read or changed; the full suite passes with `SESSION_ENCRYPT=true`.
-
-## Required follow-up before Senior review
-
-1. Obtain original v12 and full gap analyses; reconcile every requirement in `docs/REQUIREMENTS_TRACEABILITY_V1.md`.
-2. Confirm institutional timezone before changing parsing/serialization behavior; protect interpretation of existing MySQL booking times.
-3. Confirm the Draft retention policy and validate the metric/derived-area assumption against original v12 or owner decision.
-4. Complete browser Draft save/resume/submit, approval/rejection and the full role matrix at 1440/1024/768/390, plus keyboard and zero/error/loading checks.
-5. Test backup/restore against the approved deployment backup mechanism; the synthetic SQLite drill does not cover MySQL operations.
-6. Complete remaining cross-module checks, Ponytail review of the final patch, and fresh suite/build after final edits.
-7. Review the Senior demo and operational gates with the Senior reviewer.
-
-## Runtime and Git boundary
-
-- Runtime MySQL was inspected and migrations were applied. Application test fixtures were never pointed at MySQL.
-- The Senior demo uses `scripts/qa/phase-i-demo.ps1`, a new SQLite file under `%TEMP%`, a random APP_KEY, a local-only server and synthetic data only.
-- The setup and cleanup script were exercised end-to-end. Cleanup stops only verified demo processes, requires port 8766 to be closed, then removes only the fixed demo directory under TEMP; a PID-reuse failure path was corrected and rerun.
-- MySQL received only the additive `booking_drafts` table migration; the table is empty. No existing application rows were changed; tests and demo seeding remained isolated.
-- No `main` merge or Export feature was performed.
-- The current Phase I implementation is committed and pushed on `backend/inertia-foundation`; no `main` merge was made.
-
-
-## Verification refresh — 12 October 2026
-
-After Draft and Room Master dimension implementation, the full PHP suite passed on the working branch with the default test configuration and again with `SESSION_ENCRYPT=true` (186 tests / 1,663 assertions each). `npm run build` passed (686 modules), Pint passed, Composer and npm audits reported no advisories/vulnerabilities, migrations 000017 and 000018 are `Ran` with 21 total applied migrations, and the registered-route export/download scan returned no matches. Runtime schema changes created the empty Draft table (0 rows) and nullable room-dimension columns; no existing room was populated. Browser workflows were not run. The Draft implementation commit `3bef07e` and room-dimensions commit `4d3fcb4` are pushed to `origin/backend/inertia-foundation`. Browser workflows remain unverified for this feature.
+No Export feature was enabled, `main` was not merged, and runtime MySQL was not reset or seeded.

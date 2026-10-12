@@ -1,40 +1,102 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "4d3fcb40d9e7242791a73d9d29e202034342b463",
+  "application_head": "f3660f3b484d19a376fab0337d41c23258906168",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
   },
   "automated": {
-    "php_artisan_test": { "status": "pass", "tests": 186, "assertions": 1663, "database": "guarded sqlite :memory:" },
-    "php_artisan_test_session_encrypt_true": { "status": "pass", "tests": 186, "assertions": 1663, "database": "guarded sqlite :memory:" },
-    "npm_run_build": { "status": "pass", "modules": 686 },
-    "pint_test_dirty": { "status": "pass", "scope": "changed php files" },
-    "composer_audit": { "status": "pass", "advisories": 0 },
-    "npm_audit": { "status": "pass", "vulnerabilities": 0 },
-    "runtime_migrations": { "status": "pass", "applied": 21, "last_migration": "2026_10_12_000018_add_room_dimensions" },
-    "export_route_scan": { "status": "pass", "matches": 0 },
-    "demo_setup_cleanup": { "status": "pass", "database": "synthetic sqlite under TEMP", "cleanup_port_guard": "pass", "process_identity": "name command_line creation_ticks" },
-    "caller_app_db_environment_restoration": { "status": "pass", "method": "sentinel variables preserved after setup" },
-    "isolated_sqlite_restore": { "status": "pass", "integrity": "ok", "matching_table_row_counts": 26, "production_mysql": "not_verified" },
-    "powershell_parser": { "status": "pass", "file": "scripts/qa/phase-i-demo.ps1" },
-    "php_restore_script_lint": { "status": "pass", "file": "scripts/qa/verify-phase-i-demo-restore.php" },
-    "deployment_runbook": { "status": "drafted_from_source", "target_host_tested": false, "deployment_authorized": false },
-    "git_diff_check": { "status": "pass" }
+    "php_artisan_test": {
+      "status": "pass",
+      "tests": 187,
+      "assertions": 1672,
+      "database": "guarded sqlite :memory:"
+    },
+    "php_artisan_test_session_encrypt_true": {
+      "status": "pass",
+      "tests": 187,
+      "assertions": 1672,
+      "database": "guarded sqlite :memory:",
+      "session_encrypt": "true"
+    },
+    "npm_run_build": {
+      "status": "pass",
+      "modules": 686
+    },
+    "pint_test_dirty": {
+      "status": "pass",
+      "scope": "changed PHP files only"
+    },
+    "composer_audit": {
+      "status": "pass",
+      "advisories": 0
+    },
+    "npm_audit": {
+      "status": "pass",
+      "vulnerabilities": 0
+    },
+    "runtime_migrations": {
+      "status": "pass",
+      "applied": 21,
+      "last_migration": "2026_10_12_000018_add_room_dimensions",
+      "mode": "read-only status inspection"
+    },
+    "export_route_scan": {
+      "status": "pass",
+      "matches": 0,
+      "scope": "route name and URI export/download scan"
+    },
+    "demo_setup_cleanup": {
+      "status": "pass",
+      "database": "synthetic sqlite under TEMP",
+      "cleanup_port_guard": "pass",
+      "process_identity": "name command_line creation_ticks"
+    },
+    "caller_app_db_environment_restoration": {
+      "status": "pass",
+      "method": "sentinel variables preserved after setup"
+    },
+    "isolated_sqlite_restore": {
+      "status": "pass",
+      "integrity": "ok",
+      "matching_table_row_counts": 26,
+      "production_mysql": "not_verified"
+    },
+    "powershell_parser": {
+      "status": "pass",
+      "file": "scripts/qa/phase-i-demo.ps1"
+    },
+    "php_restore_script_lint": {
+      "status": "pass",
+      "file": "scripts/qa/verify-phase-i-demo-restore.php"
+    },
+    "deployment_runbook": {
+      "status": "drafted_from_source",
+      "target_host_tested": false,
+      "deployment_authorized": false
+    },
+    "git_diff_check": {
+      "status": "pass",
+      "scope": "current candidate"
+    }
   },
   "browser": {
     "environment": "synthetic isolated sqlite",
     "admin_account_create_and_hide_one_time_credential": "pass",
     "staff_role_navigation_and_direct_403": "pass",
-    "staff_same_college_review_contact": "pass",
+    "staff_same_college_review_contact": "pass_prior_isolated_synthetic_sqlite_run",
     "lecturer_booking_history_and_detail": "pass",
     "approval_confirmation": "not_verified_browser_control_timeout",
-    "responsive_1440_1024_768_390": "not_verified",
+    "responsive_1440_1024_768_390": "pass_for_lecturer_dashboard_and_booking_form_prior_isolated_run",
     "credential_change": "not_verified_in_browser",
-    "booking_draft_ui": "not_verified_in_browser",
-    "room_dimensions_ui": "not_verified_in_browser",
-    "previous_localhost_attempt": "blocked_by_computer_use_policy; no alternate path attempted"
+    "booking_draft_ui": "lecturer_save_and_resume_passed_in_prior_isolated_run; submit/delete not_browser_verified",
+    "room_dimensions_ui": "not_visually_rechecked_after_hide_change; automated Admin and booking props omission assertions pass",
+    "previous_localhost_attempt": "isolated browser was used; approval click timed out; no real credentials or institutional data used",
+    "lecturer_draft_save_resume": "pass_prior_isolated_synthetic_sqlite_run",
+    "staff_review_queue": "pass_prior_isolated_synthetic_sqlite_run",
+    "responsive_lecturer_dashboard_and_booking_form_1440_1024_768_390": "pass_prior_isolated_run",
+    "room_dimensions_ui_after_hide_change": "not_visually_rechecked; feature_props_assertions_pass_for_admin_and_booking_pages"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -47,13 +109,42 @@
     "existing_rooms_populated_with_dimensions": false
   },
   "limitations": [
-    "Original project_sim_flow_v12.md unavailable; secondary 60-check report exists but was assessed against older d2e84e7.",
-    "Drafts do not auto-expire pending owner approval of a retention policy; metric/derived-area assumption needs source validation against v12; institutional timezone needs owner confirmation.",
-    "Production timezone is currently configured as UTC while browser display follows local timezone; a Thai display offset risk is open.",
-    "Production backup/restore drill is not verified.",
+    "Original project_sim_flow_v12.md and complete gap analysis unavailable; traceability is not source-complete.",
+    "Staff approval action remains unverified in browser because the computer-use bridge timed out at confirmation.",
+    "Admin dimension-hiding has automated page-props coverage but not a fresh visual browser pass after the change.",
+    "Production backup/restore process is not verified; prior restore check covered synthetic SQLite only.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY."
   ],
-  "verification_refresh": {"date":"2026-10-12","head":"4d3fcb40d9e7242791a73d9d29e202034342b463","head_before_feature_commit":"1a9406e8e558c75ba8b8995e1c268c6890b039d5","branch_matches_origin_before_feature_slice":true,"working_tree_clean_at_slice_start":true,"test_default":{"status":"pass","tests":186,"assertions":1663},"test_session_encrypt_true":{"status":"pass","tests":186,"assertions":1663},"build_modules":686,"pint":"pass","composer_audit":"0 advisories","npm_audit":"0 vulnerabilities","migrations":"21 ran; additive draft table plus nullable room-dimension columns; draft count 0; no room backfill","export_download_route_scan":"0 matches","browser_workflows_repeated":false,"existing_runtime_rows_changed":false},
-  "secrets_or_personal_data_included": false
+  "verification_refresh": {
+    "date": "2026-10-12",
+    "base_head": "f3660f3b484d19a376fab0337d41c23258906168",
+    "candidate_uncommitted": true,
+    "branch": "backend/inertia-foundation",
+    "branch_matches_origin_at_base": true,
+    "test_default": {
+      "status": "pass",
+      "tests": 187,
+      "assertions": 1672,
+      "database": "guarded sqlite :memory:"
+    },
+    "test_session_encrypt_true": {
+      "status": "pass",
+      "tests": 187,
+      "assertions": 1672
+    },
+    "build_modules": 686,
+    "pint_changed_php": "pass",
+    "composer_audit": "0 advisories",
+    "npm_audit": "0 vulnerabilities",
+    "git_diff_check": "pass",
+    "timezone": "Asia/Bangkok confirmed by owner; UTC persisted; no timestamp conversion",
+    "room_dimensions": "hidden from all UI and omitted from Admin/booking page props; schema and values preserved",
+    "runtime_migrations": "21 ran; read-only migrate:status rerun",
+    "export_download_route_scan": "0 matches; rerun",
+    "browser_workflows_repeated": false,
+    "runtime_mysql_changes_this_slice": false
+  },
+  "secrets_or_personal_data_included": false,
+  "candidate_uncommitted": true
 }

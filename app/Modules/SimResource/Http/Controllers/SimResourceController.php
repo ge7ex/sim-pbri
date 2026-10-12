@@ -36,6 +36,7 @@ final class SimResourceController extends Controller
             ->orderBy('kind')
             ->orderBy('name')
             ->get();
+        $resources->makeHidden(['room_width_m', 'room_length_m']);
 
         return Inertia::render('Modules/SimResource/Pages/Index', [
             'resources' => $resources,

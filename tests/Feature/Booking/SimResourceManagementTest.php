@@ -103,14 +103,22 @@ final class SimResourceManagementTest extends TestCase
         $this->assertSame('6.00', $resource->room_length_m);
     }
 
-    public function test_lecturer_booking_room_selection_receives_saved_dimensions(): void
+    public function test_room_dimensions_are_not_exposed_on_admin_or_booking_pages(): void
     {
-        [$lecturer, $room] = $this->context(UserRole::Lecturer);
+        [$admin, $room] = $this->context(UserRole::Admin);
         $room->update(['room_width_m' => '5.25', 'room_length_m' => '6.00']);
 
+        $this->actingAs($admin)->get('/app/resources')->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->missing('resources.0.room_width_m')
+            ->missing('resources.0.room_length_m'));
+
+        $lecturer = User::factory()->create([
+            'college_id' => $admin->college_id,
+            'role' => UserRole::Lecturer->value,
+        ]);
         $this->actingAs($lecturer)->get('/app/bookings/create')->assertOk()->assertInertia(fn (Assert $page) => $page
-            ->where('resources.0.room_width_m', '5.25')
-            ->where('resources.0.room_length_m', '6.00'));
+            ->missing('resources.0.room_width_m')
+            ->missing('resources.0.room_length_m'));
     }
 
     public function test_room_dimensions_must_be_both_present_and_within_supported_range(): void

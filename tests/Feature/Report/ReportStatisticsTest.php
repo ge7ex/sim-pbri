@@ -43,16 +43,16 @@ final class ReportStatisticsTest extends TestCase
         $scenario = Scenario::create(['course_id' => $course->id, 'name' => 'Scenario']);
         $type = SimulatorType::create(['college_id' => $actor->college_id, 'name' => 'Type']);
         $asset = SimulatorAsset::create(['college_id' => $actor->college_id, 'simulator_type_id' => $type->id, 'asset_name' => 'Asset', 'asset_code' => 'A1']);
-        $first = $this->booking($actor, 'approved', ['starts_at' => '2026-09-30 23:00:00', 'ends_at' => '2026-10-01 02:00:00', 'course_id' => $course->id, 'scenario_id' => $scenario->id, 'simulator_asset_id' => $asset->id]);
+        $first = $this->booking($actor, 'approved', ['starts_at' => '2026-09-30 23:00:00', 'ends_at' => '2026-10-01 01:00:00', 'course_id' => $course->id, 'scenario_id' => $scenario->id, 'simulator_asset_id' => $asset->id]);
         $first->resources()->attach([$room->id => ['quantity' => 1], $equipment->id => ['quantity' => 3]]);
-        $second = $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 23:00:00', 'ends_at' => '2026-10-02 02:00:00', 'participant_count' => null]);
+        $second = $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 16:00:00', 'ends_at' => '2026-10-01 18:00:00', 'participant_count' => null]);
         $second->resources()->attach([$room->id => ['quantity' => 1], $equipment->id => ['quantity' => 2]]);
         foreach (['pending', 'rejected', 'cancelled'] as $status) {
             $booking = $this->booking($actor, $status);
             $booking->resources()->attach($equipment->id, ['quantity' => 9]);
         }
-        $this->booking($actor, 'approved', ['starts_at' => '2026-09-30 20:00:00', 'ends_at' => '2026-10-01 00:00:00']);
-        $this->booking($actor, 'approved', ['starts_at' => '2026-10-02 00:00:00', 'ends_at' => '2026-10-02 01:00:00']);
+        $this->booking($actor, 'approved', ['starts_at' => '2026-09-30 16:00:00', 'ends_at' => '2026-09-30 17:00:00']);
+        $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 17:00:00', 'ends_at' => '2026-10-01 18:00:00']);
         $data = $this->report($actor);
         $this->assertSame(['total' => 5, 'pending' => 1, 'approved' => 2, 'rejected' => 1, 'cancelled' => 1], $data['statistics']['workflow']);
         $this->assertSame(3.0, $data['statistics']['rooms'][0]['hours']);
@@ -160,11 +160,11 @@ final class ReportStatisticsTest extends TestCase
 
     public function test_local_operational_date_boundaries_do_not_shift_with_server_clock(): void
     {
-        config(['app.timezone' => 'Asia/Bangkok']);
         $actor = $this->actor(College::factory()->create(), UserRole::Staff);
-        $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 00:00:00', 'ends_at' => '2026-10-01 01:00:00']);
-        $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 23:00:00', 'ends_at' => '2026-10-02 00:00:00']);
-        $this->booking($actor, 'approved', ['starts_at' => '2026-10-02 00:00:00', 'ends_at' => '2026-10-02 01:00:00']);
+        $this->booking($actor, 'approved', ['starts_at' => '2026-09-30 17:00:00', 'ends_at' => '2026-09-30 18:00:00']);
+        $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 16:00:00', 'ends_at' => '2026-10-01 17:00:00']);
+        $this->booking($actor, 'approved', ['starts_at' => '2026-10-01 17:00:00', 'ends_at' => '2026-10-01 18:00:00']);
+        $this->booking($actor, 'approved', ['starts_at' => '2026-09-30 16:00:00', 'ends_at' => '2026-09-30 17:00:00']);
         $data = $this->report($actor);
         $this->assertSame(2, $data['statistics']['workflow']['approved']);
         $this->assertSame(['date' => '2026-10-01', 'total' => 2, 'approved' => 2], $data['statistics']['trend'][0]);
