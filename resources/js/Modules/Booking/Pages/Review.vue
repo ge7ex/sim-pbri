@@ -24,7 +24,7 @@ interface BookingRow {
 }
 
 interface Pagination<T> { data: T[]; current_page: number; last_page: number; total: number; prev_page_url: string | null; next_page_url: string | null }
-interface SharedProps { auth: { user: any; permissions: string[] }; errors: Record<string, string> }
+interface SharedProps { auth: { user: any; permissions: string[] }; errors: Record<string, string>; flash: { success?: string } }
 
 const props = defineProps<{ bookings: Pagination<BookingRow> }>();
 const selectedId = ref<number | null>(props.bookings.data[0]?.id ?? null);
@@ -57,6 +57,7 @@ function reject(id: number): void {
     <Head title="ตรวจสอบคำขอ" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
         <PageHeader title="ตรวจสอบคำขอ" description="คำขอรอตรวจสอบกันช่วงเวลาทรัพยากรไว้จนกว่าจะไม่อนุมัติหรือยกเลิก"></PageHeader>
+        <p v-if="page.props.flash?.success" class="action-success" role="status">{{ page.props.flash.success }}</p>
         <div v-if="Object.keys(page.props.errors).length" class="action-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
 
         <nav class="workflow-links" aria-label="กลุ่มคำขอ">
@@ -112,7 +113,7 @@ function reject(id: number): void {
 </template>
 
 <style scoped>
-.action-errors{margin-bottom:14px;border:1px solid #e5c1c1;border-radius:10px;padding:12px 16px;color:#a43b3b;background:#fff}.action-errors p{margin:4px 0}
+.action-success{margin:0 0 14px;border:1px solid #b9d8c4;border-radius:10px;padding:12px 16px;color:#2f6f4e;background:#edf7f0}.action-errors{margin-bottom:14px;border:1px solid #e5c1c1;border-radius:10px;padding:12px 16px;color:#a43b3b;background:#fff}.action-errors p{margin:4px 0}
 .heading{margin-bottom:20px}.heading p{margin:0}.heading h1{margin:5px 0}.review-list{display:grid;gap:14px}.review-card{display:grid;grid-template-columns:1fr;gap:20px;border:1px solid var(--sim-border);border-radius:16px;background:#fff;padding:20px}.review-main{display:grid;gap:14px}.review-title{display:flex;justify-content:space-between;gap:16px}.review-title>div{display:grid;gap:4px}.review-title span,dt{color:var(--sim-muted);font-size:12px}dl{display:grid;gap:8px;margin:0}dl div{display:grid;grid-template-columns:140px 1fr;gap:12px}dd{margin:0;color:var(--sim-text)}.review-main a{width:fit-content;color:var(--sim-blue);font-weight:800;text-decoration:none}.review-actions{display:grid;gap:9px;border-top:1px solid var(--sim-border);padding-top:16px}.review-actions textarea{width:100%}.review-actions button{border:1px solid #cfd8e1;border-radius:9px;background:#fff;color:#7c3434;padding:10px;font-weight:800;cursor:pointer}.review-actions button.approve{border-color:var(--sim-blue);background:var(--sim-blue);color:#fff}.review-actions button:disabled{opacity:.5;cursor:not-allowed}.empty{border:1px solid var(--sim-border);border-radius:16px;background:#fff;padding:42px;text-align:center;color:var(--sim-muted)}@media(max-width:780px){.review-card{grid-template-columns:1fr}.review-actions{border-left:0;border-top:1px solid var(--sim-border);padding:16px 0 0}}
 .review-workspace{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px;align-items:start}.request-list{display:grid;gap:8px}.request-option{display:grid;gap:4px;width:100%;min-width:0;text-align:left;border:1px solid var(--sim-border);border-radius:9px;background:var(--sim-soft);padding:12px;color:var(--sim-text);overflow-wrap:anywhere}.request-option span{font-size:12px;color:var(--sim-muted)}.request-option.selected{background:var(--sim-tint);border-color:var(--sim-blue)}.review-actions label{font-weight:800}.review-pager{display:flex;justify-content:center;gap:16px;margin-top:20px}@media(max-width:1100px){.review-workspace{grid-template-columns:1fr}.request-list{grid-template-columns:repeat(2,minmax(0,1fr))}.request-list :deep(.section-header){grid-column:1/-1}}@media(max-width:600px){.request-list{grid-template-columns:1fr}.review-main dl div{grid-template-columns:1fr;gap:4px}}
 .legacy-count-note{margin:0;border:1px solid var(--sim-border);border-radius:9px;padding:12px;background:var(--sim-warning-bg);color:var(--sim-warning);font-size:13px}.review-time{margin:0;color:var(--sim-muted)}

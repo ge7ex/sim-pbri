@@ -11,6 +11,7 @@ use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 final class BookingStateTransitionTest extends TestCase
@@ -23,7 +24,12 @@ final class BookingStateTransitionTest extends TestCase
 
         $this->actingAs($staff)
             ->post("/app/bookings/{$booking->id}/approve")
-            ->assertRedirect();
+            ->assertRedirect()
+            ->assertSessionHas('success', 'อนุมัติคำขอเรียบร้อยแล้ว');
+
+        $this->actingAs($staff)->get('/app/review')->assertInertia(fn (Assert $page) => $page
+            ->component('Modules/Booking/Pages/Review')
+            ->where('flash.success', 'อนุมัติคำขอเรียบร้อยแล้ว'));
 
         $booking->refresh();
 
