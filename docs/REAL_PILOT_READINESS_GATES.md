@@ -13,7 +13,7 @@ Software completion and real operational readiness are separate decisions. Curre
 | Backup and restore | Isolated backup/restore drill with integrity and access verification | PASS for synthetic SQLite only: integrity and row counts across 26 tables matched after backup/restore-copy. Production/MySQL backup and restore are not performed or verified. |
 | Storage and images | Writable private storage, backup/retention, image size/type validation and authorized access | Existing protected image behavior has tests; real deployment storage/backup not verified |
 | Operations | Error monitoring, log retention/redaction, incident owner, least-privilege server/database accounts | Not verified for production environment |
-| Security and privacy | Approved user list, College data isolation, staff finance privacy and no Export controls | Automated tests and registered-route scan pass; current browser control is blocked for localhost, so the full browser matrix and Senior review remain pending |
+| Security and privacy | Approved user list, College data isolation, staff finance privacy and no Export controls | Automated tests and registered-route scan pass; `.env.example` enables session encryption for new setup. Production cookie/TLS configuration and full browser matrix remain unverified. |
 | Owner acceptance | College owner sign-off on requirements, migration, workflow, data retention and training | Not obtained |
 
 Do not present synthetic demo credentials/data as pilot users or master data. Do not run the isolated demo seeder against MySQL.

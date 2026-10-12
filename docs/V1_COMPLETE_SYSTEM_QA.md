@@ -16,6 +16,7 @@ The feature suite, production frontend build, dependency audits, schema migratio
 | Check | Result | Scope / limit |
 |---|---|---|
 | `php artisan test --no-ansi` | 175 passed / 1,595 assertions | Tests use guarded SQLite `:memory:`; no MySQL test run |
+| `php artisan test --no-ansi` with `SESSION_ENCRYPT=true` | 175 passed / 1,595 assertions | Confirms auth/session feature suite still passes with session payload encryption enabled |
 | `npm run build` | PASS, 686 modules | Frontend production compilation |
 | `php vendor/bin/pint --test --dirty` | PASS | Changed PHP files |
 | `composer audit --no-interaction` | No advisories | Current lockfile |
@@ -57,6 +58,7 @@ Ponytail and Ponytail Review instructions were available and applied to the QA h
 - `config/app.php` sets UTC; booking inputs are local `datetime-local` values parsed without an explicit timezone, and JS renders in browser-local time. This can shift displayed times for Thai users. Timezone confirmation is pending; no timestamp interpretation or schema was changed.
 - `php artisan tinker --execute 'echo config("app.timezone");'` returned `UTC`; parsing 09:00 as UTC and rendering that ISO value in an Asia/Bangkok browser produces 16:00. This reproduces the seven-hour risk, but does not establish the institution's approved timezone.
 - Email invitations and self-service recovery remain unavailable because no approved mail or identity provider was configured. Admin provisioning uses a one-time credential delivered through an institution-approved private channel.
+- Changed only `.env.example` to enable session payload encryption for new environment setup. The local `.env` and database were not read or changed; the full suite passes with `SESSION_ENCRYPT=true`.
 
 ## Required follow-up before Senior review
 

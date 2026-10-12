@@ -8,6 +8,7 @@
   },
   "automated": {
     "php_artisan_test": { "status": "pass", "tests": 175, "assertions": 1595, "database": "guarded sqlite :memory:" },
+    "php_artisan_test_session_encrypt_true": { "status": "pass", "tests": 175, "assertions": 1595, "database": "guarded sqlite :memory:" },
     "npm_run_build": { "status": "pass", "modules": 686 },
     "pint_test_dirty": { "status": "pass", "scope": "changed php files" },
     "composer_audit": { "status": "pass", "advisories": 0 },

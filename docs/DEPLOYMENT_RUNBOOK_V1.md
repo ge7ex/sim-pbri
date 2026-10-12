@@ -47,7 +47,7 @@ Required production settings include:
 | `LOG_CHANNEL` / `LOG_LEVEL` | Use the approved protected log sink, retention, alerting, and redaction policy |
 | `FILESYSTEM_DISK` | Configure writable private storage for protected room images and include it in backup/retention planning |
 
-`.env.example` is a local-development template: it defaults to debug mode, SQLite, database-backed session/cache/queue, and unencrypted session storage. Do not copy it unchanged into production. No outbound mail or identity provider is configured; email-based invitations and password recovery are unavailable.
+`.env.example` is a local-development template: it defaults to debug mode, SQLite, and database-backed session/cache/queue. It now enables session payload encryption by default, but this does not replace the production HTTPS/cookie settings above. Do not copy the template unchanged into production. No outbound mail or identity provider is configured; email-based invitations and password recovery are unavailable.
 
 The current bootstrap has no explicit trusted-proxy configuration. Before deployment behind a proxy/load balancer, verify the actual topology and configure the trusted proxy addresses/headers narrowly; do not trust arbitrary forwarded headers. Confirm the app recognizes HTTPS before enabling secure-cookie checks.
 
