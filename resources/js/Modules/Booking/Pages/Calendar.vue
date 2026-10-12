@@ -13,7 +13,7 @@ interface CalendarEvent {
     ends_at: string;
     title: string;
     status?: string;
-    resources?: Array<{ id: number; name: string; kind: string }>;
+    resources?: Array<{ id: number; name: string; kind: string; is_historical_snapshot: boolean }>;
 }
 
 interface SharedProps { auth: { user: any; permissions: string[] } }
@@ -66,7 +66,7 @@ function applyFilters(): void {
                 </div>
                 <div class="detail">
                     <strong>{{ event.title }}</strong>
-                    <span v-if="event.resources">{{ event.resources.map((item) => item.name).join(', ') }}</span>
+                    <span v-if="event.resources">{{ event.resources.map((item) => item.name + (item.is_historical_snapshot ? ' · ณ เวลาส่งคำขอ' : '')).join(', ') }}</span>
                 </div>
                 <BookingStatusBadge v-if="event.status" :status="event.status" />
                 <span v-else class="private-badge">ข้อมูลปกปิด</span>

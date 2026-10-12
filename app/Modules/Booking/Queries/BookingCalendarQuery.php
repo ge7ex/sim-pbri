@@ -65,7 +65,8 @@ final class BookingCalendarQuery
                     'resources' => $booking->resources
                         ->map(static fn ($resource): array => [
                             'id' => $resource->id,
-                            'name' => $resource->name,
+                            'name' => $resource->pivot->resource_name_snapshot ?? $resource->name,
+                            'is_historical_snapshot' => $resource->pivot->resource_name_snapshot !== null,
                             'kind' => $resource->kind->value,
                         ])
                         ->values()

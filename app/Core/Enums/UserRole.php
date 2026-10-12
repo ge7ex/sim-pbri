@@ -53,6 +53,7 @@ enum UserRole: string
                 AppPermission::ScenarioView,
                 AppPermission::ScenarioCreate,
                 AppPermission::ScenarioUpdate,
+                AppPermission::UserManage,
             ],
         };
     }

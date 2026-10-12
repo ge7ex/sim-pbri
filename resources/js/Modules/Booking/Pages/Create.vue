@@ -92,6 +92,7 @@ const form = useForm({
     ends_at: '',
     participant_count: null as number | null,
     requester_phone: '',
+    requester_name: page.props.auth.user.name,
     note: '',
 });
 
@@ -106,13 +107,14 @@ const dateTimeValid = computed(() => !!form.starts_at && !!form.ends_at && new D
 const canSubmit = computed(() => !form.processing && dateTimeValid.value && selectedRoomId.value !== null
     && roomAvailability.value[selectedRoomId.value] === true && !!selectedRoom.value?.capacity
     && Number.isInteger(form.participant_count) && form.participant_count! > 0
-    && form.participant_count! <= selectedRoom.value.capacity && form.requester_phone.trim().length >= 7
+    && form.participant_count! <= selectedRoom.value.capacity && form.requester_name.trim().length >= 2 && form.requester_phone.trim().length >= 7
     && !(form.simulator_asset_id !== null && simulatorAvailability.value[form.simulator_asset_id] === false));
 const submissionHelp = computed(() => {
     if (!selectedRoom.value) return 'เลือกห้องที่พร้อมใช้งานในหัวข้อ 1';
     if (!dateTimeValid.value) return 'ระบุวันเวลาเริ่มและสิ้นสุด โดยเวลาสิ้นสุดต้องอยู่หลังเวลาเริ่ม';
     if (roomAvailability.value[selectedRoom.value.id] !== true) return checkingRoomAvailability.value ? 'กำลังตรวจเวลาว่างของห้อง' : 'เลือกห้องหรือช่วงเวลาใหม่ให้ห้องว่างก่อนส่งคำขอ';
     if (!Number.isInteger(form.participant_count) || form.participant_count! < 1 || form.participant_count! > selectedRoom.value.capacity!) return 'ระบุจำนวนผู้เข้าใช้งานไม่เกินความจุห้องในหัวข้อ 2';
+    if (form.requester_name.trim().length < 2) return 'ระบุชื่อผู้ใช้ห้องในหัวข้อ 2';
     if (form.requester_phone.trim().length < 7) return 'ระบุเบอร์ติดต่อในหัวข้อ 2';
     if (form.simulator_asset_id !== null && simulatorAvailability.value[form.simulator_asset_id] === false) return 'เปลี่ยนเครื่องจำลองหรือช่วงเวลาในหัวข้อ 3';
     return '';
@@ -234,7 +236,7 @@ function handleEquipmentInput(resource: ResourceItem, event: Event): void {
 function submit(): void {
     if (selectedRoomId.value === null || !form.starts_at || !form.ends_at || roomAvailability.value[selectedRoomId.value] !== true
         || !selectedRoom.value?.capacity || !Number.isInteger(form.participant_count) || form.participant_count! < 1
-        || form.participant_count! > selectedRoom.value.capacity || form.requester_phone.trim().length < 7) {
+        || form.participant_count! > selectedRoom.value.capacity || form.requester_name.trim().length < 2 || form.requester_phone.trim().length < 7) {
         return;
     }
 
@@ -308,7 +310,7 @@ function addCustomEquipment(): void {
                 <p v-if="selectedRoom && dateTimeValid && !checkingRoomAvailability" class="section-help" role="status">{{ selectedRoom.name }} · {{ availabilityLabel(selectedRoom) }}</p>
             </section>
 
-            <section class="panel booking-step-panel" aria-labelledby="requester-title"><SectionHeader id="requester-title" title="2) ข้อมูลการใช้งาน" description="ระบุจำนวนผู้เข้าใช้งานและเบอร์ติดต่อ ข้อมูลบัญชีมาจากผู้เข้าสู่ระบบ" /><div class="requester-grid"><label class="field">จำนวนผู้เข้าใช้งาน<input v-model.number="form.participant_count" aria-label="จำนวนผู้เข้าใช้งาน" :aria-invalid="Boolean(form.errors.participant_count)" :aria-describedby="form.errors.participant_count ? 'participant-error' : undefined" type="number" min="1" :max="selectedRoom?.capacity ?? 10000" required :disabled="!selectedRoom?.capacity"><small v-if="selectedRoom">ห้องที่เลือกรองรับได้สูงสุด {{ selectedRoom.capacity ?? 'ยังไม่กำหนด' }} คน</small><small v-else>เลือกห้องก่อนระบุจำนวนผู้เข้าใช้งาน</small><small v-if="form.errors.participant_count" id="participant-error" class="error" role="alert">{{ form.errors.participant_count }}</small></label><label class="field">หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly><small>ตามวิทยาลัย / หน่วยงานของคุณ</small></label><label class="field">ชื่อผู้จอง<input :value="page.props.auth.user.name" readonly><small>บันทึกตามบัญชีที่เข้าสู่ระบบ</small></label><label class="field">เบอร์ติดต่อ<input v-model="form.requester_phone" :aria-invalid="Boolean(form.errors.requester_phone)" :aria-describedby="form.errors.requester_phone ? 'phone-error' : undefined" type="tel" inputmode="tel" minlength="7" maxlength="32" autocomplete="tel" required><small v-if="form.errors.requester_phone" id="phone-error" class="error" role="alert">{{ form.errors.requester_phone }}</small></label></div></section>
+            <section class="panel booking-step-panel" aria-labelledby="requester-title"><SectionHeader id="requester-title" title="2) ข้อมูลการใช้งาน" description="ระบุชื่อผู้ใช้ห้อง จำนวนผู้เข้าใช้งาน และเบอร์ติดต่อ ส่วนผู้ส่งคำขอจะบันทึกจากบัญชีที่เข้าสู่ระบบ" /><div class="requester-grid"><label class="field">จำนวนผู้เข้าใช้งาน<input v-model.number="form.participant_count" aria-label="จำนวนผู้เข้าใช้งาน" :aria-invalid="Boolean(form.errors.participant_count)" :aria-describedby="form.errors.participant_count ? 'participant-error' : undefined" type="number" min="1" :max="selectedRoom?.capacity ?? 10000" required :disabled="!selectedRoom?.capacity"><small v-if="selectedRoom">ห้องที่เลือกรองรับได้สูงสุด {{ selectedRoom.capacity ?? 'ยังไม่กำหนด' }} คน</small><small v-else>เลือกห้องก่อนระบุจำนวนผู้เข้าใช้งาน</small><small v-if="form.errors.participant_count" id="participant-error" class="error" role="alert">{{ form.errors.participant_count }}</small></label><label class="field">หน่วยงาน<input :value="page.props.auth.user.college?.name ?? ''" readonly><small>ตามวิทยาลัย / หน่วยงานของคุณ</small></label><label class="field">ชื่อผู้ใช้ห้อง / ผู้ประสานงาน<input v-model.trim="form.requester_name" maxlength="255" autocomplete="name" required :aria-invalid="Boolean(form.errors.requester_name)" :aria-describedby="form.errors.requester_name ? 'requester-name-error' : undefined"><small>ค่าเริ่มต้นจากบัญชี แก้ได้เมื่อส่งคำขอแทนผู้ใช้งาน</small><small v-if="form.errors.requester_name" id="requester-name-error" class="error" role="alert">{{ form.errors.requester_name }}</small></label><label class="field">เบอร์ติดต่อ<input v-model="form.requester_phone" :aria-invalid="Boolean(form.errors.requester_phone)" :aria-describedby="form.errors.requester_phone ? 'phone-error' : undefined" type="tel" inputmode="tel" minlength="7" maxlength="32" autocomplete="tel" required><small v-if="form.errors.requester_phone" id="phone-error" class="error" role="alert">{{ form.errors.requester_phone }}</small></label></div></section>
 
             <section class="panel booking-step-panel" aria-labelledby="teaching-title">
                 <SectionHeader id="teaching-title" title="3) รายวิชาและสถานการณ์ (ถ้ามี)" description="รายวิชา สถานการณ์ และเครื่องจำลองเป็นตัวเลือก ชุดแนะนำปรับได้ก่อนส่งคำขอ" />

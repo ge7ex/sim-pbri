@@ -8,7 +8,7 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::middleware(['auth', 'access-profile'])
+Route::middleware(['auth', 'auth.session', 'access-profile'])
     ->prefix('app')
     ->group(function (): void {
         Route::get('/', DashboardController::class)->name('dashboard');
@@ -19,4 +19,5 @@ require base_path('app/Modules/SimResource/Routes/web.php');
 require base_path('app/Modules/Scenario/Routes/web.php');
 require base_path('app/Modules/Simulator/Routes/web.php');
 require base_path('app/Modules/Report/Routes/web.php');
+require base_path('app/Modules/Access/Routes/web.php');
 require __DIR__.'/auth.php';

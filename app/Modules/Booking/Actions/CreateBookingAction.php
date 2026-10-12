@@ -157,7 +157,7 @@ final class CreateBookingAction
                 'course_id' => $data['course_id'] ?? null,
                 'scenario_id' => $data['scenario_id'] ?? null,
                 'simulator_asset_id' => $data['simulator_asset_id'] ?? null,
-                'requester_name' => $actor->name,
+                'requester_name' => trim((string) ($data['requester_name'] ?? $actor->name)),
                 'requester_phone' => $data['requester_phone'] ?? null,
                 'starts_at' => $startsAt,
                 'ends_at' => $endsAt,
@@ -166,18 +166,18 @@ final class CreateBookingAction
                 'status' => BookingStatus::Pending,
             ]);
 
-            $booking->resources()->attach(
-                collect($quantities)
-                    ->mapWithKeys(
-                        static fn (int $quantity, int $resourceId): array => [
-                            $resourceId => [
-                                'quantity' => $quantity,
-                                'is_auto_recommended' => in_array($resourceId, $recommendedIds, true),
-                            ],
-                        ],
-                    )
-                    ->all(),
-            );
+            $booking->resources()->attach($resources
+                ->mapWithKeys(fn (SimResource $resource): array => [
+                    $resource->id => [
+                        'quantity' => $quantities[$resource->id],
+                        'is_auto_recommended' => in_array($resource->id, $recommendedIds, true),
+                        'resource_name_snapshot' => $resource->name,
+                        'resource_location_snapshot' => $resource->location,
+                        'room_building_snapshot' => $resource->kind === SimResourceKind::Room ? $resource->building : null,
+                        'room_floor_snapshot' => $resource->kind === SimResourceKind::Room ? $resource->floor : null,
+                        'room_capacity_snapshot' => $resource->kind === SimResourceKind::Room ? $resource->capacity : null,
+                    ],
+                ])->all());
 
             foreach ($data['custom_equipment'] ?? [] as $customEquipment) {
                 BookingCustomEquipmentRequest::query()->create([

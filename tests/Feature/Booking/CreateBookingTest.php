@@ -41,7 +41,7 @@ final class CreateBookingTest extends TestCase
         $this->assertCount(1, $booking->statusTransitions);
     }
 
-    public function test_client_cannot_override_college_actor_or_requester_identity(): void
+    public function test_client_cannot_override_college_or_audit_actor_while_setting_display_name(): void
     {
         [$user, $room] = $this->bookingContext();
         $otherCollege = College::factory()->create();
@@ -67,7 +67,52 @@ final class CreateBookingTest extends TestCase
 
         $this->assertSame($user->college_id, $booking->college_id);
         $this->assertSame($user->id, $booking->requested_by_user_id);
-        $this->assertSame($user->name, $booking->requester_name);
+        $this->assertSame('จองแทนโดยไม่ได้รับสิทธิ์', $booking->requester_name);
+    }
+
+    public function test_booking_keeps_editable_requester_separate_from_immutable_actor_and_snapshots_room(): void
+    {
+        [$user, $room] = $this->bookingContext();
+        $room->update(['name' => 'ห้องจำลองอาคาร A', 'building' => 'อาคาร A', 'floor' => '2', 'capacity' => 40, 'location' => 'ชั้น 2']);
+
+        $this->actingAs($user)->post('/app/bookings', [
+            'requested_by_user_id' => 999999,
+            'college_id' => 999999,
+            'requester_name' => 'อาจารย์ผู้ประสานงาน',
+            'requester_phone' => '0812345678',
+            'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'participant_count' => 12,
+            'starts_at' => '2026-10-07 09:00:00',
+            'ends_at' => '2026-10-07 11:00:00',
+        ])->assertRedirect(route('bookings.index'));
+
+        $booking = Booking::query()->sole();
+        $this->assertSame($user->id, $booking->requested_by_user_id);
+        $this->assertSame('อาจารย์ผู้ประสานงาน', $booking->requester_name);
+
+        $room->update(['name' => 'เปลี่ยนชื่อห้องภายหลัง', 'building' => 'อาคาร B', 'floor' => '1', 'capacity' => 60]);
+        $resource = $booking->resources()->firstOrFail();
+        $this->assertSame('ห้องจำลองอาคาร A', $resource->pivot->resource_name_snapshot);
+        $this->assertSame('อาคาร A', $resource->pivot->room_building_snapshot);
+        $this->assertSame('2', $resource->pivot->room_floor_snapshot);
+        $this->assertSame(40, (int) $resource->pivot->room_capacity_snapshot);
+        $this->assertSame('เปลี่ยนชื่อห้องภายหลัง', $resource->name);
+    }
+
+    public function test_booking_requires_valid_requester_display_name(): void
+    {
+        [$user, $room] = $this->bookingContext();
+
+        $this->actingAs($user)->from('/app/bookings/create')->post('/app/bookings', [
+            'requester_name' => 'A',
+            'requester_phone' => '0812345678',
+            'resources' => [['id' => $room->id, 'quantity' => 1]],
+            'participant_count' => 10,
+            'starts_at' => '2026-10-07 09:00:00',
+            'ends_at' => '2026-10-07 11:00:00',
+        ])->assertSessionHasErrors('requester_name');
+
+        $this->assertDatabaseCount('bookings', 0);
     }
 
     public function test_booking_requires_exactly_one_room(): void

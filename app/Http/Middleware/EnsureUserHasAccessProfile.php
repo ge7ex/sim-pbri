@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class EnsureUserHasAccessProfile
 {
     /**
-     * @param Closure(Request): Response $next
+     * @param  Closure(Request): Response  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -19,6 +19,10 @@ final class EnsureUserHasAccessProfile
             $user !== null && $user->hasAccessProfile(),
             Response::HTTP_FORBIDDEN,
         );
+
+        if ($user->must_change_password && ! $request->routeIs('account.password.*')) {
+            return redirect()->route('account.password.edit');
+        }
 
         return $next($request);
     }

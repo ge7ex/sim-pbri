@@ -26,7 +26,7 @@ final class DashboardQuery
             ->map(static fn (Booking $booking): array => [
                 'id' => $booking->id,
                 'requester_name' => $booking->requester_name,
-                'rooms' => $booking->resources->pluck('name')->all(),
+                'rooms' => $booking->resources->map(static fn ($room): string => $room->pivot->resource_name_snapshot ?? $room->name)->all(),
                 'scenario_name' => $booking->scenario?->name,
                 'starts_at' => $booking->starts_at->toIso8601String(),
                 'ends_at' => $booking->ends_at->toIso8601String(),

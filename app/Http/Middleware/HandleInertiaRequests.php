@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
                                 'name' => $user->college->name,
                             ],
                         'has_access_profile' => $user->hasAccessProfile(),
+                        'must_change_password' => $user->must_change_password,
                     ],
                 'permissions' => $user?->permissionNames() ?? [],
             ],

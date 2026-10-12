@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-12",
+  "branch": "backend/inertia-foundation",
+  "baseline_head": "d2e84e71c33edc8842e0483ab7c7213194a38564",
+  "verdict": {
+    "full_v1_ready_for_senior_review": false,
+    "real_pilot_ready": false
+  },
+  "automated": {
+    "php_artisan_test": { "status": "pass", "tests": 175, "assertions": 1595, "database": "guarded sqlite :memory:" },
+    "npm_run_build": { "status": "pass", "modules": 686 },
+    "pint_test_dirty": { "status": "pass", "scope": "changed php files" },
+    "composer_audit": { "status": "pass", "advisories": 0 },
+    "npm_audit": { "status": "pass", "vulnerabilities": 0 },
+    "runtime_migrations": { "status": "pass", "applied": 19, "last_migration": "2026_10_12_000016_add_booking_resource_snapshots" },
+    "export_route_scan": { "status": "pass", "matches": 0 }
+  },
+  "browser": {
+    "environment": "synthetic isolated sqlite",
+    "admin_account_create_and_hide_one_time_credential": "pass",
+    "staff_role_navigation_and_direct_403": "pass",
+    "staff_same_college_review_contact": "pass",
+    "lecturer_booking_history_and_detail": "pass",
+    "approval_confirmation": "not_verified_browser_control_timeout",
+    "responsive_1440_1024_768_390": "not_verified",
+    "credential_change": "not_verified_in_browser"
+  },
+  "database_changes": {
+    "runtime_mysql_migrations_applied": true,
+    "application_fixtures_seeded_into_mysql": false,
+    "existing_booking_snapshots_backfilled": false
+  },
+  "limitations": [
+    "Original project_sim_flow_v12.md unavailable; traceability is handoff-derived.",
+    "Draft semantics and optional room dimensions remain owner/source decision gates.",
+    "Senior review candidate verdict remains NOT YET READY.",
+    "Real Pilot remains NOT YET READY."
+  ],
+  "secrets_or_personal_data_included": false
+}

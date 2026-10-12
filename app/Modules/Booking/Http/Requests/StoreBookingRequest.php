@@ -64,6 +64,7 @@ final class StoreBookingRequest extends FormRequest
             'starts_at' => ['required', 'date'],
             'ends_at' => ['required', 'date', 'after:starts_at'],
             'participant_count' => ['required', 'integer', 'min:1', 'max:10000'],
+            'requester_name' => ['nullable', 'string', 'min:2', 'max:255'],
             'requester_phone' => ['required', 'string', 'min:7', 'max:32', 'regex:/\A(?=(?:.*[0-9๐-๙]){7})[+()0-9๐-๙.\-\s]+\z/u'],
             'note' => ['nullable', 'string', 'max:2000'],
         ];

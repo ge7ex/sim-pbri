@@ -77,10 +77,14 @@ final class DashboardTest extends TestCase
         $foreign->college_id = College::factory()->create()->id;
         $foreign->name = 'Foreign private room';
         $foreign->save();
-        $latest->resources()->attach([$room->id => ['quantity' => 1], $foreign->id => ['quantity' => 1]]);
+        $latest->resources()->attach([
+            $room->id => ['quantity' => 1, 'resource_name_snapshot' => 'Snapshot room'],
+            $foreign->id => ['quantity' => 1, 'resource_name_snapshot' => null],
+        ]);
+        $room->update(['name' => 'Renamed room']);
         $this->actingAs($actor)->get('/app')->assertOk()->assertInertia(fn (Assert $page) => $page
             ->where('dashboard.summary.total', 10)->has('dashboard.recent_bookings', 8)
-            ->where('dashboard.recent_bookings.0.id', $latest->id)->where('dashboard.recent_bookings.0.rooms', ['Own room']));
+            ->where('dashboard.recent_bookings.0.id', $latest->id)->where('dashboard.recent_bookings.0.rooms', ['Snapshot room']));
     }
 
     public function test_foreign_scenario_is_not_projected_even_on_a_malformed_own_booking(): void

@@ -114,6 +114,11 @@ final class Booking extends Model
         )->withPivot(
             'quantity',
             'is_auto_recommended',
+            'resource_name_snapshot',
+            'resource_location_snapshot',
+            'room_building_snapshot',
+            'room_floor_snapshot',
+            'room_capacity_snapshot',
         )->withTimestamps();
     }
 

@@ -10,6 +10,8 @@ import BookingStatusBadge from '../Components/BookingStatusBadge.vue';
 interface BookingRow {
     id: number;
     requester_name: string;
+    requester_phone: string | null;
+    requested_by: { id: number; name: string } | null;
     starts_at: string;
     ends_at: string;
     status: string;
@@ -17,7 +19,7 @@ interface BookingRow {
     course: { id: number; code: string | null; name: string } | null;
     scenario: { id: number; name: string } | null;
     simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } | null } | null;
-    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean } }>;
+    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean; resource_name_snapshot: string | null; resource_location_snapshot: string | null; room_building_snapshot: string | null; room_floor_snapshot: string | null; room_capacity_snapshot: number | null } }>;
     custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
 }
 
@@ -79,10 +81,13 @@ function reject(id: number): void {
                         <div><dt>รายวิชา</dt><dd>{{ booking.course?.name ?? 'ไม่ได้ระบุ' }}</dd></div>
                         <div><dt>สถานการณ์จำลอง</dt><dd>{{ booking.scenario?.name ?? 'ไม่ได้ระบุ' }}</dd></div>
                         <div><dt>จำนวนผู้เข้าใช้งาน</dt><dd>{{ booking.participant_count ?? '-' }}</dd></div>
+                        <div><dt>ชื่อผู้ใช้ห้อง / ผู้ประสานงาน</dt><dd>{{ booking.requester_name }}</dd></div>
+                        <div><dt>ผู้ส่งคำขอ</dt><dd>{{ booking.requested_by?.name ?? 'ไม่พบผู้ส่งคำขอในหน่วยงานนี้' }}</dd></div>
+                        <div><dt>เบอร์ติดต่อ</dt><dd>{{ booking.requester_phone ?? 'ไม่ระบุ' }}</dd></div>
                     </dl>
                     <SectionHeader :level="3" title="ทรัพยากรที่ขอใช้" />
                     <dl>
-                        <div><dt>ห้อง</dt><dd>{{ booking.resources.filter((item) => item.kind === 'room').map((item) => item.name).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
+                        <div><dt>ห้อง (ข้อมูล ณ เวลาส่งคำขอ)</dt><dd>{{ booking.resources.filter((item) => item.kind === 'room').map((item) => `${item.pivot.resource_name_snapshot ?? item.name}${item.pivot.resource_location_snapshot ? ' · ' + item.pivot.resource_location_snapshot : ''}${item.pivot.room_building_snapshot ? ' · ' + item.pivot.room_building_snapshot : ''}${item.pivot.room_floor_snapshot ? ' · ชั้น ' + item.pivot.room_floor_snapshot : ''}${item.pivot.room_capacity_snapshot ? ' · ' + item.pivot.room_capacity_snapshot + ' คน' : ''}${item.pivot.resource_name_snapshot ? '' : ' · รายการเดิมใช้ข้อมูลปัจจุบัน'}`).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
                         <div><dt>เครื่องจำลอง</dt><dd v-if="booking.simulator_asset">{{ booking.simulator_asset.simulator_type?.name ?? 'ไม่พบประเภทที่เข้าถึงได้' }}{{ booking.simulator_asset.simulator_type && !booking.simulator_asset.simulator_type.is_active ? ' (ปิดใช้งานประเภท)' : '' }} · {{ booking.simulator_asset.asset_name }}{{ booking.simulator_asset.asset_code ? ' · ' + booking.simulator_asset.asset_code : '' }}<br>สถานะปัจจุบัน: {{ simulatorStatusLabel(booking.simulator_asset.status) }} · สถานที่: {{ booking.simulator_asset.location || 'ไม่ระบุ' }}</dd><dd v-else>ไม่ได้เลือกเครื่องจำลอง</dd></div>
                         <div><dt>อุปกรณ์จากแค็ตตาล็อก</dt><dd>{{ booking.resources.filter((item) => item.kind === 'equipment').map((item) => item.name + ' × ' + item.pivot.quantity + (item.pivot.is_auto_recommended ? ' (อุปกรณ์จากชุดแนะนำ)' : '')).join(', ') || 'ไม่ได้ระบุ' }}</dd></div>
 

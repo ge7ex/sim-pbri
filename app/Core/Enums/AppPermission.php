@@ -24,4 +24,5 @@ enum AppPermission: string
     case ScenarioView = 'scenario.view';
     case ScenarioCreate = 'scenario.create';
     case ScenarioUpdate = 'scenario.update';
+    case UserManage = 'user.manage';
 }

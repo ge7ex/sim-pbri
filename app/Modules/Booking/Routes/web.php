@@ -8,7 +8,7 @@ use App\Modules\Booking\Http\Controllers\BookingParticipantController;
 use App\Modules\Booking\Http\Controllers\BookingReviewController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'access-profile'])
+Route::middleware(['auth', 'auth.session', 'access-profile'])
     ->prefix('app')
     ->group(function (): void {
         Route::get('/bookings', [BookingController::class, 'index'])

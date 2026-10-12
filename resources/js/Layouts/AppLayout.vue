@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 
 interface UserSummary {
+    id: number;
     name: string;
     email: string;
     role_label: string | null;
@@ -33,6 +34,10 @@ const sections = computed(() => {
             { label: 'ทรัพยากร SIM', href: '/app/resources', permission: 'sim-resource.view' },
             { label: 'หุ่นจำลองและทรัพย์สิน', href: '/app/simulators', permission: 'simulator.view' },
             { label: 'รายวิชาและสถานการณ์', href: '/app/scenarios', permission: 'scenario.view' },
+        ] },
+        { key: 'account', label: 'บัญชีผู้ใช้', items: [
+            { label: 'เปลี่ยนรหัสผ่าน', href: '/app/account/password', permission: null },
+            { label: 'จัดการบุคลากร', href: '/app/users', permission: 'user.manage' },
         ] },
     ].map(section => ({ ...section, items: section.items.filter(item => item.permission === null || granted.has(item.permission)) }))
         .filter(section => section.items.length > 0);

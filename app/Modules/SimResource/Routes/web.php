@@ -4,7 +4,7 @@ use App\Core\Enums\AppPermission;
 use App\Modules\SimResource\Http\Controllers\SimResourceController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'access-profile'])
+Route::middleware(['auth', 'auth.session', 'access-profile'])
     ->prefix('app/resources')
     ->name('resources.')
     ->group(function (): void {

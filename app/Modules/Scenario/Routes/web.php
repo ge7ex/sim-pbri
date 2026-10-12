@@ -4,7 +4,7 @@ use App\Core\Enums\AppPermission;
 use App\Modules\Scenario\Http\Controllers\ScenarioManagementController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'access-profile'])
+Route::middleware(['auth', 'auth.session', 'access-profile'])
     ->prefix('app/scenarios')
     ->name('scenarios.')
     ->group(function (): void {

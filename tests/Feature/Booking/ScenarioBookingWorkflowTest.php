@@ -298,6 +298,33 @@ final class ScenarioBookingWorkflowTest extends TestCase
                 ->has('bookings.data.0.resources', 0));
     }
 
+    public function test_staff_review_shows_requester_contact_only_for_same_college_bookings(): void
+    {
+        [$requester, , $college] = $this->bookingContext();
+        $booking = Booking::create([
+            'college_id' => $college->id,
+            'requested_by_user_id' => $requester->id,
+            'requester_name' => 'Synthetic Coordinator',
+            'requester_phone' => '0812345678',
+            'starts_at' => '2026-10-13 09:00:00',
+            'ends_at' => '2026-10-13 11:00:00',
+            'participant_count' => 12,
+            'status' => BookingStatus::Pending,
+        ]);
+        $staff = User::factory()->create(['college_id' => $college->id, 'role' => UserRole::Staff->value]);
+
+        $this->actingAs($staff)->get('/app/review')->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->where('bookings.data.0.requester_name', 'Synthetic Coordinator')
+            ->where('bookings.data.0.requester_phone', '0812345678')
+            ->where('bookings.data.0.requested_by.name', $requester->name));
+
+        $foreignStaff = User::factory()->create(['college_id' => College::factory()->create()->id, 'role' => UserRole::Staff->value]);
+        $this->actingAs($foreignStaff)->get('/app/review')->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->has('bookings.data', 0)
+            ->missing('bookings.data.0.requester_phone'));
+        $this->assertTrue($booking->exists);
+    }
+
     /**
      * @return array{User, SimResource, College}
      */

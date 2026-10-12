@@ -13,6 +13,7 @@ interface BookingDetail {
     requested_by_user_id: number;
     requester_name: string;
     requester_phone: string | null;
+    requested_by: { id: number; name: string } | null;
     starts_at: string;
     ends_at: string;
     participant_count: number | null;
@@ -22,7 +23,7 @@ interface BookingDetail {
     course: { id: number; code: string | null; name: string } | null;
     scenario: { id: number; name: string } | null;
     simulator_asset: { asset_name: string; asset_code: string | null; status: string; location: string | null; simulator_type: { id: number; name: string; is_active: boolean } | null } | null;
-    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean } }>;
+    resources: Array<{ id: number; name: string; kind: string; status: string; pivot: { quantity: number; is_auto_recommended: boolean; resource_name_snapshot: string | null; resource_location_snapshot: string | null; room_building_snapshot: string | null; room_floor_snapshot: string | null; room_capacity_snapshot: number | null } }>;
     custom_equipment_requests: Array<{ id: number; name: string; quantity: number; note: string | null }>;
     participant_amendments: Array<{ id: number; participant_count: number; reason: string; created_at: string; actor: { name: string } | null }>;
     status_transitions: Array<{
@@ -90,7 +91,8 @@ function recallBooking(): void {
         <div v-if="Object.keys(page.props.errors).length" class="action-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
 
         <section class="panel"><SectionHeader title="ข้อมูลคำขอและช่วงเวลา" /><div class="detail-grid">
-            <div><span>ชื่อผู้จอง</span><strong>{{ booking.requester_name }}</strong></div>
+            <div><span>ชื่อผู้ใช้ห้อง / ผู้ประสานงาน</span><strong>{{ booking.requester_name }}</strong></div>
+            <div><span>ผู้ส่งคำขอ</span><strong>{{ booking.requested_by?.name ?? 'ไม่พบผู้ส่งคำขอในหน่วยงานนี้' }}</strong></div>
             <div><span>เบอร์ติดต่อ</span><strong>{{ booking.requester_phone ?? '-' }}</strong></div>
             <div><span>เริ่มใช้งาน</span><strong>{{ formatBookingDateTime(booking.starts_at) }}</strong></div>
             <div><span>สิ้นสุด</span><strong>{{ formatBookingDateTime(booking.ends_at) }}</strong></div>
@@ -137,7 +139,7 @@ function recallBooking(): void {
             <SectionHeader title="ห้องและอุปกรณ์" />
             <div class="resource-list">
                 <div v-for="resource in booking.resources" :key="resource.id">
-                    <strong>{{ resource.name }} <small>{{ resource.kind === 'room' ? 'ห้อง' : 'อุปกรณ์จากแค็ตตาล็อก' }}</small></strong>
+                    <strong>{{ resource.pivot.resource_name_snapshot ?? resource.name }} <small>{{ resource.kind === 'room' ? 'ห้อง' : 'อุปกรณ์จากแค็ตตาล็อก' }}<template v-if="!resource.pivot.resource_name_snapshot"> · รายการเดิมใช้ข้อมูลปัจจุบัน</template></small><small v-if="resource.pivot.resource_name_snapshot"> · ณ เวลาส่งคำขอ<template v-if="resource.pivot.resource_location_snapshot"> · {{ resource.pivot.resource_location_snapshot }}</template><template v-if="resource.kind === 'room' && resource.pivot.room_building_snapshot"> · {{ resource.pivot.room_building_snapshot }}</template><template v-if="resource.kind === 'room' && resource.pivot.room_floor_snapshot"> · ชั้น {{ resource.pivot.room_floor_snapshot }}</template><template v-if="resource.kind === 'room' && resource.pivot.room_capacity_snapshot"> · {{ resource.pivot.room_capacity_snapshot }} คน</template></small></strong>
                     <span>จำนวน {{ resource.pivot.quantity }}<template v-if="resource.pivot.is_auto_recommended"> · อุปกรณ์จากชุดแนะนำ</template></span>
                 </div>
             </div>
