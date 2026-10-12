@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import PageHeader from '../../../Components/PageHeader.vue';
 import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
@@ -36,6 +36,8 @@ interface ScenarioItem {
     }>;
     recommended_simulator_types: SimulatorType[];
 }
+interface BookingDraft { id: number; payload: Record<string, any> }
+interface DraftSummary { id: number; updated_at: string }
 
 interface SharedProps {
     auth: {
@@ -50,7 +52,7 @@ interface SharedProps {
     };
 }
 
-const props = defineProps<{ resources: ResourceItem[]; courses: CourseItem[]; scenarios: ScenarioItem[]; simulatorTypes: SimulatorType[]; simulatorAssets: SimulatorAsset[] }>();
+const props = defineProps<{ resources: ResourceItem[]; courses: CourseItem[]; scenarios: ScenarioItem[]; simulatorTypes: SimulatorType[]; simulatorAssets: SimulatorAsset[]; draft: BookingDraft | null; drafts: DraftSummary[] }>();
 const page = usePage<SharedProps>();
 const selectedRoomId = ref<number | null>(null);
 const roomAvailability = ref<Record<number, boolean>>({});
@@ -94,7 +96,9 @@ const form = useForm({
     requester_phone: '',
     requester_name: page.props.auth.user.name,
     note: '',
+    draft_id: null as number | null,
 });
+watch(() => props.draft?.id, (id) => { if (id) form.draft_id = id; }, { immediate: true });
 
 const dates = reactive({ startDate: '', startTime: '', endDate: '', endTime: '' });
 const activeRoomIndex = ref(0);
@@ -103,6 +107,7 @@ const visibleRoom = computed(() => rooms.value[activeRoomIndex.value] ?? rooms.v
 const additionalEquipmentId = ref<number | null>(null);
 const additionalEquipmentQuantity = ref(1);
 const selectedAdditionalEquipment = computed(() => additionalEquipment.value.filter(item => (equipmentQuantities.value[item.id] ?? 0) > 0));
+const savingDraft = ref(false);
 const dateTimeValid = computed(() => !!form.starts_at && !!form.ends_at && new Date(form.ends_at) > new Date(form.starts_at));
 const canSubmit = computed(() => !form.processing && dateTimeValid.value && selectedRoomId.value !== null
     && roomAvailability.value[selectedRoomId.value] === true && !!selectedRoom.value?.capacity
@@ -218,6 +223,42 @@ watch(() => form.scenario_id, () => {
     );
 });
 
+function dateTimeInput(value: unknown): string {
+    if (typeof value !== 'string' || !value) return '';
+    const date = new Date(value);
+    if (!Number.isFinite(date.getTime())) return '';
+    const pad = (part: number) => String(part).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+onMounted(async () => {
+    const payload = props.draft?.payload;
+    if (!payload) return;
+    form.course_id = props.courses.some((item) => item.id === payload.course_id) ? payload.course_id : null;
+    form.scenario_id = props.scenarios.some((item) => item.id === payload.scenario_id) ? payload.scenario_id : null;
+    form.simulator_asset_id = props.simulatorAssets.some((item) => item.id === payload.simulator_asset_id) ? payload.simulator_asset_id : null;
+    form.starts_at = dateTimeInput(payload.starts_at);
+    form.ends_at = dateTimeInput(payload.ends_at);
+    form.participant_count = payload.participant_count ?? null;
+    form.requester_phone = payload.requester_phone ?? '';
+    form.requester_name = payload.requester_name ?? page.props.auth.user.name;
+    form.note = payload.note ?? '';
+    form.draft_id = props.draft.id;
+    const [startDate = '', startTime = ''] = form.starts_at.split('T');
+    const [endDate = '', endTime = ''] = form.ends_at.split('T');
+    Object.assign(dates, { startDate, startTime, endDate, endTime });
+    await nextTick();
+    const currentResourceIds = new Set(props.resources.map((item) => item.id));
+    const savedResources = Array.isArray(payload.resources) ? payload.resources.filter((item: any) => currentResourceIds.has(item.id)) : [];
+    const room = savedResources.find((item: any) => rooms.value.some((candidate) => candidate.id === item.id && candidate.kind === 'room'));
+    selectedRoomId.value = room?.id ?? null;
+    roomPickerOpen.value = selectedRoomId.value === null;
+    activeRoomIndex.value = Math.max(0, rooms.value.findIndex((item) => item.id === selectedRoomId.value));
+    equipmentQuantities.value = Object.fromEntries(savedResources.filter((item: any) => item.id !== selectedRoomId.value).map((item: any) => [item.id, item.quantity]));
+    customEquipmentRows.value = Array.isArray(payload.custom_equipment) ? payload.custom_equipment : [];
+    selectedSimulatorTypeId.value = props.simulatorAssets.find((item) => item.id === form.simulator_asset_id)?.simulator_type_id ?? null;
+});
+
 function handleEquipmentInput(resource: ResourceItem, event: Event): void {
     const target = event.target as HTMLInputElement;
     const quantity = Number(target.value);
@@ -260,6 +301,36 @@ function submit(): void {
         .post('/app/bookings');
 }
 
+function draftPayload(): Record<string, unknown> {
+    const resources: Array<{ id: number; quantity: number }> = [];
+    if (selectedRoomId.value !== null) resources.push({ id: selectedRoomId.value, quantity: 1 });
+    for (const [id, quantity] of Object.entries(equipmentQuantities.value)) resources.push({ id: Number(id), quantity });
+    return {
+        course_id: form.course_id, scenario_id: form.scenario_id, simulator_asset_id: form.simulator_asset_id,
+        resources, custom_equipment: customEquipmentRows.value.filter((item) => item.name.trim()),
+        starts_at: form.starts_at || null, ends_at: form.ends_at || null,
+        participant_count: form.participant_count, requester_phone: form.requester_phone || null,
+        requester_name: form.requester_name || null, note: form.note || null,
+    };
+}
+
+function saveDraft(): void {
+    savingDraft.value = true;
+    form.clearErrors();
+    const options = {
+        preserveScroll: true,
+        onError: (errors: Record<string, string>) => form.setError(errors),
+        onFinish: () => { savingDraft.value = false; },
+    };
+    if (form.draft_id) router.put(`/app/booking-drafts/${form.draft_id}`, draftPayload(), options);
+    else router.post('/app/booking-drafts', draftPayload(), options);
+}
+
+function deleteDraft(id: number): void {
+    if (form.draft_id === id) form.draft_id = null;
+    router.delete(`/app/booking-drafts/${id}`, { preserveScroll: true });
+}
+
 function addCustomEquipment(): void {
     if (customEquipmentRows.value.length < 50) customEquipmentRows.value.push({ name: '', quantity: 1, note: '' });
 }
@@ -269,6 +340,8 @@ function addCustomEquipment(): void {
     <Head title="สร้างคำขอจอง" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
         <PageHeader title="สร้างคำขอจองห้อง Simulation" description="เลือกห้อง วันเวลา และทรัพยากร แล้วส่งให้เจ้าหน้าที่ตรวจสอบ"><Link class="button-secondary" href="/app/calendar">ดูปฏิทินการใช้ห้อง</Link></PageHeader>
+        <section v-if="drafts.length" class="draft-list panel" aria-labelledby="draft-title"><SectionHeader id="draft-title" title="ร่างคำขอของฉัน" description="ร่างไม่จองทรัพยากรและเจ้าหน้าที่มองไม่เห็น จนกว่าจะส่งคำขอ" /><ul><li v-for="item in drafts" :key="item.id"><Link :href="`/app/bookings/create?draft=${item.id}`">ร่าง #{{ item.id }} · แก้ไขล่าสุด {{ new Date(item.updated_at).toLocaleString('th-TH') }}</Link><button type="button" class="button-secondary" @click="deleteDraft(item.id)">ลบร่าง</button></li></ul></section>
+        <p v-if="form.errors.drafts" class="error" role="alert">{{ form.errors.drafts }}</p>
         <form class="booking-form" @submit.prevent="submit">
             <section class="panel booking-step-panel room-picker-panel" aria-labelledby="room-title">
                 <SectionHeader id="room-title" title="1) ห้องและช่วงเวลา" description="เลือกห้องในวิทยาลัยของคุณ แล้วระบุวันเวลาเพื่อให้ระบบตรวจเวลาว่าง" />
@@ -342,12 +415,14 @@ function addCustomEquipment(): void {
 
             <section class="panel booking-step-panel"><SectionHeader title="5) หมายเหตุและตรวจสอบก่อนส่ง" description="ตรวจห้อง วันเวลา จำนวนผู้ใช้ และอุปกรณ์ให้ครบก่อนส่งคำขอ เจ้าหน้าที่จะพิจารณาอนุมัติอีกครั้ง" /><label class="field">หมายเหตุ<textarea v-model="form.note" rows="4" maxlength="2000"></textarea></label><p v-if="form.errors.note" class="error">{{ form.errors.note }}</p></section>
             <p v-if="!canSubmit && !form.processing" id="submission-help" class="section-help" role="status">{{ submissionHelp }}</p>
-            <div class="form-actions"><Link href="/app/bookings" class="button-secondary">กลับประวัติการจอง</Link><button class="button-primary" type="submit" :disabled="!canSubmit" :aria-describedby="!canSubmit ? 'submission-help' : undefined">{{ form.processing ? 'กำลังส่ง...' : 'ยืนยันส่งคำขอ' }}</button></div>
+            <div class="form-actions"><Link href="/app/bookings" class="button-secondary">กลับประวัติการจอง</Link><button class="button-secondary" type="button" :disabled="savingDraft || form.processing" @click="saveDraft">{{ savingDraft ? 'กำลังบันทึก...' : 'บันทึกร่าง' }}</button><button class="button-primary" type="submit" :disabled="!canSubmit" :aria-describedby="!canSubmit ? 'submission-help' : undefined">{{ form.processing ? 'กำลังส่ง...' : 'ยืนยันส่งคำขอ' }}</button></div>
         </form>
     </AppLayout>
 </template>
 <style scoped>
+.draft-list{margin-bottom:20px;padding:18px}.draft-list ul{display:grid;gap:8px;padding:0;list-style:none}.draft-list li{display:flex;justify-content:space-between;align-items:center;gap:12px}.draft-list a{overflow-wrap:anywhere}
 .booking-form{display:grid;gap:20px}.booking-step-panel{padding:24px!important}.room-picker-panel{overflow:hidden}.room-carousel{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:12px;align-items:stretch}.room-carousel>.room-card:only-child{grid-column:1/-1}.room-carousel-control{border:1px solid var(--sim-border);border-radius:14px;background:var(--sim-soft);color:var(--sim-navy);font-size:32px;min-height:44px}.room-card{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1fr);gap:24px;min-width:0;border:1px solid var(--sim-border);border-radius:18px;padding:18px}.room-card.unavailable{opacity:.7}.room-photo{width:100%;height:100%;max-height:360px;min-height:245px;object-fit:cover;border-radius:14px}.room-visual{display:flex;flex-direction:column;justify-content:flex-end;min-height:245px;border-radius:14px;background:var(--sim-blue);color:#fff;padding:24px}.room-visual svg{width:100%;max-height:140px;margin:auto 0;opacity:.65}.room-visual strong{font-size:24px;line-height:1.4}.room-visual small{color:#dbeafe;font-size:12px}.room-card-content{display:grid;gap:16px;min-width:0}.room-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.room-card-heading h3{margin:0;font-size:26px;color:var(--sim-navy)}.room-card-heading p{margin:6px 0 0;color:var(--sim-muted)}.room-status{flex:none;border-radius:999px;background:var(--sim-warning-bg);color:var(--sim-warning);padding:6px 10px;font-size:12px;font-weight:800}.room-status.ready{background:var(--sim-success-bg);color:var(--sim-success)}.room-meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0}.room-meta-grid>div{border:1px solid var(--sim-border);border-radius:12px;background:var(--sim-soft);padding:12px}.room-meta-grid dt{font-size:12px;color:var(--sim-muted)}.room-meta-grid dd{margin:3px 0 0;color:var(--sim-text);font-weight:700}.room-select-button{width:100%}.room-availability,.room-position{margin:0;color:var(--sim-muted);font-size:13px}.room-position{text-align:center;margin-top:12px}.selected-room-summary{display:flex;justify-content:space-between;align-items:center;gap:16px;border:1px solid var(--sim-border);border-radius:14px;background:var(--sim-soft);padding:18px}.selected-room-summary span,.selected-room-summary small{display:block;color:var(--sim-muted);font-size:12px}.selected-room-summary strong{display:block;color:var(--sim-navy);font-size:20px}.selected-room-summary p{margin:4px 0;color:var(--sim-text)}.date-time-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.field{display:grid;gap:8px;align-content:start;font-weight:700}.field input,.field select,.field textarea{width:100%}.field small{color:var(--sim-muted);font-size:12px;font-weight:500}.participant-field{grid-column:span 2}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.equipment-group{margin-bottom:20px}.equipment-group h3{margin:0 0 12px}.equipment-list{display:grid;gap:10px;margin:12px 0}.equipment-row{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:center;gap:16px;border:1px solid var(--sim-border);border-radius:14px;background:var(--sim-soft);padding:14px}.equipment-row strong,.equipment-row small{display:block}.equipment-row small{color:var(--sim-muted);font-size:12px;margin-top:4px}.equipment-row input{width:100%;text-align:right}.additional-equipment-controls{display:grid;grid-template-columns:minmax(0,1.4fr) 140px auto;gap:14px;align-items:end}.empty-state{display:grid;min-height:86px;place-items:center;border:1px dashed #cbd5e1;border-radius:14px;background:var(--sim-soft);color:var(--sim-muted);padding:16px;text-align:center}.custom-equipment-title{margin-top:24px!important}.custom-row{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:12px;align-items:end;border-bottom:1px solid var(--sim-border);padding:12px 0;margin-bottom:12px}.custom-row .error{grid-column:1/-1}.requester-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.form-actions{display:flex;justify-content:flex-end;gap:12px}.error{margin:8px 0;color:var(--sim-danger);font-size:13px}.section-help{margin:12px 0;color:var(--sim-muted);font-size:13px}.booking-form .button-primary,.booking-form .button-secondary{min-height:46px}
 @media(max-width:1180px){.date-time-grid,.requester-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.room-card{grid-template-columns:1fr}.room-visual{min-height:200px}}
 @media(max-width:760px){.booking-step-panel{padding:16px!important}.date-time-grid,.field-grid,.requester-grid,.additional-equipment-controls,.custom-row,.equipment-row{grid-template-columns:1fr}.participant-field{grid-column:auto}.room-carousel{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.room-carousel>.room-card{grid-column:1/-1;grid-row:1}.room-carousel-control{grid-row:2;min-height:44px}.room-card{padding:12px;gap:16px}.room-card-heading,.selected-room-summary{flex-direction:column;align-items:flex-start}.room-meta-grid{grid-template-columns:1fr}.room-card-heading h3{font-size:22px}.room-visual{min-height:180px;padding:16px}.form-actions{flex-direction:column-reverse}.form-actions>*{width:100%}.equipment-row input{text-align:left}.selected-room-summary .button-secondary{width:100%}}
+@media(max-width:600px){.draft-list li{align-items:stretch;flex-direction:column}.draft-list li button{min-height:44px}}
 </style>

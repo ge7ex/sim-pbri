@@ -67,6 +67,8 @@ final class StoreBookingRequest extends FormRequest
             'requester_name' => ['nullable', 'string', 'min:2', 'max:255'],
             'requester_phone' => ['required', 'string', 'min:7', 'max:32', 'regex:/\A(?=(?:.*[0-9๐-๙]){7})[+()0-9๐-๙.\-\s]+\z/u'],
             'note' => ['nullable', 'string', 'max:2000'],
+            'draft_id' => ['nullable', 'integer', Rule::exists('booking_drafts', 'id')->where(fn ($query) => $query
+                ->where('college_id', $this->user()?->college_id)->where('user_id', $this->user()?->id))],
         ];
     }
 }

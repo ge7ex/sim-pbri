@@ -34,12 +34,12 @@ The check creates a SQLite backup with `VACUUM INTO`, restores it to a second fi
 
 Cleanup verifies the recorded PHP server command lines, stops only the demo server, and removes only its fixed TEMP directory. If another process occupies port 8766, setup stops before creating the demo. The seeder itself refuses to run unless the selected connection is SQLite and the database path is the dedicated demo file.
 
-## 15-minute walkthrough
+## 17-minute walkthrough
 
-1. **Lecturer — 4 minutes:** Sign in, open the booking form, select the fictional room and a 24-hour period, review capacity, enter the coordinator/contact, select `DEMO-101` and its scenario, confirm the recommended equipment, submit, and open the Pending booking detail.
-2. **Staff — 4 minutes:** Sign out and sign in as Staff. Open the review queue; verify contact, requester actor, room snapshot, simulator, scenario and equipment. Approve a new Pending booking or reject it with a reason. The database begins with one synthetic Approved record and one Pending record on separate future dates.
-3. **Lecturer — 2 minutes:** Reopen history and verify status and detail. Compare the booking user/coordinator label with the immutable submitted-by actor.
-4. **Admin — 3 minutes:** Sign in as Admin. Review fictional room/equipment/course/scenario/simulator master data, open the account-management list, and inspect dashboard/statistics. If creating a user, the random temporary credential appears once; do not retain it after the demo.
+1. **Lecturer — 5 minutes:** Sign in, open the booking form and save an incomplete Draft. Select its resume link, complete the fictional room/time/course/scenario/equipment/contact, confirm availability, submit and open the Pending detail.
+2. **Staff — 4 minutes:** Sign out and sign in as Staff. Confirm the unsubmitted Draft was never in the review queue. Verify the submitted request's contact, requester actor, room snapshot, simulator, scenario and equipment; approve it or reject with a reason. The database begins with one synthetic Approved record and a separate Pending record.
+3. **Lecturer — 2 minutes:** Reopen history and verify status/detail. Compare the booking user/coordinator label with the immutable submitted-by actor.
+4. **Admin — 4 minutes:** Review fictional master data, account management, dashboard and statistics. If creating a user, the random temporary credential appears once; do not retain it after the demo.
 5. **Cross-role — 2 minutes:** Verify Staff has no Admin-only financial data or account-management link; verify a Lecturer cannot access Staff review or Admin account routes. No Export control or route is available.
 
 All phone numbers and names in this environment are fictional. No image upload, live email, external integration, real MySQL data, or production account is used. Browser approval still needs a successful manual/automated confirmation run before this walkthrough is considered full-system QA evidence.

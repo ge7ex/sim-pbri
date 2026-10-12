@@ -7,6 +7,7 @@ use App\Modules\Booking\Actions\CreateBookingAction;
 use App\Modules\Booking\Http\Requests\BookingFilterRequest;
 use App\Modules\Booking\Http\Requests\StoreBookingRequest;
 use App\Modules\Booking\Models\Booking;
+use App\Modules\Booking\Models\BookingDraft;
 use App\Modules\Booking\Queries\BookingIndexQuery;
 use App\Modules\Scenario\Models\Course;
 use App\Modules\Scenario\Models\Scenario;
@@ -18,6 +19,7 @@ use App\Modules\Simulator\Models\SimulatorAsset;
 use App\Modules\Simulator\Models\SimulatorType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -60,7 +62,13 @@ final class BookingController extends Controller
                 'image_path',
             ]);
 
+        $draft = $request->filled('draft')
+            ? BookingDraft::query()->where('college_id', $user->college_id)->where('user_id', $user->id)->findOrFail($request->integer('draft'))
+            : null;
+
         return Inertia::render('Modules/Booking/Pages/Create', [
+            'draft' => $draft ? ['id' => $draft->id, 'payload' => $draft->payload] : null,
+            'drafts' => BookingDraft::query()->where('college_id', $user->college_id)->where('user_id', $user->id)->latest('updated_at')->limit(10)->get(['id', 'updated_at']),
             'resources' => $resources,
             'simulatorTypes' => SimulatorType::where('college_id', $user->college_id)->where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'simulatorAssets' => SimulatorAsset::where('college_id', $user->college_id)->where('status', SimulatorAssetStatus::Active)
@@ -90,10 +98,18 @@ final class BookingController extends Controller
         StoreBookingRequest $request,
         CreateBookingAction $action,
     ): RedirectResponse {
-        $action->execute(
-            data: $request->validated(),
-            actor: $request->user(),
-        );
+        DB::transaction(function () use ($request, $action): void {
+            $data = $request->validated();
+            $action->execute($data, $request->user());
+
+            if (isset($data['draft_id'])) {
+                BookingDraft::query()
+                    ->where('college_id', $request->user()->college_id)
+                    ->where('user_id', $request->user()->id)
+                    ->whereKey($data['draft_id'])
+                    ->delete();
+            }
+        });
 
         return redirect()
             ->route('bookings.index')

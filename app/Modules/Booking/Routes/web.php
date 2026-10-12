@@ -4,6 +4,7 @@ use App\Core\Enums\AppPermission;
 use App\Modules\Booking\Http\Controllers\BookingCalendarController;
 use App\Modules\Booking\Http\Controllers\BookingCancellationController;
 use App\Modules\Booking\Http\Controllers\BookingController;
+use App\Modules\Booking\Http\Controllers\BookingDraftController;
 use App\Modules\Booking\Http\Controllers\BookingParticipantController;
 use App\Modules\Booking\Http\Controllers\BookingReviewController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,18 @@ Route::middleware(['auth', 'auth.session', 'access-profile'])
         Route::post('/bookings', [BookingController::class, 'store'])
             ->middleware('permission:'.AppPermission::BookingCreate->value)
             ->name('bookings.store');
+
+        Route::post('/booking-drafts', [BookingDraftController::class, 'store'])
+            ->middleware('permission:'.AppPermission::BookingCreate->value)
+            ->name('booking-drafts.store');
+
+        Route::put('/booking-drafts/{draft}', [BookingDraftController::class, 'update'])
+            ->middleware('permission:'.AppPermission::BookingCreate->value)
+            ->name('booking-drafts.update');
+
+        Route::delete('/booking-drafts/{draft}', [BookingDraftController::class, 'destroy'])
+            ->middleware('permission:'.AppPermission::BookingCreate->value)
+            ->name('booking-drafts.destroy');
 
         Route::get('/bookings/{booking}', [BookingController::class, 'show'])
             ->middleware('permission:'.AppPermission::BookingView->value)

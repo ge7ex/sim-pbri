@@ -1,19 +1,19 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "cd74be642f682d147b92eaaa8d6e23dc2e4b91f3",
+  "application_head": "1a9406e8e558c75ba8b8995e1c268c6890b039d5",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
   },
   "automated": {
-    "php_artisan_test": { "status": "pass", "tests": 175, "assertions": 1595, "database": "guarded sqlite :memory:" },
-    "php_artisan_test_session_encrypt_true": { "status": "pass", "tests": 175, "assertions": 1595, "database": "guarded sqlite :memory:" },
+    "php_artisan_test": { "status": "pass", "tests": 182, "assertions": 1640, "database": "guarded sqlite :memory:" },
+    "php_artisan_test_session_encrypt_true": { "status": "pass", "tests": 182, "assertions": 1640, "database": "guarded sqlite :memory:" },
     "npm_run_build": { "status": "pass", "modules": 686 },
     "pint_test_dirty": { "status": "pass", "scope": "changed php files" },
     "composer_audit": { "status": "pass", "advisories": 0 },
     "npm_audit": { "status": "pass", "vulnerabilities": 0 },
-    "runtime_migrations": { "status": "pass", "applied": 19, "last_migration": "2026_10_12_000016_add_booking_resource_snapshots" },
+    "runtime_migrations": { "status": "pass", "applied": 20, "last_migration": "2026_10_12_000017_create_booking_drafts_table" },
     "export_route_scan": { "status": "pass", "matches": 0 },
     "demo_setup_cleanup": { "status": "pass", "database": "synthetic sqlite under TEMP", "cleanup_port_guard": "pass", "process_identity": "name command_line creation_ticks" },
     "caller_app_db_environment_restoration": { "status": "pass", "method": "sentinel variables preserved after setup" },
@@ -37,16 +37,19 @@
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
     "application_fixtures_seeded_into_mysql": false,
-    "existing_booking_snapshots_backfilled": false
+    "existing_booking_snapshots_backfilled": false,
+    "booking_drafts_table_created": true,
+    "booking_drafts_row_count": 0,
+    "existing_application_rows_modified": false
   },
   "limitations": [
     "Original project_sim_flow_v12.md unavailable; secondary 60-check report exists but was assessed against older d2e84e7.",
-    "Draft lifecycle/retention, room dimension units/area rule, and institutional timezone need source/owner confirmation.",
+    "Drafts do not auto-expire pending owner approval of a retention policy; room dimension units/area rule and institutional timezone need source/owner confirmation.",
     "Production timezone is currently configured as UTC while browser display follows local timezone; a Thai display offset risk is open.",
     "Production backup/restore drill is not verified.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY."
   ],
-  "verification_refresh": {"date":"2026-10-12","head":"cd74be642f682d147b92eaaa8d6e23dc2e4b91f3","branch_matches_origin":true,"working_tree_clean_at_start":true,"test_default":{"status":"pass","tests":175,"assertions":1595},"test_session_encrypt_true":{"status":"pass","tests":175,"assertions":1595},"build_modules":686,"pint":"pass","composer_audit":"0 advisories","npm_audit":"0 vulnerabilities","migrations":"19 ran; read-only check","export_download_route_scan":"0 matches","browser_workflows_repeated":false,"runtime_database_mutation":false},
+  "verification_refresh": {"date":"2026-10-12","head_before_feature_commit":"1a9406e8e558c75ba8b8995e1c268c6890b039d5","branch_matches_origin_before_feature_slice":true,"working_tree_clean_at_slice_start":true,"test_default":{"status":"pass","tests":182,"assertions":1640},"test_session_encrypt_true":{"status":"pass","tests":182,"assertions":1640},"build_modules":686,"pint":"pass","composer_audit":"0 advisories","npm_audit":"0 vulnerabilities","migrations":"20 ran; additive booking_drafts table only; row count 0","export_download_route_scan":"0 matches","browser_workflows_repeated":false,"existing_runtime_rows_changed":false},
   "secrets_or_personal_data_included": false
 }
