@@ -47,6 +47,8 @@ All browser flows used the temporary synthetic SQLite demo created by `scripts/q
 | Staff queue empty state after approval | PASS: pending count changed from 1 to 0 and empty-state message displayed | Synthetic fixture; same-College scope only |
 | Staff report privacy | PASS: approved-activity statistics populated; no finance labels or export/download links in report page | Synthetic Staff account; current route scan also found 0 matches across 51 routes |
 | Mobile navigation Escape | PASS at 390px: Escape closes menu, sets `aria-expanded=false`, returns focus to toggle, and leaves visible focus indicator | Synthetic Staff account; tested from menu toggle; screen-reader run not performed |
+| Staff rejected-history zero state | PASS: role-filtered synthetic history displayed the empty-state message with zero results | Staff role, isolated SQLite only |
+| Staff keyboard and form labels | PASS: Tab focus reached skip link, brand, menu and grouped navigation; review focus indicator visible; status/date filters have associated labels; no console errors on review page | Spot check, not a complete keyboard or screen-reader run |
 | Keyboard/screen reader | Not verified end-to-end | Source labels and test evidence exist; no full assistive-tech run |
 
 The first Playwright wrapper was blocked by WSL and `npx --no-install` found no installed executable. A cached Playwright CLI completed the flows above; session access was intermittent earlier in the run and later recovered. No app bug was inferred from browser-control failures.

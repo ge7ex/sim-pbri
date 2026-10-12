@@ -132,7 +132,10 @@
     "staff_queue_empty_after_approval": "pass_pending_count_1_to_0_empty_state_displayed_in_synthetic_sqlite",
     "staff_report_finance_redaction": "pass_approved_usage_populated_no_financial_labels_or_export_links",
     "lecturer_draft_ui": "pass_save_resume_16_oct_2026_09_00_to_11_00_then_submit_pending_draft_removed",
-    "lecturer_to_staff_end_to_end": "pass_synthetic_lecturer_draft_resume_submit_staff_approval_approved_history"
+    "lecturer_to_staff_end_to_end": "pass_synthetic_lecturer_draft_resume_submit_staff_approval_approved_history",
+    "staff_rejected_history_zero_state": "pass_current_synthetic_staff_page_zero_results",
+    "staff_keyboard_and_filter_labels": "pass_skip_link_nav_menu_tab_focus_status_date_labels; spot_check_only",
+    "staff_review_console_errors": "none_observed_current_synthetic_review_page"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
