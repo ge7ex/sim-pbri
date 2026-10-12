@@ -1,5 +1,7 @@
 # Pilot Readiness / UAT — 9 ตุลาคม 2569
 
+> เอกสารนี้เป็น snapshot ลงวันที่ 9 ตุลาคม 2569; Phase I เริ่มดำเนินการหลัง snapshot นี้แล้ว ผลตรวจล่าสุดอยู่ที่ `V1_COMPLETE_SYSTEM_QA.md` และ `PHASE_I_PRODUCT_COMPLETION_PLAN.md`.
+
 ## สรุปสถานะ
 
 **Technical UAT ในฐานข้อมูลแยก: ผ่าน หลังแก้ปัญหาที่ทำซ้ำได้ 2 กลุ่ม**

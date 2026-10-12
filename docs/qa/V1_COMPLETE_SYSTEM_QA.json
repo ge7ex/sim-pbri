@@ -79,24 +79,38 @@
     "git_diff_check": {
       "status": "pass",
       "scope": "current candidate"
+    },
+    "mysql_report_date_literal_select": {
+      "status": "pass",
+      "result": "2026-10-16",
+      "scope": "literal-only SELECT DATE(DATE_ADD(... INTERVAL 7 HOUR)); no table read or write"
     }
   },
   "browser": {
     "environment": "synthetic isolated sqlite",
     "admin_account_create_and_hide_one_time_credential": "pass",
     "staff_role_navigation_and_direct_403": "pass",
-    "staff_same_college_review_contact": "pass_prior_isolated_synthetic_sqlite_run",
+    "staff_same_college_review_contact": "pass_current_isolated_synthetic_sqlite_run",
     "lecturer_booking_history_and_detail": "pass",
-    "approval_confirmation": "not_verified_browser_control_timeout",
-    "responsive_1440_1024_768_390": "pass_for_lecturer_dashboard_and_booking_form_prior_isolated_run",
+    "approval_confirmation": "pass_synthetic_fixture_pending_to_approved",
+    "responsive_1440_1024_768_390": "pass_lecturer_booking_form_no_overflow",
     "credential_change": "not_verified_in_browser",
-    "booking_draft_ui": "lecturer_save_and_resume_passed_in_prior_isolated_run; submit/delete not_browser_verified",
-    "room_dimensions_ui": "not_visually_rechecked_after_hide_change; automated Admin and booking props omission assertions pass",
-    "previous_localhost_attempt": "isolated browser was used; approval click timed out; no real credentials or institutional data used",
-    "lecturer_draft_save_resume": "pass_prior_isolated_synthetic_sqlite_run",
-    "staff_review_queue": "pass_prior_isolated_synthetic_sqlite_run",
-    "responsive_lecturer_dashboard_and_booking_form_1440_1024_768_390": "pass_prior_isolated_run",
-    "room_dimensions_ui_after_hide_change": "not_visually_rechecked; feature_props_assertions_pass_for_admin_and_booking_pages"
+    "booking_draft_ui": "pass_save_resume_2026-10-16_09:00-11:00_bangkok",
+    "room_dimensions_ui": "pass_after_hide_change_admin_create_edit_and_lecturer_picker",
+    "previous_localhost_attempt": "earlier isolated attempt had a browser control timeout; this run later verified synthetic Staff approval; no real credentials or institutional data used",
+    "lecturer_draft_save_resume": "pass_current_isolated_synthetic_sqlite_run",
+    "staff_review_queue": "pass_current_isolated_synthetic_sqlite_run",
+    "responsive_lecturer_dashboard_and_booking_form_1440_1024_768_390": "pass_prior_lecturer_dashboard_and_current_booking_form",
+    "room_dimensions_ui_after_hide_change": "pass_admin_create_edit_and_lecturer_picker_no_dimensions_or_area_visible",
+    "admin_room_dimension_create_edit_ui": "pass_no_dimension_inputs_or_area_visible",
+    "staff_same_college_review_contact_and_room_snapshot": "pass_synthetic_fixture",
+    "lecturer_booking_room_picker_dimensions": "pass_no_dimensions_or_area_visible",
+    "staff_draft_privacy": "pass_draft_not_visible_in_staff_queue",
+    "lecturer_booking_form_responsive_1440_1024_768_390": "pass_no_horizontal_overflow",
+    "staff_review_responsive_390": "pass_no_horizontal_overflow",
+    "admin_resources_responsive": "not_verified_cli_control_failure",
+    "browser_reject_cancel": "not_verified",
+    "keyboard_screen_reader": "not_verified_end_to_end"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -110,8 +124,8 @@
   },
   "limitations": [
     "Original project_sim_flow_v12.md and complete gap analysis unavailable; traceability is not source-complete.",
-    "Staff approval action remains unverified in browser because the computer-use bridge timed out at confirmation.",
-    "Admin dimension-hiding has automated page-props coverage but not a fresh visual browser pass after the change.",
+    "Admin resources responsive matrix, browser reject/cancel, and full keyboard/screen-reader/accessibility checks remain incomplete.",
+    "The MySQL date-grouping expression was validated with a literal-only SELECT; SQL aggregation over actual MySQL booking rows was not exercised.",
     "Production backup/restore process is not verified; prior restore check covered synthetic SQLite only.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY."
@@ -140,10 +154,18 @@
     "room_dimensions": "hidden from all UI and omitted from Admin/booking page props; schema and values preserved",
     "runtime_migrations": "21 ran; read-only migrate:status rerun",
     "export_download_route_scan": "0 matches; rerun",
-    "browser_workflows_repeated": false,
+    "browser_workflows_repeated": true,
     "runtime_mysql_changes_this_slice": false,
     "implementation_commit": "4cddbafc0baa9b5da7674b430e7391486516d5ec",
-    "branch_ahead_of_origin_before_push": 2
+    "branch_ahead_of_origin_before_push": 2,
+    "admin_dimension_forms": "browser verified on isolated synthetic SQLite",
+    "staff_approval": "browser verified; pending queue moved to approved history",
+    "lecturer_draft": "browser save and resume verified at Bangkok 09:00-11:00",
+    "lecturer_responsive": "1440/1024/768/390 no overflow",
+    "staff_responsive": "390 no overflow; other widths not freshly measured",
+    "admin_responsive": "not verified due Playwright control/access issue",
+    "mysql_date_add_literal_select": "pass; expected Bangkok date; no table queried",
+    "demo_cleanup": "pass; port 8766 closed and TEMP demo removed"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false
