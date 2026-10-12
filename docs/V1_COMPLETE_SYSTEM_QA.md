@@ -77,7 +77,7 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 No Export feature was enabled, `main` was not merged, no production deployment occurred, and no real Master Data was invented or seeded.
 ## Follow-up verification on current branch HEAD 883b744
 
-The tested product-code baseline remains `47552b4`; `git diff --name-only 47552b4..HEAD` shows only README and documentation files, with no application source changes. This follow-up adds fresh evidence from the current checkout without changing product behavior.
+The earlier QA snapshot was based on `47552b4`. This follow-up found and fixed the account-management CSRF defect; the current product-code commit is `25d8a20`.
 
 | Check | Result | Scope / limit |
 |---|---|---|
@@ -99,3 +99,16 @@ The tested product-code baseline remains `47552b4`; `git diff --name-only 47552b
 - Demo Cleanup confirmed port 8766 was closed, then removed the isolated TEMP SQLite directory.
 
 No source code or MySQL data changed during this follow-up. Full screen-reader coverage, keyboard/error/loading coverage across every role journey, and the source-complete requirements matrix remain open. The Senior Review and Real Pilot verdicts remain **NOT YET READY**.
+
+### Follow-up QA — 12 October 2026
+
+Code baseline: `25d8a20` (`fix: refresh account management csrf token`), committed locally on `backend/inertia-foundation`.
+
+- Reproduced Admin account creation returning HTTP 419 immediately after login. Login regenerates the session CSRF token, while the account page's manual `fetch` read the old `<meta>` value that Inertia does not refresh. The account-management GET now includes the current token in its page props and the form uses that value.
+- Added a regression test that confirms the token rotates after login and the next account-management page receives the new token. The duplicate-email validation message now renders in Thai.
+- Fresh verification: `php artisan test --no-ansi` — 189 passed / 1,690 assertions; `npm run build` — 686 modules; `php vendor/bin/pint --test --dirty` — pass; `git diff --check` — pass.
+- Synthetic SQLite browser verification: Admin logged in and submitted a duplicate email immediately without a hard reload. The request returned the expected Thai inline error, with `aria-invalid=true` and `aria-describedby` linked to that error; the synthetic account count remained 3. The same session displayed approved-only usage statistics and Admin-only financial statistics.
+- The Staff login attempt in this run did not authenticate from the generated TEMP credential file, so Staff role checks were not repeated in this slice. No credential reset was performed. Cleanup confirmed port 8766 was closed and removed the isolated TEMP demo.
+- No MySQL connection or data change occurred. Composer audit was rejected before execution by automatic review rate limiting (429); npm audit was not rerun. Prior dependency-audit results apply to unchanged lockfiles, but are not fresh results for this follow-up.
+
+Full screen-reader coverage, complete cross-role keyboard/error/loading checks, source-complete v12 traceability, the current-revision Codex Security report, and the full Admin/Staff/Lecturer Senior walkthrough remain open. Verdicts remain **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY** and **REAL PILOT READY: NOT YET READY**. The branch is two commits ahead of origin; no merge to `main` was made.

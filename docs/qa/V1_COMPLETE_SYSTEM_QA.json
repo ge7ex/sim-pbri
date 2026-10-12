@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "47552b4f0e1592bda303d3c8ac6d439dd1832e3e",
+  "application_head": "25d8a20f3c8badf9f829df664d59b47d742fbf49",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -223,5 +223,43 @@
     "full_suite_after_demo_timezone_fix": "187 passed / 1672 assertions; guarded sqlite :memory:"
   },
   "secrets_or_personal_data_included": false,
-  "candidate_uncommitted": false
+  "candidate_uncommitted": false,
+  "current_follow_up": {
+    "date": "2026-10-12",
+    "code_baseline": "25d8a20",
+    "commit_status": "committed_locally_branch_ahead_of_origin_by_2_not_merged_to_main",
+    "committed_change_scope": [
+      "app/Modules/Access/Http/Controllers/UserManagementController.php",
+      "app/Modules/Access/Http/Requests/StoreUserRequest.php",
+      "resources/js/Modules/Access/Pages/Users/Index.vue",
+      "tests/Feature/Access/UserManagementTest.php"
+    ],
+    "php_artisan_test": {
+      "status": "pass",
+      "tests": 189,
+      "assertions": 1690,
+      "database": "guarded sqlite :memory:"
+    },
+    "user_management_test": {
+      "status": "pass",
+      "tests": 13,
+      "assertions": 141
+    },
+    "npm_run_build": {
+      "status": "pass",
+      "modules": 686
+    },
+    "pint_changed_php": "pass",
+    "git_diff_check": "pass",
+    "composer_audit": "not_run_auto_review_rejected_429",
+    "npm_audit": "not_rerun_lockfiles_unchanged",
+    "browser": {
+      "admin_post_login_csrf": "pass_duplicate_email_request_after_login_without_hard_reload_returned_validation_not_419",
+      "duplicate_email_validation": "pass_thai_message_aria_invalid_true_describedby_resolves",
+      "admin_report": "pass_approved_usage_and_admin_only_financial_statistics_visible",
+      "staff_login": "not_verified_synthetic_temp_credential_rejected",
+      "demo_cleanup": "pass_port_8766_closed_and_temp_directory_removed"
+    },
+    "mysql": "not_accessed_no_changes"
+  }
 }
