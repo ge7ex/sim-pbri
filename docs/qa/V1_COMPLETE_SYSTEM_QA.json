@@ -273,5 +273,39 @@
     "mysql": "not accessed or changed during this slice",
     "codex_security_diff_scan_patch": "not_run; earlier scan does not cover this UI-only patch",
     "senior_review_candidate": "not_yet_ready; traceability source and end-to-end accessibility/error/loading gates remain"
+  },
+  "continuation_2026_10_12": {
+    "head": "0b3bf6c536a0805a68c1b121a53ab49003ec2fa3",
+    "branch": "backend/inertia-foundation",
+    "ahead_of_origin": 8,
+    "pushed": false,
+    "merged_to_main": false,
+    "changes": [
+      "Admin account search empty state gains role=status"
+    ],
+    "build": {
+      "status": "pass",
+      "modules": 686
+    },
+    "php_suite": {
+      "status": "not_run_auto_review_429",
+      "previous_commit_result": "189 tests / 1700 assertions before Vue-only commit"
+    },
+    "browser_accessibility": {
+      "admin_no_results_status_region": "pass",
+      "admin_staff_keyboard_spot_checks": "pass",
+      "lecturer_form_names_and_24h_time": "pass",
+      "screen_reader": "not_run"
+    },
+    "demo_cleanup": "pass; SQLite temp removed; port 8766 closed",
+    "mysql_cache_clear_incident": {
+      "command": "php artisan optimize:clear ran outside isolated demo environment",
+      "config": "DB_CONNECTION=mysql; CACHE_STORE=database",
+      "read_only_counts_after": "cache=0; cache_locks=0",
+      "pre_command_counts": "unknown",
+      "restore_attempted": false,
+      "details": "docs/incidents/2026-10-12-cache-clear-during-ui-qa.md"
+    },
+    "senior_review_candidate": "not_yet_ready"
   }
 }

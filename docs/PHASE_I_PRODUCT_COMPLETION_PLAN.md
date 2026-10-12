@@ -75,3 +75,10 @@ No uncommitted user changes were present at the original baseline. The branch an
 - Browser UAT on the guarded synthetic SQLite fixture confirmed the approval POST redirected (302), the status “อนุมัติคำขอเรียบร้อยแล้ว” appeared, the queue empty state rendered, and the Lecturer approved history contained the request. No browser JavaScript errors; 390px layout had no horizontal overflow.
 - Fresh verification: 189 tests / 1,700 assertions, Vite build 686 modules, Pint, and `git diff --check` pass. The temporary fixture was removed and port 8766 closed.
 - Implemented and committed locally as `bebd6de`; branch is five commits ahead of origin. Not pushed or merged. The prior Codex Security scan does not cover this patch.
+
+### Handoff update — 12 October 2026
+
+- Current implementation commit: `0b3bf6c536a0805a68c1b121a53ab49003ec2fa3`; eight commits ahead of origin, not pushed or merged.
+- Admin filtered empty results now use an accessible status region, verified in the browser. Build and diff-check pass; a new PHP-suite run was blocked by automatic approval review (429), so prior PHP results remain tied to the preceding commit.
+- A MySQL cache-clear incident occurred during local UI QA; see `docs/incidents/2026-10-12-cache-clear-during-ui-qa.md`. The cache baseline before clearing is unknown. No restoration was attempted.
+- Phase I remains incomplete pending source-complete traceability, a real screen-reader run, remaining cross-role error/loading QA, and review of the cache-clear incident.
