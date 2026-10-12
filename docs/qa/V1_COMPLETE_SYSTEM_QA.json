@@ -108,8 +108,8 @@
     "staff_draft_privacy": "pass_draft_not_visible_in_staff_queue",
     "lecturer_booking_form_responsive_1440_1024_768_390": "pass_no_horizontal_overflow",
     "staff_review_responsive_390": "pass_no_horizontal_overflow",
-    "admin_resources_responsive": "not_verified_cli_control_failure",
-    "browser_reject_cancel": "not_verified",
+    "admin_resources_responsive": "pass_no_horizontal_overflow_1440_1024_768_390",
+    "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
     "keyboard_screen_reader": "not_verified_end_to_end"
   },
   "database_changes": {
@@ -124,11 +124,11 @@
   },
   "limitations": [
     "Original project_sim_flow_v12.md and complete gap analysis unavailable; traceability is not source-complete.",
-    "Admin resources responsive matrix, browser reject/cancel, and full keyboard/screen-reader/accessibility checks remain incomplete.",
     "The MySQL date-grouping expression was validated with a literal-only SELECT; SQL aggregation over actual MySQL booking rows was not exercised.",
     "Production backup/restore process is not verified; prior restore check covered synthetic SQLite only.",
     "Senior review candidate verdict remains NOT YET READY.",
-    "Real Pilot remains NOT YET READY."
+    "Real Pilot remains NOT YET READY.",
+    "Keyboard/screen-reader and complete zero/error/loading browser-state checks were not completed."
   ],
   "verification_refresh": {
     "date": "2026-10-12",
@@ -163,9 +163,10 @@
     "lecturer_draft": "browser save and resume verified at Bangkok 09:00-11:00",
     "lecturer_responsive": "1440/1024/768/390 no overflow",
     "staff_responsive": "390 no overflow; other widths not freshly measured",
-    "admin_responsive": "not verified due Playwright control/access issue",
     "mysql_date_add_literal_select": "pass; expected Bangkok date; no table queried",
-    "demo_cleanup": "pass; port 8766 closed and TEMP demo removed"
+    "demo_cleanup": "pass; port 8766 closed and TEMP demo removed",
+    "admin_responsive": "pass_no_overflow_1440_1024_768_390",
+    "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false

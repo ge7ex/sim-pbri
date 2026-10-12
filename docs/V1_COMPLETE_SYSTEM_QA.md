@@ -9,7 +9,7 @@ Code under QA: `4cddbafc0baa9b5da7674b430e7391486516d5ec`; QA documentation foll
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite, frontend build, scoped style check, dependency audits, migration-status inspection, and synthetic role workflows pass. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Browser coverage improved, but Admin responsive breakpoints, keyboard/screen-reader coverage, and browser reject/cancel flows remain outstanding. Production MySQL backup/restore and real Master Data are not verified.
+The feature suite, frontend build, scoped style check, dependency audits, migration-status inspection, and synthetic role workflows pass. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Browser coverage includes Admin responsive breakpoints and synthetic approval, rejection and cancellation flows; keyboard/screen-reader and zero/error/loading browser-state checks remain outstanding. Production MySQL backup/restore and real Master Data are not verified.
 
 ## Fresh automated evidence
 
@@ -32,18 +32,19 @@ All flows used the temporary synthetic SQLite demo created by `scripts/qa/phase-
 
 | Role / flow | Result | Limit |
 |---|---|---|
-| Admin resource list and add/edit room forms | PASS: no dimension inputs, dimensions or derived area visible | Browser visual/page inspection; no Admin responsive sweep |
+| Admin resource list and add/edit room forms | PASS: no dimension inputs, dimensions or derived area visible | Synthetic SQLite fixture |
 | Staff review | PASS: same-College contact and booking-time room snapshot visible; no Admin user link | Synthetic fixture only |
-| Staff approve | PASS: confirm dialog accepted; pending queue became empty; booking appeared approved in history | No reject/cancel browser action |
+| Staff approve/reject | PASS: approval moved fixture to approved history; rejection with reason removed it from queue and set rejected status | Synthetic SQLite fixtures |
 | Lecturer booking room picker | PASS: dimensions/area absent; 24-hour time controls visible | Synthetic fixture |
 | Lecturer Draft | PASS: saved and resumed `2026-10-16 09:00–11:00`; values remained in Bangkok local time | Submit/delete were not exercised in this browser run; feature tests cover lifecycle |
 | Draft privacy | PASS: Staff queue did not show Lecturer Draft | Synthetic fixture |
 | Lecturer booking form overflow | PASS at 1440, 1024, 768, and 390 CSS px | Measured document width did not exceed viewport |
 | Staff review overflow | PASS at 390 CSS px | Staff 768/1024/1440 not freshly measured |
-| Admin resources overflow | Not verified | CLI access/control failed while measuring; desktop form view itself passed |
+| Admin resources overflow | PASS at 1440/1024/768/390 | Document/body scroll widths matched viewport at each size; tables scroll within labeled regions |
+| Lecturer cancel | PASS: confirmation accepted; booking changed to cancelled and status history recorded | Synthetic SQLite fixture |
 | Keyboard/screen reader | Not verified end-to-end | Source labels and test evidence exist; no full assistive-tech run |
 
-The first Playwright wrapper was blocked by WSL and `npx --no-install` found no installed executable. A cached Playwright CLI was then used for the flows above. Later session access became intermittent; no app bug was inferred from the tool failure.
+The first Playwright wrapper was blocked by WSL and `npx --no-install` found no installed executable. A cached Playwright CLI completed the flows above; session access was intermittent earlier in the run and later recovered. No app bug was inferred from browser-control failures.
 
 ## Decisions and data boundary
 
@@ -57,7 +58,7 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 ## Remaining gates
 
 1. Obtain `project_sim_flow_v12.md` or an approved full requirements source and reconcile the traceability matrix.
-2. Complete Admin responsive matrix and remaining browser reject/cancel, keyboard, accessibility, zero/error/loading checks.
+2. Complete keyboard, accessibility and zero/error/loading checks across remaining role journeys.
 3. Verify the approved production MySQL backup/restore process; the existing isolated restore drill covers SQLite only.
 4. Complete final Senior walkthrough and owner acceptance before marking a Senior Review Candidate or real Pilot ready.
 
