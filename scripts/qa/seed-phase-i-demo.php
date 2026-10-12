@@ -96,6 +96,7 @@ $scenario->recommendedResources()->attach([$equipment->id => ['quantity' => 2]])
 $scenario->recommendedSimulatorTypes()->attach($type->id);
 
 $now = Carbon::now();
+$bangkokNow = Carbon::now('Asia/Bangkok');
 $approved = Booking::create([
     'college_id' => $college->id,
     'requested_by_user_id' => $users['lecturer']->id,
@@ -104,8 +105,8 @@ $approved = Booking::create([
     'simulator_asset_id' => $asset->id,
     'requester_name' => 'ผู้ประสานงานสมมติ',
     'requester_phone' => '0800000000',
-    'starts_at' => $now->copy()->addDays(2)->setTime(9, 0),
-    'ends_at' => $now->copy()->addDays(2)->setTime(11, 0),
+    'starts_at' => $bangkokNow->copy()->addDays(2)->setTime(9, 0)->utc(),
+    'ends_at' => $bangkokNow->copy()->addDays(2)->setTime(11, 0)->utc(),
     'participant_count' => 18,
     'status' => BookingStatus::Approved,
     'reviewed_by_user_id' => $users['staff']->id,
@@ -126,8 +127,8 @@ $pending = Booking::create([
     'scenario_id' => $scenario->id,
     'requester_name' => 'ผู้ประสานงานสมมติ',
     'requester_phone' => '0800000000',
-    'starts_at' => $now->copy()->addDays(3)->setTime(13, 0),
-    'ends_at' => $now->copy()->addDays(3)->setTime(15, 0),
+    'starts_at' => $bangkokNow->copy()->addDays(3)->setTime(13, 0)->utc(),
+    'ends_at' => $bangkokNow->copy()->addDays(3)->setTime(15, 0)->utc(),
     'participant_count' => 18,
     'status' => BookingStatus::Pending,
 ]);
