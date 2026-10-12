@@ -11,6 +11,22 @@ if (-not $demoRoot.StartsWith($tempRoot, [StringComparison]::OrdinalIgnoreCase))
     throw 'Demo path is outside the current user temporary directory.'
 }
 
+function Get-DemoProcessRecord($process) {
+    return [pscustomobject]@{
+        pid = $process.ProcessId
+        name = $process.Name
+        creationTicks = $process.CreationDate.ToUniversalTime().Ticks.ToString()
+        commandLine = $process.CommandLine
+    }
+}
+
+function Test-DemoProcessIdentity($record, $process) {
+    return $null -ne $process -and
+        $record.name -eq $process.Name -and
+        [long]$record.creationTicks -eq $process.CreationDate.ToUniversalTime().Ticks -and
+        $record.commandLine -eq $process.CommandLine
+}
+
 if ($Action -eq 'Cleanup') {
     if (-not (Test-Path -LiteralPath $demoRoot)) {
         Write-Output 'Demo environment is already absent.'
@@ -23,17 +39,20 @@ if ($Action -eq 'Cleanup') {
         foreach ($entry in $processes) {
             $process = Get-CimInstance Win32_Process -Filter "ProcessId=$($entry.pid)" -ErrorAction SilentlyContinue
             if ($null -eq $process) { continue }
+            if (-not (Test-DemoProcessIdentity $entry $process)) { continue }
             $isListener = $process.Name -eq 'php.exe' -and $process.CommandLine -like "*$repoRoot*" -and $process.CommandLine -like '*-S 127.0.0.1:8766*'
             $isServerParent = $process.Name -eq 'php.exe' -and $process.CommandLine -like '*artisan serve --host=127.0.0.1 --port=8766 --no-reload*'
-            if (-not ($isListener -or $isServerParent)) {
-                throw "Refusing to stop unverified process $($entry.pid)."
-            }
-            Stop-Process -Id $entry.pid -Force
+            if ($isListener -or $isServerParent) { Stop-Process -Id $entry.pid -Force }
         }
     }
 
+    Start-Sleep -Milliseconds 300
+    if (Get-NetTCPConnection -State Listen -LocalPort 8766 -ErrorAction SilentlyContinue) {
+        throw 'Port 8766 is still listening; refusing to remove demo data.'
+    }
+
     Remove-Item -LiteralPath $demoRoot -Recurse -Force
-    Write-Output 'Removed only the isolated Phase I demo directory and verified demo processes.'
+    Write-Output 'Removed only the isolated Phase I demo directory after confirming port 8766 is closed.'
     exit 0
 }
 
@@ -63,22 +82,33 @@ Set-Acl -LiteralPath $demoRoot -AclObject $acl
 
 $databasePath = Join-Path $demoRoot 'sim-pbri-phase-i-demo.sqlite'
 New-Item -ItemType File -Path $databasePath | Out-Null
-$env:APP_ENV = 'local'
-$env:APP_DEBUG = 'false'
-$env:APP_URL = 'http://127.0.0.1:8766'
-$env:APP_KEY = (& php -r "echo 'base64:' . base64_encode(random_bytes(32));").Trim()
-$env:DB_CONNECTION = 'sqlite'
-$env:DB_DATABASE = $databasePath
-$env:DB_URL = ''
-$env:DATABASE_URL = ''
-$env:SESSION_DRIVER = 'file'
-$env:CACHE_STORE = 'array'
-$env:QUEUE_CONNECTION = 'sync'
-$env:MAIL_MAILER = 'array'
-$env:LARAVEL_STORAGE_PATH = Join-Path $demoRoot 'storage'
+
+$isolatedEnvironmentNames = @(
+    'APP_ENV', 'APP_DEBUG', 'APP_URL', 'APP_KEY', 'DB_CONNECTION', 'DB_DATABASE',
+    'DB_URL', 'DATABASE_URL', 'SESSION_DRIVER', 'CACHE_STORE', 'QUEUE_CONNECTION',
+    'MAIL_MAILER', 'LARAVEL_STORAGE_PATH'
+)
+$originalEnvironment = @{}
+foreach ($name in $isolatedEnvironmentNames) {
+    $originalEnvironment[$name] = [Environment]::GetEnvironmentVariable($name, 'Process')
+}
 
 Push-Location $repoRoot
 try {
+    $env:APP_ENV = 'local'
+    $env:APP_DEBUG = 'false'
+    $env:APP_URL = 'http://127.0.0.1:8766'
+    $env:APP_KEY = (& php -r "echo 'base64:' . base64_encode(random_bytes(32));").Trim()
+    $env:DB_CONNECTION = 'sqlite'
+    $env:DB_DATABASE = $databasePath
+    $env:DB_URL = ''
+    $env:DATABASE_URL = ''
+    $env:SESSION_DRIVER = 'file'
+    $env:CACHE_STORE = 'array'
+    $env:QUEUE_CONNECTION = 'sync'
+    $env:MAIL_MAILER = 'array'
+    $env:LARAVEL_STORAGE_PATH = Join-Path $demoRoot 'storage'
+
     & php artisan migrate --force --no-interaction
     if ($LASTEXITCODE -ne 0) { throw 'Isolated demo migrations failed.' }
     $seedOutput = & php (Join-Path $repoRoot 'scripts\qa\seed-phase-i-demo.php') 2>&1
@@ -91,7 +121,13 @@ try {
         -WorkingDirectory $repoRoot -WindowStyle Hidden -PassThru `
         -RedirectStandardOutput (Join-Path $demoRoot 'server.log') `
         -RedirectStandardError (Join-Path $demoRoot 'server.err')
-    @(@{ pid = $server.Id }) | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $demoRoot 'processes.json')
+    $serverProcess = Get-CimInstance Win32_Process -Filter "ProcessId=$($server.Id)" -ErrorAction SilentlyContinue
+    if ($null -eq $serverProcess) {
+        if (-not $server.HasExited) { $server.Kill() }
+        throw 'Could not record the demo server process identity.'
+    }
+    $serverRecord = Get-DemoProcessRecord $serverProcess
+    @($serverRecord) | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $demoRoot 'processes.json')
     $listener = $null
     for ($attempt = 0; $attempt -lt 30 -and $null -eq $listener; $attempt++) {
         Start-Sleep -Milliseconds 500
@@ -102,7 +138,8 @@ try {
     if ($listenerProcess.Name -ne 'php.exe' -or $listenerProcess.CommandLine -notlike '*8766*') {
         throw 'The port listener did not match the expected demo server.'
     }
-    @(@{ pid = $listener.OwningProcess }, @{ pid = $server.Id }) | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $demoRoot 'processes.json')
+    $listenerRecord = Get-DemoProcessRecord $listenerProcess
+    @($listenerRecord, $serverRecord) | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $demoRoot 'processes.json')
 
     $ready = $false
     for ($attempt = 0; $attempt -lt 30 -and -not $ready; $attempt++) {
@@ -118,15 +155,26 @@ try {
         foreach ($entry in (Get-Content -Raw -LiteralPath $processFile | ConvertFrom-Json)) {
             $process = Get-CimInstance Win32_Process -Filter "ProcessId=$($entry.pid)" -ErrorAction SilentlyContinue
             if ($null -eq $process) { continue }
+            if (-not (Test-DemoProcessIdentity $entry $process)) { continue }
             $isListener = $process.Name -eq 'php.exe' -and $process.CommandLine -like "*$repoRoot*" -and $process.CommandLine -like '*-S 127.0.0.1:8766*'
             $isServerParent = $process.Name -eq 'php.exe' -and $process.CommandLine -like '*artisan serve --host=127.0.0.1 --port=8766 --no-reload*'
             if ($isListener -or $isServerParent) { Stop-Process -Id $entry.pid -Force }
         }
     }
+    Start-Sleep -Milliseconds 300
+    if (Get-NetTCPConnection -State Listen -LocalPort 8766 -ErrorAction SilentlyContinue) {
+        throw "Setup failed while port 8766 still listens; demo data was preserved at $demoRoot for safe cleanup."
+    }
     if (Test-Path -LiteralPath $demoRoot) { Remove-Item -LiteralPath $demoRoot -Recurse -Force }
     throw
 } finally {
-    Pop-Location
+    try {
+        Pop-Location
+    } finally {
+        foreach ($name in $isolatedEnvironmentNames) {
+            [Environment]::SetEnvironmentVariable($name, $originalEnvironment[$name], 'Process')
+        }
+    }
 }
 
 Write-Output 'Synthetic demo is ready at http://127.0.0.1:8766'

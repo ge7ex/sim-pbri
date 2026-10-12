@@ -14,11 +14,23 @@ From the repository root in PowerShell:
 
 The script creates a dedicated SQLite database under `%TEMP%\sim-pbri-phase-i-demo`, generates a random APP_KEY and three random sign-in credentials, migrates the isolated database, and starts Laravel on `http://127.0.0.1:8766`. The credential file is protected by a Windows ACL for the current user. Read the credentials only on the local machine; do not paste them into reports, chat, tickets, or Git.
 
+Setup restores the caller's prior APP/DB environment variables after launching the isolated server. Cleanup verifies the recorded process name, command line, and creation ticks and refuses to delete TEMP data while port 8766 is still listening.
+
 After the walkthrough:
 
 ```powershell
 .\scripts\qa\phase-i-demo.ps1 -Action Cleanup
 ```
+
+## Isolated SQLite restore check
+
+With the demo environment set up, run:
+
+```powershell
+php scripts/qa/verify-phase-i-demo-restore.php
+```
+
+The check creates a SQLite backup with `VACUUM INTO`, restores it to a second file under the same TEMP directory, verifies integrity and row counts for every table, then removes its temporary backup files. It does not verify a production MySQL backup or restore process.
 
 Cleanup verifies the recorded PHP server command lines, stops only the demo server, and removes only its fixed TEMP directory. If another process occupies port 8766, setup stops before creating the demo. The seeder itself refuses to run unless the selected connection is SQLite and the database path is the dedicated demo file.
 

@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "baseline_head": "d2e84e71c33edc8842e0483ab7c7213194a38564",
+  "application_head": "d439e6f393eb513f23b24a13a034e34344275d3e",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -13,7 +13,13 @@
     "composer_audit": { "status": "pass", "advisories": 0 },
     "npm_audit": { "status": "pass", "vulnerabilities": 0 },
     "runtime_migrations": { "status": "pass", "applied": 19, "last_migration": "2026_10_12_000016_add_booking_resource_snapshots" },
-    "export_route_scan": { "status": "pass", "matches": 0 }
+    "export_route_scan": { "status": "pass", "matches": 0 },
+    "demo_setup_cleanup": { "status": "pass", "database": "synthetic sqlite under TEMP", "cleanup_port_guard": "pass", "process_identity": "name command_line creation_ticks" },
+    "caller_app_db_environment_restoration": { "status": "pass", "method": "sentinel variables preserved after setup" },
+    "isolated_sqlite_restore": { "status": "pass", "integrity": "ok", "matching_table_row_counts": 26, "production_mysql": "not_verified" },
+    "powershell_parser": { "status": "pass", "file": "scripts/qa/phase-i-demo.ps1" },
+    "php_restore_script_lint": { "status": "pass", "file": "scripts/qa/verify-phase-i-demo-restore.php" },
+    "git_diff_check": { "status": "pass" }
   },
   "browser": {
     "environment": "synthetic isolated sqlite",
@@ -23,7 +29,8 @@
     "lecturer_booking_history_and_detail": "pass",
     "approval_confirmation": "not_verified_browser_control_timeout",
     "responsive_1440_1024_768_390": "not_verified",
-    "credential_change": "not_verified_in_browser"
+    "credential_change": "not_verified_in_browser",
+    "current_localhost_attempt": "blocked_by_computer_use_policy; no alternate path attempted"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -31,8 +38,10 @@
     "existing_booking_snapshots_backfilled": false
   },
   "limitations": [
-    "Original project_sim_flow_v12.md unavailable; traceability is handoff-derived.",
-    "Draft semantics and optional room dimensions remain owner/source decision gates.",
+    "Original project_sim_flow_v12.md unavailable; secondary 60-check report exists but was assessed against older d2e84e7.",
+    "Draft lifecycle/retention, room dimension units/area rule, and institutional timezone need source/owner confirmation.",
+    "Production timezone is currently configured as UTC while browser display follows local timezone; a Thai display offset risk is open.",
+    "Production backup/restore drill is not verified.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY."
   ],
