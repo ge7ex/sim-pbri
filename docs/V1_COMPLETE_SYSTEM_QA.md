@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Application HEAD under review: `3bef07e07856def196ab31a3c0c37243dbc46f26` (verified 12 October 2026; branch equals origin; worktree clean)
+Application HEAD under review: `4d3fcb40d9e7242791a73d9d29e202034342b463` (verified 12 October 2026; branch equals origin; worktree clean)
 
 ## Verdict
 
@@ -84,4 +84,4 @@ Ponytail and Ponytail Review instructions were available and used for code/chang
 
 ## Verification refresh — 12 October 2026
 
-After Draft and Room Master dimension implementation, the full PHP suite passed on the working branch with the default test configuration and again with `SESSION_ENCRYPT=true` (186 tests / 1,663 assertions each). `npm run build` passed (686 modules), Pint passed, Composer and npm audits reported no advisories/vulnerabilities, migrations 000017 and 000018 are `Ran` with 21 total applied migrations, and the registered-route export/download scan returned no matches. Runtime schema changes created the empty Draft table (0 rows) and nullable room-dimension columns; no existing room was populated. Browser workflows were not run. The feature commit is `3bef07e` and is pushed to `origin/backend/inertia-foundation`; the branch is clean. Browser workflows remain unverified for this feature.
+After Draft and Room Master dimension implementation, the full PHP suite passed on the working branch with the default test configuration and again with `SESSION_ENCRYPT=true` (186 tests / 1,663 assertions each). `npm run build` passed (686 modules), Pint passed, Composer and npm audits reported no advisories/vulnerabilities, migrations 000017 and 000018 are `Ran` with 21 total applied migrations, and the registered-route export/download scan returned no matches. Runtime schema changes created the empty Draft table (0 rows) and nullable room-dimension columns; no existing room was populated. Browser workflows were not run. The Draft implementation commit `3bef07e` and room-dimensions commit `4d3fcb4` are pushed to `origin/backend/inertia-foundation`. Browser workflows remain unverified for this feature.

@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Current reviewed HEAD: `3bef07e07856def196ab31a3c0c37243dbc46f26` (verified 12 October 2026; clean and equal to origin)
+Current reviewed HEAD: `4d3fcb40d9e7242791a73d9d29e202034342b463` (verified 12 October 2026; clean and equal to origin)
 
 ## Evidence boundary
 
@@ -14,7 +14,7 @@ No uncommitted user changes were present at the original baseline. The branch an
 
 | Increment | Scope | Entry evidence | Ready condition | Status |
 |---|---|---|---|---|
-| I-0 | Baseline and traceability | Current reviewed HEAD `3bef07e`; fresh suite 186 tests / 1,663 assertions; v12 source absent; secondary 60-check report found | Every v12 core requirement mapped to evidence/decision | In progress: handoff and secondary-report gaps mapped; exact v12 wording and full gap analysis remain unavailable |
+| I-0 | Baseline and traceability | Current reviewed HEAD `4d3fcb4`; fresh suite 186 tests / 1,663 assertions; v12 source absent; secondary 60-check report found | Every v12 core requirement mapped to evidence/decision | In progress: handoff and secondary-report gaps mapped; exact v12 wording and full gap analysis remain unavailable |
 | I-1 | Real account operations | Route inventory had login/logout only; local dev seeder is environment-guarded | College-scoped Admin account create/edit/disable/reset; bootstrap/recovery; forced password change; last-Admin protection; feature tests and isolated browser QA | Done for code: 11 focused tests within fresh full suite; Admin login/menu/create/one-time-secret-hide verified in isolated Chrome. Browser password-rotation flow not performed; feature tests cover it. |
 | I-2 | Room, booking, and review gaps | Editable requester display, room snapshots, review contact, Drafts, and room dimensions implemented | Implement clear safe requirements; document owner-dependent retention; retain no-auto-classification rule | In progress: dimensions are optional metric inputs with derived area and no historical backfill; this convention is an accepted assumption pending v12 validation. Drafts have no automatic expiry pending owner retention decision |
 | I-3 | End-to-end UX and reliability | Role-specific route and test inventory plus I-1/I-2 | Admin, Staff, Lecturer flows verified in isolated browser at 1440/1024/768/390; responsive/accessibility defects fixed | In progress: prior isolated desktop checks exist; no browser workflow was performed in this review. Approval and all required breakpoints remain unverified. |
@@ -38,7 +38,7 @@ No uncommitted user changes were present at the original baseline. The branch an
 - Approval flow reached the browser confirmation modal, but Chrome automation could not operate the modal after focus-emulation timeouts. No claim of browser approval is made; feature tests cover state transitions.
 - Runtime migrations 000015 and 000016 were applied after confirming the pending SQL with `php artisan migrate --pretend`; `migrate:status` then showed all 21 migrations applied. No fixtures or institutional data were seeded into runtime MySQL.
 - Added a guarded Senior demo setup/cleanup pair under `scripts/qa`; the setup refuses MySQL and uses a TEMP-only synthetic SQLite database with random credentials.
-- The earlier QA-helper change is committed; current verified HEAD is `3bef07e` and the worktree is clean. Cleanup checks process identity and refuses deletion while port 8766 remains open.
+- The earlier QA-helper change is committed; current verified HEAD is `4d3fcb4` and the worktree was clean at verification. Cleanup checks process identity and refuses deletion while port 8766 remains open.
 - Fresh checks on 12 October 2026: 186 tests / 1,663 assertions; Vite 686 modules; Pint, Composer audit, npm audit, migration-status read, and route Export scan pass. Browser role and responsive checks were not repeated in this review.
 - Current code sets application timezone to UTC while booking fields are local datetime inputs and frontend display follows browser timezone. This is a P0 owner decision because changing the configured timezone can alter interpretation of existing timestamp values.
 - `scripts/qa/verify-phase-i-demo-restore.php` passed against synthetic demo data: SQLite integrity passed and table row counts matched across 26 tables after backup and restore-copy. This does not verify production MySQL backup/restore.
