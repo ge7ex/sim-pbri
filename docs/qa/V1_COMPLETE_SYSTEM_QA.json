@@ -116,7 +116,9 @@
     "keyboard_focus_spot_check": "pass_sampled_tab_focus_outline_2_4px_solid; not_full_keyboard_or_screen_reader_run",
     "mobile_navigation_escape": "pass_390px_escape_closes_menu_aria_expanded_false_focus_returned_with_visible_indicator",
     "staff_queue_empty_after_approval": "pass_pending_count_1_to_0_empty_state_displayed_in_synthetic_sqlite",
-    "staff_report_finance_redaction": "pass_approved_usage_populated_no_financial_labels_or_export_links"
+    "staff_report_finance_redaction": "pass_approved_usage_populated_no_financial_labels_or_export_links",
+    "lecturer_draft_ui": "pass_save_resume_16_oct_2026_09_00_to_11_00_then_submit_pending_draft_removed",
+    "lecturer_to_staff_end_to_end": "pass_synthetic_lecturer_draft_resume_submit_staff_approval_approved_history"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -134,7 +136,8 @@
     "Production backup/restore process is not verified; prior restore check covered synthetic SQLite only.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY.",
-    "End-to-end keyboard/screen-reader and complete cross-role zero/error/loading browser checks remain incomplete; the 390px mobile-menu Escape/focus-return path, sampled focus, and one server validation path passed."
+    "End-to-end keyboard/screen-reader and complete cross-role zero/error/loading browser checks remain incomplete; the 390px mobile-menu Escape/focus-return path, sampled focus, and one server validation path passed.",
+    "Admin-led final Senior walkthrough and owner feedback remain incomplete; the same-run Lecturer-to-Staff workflow passed in synthetic SQLite."
   ],
   "verification_refresh": {
     "date": "2026-10-12",
@@ -166,7 +169,7 @@
     "branch_ahead_of_origin_before_push": 1,
     "admin_dimension_forms": "browser verified on isolated synthetic SQLite",
     "staff_approval": "browser verified; pending queue moved to approved history",
-    "lecturer_draft": "browser save and resume verified at Bangkok 09:00-11:00",
+    "lecturer_draft": "saved_and_resumed_2026-10-16_09:00-11:00_Bangkok; submitted_as_pending; draft_removed_on_success",
     "lecturer_responsive": "1440/1024/768/390 no overflow",
     "staff_responsive": "390 no overflow; other widths not freshly measured",
     "mysql_date_add_literal_select": "pass; expected Bangkok date; no table queried",
@@ -179,7 +182,9 @@
     "mobile_menu_escape": "390px: aria-expanded=false, focus returned to toggle, focus-visible true",
     "staff_report_privacy": "approved usage populated; no financial labels or export/download links",
     "staff_queue_empty_state": "pending count moved from 1 to 0 after synthetic approval",
-    "runbook_timezone_and_migration_facts": "updated to Asia/Bangkok booking/report semantics and 21 migration read-only QA snapshot"
+    "runbook_timezone_and_migration_facts": "updated to Asia/Bangkok booking/report semantics and 21 migration read-only QA snapshot",
+    "lecturer_to_staff_workflow": "pass_same_synthetic_sqlite_demo_staff_approved_and_history_showed_request",
+    "senior_walkthrough": "partial; Admin-led final walkthrough and owner feedback remain"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false

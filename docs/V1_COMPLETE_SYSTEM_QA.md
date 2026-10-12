@@ -9,7 +9,7 @@ Code under QA: `2332b11` (`fix: close mobile navigation on escape`), pushed to `
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite and frontend build pass on `2332b11`; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
+The feature suite and frontend build pass on `2332b11`; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
 
 ## Automated evidence refreshed on 12 October 2026
 
@@ -36,7 +36,7 @@ All browser flows used the temporary synthetic SQLite demo created by `scripts/q
 | Staff review | PASS: same-College contact and booking-time room snapshot visible; no Admin user link | Synthetic fixture only |
 | Staff approve/reject | PASS: approval moved fixture to approved history; rejection with reason removed it from queue and set rejected status | Synthetic SQLite fixtures |
 | Lecturer booking room picker | PASS: dimensions/area absent; 24-hour time controls visible | Synthetic fixture |
-| Lecturer Draft | PASS: saved and resumed `2026-10-16 09:00–11:00`; values remained in Bangkok local time | Submit/delete were not exercised in this browser run; feature tests cover lifecycle |
+| Lecturer Draft to Staff approval | PASS: saved Draft, resumed at `2026-10-16 09:00–11:00`, added course/scenario/simulator, submitted as Pending, Draft disappeared, Staff reviewed and approved it, and Approved history showed the booking | Synthetic single-College SQLite; owner-delete path not exercised in browser |
 | Draft privacy | PASS: Staff queue did not show Lecturer Draft | Synthetic fixture |
 | Lecturer booking form overflow | PASS at 1440, 1024, 768, and 390 CSS px | Measured document width did not exceed viewport |
 | Staff review overflow | PASS at 390 CSS px | Staff 768/1024/1440 not freshly measured |
@@ -65,6 +65,6 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 1. Obtain `project_sim_flow_v12.md` or an approved full requirements source and reconcile the traceability matrix.
 2. Complete end-to-end keyboard/screen-reader and zero/error/loading checks across remaining role journeys. Mobile Escape close/focus return now passes; the remaining matrix is not complete.
 3. Verify the approved production MySQL backup/restore process; the existing isolated restore drill covers SQLite only.
-4. Complete final Senior walkthrough and owner acceptance before marking a Senior Review Candidate or real Pilot ready.
+4. Complete the final Admin-led Senior walkthrough and owner acceptance before marking a Senior Review Candidate or real Pilot ready. Lecturer-to-Staff booking handoff now passes in the isolated demo.
 
 No Export feature was enabled, `main` was not merged, no production deployment occurred, and no real Master Data was invented or seeded.
