@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "1a9406e8e558c75ba8b8995e1c268c6890b039d5",
+  "application_head": "3bef07e07856def196ab31a3c0c37243dbc46f26",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -32,7 +32,8 @@
     "approval_confirmation": "not_verified_browser_control_timeout",
     "responsive_1440_1024_768_390": "not_verified",
     "credential_change": "not_verified_in_browser",
-    "current_localhost_attempt": "blocked_by_computer_use_policy; no alternate path attempted"
+    "booking_draft_ui": "not_verified_in_browser",
+    "previous_localhost_attempt": "blocked_by_computer_use_policy; no alternate path attempted"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -50,6 +51,6 @@
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY."
   ],
-  "verification_refresh": {"date":"2026-10-12","head_before_feature_commit":"1a9406e8e558c75ba8b8995e1c268c6890b039d5","branch_matches_origin_before_feature_slice":true,"working_tree_clean_at_slice_start":true,"test_default":{"status":"pass","tests":182,"assertions":1640},"test_session_encrypt_true":{"status":"pass","tests":182,"assertions":1640},"build_modules":686,"pint":"pass","composer_audit":"0 advisories","npm_audit":"0 vulnerabilities","migrations":"20 ran; additive booking_drafts table only; row count 0","export_download_route_scan":"0 matches","browser_workflows_repeated":false,"existing_runtime_rows_changed":false},
+  "verification_refresh": {"date":"2026-10-12","head":"3bef07e07856def196ab31a3c0c37243dbc46f26","head_before_feature_commit":"1a9406e8e558c75ba8b8995e1c268c6890b039d5","branch_matches_origin_before_feature_slice":true,"working_tree_clean_at_slice_start":true,"test_default":{"status":"pass","tests":182,"assertions":1640},"test_session_encrypt_true":{"status":"pass","tests":182,"assertions":1640},"build_modules":686,"pint":"pass","composer_audit":"0 advisories","npm_audit":"0 vulnerabilities","migrations":"20 ran; additive booking_drafts table only; row count 0","export_download_route_scan":"0 matches","browser_workflows_repeated":false,"existing_runtime_rows_changed":false},
   "secrets_or_personal_data_included": false
 }

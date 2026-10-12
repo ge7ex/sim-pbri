@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Application HEAD under review: `cd74be642f682d147b92eaaa8d6e23dc2e4b91f3` (verified 12 October 2026; branch equals origin; worktree clean)
+Application HEAD under review: `3bef07e07856def196ab31a3c0c37243dbc46f26` (verified 12 October 2026; branch equals origin; worktree clean)
 
 ## Verdict
 
@@ -27,7 +27,7 @@ The feature suite, production frontend build, dependency audits, schema migratio
 | `php scripts/qa/verify-phase-i-demo-restore.php` | PASS; integrity and row counts match across 26 tables | Synthetic SQLite only; does not verify a production MySQL backup |
 | `phase-i-demo.ps1` caller environment restoration | PASS | Sentinel APP/DB values were restored after setup; server retained isolated SQLite settings |
 | PowerShell parser for `phase-i-demo.ps1` | PASS | After process identity and environment restoration changes |
-| `git diff --check` | PASS (latest run) | Current worktree includes an uncommitted QA script change and docs updates |
+| `git diff --check` | PASS | Verified on the pre-commit diff; committed branch is clean |
 
 The prior additive MySQL schema change created `user_access_events`, added account flags, and added nullable booking-resource snapshots. This review applied migration 000017, which only created the new empty `booking_drafts` table; its row count is 0. No existing table row was updated/deleted, and no fixture seed or historical snapshot backfill was run. Existing booking pivot snapshot columns remain null; no historical values were inferred from current Master Data.
 
@@ -48,7 +48,7 @@ No real user accounts or credentials were entered. The isolated Senior demo help
 
 ## Code and UX review
 
-Ponytail and Ponytail Review instructions were available and used for code/change review. Impeccable and UI/UX Pro Max skills were present; `.impeccable.md` supplied the established institutional design context. Impeccable’s referenced `references/pro-rules.md` is absent. UI/UX Pro Max guidance for this review emphasized keyboard focus, complete keyboard navigation, visible submit feedback, and responsive form inspection. The Vue-specific lookup returned no match on the first query and three relevant form/component/testing entries on a single broader retry. No UI source was changed; browser observations below are prior isolated-browser evidence, not a fresh browser run in this review.
+Ponytail and Ponytail Review instructions were available and used for code/change review. Impeccable and UI/UX Pro Max skills were present; `.impeccable.md` supplied the established institutional design context. Impeccable’s referenced `references/pro-rules.md` is absent. UI/UX Pro Max guidance for this review emphasized keyboard focus, complete keyboard navigation, visible submit feedback, and responsive form inspection. The Vue-specific lookup returned no match on the first query and three relevant form/component/testing entries on a single broader retry. UI source changed to add Draft controls; browser observations below are prior isolated-browser evidence, not a fresh browser run in this review.
 
 ## Product gap decisions
 
@@ -83,4 +83,4 @@ Ponytail and Ponytail Review instructions were available and used for code/chang
 
 ## Verification refresh — 12 October 2026
 
-After Draft implementation, the full PHP suite passed on the working branch with the default test configuration and again with `SESSION_ENCRYPT=true` (182 tests / 1,640 assertions each). `npm run build` passed (686 modules), Pint passed, Composer and npm audits reported no advisories/vulnerabilities, migration 000017 is `Ran` with 20 total applied migrations, and the registered-route export/download scan returned no matches. The only runtime database change was creation of the empty Draft table; its row count is 0. Browser workflows were not run. The feature commit and resulting HEAD will be recorded after final review.
+After Draft implementation, the full PHP suite passed on the working branch with the default test configuration and again with `SESSION_ENCRYPT=true` (182 tests / 1,640 assertions each). `npm run build` passed (686 modules), Pint passed, Composer and npm audits reported no advisories/vulnerabilities, migration 000017 is `Ran` with 20 total applied migrations, and the registered-route export/download scan returned no matches. The only runtime database change was creation of the empty Draft table; its row count is 0. Browser workflows were not run. The feature commit is `3bef07e` and is pushed to `origin/backend/inertia-foundation`; the branch is clean. Browser workflows remain unverified for this feature.
