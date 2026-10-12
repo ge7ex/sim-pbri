@@ -216,7 +216,8 @@
     "lecturer_to_staff_workflow": "pass_same_synthetic_sqlite_demo_staff_approved_and_history_showed_request",
     "senior_walkthrough": "partial; Admin-led final walkthrough and owner feedback remain",
     "export_source_scan": "0 matching user-facing source terms in resources/js, app, routes",
-    "mysql_encrypted_backup_restore": "pass_AES-256-GCM; isolated temporary schema; exact row counts match across 27 tables; source counts unchanged; temp file/schema deleted"
+    "mysql_encrypted_backup_restore": "pass_AES-256-GCM; isolated temporary schema; exact row counts match across 27 tables; source counts unchanged; temp file/schema deleted",
+    "lecturer_form_accessibility_spot_check": "all visible controls named; 2.4px focus outline; role=status capacity help; over-capacity submit disabled; no request sent; synthetic SQLite only"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false
