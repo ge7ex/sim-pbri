@@ -102,7 +102,7 @@ The earlier QA snapshot was based on `47552b4`. This follow-up found and fixed t
 - The approval confirmation dialog was reached, but the browser-control bridge timed out while handling it. A read-only query of the temporary SQLite demo still showed one Approved and one Pending fixture; this run did not record a new approval and the approval click was not retried.
 - Demo Cleanup confirmed port 8766 was closed, then removed the isolated TEMP SQLite directory.
 
-No source code or MySQL data changed during this follow-up. Full screen-reader coverage, keyboard/error/loading coverage across every role journey, and the source-complete requirements matrix remain open. The Staff approval feedback defect was fixed in commit `bebd6de` and verified in the browser and feature suite (189 tests / 1,700 assertions). The Senior Review and Real Pilot verdicts remain **NOT YET READY**.
+That earlier follow-up changed no source code or MySQL data. In the subsequent approval-feedback slice, the Staff review page and its feature test were changed and committed as `bebd6de`; browser and feature-suite verification passed (189 tests / 1,700 assertions). Full screen-reader coverage, keyboard/error/loading coverage across every role journey, and the source-complete requirements matrix remain open. The Senior Review and Real Pilot verdicts remain **NOT YET READY**.
 
 ### Follow-up QA — 12 October 2026
 

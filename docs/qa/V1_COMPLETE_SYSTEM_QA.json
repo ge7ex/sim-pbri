@@ -261,6 +261,10 @@
     "composer_audit": "not_run_auto_review_rejected_429",
     "npm_audit": "not_rerun_lockfiles_unchanged",
     "browser": {
+      "admin_post_login_csrf": "pass_duplicate_email_request_after_login_without_hard_reload_returned_validation_not_419",
+      "duplicate_email_validation": "pass_thai_message_aria_invalid_true_describedby_resolves",
+      "admin_report": "pass_approved_usage_and_admin_only_financial_statistics_visible",
+      "staff_login": "pass_synthetic_demo_staff_login",
       "staff_approval_confirmation": "pass_native_confirmation_accepted_POST_302_visible_role_status_queue_empty_approved_history",
       "staff_approval_responsive": "pass_390px_no_horizontal_overflow",
       "page_errors": "none",
