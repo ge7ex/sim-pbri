@@ -2,14 +2,14 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Application HEAD under review: `d439e6f393eb513f23b24a13a034e34344275d3e` (the current diff only changes QA scripts and evidence documents)
+Application HEAD under review: `cd74be642f682d147b92eaaa8d6e23dc2e4b91f3` (verified 12 October 2026; branch equals origin; worktree clean)
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite, production frontend build, dependency audits, schema migration status and demo setup/cleanup pass. The original `project_sim_flow_v12.md` and full gap analyses remain unavailable; a secondary 60-check HTML report was found, but its code evidence is from `d2e84e7`, so traceability is not source-complete. This turn's computer-use tool rejected localhost navigation under its browser policy; no alternate browser path was attempted. Browser approval, the 1440/1024/768/390 matrix and whole-system role walkthrough remain incomplete.
+The feature suite, production frontend build, dependency audits, schema migration status and demo setup/cleanup pass. The original `project_sim_flow_v12.md` and full gap analyses remain unavailable; a secondary 60-check HTML report was found, but its code evidence is from `d2e84e7`, so traceability is not source-complete. The current review reran automated checks but did not perform browser workflows. Browser approval, the 1440/1024/768/390 matrix and whole-system role walkthrough remain incomplete.
 
 ## Fresh automated evidence
 
@@ -47,7 +47,7 @@ No real user accounts or credentials were entered. The isolated Senior demo help
 
 ## Code and UX review
 
-Ponytail and Ponytail Review instructions were available and applied to the QA helper patch. Impeccable and UI/UX Pro Max skill files were available; `.impeccable.md` supplied the existing institutional design context. The Impeccable referenced `references/pro-rules.md` file was absent. UI/UX Pro Max local guidance confirmed the responsive checks should include horizontal overflow, long-token wrapping and clipped content. No visual source changes were made this turn because the browser tool blocked localhost navigation, so none of these guidance points are claimed as screen-verified.
+Ponytail and Ponytail Review instructions were available and used for code/change review. Impeccable and UI/UX Pro Max skills were present; `.impeccable.md` supplied the established institutional design context. Impeccable’s referenced `references/pro-rules.md` is absent. UI/UX Pro Max guidance for this review emphasized keyboard focus, complete keyboard navigation, visible submit feedback, and responsive form inspection. The Vue-specific lookup returned no match on the first query and three relevant form/component/testing entries on a single broader retry. No UI source was changed; browser observations below are prior isolated-browser evidence, not a fresh browser run in this review.
 
 ## Product gap decisions
 
@@ -78,3 +78,8 @@ Ponytail and Ponytail Review instructions were available and applied to the QA h
 - This turn did not write to MySQL. The only database command was `migrate:status`.
 - No `main` merge or Export feature was performed.
 - The current Phase I implementation is committed and pushed on `backend/inertia-foundation`; no `main` merge was made.
+
+
+## Verification refresh — 12 October 2026
+
+The full PHP feature suite was rerun on HEAD `cd74be642f682d147b92eaaa8d6e23dc2e4b91f3` with the default test configuration and again with `SESSION_ENCRYPT=true`; both runs passed (175 tests / 1,595 assertions). `npm run build` passed (686 modules), Pint passed, Composer and npm audits reported no advisories/vulnerabilities, all 19 migrations were `Ran`, and the registered-route export/download scan returned no matches. Runtime database verification was read-only; no migration or data mutation was run in this refresh. Git HEAD equals `origin/backend/inertia-foundation`, and the working tree was clean at the start of this review.

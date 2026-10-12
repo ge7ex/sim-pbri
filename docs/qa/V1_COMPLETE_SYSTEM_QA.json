@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "d439e6f393eb513f23b24a13a034e34344275d3e",
+  "application_head": "cd74be642f682d147b92eaaa8d6e23dc2e4b91f3",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -47,5 +47,6 @@
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY."
   ],
+  "verification_refresh": {"date":"2026-10-12","head":"cd74be642f682d147b92eaaa8d6e23dc2e4b91f3","branch_matches_origin":true,"working_tree_clean_at_start":true,"test_default":{"status":"pass","tests":175,"assertions":1595},"test_session_encrypt_true":{"status":"pass","tests":175,"assertions":1595},"build_modules":686,"pint":"pass","composer_audit":"0 advisories","npm_audit":"0 vulnerabilities","migrations":"19 ran; read-only check","export_download_route_scan":"0 matches","browser_workflows_repeated":false,"runtime_database_mutation":false},
   "secrets_or_personal_data_included": false
 }
