@@ -110,7 +110,9 @@
     "staff_review_responsive_390": "pass_no_horizontal_overflow",
     "admin_resources_responsive": "pass_no_horizontal_overflow_1440_1024_768_390",
     "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
-    "keyboard_screen_reader": "not_verified_end_to_end"
+    "keyboard_screen_reader": "not_verified_end_to_end",
+    "admin_resource_validation_error_accessibility": "pass_server_validation_role_alert_aria_invalid_and_describedby_target_resolves",
+    "keyboard_focus_spot_check": "pass_sampled_tab_focus_outline_2_4px_solid; not_full_keyboard_or_screen_reader_run"
   },
   "database_changes": {
     "runtime_mysql_migrations_applied": true,
@@ -156,8 +158,8 @@
     "export_download_route_scan": "0 matches; rerun",
     "browser_workflows_repeated": true,
     "runtime_mysql_changes_this_slice": false,
-    "implementation_commit": "4cddbafc0baa9b5da7674b430e7391486516d5ec",
-    "branch_ahead_of_origin_before_push": 2,
+    "implementation_commit": "cafca43",
+    "branch_ahead_of_origin_before_push": 1,
     "admin_dimension_forms": "browser verified on isolated synthetic SQLite",
     "staff_approval": "browser verified; pending queue moved to approved history",
     "lecturer_draft": "browser save and resume verified at Bangkok 09:00-11:00",

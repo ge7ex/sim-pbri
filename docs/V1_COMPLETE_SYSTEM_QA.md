@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Code under QA: `4cddbafc0baa9b5da7674b430e7391486516d5ec`; QA documentation follows in this branch.
+Code under QA: `cafca43` (`fix: announce validation errors accessibly`); QA documentation follows in this branch.
 
 ## Verdict
 
@@ -24,7 +24,7 @@ The feature suite, frontend build, scoped style check, dependency audits, migrat
 | `php artisan migrate:status` | 21 migrations Ran | Read-only status inspection; no migration executed |
 | Export/download route scan | 0 URI/name matches | Registered route list; source scan finds only TypeScript `export` syntax |
 | MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Validated `DATE(DATE_ADD(..., INTERVAL 7 HOUR))`; no table queried or changed |
-| `git diff --check` | PASS | QA documentation patch |
+| `git diff --check` | PASS | Source and QA documentation patch |
 
 ## Isolated browser evidence
 
@@ -41,6 +41,8 @@ All flows used the temporary synthetic SQLite demo created by `scripts/qa/phase-
 | Lecturer booking form overflow | PASS at 1440, 1024, 768, and 390 CSS px | Measured document width did not exceed viewport |
 | Staff review overflow | PASS at 390 CSS px | Staff 768/1024/1440 not freshly measured |
 | Admin resources overflow | PASS at 1440/1024/768/390 | Document/body scroll widths matched viewport at each size; tables scroll within labeled regions |
+| Admin resource validation error | PASS: server-side missing-name error renders as alert; field has `aria-invalid=true` and `aria-describedby` resolves to that alert | One Admin field verified in synthetic SQLite browser |
+| Keyboard focus spot check | PASS: sampled Tab stop showed a 2.4px solid outline | Spot check only; not a complete keyboard or screen-reader run |
 | Lecturer cancel | PASS: confirmation accepted; booking changed to cancelled and status history recorded | Synthetic SQLite fixture |
 | Keyboard/screen reader | Not verified end-to-end | Source labels and test evidence exist; no full assistive-tech run |
 

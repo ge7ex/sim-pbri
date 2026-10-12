@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Latest implementation commit: `4cddbafc0baa9b5da7674b430e7391486516d5ec` on `backend/inertia-foundation`; QA documentation is being finalized in a follow-up commit.
+Latest implementation commit: `cafca43` on `backend/inertia-foundation`; QA documentation is being finalized in a follow-up commit.
 
 ## Evidence boundary
 
