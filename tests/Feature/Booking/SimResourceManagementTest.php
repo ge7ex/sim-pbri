@@ -9,6 +9,7 @@ use App\Modules\SimResource\Enums\SimResourceKind;
 use App\Modules\SimResource\Enums\SimResourceStatus;
 use App\Modules\SimResource\Models\SimResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 final class SimResourceManagementTest extends TestCase
@@ -87,6 +88,58 @@ final class SimResourceManagementTest extends TestCase
         $this->assertSame('3', $resource->floor);
         $this->assertSame(24, $resource->capacity);
         $this->assertSame($staff->id, $resource->responsible_staff_user_id);
+    }
+
+    public function test_room_dimensions_are_optional_pair_and_store_metric_precision(): void
+    {
+        [$admin] = $this->context(UserRole::Admin);
+
+        $this->actingAs($admin)->post('/app/resources', [
+            ...$this->payload(), 'room_width_m' => '5.25', 'room_length_m' => '6.00',
+        ])->assertRedirect();
+
+        $resource = SimResource::query()->where('name', 'SIM Lab ใหม่')->sole();
+        $this->assertSame('5.25', $resource->room_width_m);
+        $this->assertSame('6.00', $resource->room_length_m);
+    }
+
+    public function test_lecturer_booking_room_selection_receives_saved_dimensions(): void
+    {
+        [$lecturer, $room] = $this->context(UserRole::Lecturer);
+        $room->update(['room_width_m' => '5.25', 'room_length_m' => '6.00']);
+
+        $this->actingAs($lecturer)->get('/app/bookings/create')->assertOk()->assertInertia(fn (Assert $page) => $page
+            ->where('resources.0.room_width_m', '5.25')
+            ->where('resources.0.room_length_m', '6.00'));
+    }
+
+    public function test_room_dimensions_must_be_both_present_and_within_supported_range(): void
+    {
+        [$admin] = $this->context(UserRole::Admin);
+
+        $this->actingAs($admin)->from('/app/resources')->post('/app/resources', [
+            ...$this->payload(), 'room_width_m' => '5.25',
+        ])->assertSessionHasErrors('room_length_m');
+
+        $this->actingAs($admin)->from('/app/resources')->post('/app/resources', [
+            ...$this->payload(), 'room_width_m' => '0', 'room_length_m' => '900',
+        ])->assertSessionHasErrors(['room_width_m', 'room_length_m']);
+
+        $this->assertDatabaseMissing('sim_resources', ['name' => 'SIM Lab ใหม่']);
+    }
+
+    public function test_converting_a_room_to_equipment_clears_room_dimensions(): void
+    {
+        [$admin, $room] = $this->context(UserRole::Admin);
+        $room->update(['room_width_m' => '5.25', 'room_length_m' => '6.00']);
+
+        $this->actingAs($admin)->put('/app/resources/'.$room->id, [
+            ...$this->payload(), 'kind' => SimResourceKind::Equipment->value, 'status' => SimResourceStatus::Ready->value,
+            'capacity' => null, 'room_width_m' => '5.25', 'room_length_m' => '6.00',
+        ])->assertRedirect();
+
+        $this->assertNull($room->refresh()->room_width_m);
+        $this->assertNull($room->room_length_m);
     }
 
     public function test_responsible_person_must_be_staff_in_the_admins_college(): void

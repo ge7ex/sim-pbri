@@ -19,6 +19,8 @@ interface ResourceItem {
     building: string | null;
     floor: string | null;
     capacity: number | null;
+    room_width_m: string | null;
+    room_length_m: string | null;
 }
 
 interface CourseItem { id: number; code: string | null; name: string }
@@ -83,6 +85,10 @@ const recommendedEquipment = computed(() => equipment.value.filter((item) => rec
 const additionalEquipment = computed(() => equipment.value.filter((item) => !recommendedEquipmentIds.value.has(item.id)));
 const unavailableRecommended = computed(() => (selectedScenario.value?.recommended_resources ?? [])
     .filter((item) => item.kind === 'equipment' && item.status !== 'ready'));
+function roomArea(room: ResourceItem): string {
+    if (room.room_width_m === null || room.room_length_m === null) return 'ไม่ระบุ';
+    return `${(Number(room.room_width_m) * Number(room.room_length_m)).toFixed(2)} ตร.ม.`;
+}
 
 const form = useForm({
     course_id: null as number | null,
@@ -359,7 +365,7 @@ function addCustomEquipment(): void {
                         </div>
                         <div class="room-card-content">
                             <div class="room-card-heading"><div><h3>{{ visibleRoom.name }}</h3><p>{{ visibleRoom.description || 'ห้องปฏิบัติการ Simulation ของหน่วยงาน' }}</p></div><span class="room-status" :class="{ ready: roomSelectable(visibleRoom) }">{{ roomStatusLabel(visibleRoom) }}</span></div>
-                            <dl class="room-meta-grid"><div><dt>อาคาร / ชั้น</dt><dd>{{ [visibleRoom.building, visibleRoom.floor ? `ชั้น ${visibleRoom.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' }}</dd></div><div><dt>ความจุ</dt><dd>{{ visibleRoom.capacity === null ? 'ยังไม่กำหนด' : `${visibleRoom.capacity} คน` }}</dd></div><div><dt>ตำแหน่ง</dt><dd>{{ visibleRoom.location || 'ไม่ระบุ' }}</dd></div></dl>
+                            <dl class="room-meta-grid"><div><dt>อาคาร / ชั้น</dt><dd>{{ [visibleRoom.building, visibleRoom.floor ? `ชั้น ${visibleRoom.floor}` : null].filter(Boolean).join(' / ') || 'ไม่ระบุ' }}</dd></div><div><dt>ความจุ</dt><dd>{{ visibleRoom.capacity === null ? 'ยังไม่กำหนด' : `${visibleRoom.capacity} คน` }}</dd></div><div><dt>ตำแหน่ง</dt><dd>{{ visibleRoom.location || 'ไม่ระบุ' }}</dd></div><div><dt>พื้นที่</dt><dd>{{ roomArea(visibleRoom) }}</dd></div></dl>
                             <p class="room-availability" role="status">{{ availabilityLabel(visibleRoom) }}</p>
                             <button class="button-primary room-select-button" type="button" :disabled="!roomSelectable(visibleRoom)" @click="chooseRoom(visibleRoom)">เลือกห้องนี้</button>
                         </div>

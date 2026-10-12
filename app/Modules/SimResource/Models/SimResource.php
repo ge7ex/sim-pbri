@@ -28,6 +28,8 @@ final class SimResource extends Model
         'building',
         'floor',
         'capacity',
+        'room_width_m',
+        'room_length_m',
         'responsible_staff_user_id',
         'image_path',
     ];
@@ -79,6 +81,8 @@ final class SimResource extends Model
             'quantity_total' => 'integer',
             'is_exclusive' => 'boolean',
             'capacity' => 'integer',
+            'room_width_m' => 'decimal:2',
+            'room_length_m' => 'decimal:2',
             'responsible_staff_user_id' => 'integer',
         ];
     }

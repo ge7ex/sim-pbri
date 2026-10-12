@@ -44,6 +44,8 @@ final class UpdateSimResourceAction
                 $data['building'] = null;
                 $data['floor'] = null;
                 $data['capacity'] = null;
+                $data['room_width_m'] = null;
+                $data['room_length_m'] = null;
                 $data['responsible_staff_user_id'] = null;
             }
 

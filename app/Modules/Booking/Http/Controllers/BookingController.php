@@ -59,6 +59,8 @@ final class BookingController extends Controller
                 'building',
                 'floor',
                 'capacity',
+                'room_width_m',
+                'room_length_m',
                 'image_path',
             ]);
 

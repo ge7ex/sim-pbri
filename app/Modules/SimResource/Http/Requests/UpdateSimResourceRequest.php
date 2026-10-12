@@ -40,6 +40,8 @@ final class UpdateSimResourceRequest extends FormRequest
             'building' => ['exclude_unless:kind,room', 'nullable', 'string', 'max:120'],
             'floor' => ['exclude_unless:kind,room', 'nullable', 'string', 'max:64'],
             'capacity' => ['exclude_unless:kind,room', 'nullable', 'integer', 'min:1', 'max:10000'],
+            'room_width_m' => ['exclude_unless:kind,room', 'nullable', 'required_with:room_length_m', 'numeric', 'decimal:0,2', 'min:0.01', 'max:500'],
+            'room_length_m' => ['exclude_unless:kind,room', 'nullable', 'required_with:room_width_m', 'numeric', 'decimal:0,2', 'min:0.01', 'max:500'],
             'responsible_staff_user_id' => [
                 'exclude_unless:kind,room', 'nullable', 'integer',
                 Rule::exists('users', 'id')->where(fn ($query) => $query
