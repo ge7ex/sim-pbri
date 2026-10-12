@@ -2,14 +2,14 @@
 
 Date: 12 October 2026
 Branch: `backend/inertia-foundation`
-Code under QA: `2332b11` (`fix: close mobile navigation on escape`), pushed to `origin/backend/inertia-foundation`.
+Code under QA: `a306551` (`docs: record current MySQL readiness evidence`), pushed to `origin/backend/inertia-foundation`.
 
 ## Verdict
 
 **FULL V1 READY FOR SENIOR REVIEW: NOT YET READY.**
 **REAL PILOT READY: NOT YET READY.**
 
-The feature suite and frontend build pass on `2332b11`; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
+The feature suite and frontend build pass on the current branch HEAD `a306551`; the route list contains no Export/download endpoints. The original `project_sim_flow_v12.md` and full gap analysis remain unavailable, so requirements traceability is incomplete. Synthetic browser coverage includes Admin responsive forms and Staff approval, rejection, queue empty state, report privacy, a full Lecturer Draft-to-Pending-to-Staff-approval workflow, plus a mobile-menu Escape fix. End-to-end keyboard/screen-reader and zero/error/loading checks across all role journeys remain outstanding.
 
 ## Automated evidence refreshed on 12 October 2026
 
@@ -22,7 +22,8 @@ The feature suite and frontend build pass on `2332b11`; the route list contains 
 | `composer audit --no-interaction` | No security advisories | Fresh 12 Oct 2026 check |
 | `npm audit --no-fund` | 0 vulnerabilities | Fresh 12 Oct 2026 check |
 | `php artisan migrate:status --no-ansi` | 21 Ran, 0 Pending | Fresh read-only status inspection on 12 Oct; no migration executed and no application rows queried |
-| Current MySQL aggregate row counts | PASS: users=3, colleges=1, sim_resources=1, bookings=0, simulator_assets=0, booking_drafts=0 | Read-only counts only; no record contents or mutations |
+| Current MySQL aggregate row counts | PASS: users=3, colleges=1, sim_resources=1, bookings=0, simulator_assets=0, booking_drafts=0 | Aggregate counts only; no record contents queried |
+| Temporary MySQL encrypted backup/restore drill | PASS: AES-256-GCM encrypted dump (41,058 bytes), authenticated decrypt, restore into a newly created isolated schema, exact row counts matched across 27 tables, and source `sim_pbri` row counts matched before/after | User-authorized local one-time drill; encrypted file and temporary schema removed; does not verify institutional production backup policy, scheduled backups, permissions, or disaster recovery |
 | Export/download source and route scan | PASS: 0 user-facing source matches and 0 route matches across 51 registered routes | `resources/js`, `app`, and `routes` scanned for download, Thai Export labels, and CSV/XLSX/PDF export terms; registered URI/name scan |
 | MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Prior 12 Oct check; literal-only `DATE_ADD`; no table queried or changed |
 | `git diff --check` | PASS | Source and QA documentation patch |
@@ -60,14 +61,14 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 - A literal-only `SELECT` through the configured MySQL connection validated the MySQL `DATE_ADD` expression without querying app tables. SQL aggregation against real booking rows was not run in this check.
 - Owner confirmed Drafts persist until the owner submits or deletes them; there is no automatic expiry.
 - Owner directed dimensions remain hidden from every page, including Admin. Schema and values are preserved; Admin and booking Inertia props omit dimensions. No schema migration/data change was made for this decision.
-- MySQL migrations 000017/000018 were previously applied; current read-only status lists 21 migrations as Ran. No MySQL reset, fixture, backfill, or write occurred in this QA slice.
+- MySQL migrations 000017/000018 were previously applied; fresh status lists 21 migrations as Ran. The authorized backup/restore drill created and dropped only a uniquely named temporary schema; no application rows or source schema objects in `sim_pbri` were modified. Exact source row counts matched before and after. No reset, fixtures, or backfill occurred.
 - The original v12 requirements file remains unavailable. The secondary 60-check report is an older analytical aid, not an authoritative substitute.
 
 ## Remaining gates
 
 1. Obtain `project_sim_flow_v12.md` or an approved full requirements source and reconcile the traceability matrix.
 2. Complete end-to-end keyboard/screen-reader and zero/error/loading checks across remaining role journeys. Mobile Escape close/focus return now passes; the remaining matrix is not complete.
-3. Verify the approved production MySQL backup/restore process; the existing isolated restore drill covers SQLite only.
+3. Verify the institution-approved backup schedule, access controls, retention, off-host copy, and recovery-time objectives. A one-time local MySQL encrypted restore drill passed, but does not establish production operational readiness.
 4. Complete the final Admin-led Senior walkthrough and owner acceptance before marking a Senior Review Candidate or real Pilot ready. Lecturer-to-Staff booking handoff now passes in the isolated demo.
 
 No Export feature was enabled, `main` was not merged, no production deployment occurred, and no real Master Data was invented or seeded.

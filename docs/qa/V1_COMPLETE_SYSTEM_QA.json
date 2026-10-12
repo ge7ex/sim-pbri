@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "branch": "backend/inertia-foundation",
-  "application_head": "2332b11855c4a8bb5d1c798cf1036bbfe1ad28d8",
+  "application_head": "a306551822c990e6000e2aa25dc35e6904803722",
   "verdict": {
     "full_v1_ready_for_senior_review": false,
     "real_pilot_ready": false
@@ -163,11 +163,11 @@
   "limitations": [
     "Original project_sim_flow_v12.md and complete gap analysis unavailable; traceability is not source-complete.",
     "The MySQL date-grouping expression was validated with a literal-only SELECT; SQL aggregation over actual MySQL booking rows was not exercised.",
-    "Production backup/restore process is not verified; prior restore check covered synthetic SQLite only.",
     "Senior review candidate verdict remains NOT YET READY.",
     "Real Pilot remains NOT YET READY.",
     "End-to-end keyboard/screen-reader and complete cross-role zero/error/loading browser checks remain incomplete; the 390px mobile-menu Escape/focus-return path, sampled focus, and one server validation path passed.",
-    "Admin-led final Senior walkthrough and owner feedback remain incomplete; the same-run Lecturer-to-Staff workflow passed in synthetic SQLite."
+    "Admin-led final Senior walkthrough and owner feedback remain incomplete; the same-run Lecturer-to-Staff workflow passed in synthetic SQLite.",
+    "A user-authorized temporary local MySQL AES-256-GCM backup/restore drill passed for exact row counts across 27 tables; source counts were unchanged and temporary artifacts were deleted. Institution-approved production schedule, off-host retention, access control and recovery targets remain unverified."
   ],
   "verification_refresh": {
     "date": "2026-10-12",
@@ -194,9 +194,9 @@
     "runtime_migrations": "fresh read-only migrate:status; all 21 Ran, 0 pending; no migration executed",
     "export_download_route_scan": "0 matches among 51 registered routes",
     "browser_workflows_repeated": true,
-    "runtime_mysql_changes_this_slice": false,
-    "implementation_commit": "2332b11",
-    "branch_ahead_of_origin_before_push": 1,
+    "runtime_mysql_changes_this_slice": "temporary restore-test schema created and dropped; source application schema/data unchanged",
+    "implementation_commit": "a306551",
+    "branch_ahead_of_origin_before_push": 0,
     "admin_dimension_forms": "browser verified on isolated synthetic SQLite",
     "staff_approval": "browser verified; pending queue moved to approved history",
     "lecturer_draft": "saved_and_resumed_2026-10-16_09:00-11:00_Bangkok; submitted_as_pending; draft_removed_on_success",
@@ -206,7 +206,7 @@
     "demo_cleanup": "pass; port 8766 closed and TEMP demo removed",
     "admin_responsive": "pass_no_overflow_1440_1024_768_390",
     "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
-    "application_head": "2332b11855c4a8bb5d1c798cf1036bbfe1ad28d8",
+    "application_head": "a306551822c990e6000e2aa25dc35e6904803722",
     "branch_ahead_after_push": 0,
     "full_suite_after_mobile_escape_fix": "187 passed / 1672 assertions; guarded sqlite :memory:",
     "mobile_menu_escape": "390px: aria-expanded=false, focus returned to toggle, focus-visible true",
@@ -215,7 +215,8 @@
     "runbook_timezone_and_migration_facts": "updated to Asia/Bangkok booking/report semantics and 21 migration read-only QA snapshot",
     "lecturer_to_staff_workflow": "pass_same_synthetic_sqlite_demo_staff_approved_and_history_showed_request",
     "senior_walkthrough": "partial; Admin-led final walkthrough and owner feedback remain",
-    "export_source_scan": "0 matching user-facing source terms in resources/js, app, routes"
+    "export_source_scan": "0 matching user-facing source terms in resources/js, app, routes",
+    "mysql_encrypted_backup_restore": "pass_AES-256-GCM; isolated temporary schema; exact row counts match across 27 tables; source counts unchanged; temp file/schema deleted"
   },
   "secrets_or_personal_data_included": false,
   "candidate_uncommitted": false

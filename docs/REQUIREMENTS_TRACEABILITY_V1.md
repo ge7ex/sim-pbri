@@ -1,7 +1,7 @@
 # SIM PBRI V1 Requirements Traceability — working baseline
 
 Date: 12 October 2026
-Application branch/implementation commit: `backend/inertia-foundation` / `2332b11855c4a8bb5d1c798cf1036bbfe1ad28d8`. Original v12 source remains unavailable.
+Application branch/implementation commit: `backend/inertia-foundation` / `a306551822c990e6000e2aa25dc35e6904803722`. Original v12 source remains unavailable.
 
 ## Source note
 

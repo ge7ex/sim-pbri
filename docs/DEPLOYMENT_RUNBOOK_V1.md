@@ -104,7 +104,7 @@ Laravel exposes `/up` as a liveness endpoint. It does not prove that MySQL, stor
 - For a failed deployment, stop traffic or enter the approved maintenance procedure, capture logs and migration status, and contact the database/change owner.
 - Prefer a code forward-fix when the schema is additive and compatible. Restore database data only when an approved incident decision identifies the exact backup and target; first restore into an isolated database and verify it.
 - Do not restore the synthetic SQLite demo into MySQL. Do not restore over the user's current database as a routine deployment rollback.
-- The isolated SQLite backup/restore script verifies demo-file integrity and row counts only. A production MySQL backup/restore drill is still **NOT VERIFIED**.
+- The isolated SQLite script verifies demo-file integrity and row counts. A one-time user-authorized local MySQL encrypted backup/restore drill passed on 12 Oct 2026, but the institution-approved production backup process remains **NOT VERIFIED**.
 
 ## 8. Verified versus open
 
