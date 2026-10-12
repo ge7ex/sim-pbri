@@ -240,7 +240,7 @@ onBeforeUnmount(() => window.removeEventListener('pagehide', clearOnPageHide));
                     <div v-else class="actions"><button class="secondary" type="button" @click="editUser(user)">แก้ไขบัญชี</button><button v-if="user.id !== page.props.auth.user.id" class="secondary" type="button" @click="startPasswordReset(user)">ตั้งรหัสผ่านใหม่</button></div>
                 </article>
             </div>
-            <p v-else class="panel empty">ยังไม่มีบัญชีในหน่วยงานนี้</p>
+            <p v-else class="panel empty" role="status">ยังไม่มีบัญชีในหน่วยงานนี้</p>
             <nav v-if="users.last_page > 1" class="pagination" aria-label="หน้ารายการบัญชี"><Link v-if="users.prev_page_url" :href="users.prev_page_url" rel="prev">หน้าก่อน</Link><Link v-if="users.next_page_url" :href="users.next_page_url" rel="next">หน้าถัดไป</Link></nav>
         </section>
     </AppLayout>
