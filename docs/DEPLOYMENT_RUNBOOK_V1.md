@@ -6,13 +6,13 @@ Status: **Preparation only — not an authorization to deploy.** No production h
 
 Do not deploy to a real pilot until the College owner has approved:
 
-- the exact V1 requirements and remaining Draft / room-dimension behavior;
-- the institutional timezone and operating hours;
+- the exact V1 requirements and remaining operating-hours / manual special-case review policy;
+- the institution's operating hours and any approved local-time exceptions;
 - authorized pilot users, first-Admin bootstrap, and private credential delivery;
 - the target hostname, HTTPS termination, reverse-proxy behavior, and cookie policy;
 - database backup, restore, migration window, monitoring, retention, and rollback/forward-fix owner.
 
-The application currently hardcodes `config('app.timezone')` to UTC. Booking fields accept local `datetime-local` values, and the frontend formats timestamps in the browser timezone. A deployment timezone change can reinterpret existing timestamp values. Resolve the time model in code and test it against the approved policy before pilot data is entered.
+The application keeps persisted timestamps and the global `config('app.timezone')` in UTC. Booking input/display, calendar day grouping, booking filters, and report date boundaries use the owner-confirmed `Asia/Bangkok` timezone. Existing timestamp values were not converted. This behavior has focused automated and isolated QA evidence; other timestamp surfaces, institution operating hours, and manual in-class/out-of-class/special-case review policy still need owner/pilot validation before real data is entered.
 
 ## 2. Build and release inputs
 
@@ -108,6 +108,6 @@ Laravel exposes `/up` as a liveness endpoint. It does not prove that MySQL, stor
 
 ## 8. Verified versus open
 
-Verified locally: the application builds; automated feature tests use guarded SQLite `:memory:`; local MySQL reports 19 migrations as `Ran`; demo setup/cleanup and a synthetic SQLite restore check pass. The latest MySQL command used for this inventory was read-only `migrate:status`.
+Verified locally in the 12 October 2026 QA snapshot: the application builds; automated feature tests use guarded SQLite `:memory:`; read-only `migrate:status` reported 21 migrations as `Ran`; demo setup/cleanup and a synthetic SQLite restore check passed. The migration count is an environment snapshot, not a deployment target or instruction to migrate.
 
-Not verified: target deployment, proxy/TLS configuration, production account privileges, production session encryption/cookie behavior, timezone correctness, real MySQL backup/restore, log monitoring/retention, storage backup, owner acceptance, real master data, pilot accounts, full browser matrix, and Senior sign-off.
+Not verified: target deployment, proxy/TLS configuration, production account privileges, production session encryption/cookie behavior, timezone fit outside the tested booking/report paths, operating-hours/manual review policy, real MySQL backup/restore, log monitoring/retention, storage backup, owner acceptance, real master data, pilot accounts, full browser matrix, and Senior sign-off.

@@ -58,7 +58,7 @@ function logout(): void {
 <template>
     <div class="app-shell" lang="th">
         <a class="app-skip-link" href="#app-content">ข้ามไปเนื้อหา</a>
-        <aside class="app-sidebar" aria-label="เมนูระบบ">
+        <aside class="app-sidebar" aria-label="เมนูระบบ" @keydown.esc="menuOpen && closeMenu()">
             <div class="app-mobile-row">
                 <Link class="app-brand" href="/app">
                     <span class="app-brand-mark">SIM</span>
@@ -66,7 +66,7 @@ function logout(): void {
                 </Link>
                 <button ref="menuToggle" class="app-menu-toggle" type="button" :aria-expanded="menuOpen" aria-controls="app-navigation" @click="menuOpen = !menuOpen">{{ menuOpen ? 'ปิดเมนู' : 'เมนู' }}</button>
             </div>
-            <nav id="app-navigation" class="app-nav" :class="{ 'is-open': menuOpen }" aria-label="งานในระบบ" @keydown.esc="closeMenu">
+            <nav id="app-navigation" class="app-nav" :class="{ 'is-open': menuOpen }" aria-label="งานในระบบ">
                 <div v-for="section in sections" :key="section.key" class="app-nav-section" role="group" :aria-labelledby="`nav-section-${section.key}`">
                     <p :id="`nav-section-${section.key}`" class="app-nav-section-label">{{ section.label }}</p>
                     <ul class="app-nav-list"><li v-for="item in section.items" :key="item.href">
