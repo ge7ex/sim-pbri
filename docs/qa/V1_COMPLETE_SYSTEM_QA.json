@@ -11,7 +11,9 @@
       "status": "pass",
       "tests": 187,
       "assertions": 1672,
-      "database": "guarded sqlite :memory:"
+      "database": "guarded sqlite :memory:",
+      "runner": "Direct PHPUnit runner with Composer autoload preload; complete tests/ tree; SQLite :memory: and explicit PHPUnit environment",
+      "refreshed_on": "2026-10-12"
     },
     "php_artisan_test_session_encrypt_true": {
       "status": "pass",
@@ -22,19 +24,23 @@
     },
     "npm_run_build": {
       "status": "pass",
-      "modules": 686
+      "modules": 686,
+      "refreshed_on": "2026-10-12"
     },
     "pint_test_dirty": {
       "status": "pass",
-      "scope": "changed PHP files only"
+      "scope": "changed PHP files only",
+      "refreshed_on": "2026-10-12"
     },
     "composer_audit": {
       "status": "pass",
-      "advisories": 0
+      "advisories": 0,
+      "refreshed_on": "2026-10-12"
     },
     "npm_audit": {
       "status": "pass",
-      "vulnerabilities": 0
+      "vulnerabilities": 0,
+      "refreshed_on": "2026-10-12"
     },
     "runtime_migrations": {
       "status": "pass",

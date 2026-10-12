@@ -15,12 +15,12 @@ The feature suite and frontend build pass on `2332b11`; the route list contains 
 
 | Check | Result | Scope / limit |
 |---|---|---|
-| `php artisan test --no-ansi` | 187 passed / 1,672 assertions | Guarded SQLite `:memory:` only |
+| Full PHPUnit suite via direct runner | PASS: 187 tests / 1,672 assertions | SQLite `:memory:`; explicit PHPUnit environment; Composer autoload preloaded because Artisan bootstrap path was not accepted in this sandbox; Laravel storage isolated in a unique temporary workspace directory and removed after run |
 | Same suite with `SESSION_ENCRYPT=true` | 187 passed / 1,672 assertions | Prior 12 Oct QA snapshot; guarded SQLite `:memory:`; not rerun at `2332b11` |
-| `npm run build` | PASS, 686 modules | Production frontend compilation |
-| Scoped `php vendor/bin/pint --test --dirty` | PASS | Prior 12 Oct QA snapshot; no PHP changed in this slice |
-| `composer audit --no-interaction` | No advisories | Prior 12 Oct QA snapshot; lockfile unchanged in this slice |
-| `npm audit --no-fund` | 0 vulnerabilities | Prior 12 Oct QA snapshot; lockfile unchanged in this slice |
+| `npm run build` | PASS, 686 modules | Fresh production frontend compilation on 12 Oct 2026 |
+| `php vendor/bin/pint --test --dirty` | PASS | Fresh 12 Oct 2026 check |
+| `composer audit --no-interaction` | No security advisories | Fresh 12 Oct 2026 check |
+| `npm audit --no-fund` | 0 vulnerabilities | Fresh 12 Oct 2026 check |
 | `php artisan migrate:status --no-ansi` | 21 Ran, 0 Pending | Fresh read-only status inspection on 12 Oct; no migration executed and no application rows queried |
 | Export/download source and route scan | PASS: 0 user-facing source matches and 0 route matches across 51 registered routes | `resources/js`, `app`, and `routes` scanned for download, Thai Export labels, and CSV/XLSX/PDF export terms; registered URI/name scan |
 | MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Prior 12 Oct check; literal-only `DATE_ADD`; no table queried or changed |
