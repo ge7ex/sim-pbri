@@ -59,7 +59,7 @@ function submit(): void {
                         :aria-invalid="Boolean(form.errors.email)"
                         :aria-describedby="form.errors.email ? 'email-error' : undefined"
                     >
-                    <small v-if="form.errors.email" id="email-error" class="login-error">
+                    <small v-if="form.errors.email" id="email-error" class="login-error" role="alert">
                         {{ form.errors.email }}
                     </small>
                 </label>
@@ -75,7 +75,7 @@ function submit(): void {
                         :aria-invalid="Boolean(form.errors.password)"
                         :aria-describedby="form.errors.password ? 'password-error' : undefined"
                     >
-                    <small v-if="form.errors.password" id="password-error" class="login-error">
+                    <small v-if="form.errors.password" id="password-error" class="login-error" role="alert">
                         {{ form.errors.password }}
                     </small>
                 </label>

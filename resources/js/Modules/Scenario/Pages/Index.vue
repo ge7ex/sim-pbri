@@ -213,10 +213,10 @@ function statusLabel(status: EquipmentItem['status']): string {
             <section class="panel">
                 <SectionHeader title="เพิ่มรายวิชา" />
                 <form class="stack" @submit.prevent="submitCourse">
-                    <label>รหัสรายวิชา<input v-model="courseForm.code" maxlength="64" placeholder="เช่น NUR-201"></label>
-                    <label>ชื่อรายวิชา<input v-model="courseForm.name" required maxlength="255"></label>
-                    <p v-if="courseForm.errors.code" class="error">{{ courseForm.errors.code }}</p>
-                    <p v-if="courseForm.errors.name" class="error">{{ courseForm.errors.name }}</p>
+                    <label>รหัสรายวิชา<input id="course-create-code" v-model="courseForm.code" maxlength="64" placeholder="เช่น NUR-201" :aria-invalid="Boolean(courseForm.errors.code)" :aria-describedby="courseForm.errors.code ? 'course-create-code-error' : undefined"></label>
+                    <p v-if="courseForm.errors.code" id="course-create-code-error" class="error">{{ courseForm.errors.code }}</p>
+                    <label>ชื่อรายวิชา<input id="course-create-name" v-model="courseForm.name" required maxlength="255" :aria-invalid="Boolean(courseForm.errors.name)" :aria-describedby="courseForm.errors.name ? 'course-create-name-error' : undefined"></label>
+                    <p v-if="courseForm.errors.name" id="course-create-name-error" class="error">{{ courseForm.errors.name }}</p>
                     <button type="submit" :disabled="courseForm.processing">เพิ่มรายวิชา</button>
                 </form>
             </section>
@@ -225,18 +225,18 @@ function statusLabel(status: EquipmentItem['status']): string {
                 <SectionHeader title="เพิ่มสถานการณ์จำลอง" />
                 <form class="stack" @submit.prevent="submitScenario">
                     <label>รายวิชาของสถานการณ์
-                        <select v-model="scenarioForm.course_id" required>
+                        <select id="scenario-create-course" v-model="scenarioForm.course_id" required :aria-invalid="Boolean(scenarioForm.errors.course_id)" :aria-describedby="scenarioForm.errors.course_id ? 'scenario-create-course-error' : undefined">
                             <option :value="null" disabled>เลือกรายวิชา</option>
                             <option v-for="course in courses" :key="course.id" :value="course.id">
                                 {{ course.code ? course.code + ' · ' : '' }}{{ course.name }}
                             </option>
                         </select>
                     </label>
-                    <label>ชื่อ Scenario<input v-model="scenarioForm.name" required maxlength="255"></label>
+                    <p v-if="scenarioForm.errors.course_id" id="scenario-create-course-error" class="error">{{ scenarioForm.errors.course_id }}</p>
+                    <label>ชื่อ Scenario<input id="scenario-create-name" v-model="scenarioForm.name" required maxlength="255" :aria-invalid="Boolean(scenarioForm.errors.name)" :aria-describedby="scenarioForm.errors.name ? 'scenario-create-name-error' : undefined"></label>
                     <label>รายละเอียด<textarea v-model="scenarioForm.description" rows="3" maxlength="2000"></textarea></label>
                     <label class="checkbox"><input v-model="scenarioForm.is_active" type="checkbox"> เปิดให้แนะนำในการจอง</label>
-                    <p v-if="scenarioForm.errors.course_id" class="error">{{ scenarioForm.errors.course_id }}</p>
-                    <p v-if="scenarioForm.errors.name" class="error">{{ scenarioForm.errors.name }}</p>
+                    <p v-if="scenarioForm.errors.name" id="scenario-create-name-error" class="error">{{ scenarioForm.errors.name }}</p>
                     <button type="submit" :disabled="scenarioForm.processing || courses.length === 0">เพิ่ม Scenario</button>
                 </form>
             </section>

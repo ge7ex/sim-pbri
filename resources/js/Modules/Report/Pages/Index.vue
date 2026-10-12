@@ -41,8 +41,8 @@ function resetFilters(): void { router.get('/app/reports'); }
             <SectionHeader id="report-filter-title" title="ช่วงเวลาที่ต้องการดู" description="นับคำขอที่มีช่วงเวลาใช้งานทับซ้อนกับวันที่เลือก สูงสุด 366 วัน" />
             <form @submit.prevent="applyFilters" :aria-busy="form.processing">
                 <div class="filter-primary">
-                    <label>จากวันที่<input v-model="form.date_from" type="date" required><small v-if="form.errors.date_from" class="error">{{ form.errors.date_from }}</small></label>
-                    <label>ถึงวันที่<input v-model="form.date_to" type="date" required><small v-if="form.errors.date_to" class="error">{{ form.errors.date_to }}</small></label>
+                    <label>จากวันที่<input id="report-date-from" v-model="form.date_from" type="date" required :aria-invalid="Boolean(form.errors.date_from)" :aria-describedby="form.errors.date_from ? 'report-date-from-error' : undefined"><small v-if="form.errors.date_from" id="report-date-from-error" class="error">{{ form.errors.date_from }}</small></label>
+                    <label>ถึงวันที่<input id="report-date-to" v-model="form.date_to" type="date" required :aria-invalid="Boolean(form.errors.date_to)" :aria-describedby="form.errors.date_to ? 'report-date-to-error' : undefined"><small v-if="form.errors.date_to" id="report-date-to-error" class="error">{{ form.errors.date_to }}</small></label>
                     <label>สถานะคำขอ<select v-model="form.status"><option :value="null">ทุกสถานะ</option><option value="pending">รอตรวจสอบ</option><option value="approved">อนุมัติ</option><option value="rejected">ไม่อนุมัติ</option><option value="cancelled">ยกเลิก</option></select></label>
                     <div class="filter-actions"><button class="button-primary" type="submit" :disabled="form.processing">{{ form.processing ? 'กำลังแสดงผล...' : 'แสดงผล' }}</button><button class="button-secondary" type="button" :disabled="form.processing" @click="resetFilters">เดือนปัจจุบัน</button></div>
                 </div>
@@ -52,7 +52,7 @@ function resetFilters(): void { router.get('/app/reports'); }
                     <label>รายวิชา<select v-model="form.course_id" @change="form.scenario_id = null"><option :value="null">ทุกรายวิชา</option><option v-for="item in filterOptions.courses" :key="item.id" :value="item.id">{{ item.name }}</option></select></label>
                     <label>สถานการณ์<select v-model="form.scenario_id"><option :value="null">ทุกสถานการณ์</option><option v-for="item in scenarios" :key="item.id" :value="item.id">{{ item.name }}</option></select></label>
                 </div></details>
-                <ul v-if="filterErrors.length" class="error filter-errors" role="alert"><li v-for="error in filterErrors" :key="error">{{ error }}</li></ul>
+                <ul v-if="filterErrors.length" class="error filter-errors" role="alert" aria-live="assertive"><li v-for="error in filterErrors" :key="error">{{ error }}</li></ul>
             </form>
         </section>
 
