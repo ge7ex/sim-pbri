@@ -20,7 +20,9 @@
       "tests": 187,
       "assertions": 1672,
       "database": "guarded sqlite :memory:",
-      "session_encrypt": "true"
+      "session_encrypt": "true",
+      "refreshed_on": "2026-10-12",
+      "runner": "Direct PHPUnit runner with Composer autoload preload; complete tests/ tree; SQLite :memory: and explicit PHPUnit environment"
     },
     "npm_run_build": {
       "status": "pass",

@@ -16,7 +16,7 @@ The feature suite and frontend build pass on `2332b11`; the route list contains 
 | Check | Result | Scope / limit |
 |---|---|---|
 | Full PHPUnit suite via direct runner | PASS: 187 tests / 1,672 assertions | SQLite `:memory:`; explicit PHPUnit environment; Composer autoload preloaded because Artisan bootstrap path was not accepted in this sandbox; Laravel storage isolated in a unique temporary workspace directory and removed after run |
-| Same suite with `SESSION_ENCRYPT=true` | 187 passed / 1,672 assertions | Prior 12 Oct QA snapshot; guarded SQLite `:memory:`; not rerun at `2332b11` |
+| Full suite with `SESSION_ENCRYPT=true` | PASS: 187 tests / 1,672 assertions | Fresh direct PHPUnit run on 12 Oct; SQLite `:memory:`; explicit PHPUnit environment; Composer autoload preloaded; isolated temporary storage removed after run |
 | `npm run build` | PASS, 686 modules | Fresh production frontend compilation on 12 Oct 2026 |
 | `php vendor/bin/pint --test --dirty` | PASS | Fresh 12 Oct 2026 check |
 | `composer audit --no-interaction` | No security advisories | Fresh 12 Oct 2026 check |
