@@ -40,7 +40,8 @@
       "status": "pass",
       "applied": 21,
       "last_migration": "2026_10_12_000018_add_room_dimensions",
-      "mode": "read-only status inspection"
+      "mode": "fresh read-only status inspection; no migration executed",
+      "pending": 0
     },
     "export_route_scan": {
       "status": "pass",
@@ -166,7 +167,7 @@
     "git_diff_check": "pass",
     "timezone": "Asia/Bangkok confirmed by owner; UTC persisted; no timestamp conversion",
     "room_dimensions": "hidden from all UI and omitted from Admin/booking page props; schema and values preserved",
-    "runtime_migrations": "21 ran; read-only migrate:status rerun",
+    "runtime_migrations": "fresh read-only migrate:status; all 21 Ran, 0 pending; no migration executed",
     "export_download_route_scan": "0 matches among 51 registered routes",
     "browser_workflows_repeated": true,
     "runtime_mysql_changes_this_slice": false,

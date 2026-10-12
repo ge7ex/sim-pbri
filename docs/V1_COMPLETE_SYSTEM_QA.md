@@ -21,7 +21,7 @@ The feature suite and frontend build pass on `2332b11`; the route list contains 
 | Scoped `php vendor/bin/pint --test --dirty` | PASS | Prior 12 Oct QA snapshot; no PHP changed in this slice |
 | `composer audit --no-interaction` | No advisories | Prior 12 Oct QA snapshot; lockfile unchanged in this slice |
 | `npm audit --no-fund` | 0 vulnerabilities | Prior 12 Oct QA snapshot; lockfile unchanged in this slice |
-| `php artisan migrate:status` | 21 migrations Ran | Prior 12 Oct read-only status inspection; not rerun in this slice |
+| `php artisan migrate:status --no-ansi` | 21 Ran, 0 Pending | Fresh read-only status inspection on 12 Oct; no migration executed and no application rows queried |
 | Export/download source and route scan | PASS: 0 user-facing source matches and 0 route matches across 51 registered routes | `resources/js`, `app`, and `routes` scanned for download, Thai Export labels, and CSV/XLSX/PDF export terms; registered URI/name scan |
 | MySQL report date SQL check | PASS: literal-only SELECT returned `2026-10-16` | Prior 12 Oct check; literal-only `DATE_ADD`; no table queried or changed |
 | `git diff --check` | PASS | Source and QA documentation patch |
