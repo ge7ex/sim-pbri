@@ -19,6 +19,7 @@
     "isolated_sqlite_restore": { "status": "pass", "integrity": "ok", "matching_table_row_counts": 26, "production_mysql": "not_verified" },
     "powershell_parser": { "status": "pass", "file": "scripts/qa/phase-i-demo.ps1" },
     "php_restore_script_lint": { "status": "pass", "file": "scripts/qa/verify-phase-i-demo-restore.php" },
+    "deployment_runbook": { "status": "drafted_from_source", "target_host_tested": false, "deployment_authorized": false },
     "git_diff_check": { "status": "pass" }
   },
   "browser": {

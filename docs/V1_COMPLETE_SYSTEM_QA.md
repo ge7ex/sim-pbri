@@ -21,6 +21,7 @@ The feature suite, production frontend build, dependency audits, schema migratio
 | `composer audit --no-interaction` | No advisories | Current lockfile |
 | `npm audit --no-fund` | 0 vulnerabilities | Current lockfile |
 | `php artisan migrate:status` | All 19 migrations applied | Local runtime MySQL; migrations 000015/000016 applied additively |
+| Deployment runbook | Drafted from repository config/migrations | Not exercised on a target host; no deployment authorization |
 | `php artisan route:list --json` + source label scan | No Export/download routes or UI labels found | Does not claim an exhaustive semantic review of every third-party dependency |
 | `php scripts/qa/verify-phase-i-demo-restore.php` | PASS; integrity and row counts match across 26 tables | Synthetic SQLite only; does not verify a production MySQL backup |
 | `phase-i-demo.ps1` caller environment restoration | PASS | Sentinel APP/DB values were restored after setup; server retained isolated SQLite settings |
