@@ -75,3 +75,27 @@ The first Playwright wrapper was blocked by WSL and `npx --no-install` found no 
 4. Rehearse the complete repeatable Admin/Staff/Lecturer walkthrough before issuing the Senior Review Candidate. Senior feedback is gathered after delivery, per the active handoff; owner acceptance remains a Real Pilot gate, not a prerequisite for Senior review. The Lecturer-to-Staff booking handoff already passes in isolated demo data.
 
 No Export feature was enabled, `main` was not merged, no production deployment occurred, and no real Master Data was invented or seeded.
+## Follow-up verification on current branch HEAD 883b744
+
+The tested product-code baseline remains `47552b4`; `git diff --name-only 47552b4..HEAD` shows only README and documentation files, with no application source changes. This follow-up adds fresh evidence from the current checkout without changing product behavior.
+
+| Check | Result | Scope / limit |
+|---|---|---|
+| `php artisan test --no-ansi` | PASS: 187 tests / 1,672 assertions | Current branch; DatabaseSafety tests confirm test DB overrides that point to MySQL, a SQLite file, or a database URL are rejected. |
+| `npm run build` | PASS: 686 modules | Production Vite build on current branch. |
+| `php vendor/bin/pint --test --dirty` | PASS | Check-only formatter run. |
+| `composer audit --no-interaction` | No security advisories | Current Composer lockfile. |
+| `npm audit --no-fund` | 0 vulnerabilities | Current npm lockfile. |
+| Laravel route inventory | 46 registered routes; 0 route URI/name matches for Export or download | User-facing Export source/route scan remains separately bounded; JS module `export` declarations are not Export features. |
+
+### Additional isolated browser checks
+
+- Admin report date range beyond 366 days displayed the field error “กรุณาเลือกช่วงวันที่ไม่เกิน 366 วัน”; submitting a valid November range with no fixture bookings displayed all zero totals and the report’s no-results messages.
+- Staff could view room/equipment data in read-only mode; the page stated Staff cannot edit. Room dimensions remained absent.
+- Staff navigation exposed no user-management link. Direct GET to `/app/users` returned HTTP 403.
+- Staff reports contained usage statistics but no finance or Export/download text.
+- Keyboard-only tabbing on the Staff review page reached the skip link, navigation, request selector, detail link, approval button and rejection-reason field; focus cycled back to the skip link with no keyboard trap. This was a keyboard spot check, not a full assistive-technology audit.
+- The approval confirmation dialog was reached, but the browser-control bridge timed out while handling it. A read-only query of the temporary SQLite demo still showed one Approved and one Pending fixture; this run did not record a new approval and the approval click was not retried.
+- Demo Cleanup confirmed port 8766 was closed, then removed the isolated TEMP SQLite directory.
+
+No source code or MySQL data changed during this follow-up. Full screen-reader coverage, keyboard/error/loading coverage across every role journey, and the source-complete requirements matrix remain open. The Senior Review and Real Pilot verdicts remain **NOT YET READY**.
