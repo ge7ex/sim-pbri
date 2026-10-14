@@ -53,5 +53,14 @@
     "assertions": 1705,
     "status": "pass"
   },
-  "application_head": "6a914e7c32401880e59c0d2ce3cb75ebe7100a40"
+  "application_head": "6a914e7c32401880e59c0d2ce3cb75ebe7100a40",
+  "resume_checkpoint": {
+    "handoff": "docs/I4_I5_RESUME_CHECKPOINT_2026-10-14.md",
+    "i4": "in_progress",
+    "r2_complete": true,
+    "r1_fixed": true,
+    "i5": "not_started",
+    "evidence": "docs/qa/I4_RESUME_VERIFICATION_2026-10-14.json",
+    "application_head": "01ac3c686fa79f0a34f74a240bb7652d7d8a02a5"
+  }
 }

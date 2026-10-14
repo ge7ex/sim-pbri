@@ -1,0 +1,63 @@
+{
+  "r2": {
+    "status": "complete",
+    "roles": 3,
+    "viewports": [
+      1440,
+      1024,
+      768,
+      390
+    ],
+    "chrome_samples": 12,
+    "commit": "01ac3c6"
+  },
+  "r0": "complete",
+  "r4": {
+    "full_tests": 190,
+    "assertions": 1705,
+    "build": "pass",
+    "export_route_matches": 0,
+    "encrypted_exit": 0,
+    "pint": "pass",
+    "modules": 686,
+    "registered_routes": 51,
+    "fresh_dependency_audits": false,
+    "normal_exit": 0,
+    "status": "partial"
+  },
+  "date": "2026-10-14",
+  "runtime_mysql_rows_mutated": false,
+  "r3": {
+    "canonical_finding_count": 1,
+    "full_scan_sealed": false,
+    "status": "partial",
+    "original_target": "6a914e7",
+    "scan_id": "42a2fa7a-05b1-44cb-9018-4394ab93913f",
+    "remaining_paths": 18
+  },
+  "i5": "not_started",
+  "deployed": false,
+  "r1": {
+    "controller_path": true,
+    "draft_atomicity_verified": true,
+    "effective_isolation": "REPEATABLE-READ",
+    "status": "complete",
+    "green_cases": 6,
+    "disposable_schemas_removed": true,
+    "red_conflict_failures": 3,
+    "commit": "c4502ce"
+  },
+  "branch": "codex/i4-gpt-classic-handoff-2026-10-14",
+  "application_head": "01ac3c686fa79f0a34f74a240bb7652d7d8a02a5",
+  "main_merged": false,
+  "stop": {
+    "remaining_percent": 10,
+    "reason": "owner_quota_threshold"
+  },
+  "i4": "in_progress",
+  "cleanup": {
+    "demo_removed": true,
+    "port_8766_closed": true
+  },
+  "r5": "not_started"
+}

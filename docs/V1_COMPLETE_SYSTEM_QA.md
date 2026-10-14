@@ -139,3 +139,7 @@ I-3 is complete for the agreed handoff scope: 220 page samples, 110 Tab walks, 1
 ## I-4 checkpoint — 14 October 2026
 
 At application commit6a914e7, full suites190 tests/1705 assertions each (normal and encrypted sessions), build686 modules, dependency audits0 advisories, SQLite restore27 matching tables, existing isolated MySQL create/recall concurrency and read-only21 Ran/0 Pending pass. I-4 remains IN PROGRESS: scenario/controller stale-snapshot candidate and full security coverage remain open. Stopped at owner quota threshold (7% remaining). See I4_GPT_CLASSIC_HANDOFF_2026-10-14.md and docs/qa/I4_VERIFICATION.json. Demo removed/port8766 closed. No main merge/Export/push; Full V1/Real Pilot NOT YET READY.
+
+## R0–R4 resume checkpoint — 14 October 2026
+
+R1 confirmed original Scenario/outertransaction race red in3 collision modes and green all6 after c4502ce; Draft atomicity preserved. Full190tests/1705assertions pass twice. R2 CSS-only01ac3c6 passes12 Chrome role/viewport/keyboard samples and build686modules. Registered51routes contain0 Export matches. SameSecurityscan42a2fa7a now holds accepted model and1 validated originalsource finding with latergreenfix, but coverage remainspartial (18paths). I4 INPROGRESS; I5 NOTSTARTED; Senior/RealPilot NOTREADY. Stop at10% primaryremaining; demo cleaned. See I4_I5_RESUME_CHECKPOINT_2026-10-14.md; historical entries above remain historical.

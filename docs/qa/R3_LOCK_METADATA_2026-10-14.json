@@ -1,0 +1,8 @@
+{
+  "npm_packages": 202,
+  "npm_missing_integrity": 0,
+  "npm_non_https_resolved": 0,
+  "composer_packages": 112,
+  "composer_non_https_dist": 0,
+  "status": "metadata_inspection_only_not_complete_supply_chain_audit"
+}
