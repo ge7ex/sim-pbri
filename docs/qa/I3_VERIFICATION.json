@@ -274,7 +274,7 @@
   "export_added": false,
   "main_merged": false,
   "pushed": false,
-  "cleanup": "recorded_in_I4_after_restore_check",
+  "cleanup": "pass_demo_removed_port_8766_closed_2026-10-14",
   "formal_i3": "complete_agreed_handoff_scope_native_speech_optional_not_verified",
   "chrome_accessibility_tree": {
     "status": "pass",

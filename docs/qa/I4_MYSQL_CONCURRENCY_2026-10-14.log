@@ -1,0 +1,31 @@
+{
+    "driver": "mysql",
+    "isolation": "REPEATABLE READ",
+    "results": [
+        {
+            "flow": "create",
+            "competing_booking_committed": true,
+            "tested_writer": {
+                "accepted": false,
+                "validation_fields": [
+                    "simulator_asset_id"
+                ]
+            },
+            "blocking_bookings": 1,
+            "passed": true
+        },
+        {
+            "flow": "recall",
+            "competing_booking_committed": true,
+            "tested_writer": {
+                "accepted": false,
+                "validation_fields": [
+                    "simulator_asset_id"
+                ]
+            },
+            "blocking_bookings": 1,
+            "passed": true
+        }
+    ]
+}
+Disposable integration database removed.

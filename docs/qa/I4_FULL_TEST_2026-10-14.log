@@ -1,0 +1,258 @@
+
+   PASS  Tests\Unit\DatabaseSafetyTest
+  ✓ only memory sqlite is accepted                                                                               0.01s  
+  ✓ runtime mysql file sqlite and url overrides are rejected
+
+   PASS  Tests\Unit\ExampleTest
+  ✓ that true is true                                                                                            0.01s  
+
+   PASS  Tests\Feature\Access\UserManagementTest
+  ✓ admin creates user in own college and receives uncached temporary password once                              0.58s  
+  ✓ non admin roles cannot list or manage users                                                                  0.06s  
+  ✓ user management page shares the current post login csrf token                                                0.06s  
+  ✓ duplicate email error is localized for the admin form                                                        0.03s  
+  ✓ admin user list and mutations are scoped to own college                                                      0.05s  
+  ✓ admin can update other account and records non secret audit details                                          0.03s  
+  ✓ admin cannot demote or deactivate self or last active admin                                                  0.03s  
+  ✓ inactive account cannot sign in and existing session is logged out                                           0.25s  
+  ✓ temporary password requires change and user can set a strong password                                        0.03s  
+  ✓ admin password reset reauthenticates and returns a one time secret                                           0.03s  
+  ✓ first admin can be bootstrapped interactively without printing password                                      0.03s  
+  ✓ bootstrap refuses to create a second first admin                                                             0.02s  
+  ✓ console recovery resets only existing active admin and forces change                                         0.02s  
+
+   PASS  Tests\Feature\Auth\AuthenticationTest
+  ✓ login screen can be rendered                                                                                 0.02s  
+  ✓ user without access profile authenticates and returns home                                                   0.02s  
+  ✓ authorized user authenticates and enters app                                                                 0.02s  
+  ✓ user cannot authenticate with invalid password                                                               0.23s  
+  ✓ login attempts are rate limited                                                                              1.08s  
+  ✓ authenticated user can logout                                                                                0.02s  
+  ✓ guest cannot call logout route                                                                               0.02s  
+
+   PASS  Tests\Feature\Authorization\AccessProfileTest
+  ✓ guest is redirected from authenticated app                                                                   0.02s  
+  ✓ authenticated user without access profile is forbidden                                                       0.02s  
+  ✓ unknown role is forbidden                                                                                    0.02s  
+  ✓ authorized personnel with college can access app with data set "lecturer"                                    0.02s  
+  ✓ authorized personnel with college can access app with data set "staff"                                       0.02s  
+  ✓ authorized personnel with college can access app with data set "admin"                                       0.02s  
+
+   PASS  Tests\Feature\Authorization\PermissionTest
+  ✓ lecturer can use booking workspace but cannot review or view resources                                       0.05s  
+  ✓ staff can review bookings and view resources read only                                                       0.03s  
+  ✓ admin can review bookings and manage resources                                                               0.03s  
+  ✓ dashboard shares only permissions granted to role                                                            0.02s  
+  ✓ forbidden page has thai explanation landmark and safe return link                                            0.02s  
+
+   PASS  Tests\Feature\Booking\BookingDraftTest
+  ✓ lecturer can save incomplete draft without creating a booking                                                0.03s  
+  ✓ draft create update and delete are limited to the owner                                                      0.03s  
+  ✓ owner can resume draft and only receives their own draft list                                                0.03s  
+  ✓ draft rejects foreign college resource ids                                                                   0.02s  
+  ✓ user cannot create more than ten drafts                                                                      0.02s  
+  ✓ submitting a saved draft revalidates creates pending booking and deletes draft                               0.04s  
+  ✓ failed submission keeps draft and does not reserve resources                                                 0.03s  
+
+   PASS  Tests\Feature\Booking\BookingFoundationTest
+  ✓ booking persists organizational and actor boundaries                                                         0.02s  
+  ✓ only pending and approved statuses block the calendar                                                        0.02s  
+  ✓ status transition records actor reason and previous state                                                    0.02s  
+
+   PASS  Tests\Feature\Booking\BookingPrivacyTest
+  ✓ calendar redacts cross college booking details                                                               0.03s  
+  ✓ booking detail from other college is forbidden                                                               0.02s  
+  ✓ booking history is scoped to viewers college                                                                 0.03s  
+
+   PASS  Tests\Feature\Booking\BookingRelationPrivacyTest
+  ✓ foreign hydrated relations are hidden without changing booking history                                       0.07s  
+
+   PASS  Tests\Feature\Booking\BookingStateTransitionTest
+  ✓ staff can approve pending booking and audit is recorded                                                      0.04s  
+  ✓ approval rechecks current resource capacity                                                                  0.03s  
+  ✓ approval is blocked when room capacity drops below the requested participant count                           0.03s  
+  ✓ recall is blocked when room is no longer ready or large enough                                               0.03s  
+  ✓ rejection requires reason and is audited                                                                     0.03s  
+  ✓ recall requires confirmation and reason                                                                      0.03s  
+  ✓ recalling rejected booking fails when slot was taken                                                         0.03s  
+  ✓ requester can cancel own pending booking but other lecturer cannot                                           0.03s  
+
+   PASS  Tests\Feature\Booking\BookingTimezoneFilterTest
+  ✓ booking list and calendar filters use bangkok day boundaries                                                 0.02s  
+
+   PASS  Tests\Feature\Booking\CreateBookingTest
+  ✓ lecturer can create pending booking for ready resource in own college                                        0.03s  
+  ✓ client cannot override college or audit actor while setting display name                                     0.03s  
+  ✓ booking keeps editable requester separate from immutable actor and snapshots room                            0.03s  
+  ✓ booking requires valid requester display name                                                                0.02s  
+  ✓ booking requires exactly one room                                                                            0.02s  
+  ✓ booking requires participant count and phone and enforces room capacity                                      0.03s  
+  ✓ legacy room without capacity is readable but cannot be booked                                                0.02s  
+  ✓ formatted thai phone is accepted and preserved                                                               0.02s  
+  ✓ room availability only returns eligible own college ids and boolean status                                   0.04s  
+  ✓ non ready resource cannot be booked                                                                          0.02s  
+  ✓ resource from another college cannot be booked                                                               0.02s  
+  ✓ pending booking blocks overlapping exclusive resource                                                        0.03s  
+  ✓ nonexclusive resource allows overlap within quantity capacity                                                0.03s  
+  ✓ nonexclusive resource rejects overlap above quantity capacity                                                0.03s  
+  ✓ touching intervals do not overlap                                                                            0.03s  
+
+   PASS  Tests\Feature\Booking\FillParticipantCountTest
+  ✓ staff can fill missing count and approve with atomic audit                                                   0.04s  
+  ✓ admin can fill rejected count then recall                                                                    0.03s  
+  ✓ lecturer and foreign staff cannot amend or read foreign booking                                              0.03s  
+  ✓ invalid counts and reasons do not mutate or audit                                                            0.05s  
+  ✓ existing count and cancelled booking cannot be overwritten                                                   0.02s  
+  ✓ legacy booking is readable and room eligibility is rechecked                                                 0.03s  
+  ✓ action rechecks current record when caller has stale null count                                              0.02s  
+  ✓ filling approved legacy booking preserves approval and occupancy                                             0.03s  
+
+   PASS  Tests\Feature\Booking\ResourceDeletionTest
+  ✓ admin can delete unused room and equipment and missing resource is 404                                       0.06s  
+  ✓ authorization prevents all resource and file mutations                                                       0.03s  
+  ✓ every booking status blocks deletion and preserves history and image                                         0.03s  
+  ✓ image audit alone protects resource even after photo removed                                                 0.03s  
+  ✓ recommendation dependency is protected                                                                       0.02s  
+  ✓ invalid or foreign private path blocks deletion                                                              0.02s  
+  ✓ eligible private image cleanup runs only after commit                                                        0.02s  
+  ✓ foreign key race is safe and rolls back new dependency                                                       0.03s  
+  ✓ missing eligible image does not prevent unused resource deletion                                             0.03s  
+  ✓ outer rollback preserves resource and private image                                                          0.02s  
+
+   PASS  Tests\Feature\Booking\RoomDisabledTest
+  ✓ admin can close and reopen room without removing metadata photo or history                                   0.05s  
+  ✓ staff lecturer and foreign admin cannot close or reopen room                                                 0.04s  
+  ✓ disabled room is displayed but cannot be booked and reopened room can                                        0.04s  
+  ✓ disabled room blocks approval and recall without altering history                                            0.05s  
+  ✓ disabled is room only and equipment keeps existing statuses                                                  0.04s  
+
+   PASS  Tests\Feature\Booking\RoomImageTest
+  ✓ upload reencodes resizes hides path and records actor                                                        0.30s  
+  ✓ actual png jpeg and webp bytes are supported                                                                 0.05s  
+  ✓ image access requires login and same college including lecturer                                              0.26s  
+  ✓ multipart replace remove and metadata update preserve expected photo                                         0.26s  
+  ✓ unsafe invalid and excessive files are rejected without writes                                               0.05s  
+  ✓ trailing payload is removed and user cannot supply storage path                                              0.03s  
+  ✓ staff foreign admin and equipment cannot upload and conflicting operation is rejected                        0.24s  
+  ✓ database failure cleans new file and rolls back resource                                                     0.03s  
+
+   PASS  Tests\Feature\Booking\ScenarioBookingWorkflowTest
+  ✓ booking accepts a different preferred course and derives recommendations                                     0.04s  
+  ✓ user can omit recommended items and cannot spoof recommendation flags                                        0.03s  
+  ✓ course and scenario must belong to the actor college and scenario must be active                             0.03s  
+  ✓ invalid custom equipment quantity and more than fifty rows are rejected                                      0.04s  
+  ✓ create form lists only own college courses and active scenarios                                              0.03s  
+  ✓ same college staff review sees course scenario and custom equipment                                          0.03s  
+  ✓ historical booking with inactive scenario remains readable                                                   0.03s  
+  ✓ booking detail does not expose cross college related records                                                 0.03s  
+  ✓ staff review shows requester contact only for same college bookings                                          0.03s  
+
+   PASS  Tests\Feature\Booking\SimResourceFoundationTest
+  ✓ only ready resources are bookable                                                                            0.02s  
+  ✓ booking can reserve room and equipment with quantities                                                       0.02s  
+
+   PASS  Tests\Feature\Booking\SimResourceManagementTest
+  ✓ staff can view resources but cannot create or update them                                                    0.02s  
+  ✓ admin can create resource and college is derived from actor                                                  0.02s  
+  ✓ room is forced to single exclusive unit                                                                      0.02s  
+  ✓ admin can assign a same college staff member and save room master data                                       0.03s  
+  ✓ room dimensions are optional pair and store metric precision                                                 0.02s  
+  ✓ room dimensions are not exposed on admin or booking pages                                                    0.03s  
+  ✓ room dimensions must be both present and within supported range                                              0.03s  
+  ✓ converting a room to equipment clears room dimensions                                                        0.02s  
+  ✓ responsible person must be staff in the admins college                                                       0.02s  
+  ✓ admin cannot update a room owned by another college                                                          0.02s  
+  ✓ equipment does not require room only fields                                                                  0.02s  
+  ✓ lecturer cannot view or manage resource master data                                                          0.02s  
+
+   PASS  Tests\Feature\Dashboard\DashboardTest
+  ✓ lecturer counts and recent records are own only and minimal                                                  0.03s  
+  ✓ staff and admin counts include college workflow but never other college                                      0.03s  
+  ✓ empty dashboard and permission boundary                                                                      0.03s  
+  ✓ recent limit and room relationship college scope                                                             0.03s  
+  ✓ foreign scenario is not projected even on a malformed own booking                                            0.03s  
+
+   PASS  Tests\Feature\ExampleTest
+  ✓ the application returns a successful response                                                                0.02s  
+
+   PASS  Tests\Feature\LocalDevUserSeederTest
+  ✓ idempotent seeding uses hashed cast and preserves existing data                                              0.04s  
+  ✓ production guard fires before any database write                                                             0.02s  
+  ✓ missing or short password refuses to seed                                                                    0.02s  
+  ✓ zero or multiple colleges requires selection without creating data                                           0.02s  
+  ✓ explicit existing college resolves ambiguity                                                                 0.02s  
+  ✓ nonexistent explicit college never creates one                                                               0.02s  
+  ✓ invalid college selection refuses to write                                                                   0.02s  
+
+   PASS  Tests\Feature\Report\ReportStatisticsTest
+  ✓ route authorization and zero state                                                                           0.04s  
+  ✓ approved usage quantity participants and clipped overlap                                                     0.03s  
+  ✓ college totals options and malformed relationships are scoped                                                0.04s  
+  ✓ date and status validation and default month                                                                 0.05s  
+  ✓ staff never queries financial columns admin reuses depreciation                                              0.03s  
+  ✓ admin snapshot ignores booking filters and excludes foreign assets and costs                                 0.02s  
+  ✓ local operational date boundaries do not shift with server clock                                             0.02s  
+  ✓ last used timestamps include timezone for the shared booking display                                         0.02s  
+
+   PASS  Tests\Feature\Scenario\ScenarioEquipmentTemplateManagementTest
+  ✓ admin can replace scenario equipment template                                                                0.04s  
+  ✓ staff can view but cannot change equipment template                                                          0.03s  
+  ✓ template rejects room and cross college equipment                                                            0.02s  
+  ✓ template can be cleared                                                                                      0.03s  
+
+   PASS  Tests\Feature\Scenario\ScenarioFoundationTest
+  ✓ course and scenario are scoped through college                                                               0.02s  
+  ✓ scenario can store recommended equipment quantities                                                          0.02s  
+
+   PASS  Tests\Feature\Scenario\ScenarioManagementTest
+  ✓ staff can view management but cannot change master data                                                      0.03s  
+  ✓ lecturer cannot open scenario management                                                                     0.02s  
+  ✓ admin can create course and scenario in own college                                                          0.03s  
+  ✓ admin can update course without changing scenarios or booking history                                        0.03s  
+  ✓ admin can update scenario metadata without changing course recommendations or booking history                0.02s  
+  ✓ staff and lecturer cannot update course or scenario                                                          0.03s  
+  ✓ updates validate course and scenario fields                                                                  0.02s  
+  ✓ admin cannot update course or scenario from another college                                                  0.03s  
+
+   PASS  Tests\Feature\Scenario\ScenarioPreferenceTest
+  ✓ scenario course relation is preference not booking constraint                                                0.02s  
+  ✓ booking can store custom equipment request outside catalog                                                   0.02s  
+
+   PASS  Tests\Feature\Scenario\ScenarioRelationPrivacyTest
+  ✓ recommendation payload excludes foreign resources and non equipment without deleting pivots                  0.04s  
+
+   PASS  Tests\Feature\Simulator\SimulatorBookingTest
+  ✓ booking accepts one active asset and asset remains optional                                                  0.03s  
+  ✓ create form only exposes available own college assets without financial data                                 0.03s  
+  ✓ foreign disabled maintenance and inactive type assets cannot be booked                                       0.04s  
+  ✓ simulator is exclusive for pending and approved bookings even in different rooms                             0.03s  
+  ✓ rejected cancelled and adjacent bookings do not block simulator                                              0.04s  
+  ✓ approval rechecks asset readiness and type activation                                                        0.03s  
+  ✓ approval rechecks foreign college and concurrent simulator conflicts                                         0.03s  
+  ✓ historical asset remains readable without financial information                                              0.04s  
+  ✓ foreign asset relation is not exposed in booking detail or review                                            0.03s  
+  ✓ recall rechecks simulator conflict and readiness before reserving slot                                       0.04s  
+  ✓ scenario type recommendation does not restrict choice of another active asset                                0.03s  
+  ✓ availability is scoped operational and accounts for pending approved and adjacent times                      0.03s  
+  ✓ availability requires authenticated valid booking actor and valid time range                                 0.04s  
+
+   PASS  Tests\Feature\Simulator\SimulatorFoundationTest
+  ✓ type and asset belong to college and status is cast                                                          0.02s  
+  ✓ depreciation is capped and uses calendar years and decimal rounding                                          0.02s  
+
+   PASS  Tests\Feature\Simulator\SimulatorManagementTest
+  ✓ staff sees only own college operational information                                                          0.03s  
+  ✓ staff cannot mutate types assets or maintenance                                                              0.03s  
+  ✓ lecturer cannot access management                                                                            0.02s  
+  ✓ admin can create update and record maintenance with server owned college                                     0.04s  
+  ✓ foreign college mutations are forbidden before payload validation                                            0.03s  
+  ✓ foreign type and invalid financial values are rejected                                                       0.03s  
+  ✓ scenario recommendations are scoped to college and do not grant staff write access                           0.03s  
+  ✓ duplicate type names and asset codes are scoped to each college                                              0.03s  
+  ✓ financial metadata must be complete or entirely absent                                                       0.03s  
+  ✓ type and asset updates record actor and before after values                                                  0.03s  
+  ✓ maintenance history has no update or delete endpoint                                                         0.02s  
+
+  Tests:    190 passed (1705 assertions)
+  Duration: 8.90s
+

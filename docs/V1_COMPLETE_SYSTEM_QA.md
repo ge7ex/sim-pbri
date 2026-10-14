@@ -135,3 +135,7 @@ Source baseline e52282d. PASS: 64 targeted tests / 475 assertions on guarded SQL
 ## I-3 closure — 14 October 2026
 
 I-3 is complete for the agreed handoff scope: 220 page samples, 110 Tab walks, 114 Chrome accessibility-tree samples and targeted 19 tests / 132 assertions pass. Five reproduced defects fixed; see docs/I3_VERIFICATION.md. Native speech is NOT VERIFIED and is additional assurance, not the mandatory label check. Owner instructed proceeding to I-4. Full V1 and Real Pilot remain NOT YET READY pending later gates.
+
+## I-4 checkpoint — 14 October 2026
+
+At application commit6a914e7, full suites190 tests/1705 assertions each (normal and encrypted sessions), build686 modules, dependency audits0 advisories, SQLite restore27 matching tables, existing isolated MySQL create/recall concurrency and read-only21 Ran/0 Pending pass. I-4 remains IN PROGRESS: scenario/controller stale-snapshot candidate and full security coverage remain open. Stopped at owner quota threshold (7% remaining). See I4_GPT_CLASSIC_HANDOFF_2026-10-14.md and docs/qa/I4_VERIFICATION.json. Demo removed/port8766 closed. No main merge/Export/push; Full V1/Real Pilot NOT YET READY.

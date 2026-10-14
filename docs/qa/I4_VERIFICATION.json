@@ -1,0 +1,57 @@
+{
+  "runtime_migrations": {
+    "pending": 0,
+    "ran": 21,
+    "read_only": true
+  },
+  "composer_advisories": 0,
+  "pushed": false,
+  "security": {
+    "coverage": "partial",
+    "candidate": "candidate-booking-scenario-snapshot",
+    "candidate_fixed": false,
+    "later_model_checkpoint_rejected": true,
+    "scan_id": "42a2fa7a-05b1-44cb-9018-4394ab93913f",
+    "completed": false
+  },
+  "build": {
+    "js_gzip_kb": 105.18,
+    "modules": 686,
+    "status": "pass"
+  },
+  "mysql_existing_concurrency": {
+    "disposable_schema_removed": true,
+    "flows": [
+      "create",
+      "recall"
+    ],
+    "scenario_outer_transaction_covered": false,
+    "status": "pass"
+  },
+  "stop_reason": "owner_quota_threshold_remaining_7_percent",
+  "date": "2026-10-14",
+  "main_merged": false,
+  "sqlite_restore": {
+    "matching_tables": 27,
+    "status": "pass"
+  },
+  "full_suite": {
+    "tests": 190,
+    "database": "sqlite :memory:",
+    "assertions": 1705,
+    "status": "pass"
+  },
+  "npm_vulnerabilities": 0,
+  "export_added": false,
+  "i4": "in_progress",
+  "cleanup": {
+    "demo_removed": true,
+    "port_8766_closed": true
+  },
+  "encrypted_session_suite": {
+    "tests": 190,
+    "assertions": 1705,
+    "status": "pass"
+  },
+  "application_head": "6a914e7c32401880e59c0d2ce3cb75ebe7100a40"
+}
