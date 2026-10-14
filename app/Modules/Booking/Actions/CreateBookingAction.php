@@ -55,28 +55,6 @@ final class CreateBookingAction
 
         $startsAt = CarbonImmutable::parse((string) $data['starts_at']);
         $endsAt = CarbonImmutable::parse((string) $data['ends_at']);
-        $recommendedIds = [];
-
-        if (! empty($data['scenario_id'])) {
-            $scenario = Scenario::query()
-                ->whereKey($data['scenario_id'])
-                ->where('is_active', true)
-                ->whereHas('course', fn ($query) => $query->where('college_id', $actor->college_id))
-                ->first();
-
-            if (! $scenario) {
-                throw ValidationException::withMessages([
-                    'scenario_id' => 'สถานการณ์จำลองที่เลือกไม่พร้อมใช้งาน',
-                ]);
-            }
-
-            $recommendedIds = $scenario->recommendedResources()
-                ->where('sim_resources.kind', SimResourceKind::Equipment)
-                ->where('sim_resources.college_id', $actor->college_id)
-                ->pluck('sim_resources.id')
-                ->map(static fn (int $id): int => $id)
-                ->all();
-        }
 
         return DB::transaction(function () use (
             $data,
@@ -85,7 +63,6 @@ final class CreateBookingAction
             $quantities,
             $startsAt,
             $endsAt,
-            $recommendedIds,
         ): Booking {
             $resources = SimResource::query()
                 ->whereIn('id', $resourceIds)
@@ -138,6 +115,30 @@ final class CreateBookingAction
 
             if (! empty($data['simulator_asset_id'])) {
                 $simulator = $this->simulatorLocker->eligible((int) $data['simulator_asset_id'], $actor->college_id);
+            }
+
+            // All inventory mutexes must precede plain reads under REPEATABLE READ.
+            $recommendedIds = [];
+
+            if (! empty($data['scenario_id'])) {
+                $scenario = Scenario::query()
+                    ->whereKey($data['scenario_id'])
+                    ->where('is_active', true)
+                    ->whereHas('course', fn ($query) => $query->where('college_id', $actor->college_id))
+                    ->first();
+
+                if (! $scenario) {
+                    throw ValidationException::withMessages([
+                        'scenario_id' => 'สถานการณ์จำลองที่เลือกไม่พร้อมใช้งาน',
+                    ]);
+                }
+
+                $recommendedIds = $scenario->recommendedResources()
+                    ->where('sim_resources.kind', SimResourceKind::Equipment)
+                    ->where('sim_resources.college_id', $actor->college_id)
+                    ->pluck('sim_resources.id')
+                    ->map(static fn (int $id): int => $id)
+                    ->all();
             }
 
             $this->availabilityResolver->ensureAvailable(
