@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-14",
+  "source_baseline": "e52282d6545f2ae813edafe2ad7dc53d5e006b1b",
+  "branch": "backend/inertia-foundation",
+  "package_verdicts": {
+    "real_pilot": "not_yet_ready",
+    "i1": "done_for_accepted_local_account_scope",
+    "i2": "done_for_accepted_booking_room_review_scope",
+    "full_v1_senior_review": "not_yet_ready"
+  },
+  "automated": {
+    "seconds": 2.61,
+    "session": "array",
+    "cache": "array",
+    "database": "sqlite :memory:",
+    "status": "pass",
+    "storage": "isolated temporary; cleaned",
+    "assertions": 475,
+    "tests": 64,
+    "initial_harness_failure": "missing framework/views; fixed harness directories and reran; no application patch"
+  },
+  "browser": {
+    "i1": {
+      "date": "2026-10-14",
+      "environment": "isolated synthetic SQLite; local Chrome",
+      "checks": [
+        {
+          "name": "admin_login_and_create_lecturer",
+          "status": "pass"
+        },
+        {
+          "name": "one_time_secret_hide",
+          "status": "pass"
+        },
+        {
+          "name": "temporary_login_forces_password_change",
+          "status": "pass"
+        },
+        {
+          "name": "invalid_current_password_preserves_change_gate",
+          "status": "pass"
+        },
+        {
+          "name": "forced_password_rotation_and_dashboard",
+          "status": "pass"
+        },
+        {
+          "name": "new_password_authenticates_second_session",
+          "status": "pass"
+        },
+        {
+          "name": "admin_reset_reauthenticates_and_returns_temporary_secret",
+          "status": "pass"
+        },
+        {
+          "name": "reset_invalidates_existing_user_sessions",
+          "status": "pass"
+        },
+        {
+          "name": "reset_password_requires_rotation_again",
+          "status": "pass"
+        },
+        {
+          "name": "admin_deactivates_account_and_session_expires",
+          "status": "pass"
+        },
+        {
+          "name": "inactive_account_cannot_login",
+          "status": "pass"
+        },
+        {
+          "name": "admin_reactivates_account_and_login_recovers",
+          "status": "pass"
+        },
+        {
+          "name": "admin_self_deactivation_and_role_controls_disabled",
+          "status": "pass"
+        },
+        {
+          "name": "staff_direct_account_route_forbidden",
+          "status": "pass"
+        },
+        {
+          "name": "no_browser_page_errors",
+          "status": "pass"
+        }
+      ],
+      "page_error_count": 0,
+      "status": "pass"
+    },
+    "i2": {
+      "date": "2026-10-14",
+      "environment": "isolated synthetic SQLite; local Chrome",
+      "checks": [
+        {
+          "name": "incomplete_draft_save_reload_and_owner_delete",
+          "status": "pass"
+        },
+        {
+          "name": "complete_draft_save_resume_bangkok_24h",
+          "status": "pass"
+        },
+        {
+          "name": "draft_not_visible_in_staff_review",
+          "status": "pass"
+        },
+        {
+          "name": "draft_does_not_reserve_room_competing_booking_succeeds",
+          "status": "pass"
+        },
+        {
+          "name": "stale_draft_submission_conflict_preserves_draft",
+          "status": "pass"
+        },
+        {
+          "name": "corrected_draft_submits_pending_and_is_removed",
+          "status": "pass"
+        },
+        {
+          "name": "no_browser_page_errors",
+          "status": "pass"
+        }
+      ],
+      "page_error_count": 0,
+      "status": "pass"
+    }
+  },
+  "cleanup": {
+    "temporary_test_storage_removed": true,
+    "temporary_demo_and_credentials_removed": true,
+    "demo_port_8766_closed": true
+  },
+  "boundaries": {
+    "build_rerun": false,
+    "application_source_changed": false,
+    "screen_reader_run": false,
+    "new_packages_installed": false,
+    "mysql_access": false,
+    "simultaneous_mysql_concurrency_run": false
+  },
+  "remaining_packages": [
+    "I-3 full role accessibility/error/loading QA",
+    "I-4 full security/operations/concurrency evidence",
+    "I-5 integrated Senior Review Candidate"
+  ]
+}

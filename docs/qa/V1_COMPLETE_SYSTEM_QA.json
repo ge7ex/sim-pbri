@@ -307,5 +307,20 @@
       "details": "docs/incidents/2026-10-12-cache-clear-during-ui-qa.md"
     },
     "senior_review_candidate": "not_yet_ready"
+  },
+  "verification_i1_i2_2026_10_14": {
+    "source_baseline": "e52282d6545f2ae813edafe2ad7dc53d5e006b1b",
+    "evidence": "docs/qa/I1_I2_VERIFICATION.json",
+    "i1": "done_for_accepted_functional_scope",
+    "i2": "done_for_accepted_functional_scope",
+    "targeted_tests": 64,
+    "assertions": 475,
+    "full_suite_rerun": false,
+    "account_browser_checks": 15,
+    "draft_browser_checks": 7,
+    "mysql_access": false,
+    "application_source_changed": false,
+    "demo_cleanup": "verified_port_closed_temp_demo_removed",
+    "full_v1_ready": false
   }
 }
