@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-14",
+  "source_baseline": "238bf178e171e4151ce64e1b72744be1bc9a0efa",
+  "branch": "backend/inertia-foundation",
+  "source_files": [
+    {
+      "path": "resources/js/Modules/Booking/Pages/Review.vue",
+      "sha256": "a1ff2de667ae1c81824f70d308b8877dc802f03a7b9533b4e8042fe6b2f012dc"
+    },
+    {
+      "path": "resources/js/Modules/Booking/Pages/Index.vue",
+      "sha256": "dfe39c577be78fba6a5d2f9e8756325ce4f26c43b41c1b42d025227a0d95ea5d"
+    },
+    {
+      "path": "resources/js/Modules/Booking/Pages/Calendar.vue",
+      "sha256": "7670449100d821a5fdfcdd5e0c3cd8ade505748df9ab17b59ec225dd0e7c8006"
+    },
+    {
+      "path": "resources/js/Modules/SimResource/Pages/Index.vue",
+      "sha256": "330e869740991ae8e8377c1367846775cec3ea67db2860a63e21f05752b2fadc"
+    },
+    {
+      "path": "resources/css/components.css",
+      "sha256": "f9ea50c30a2d5c3e076e48314fd5dd4a6293a3eb767768e48cde4cd278234c30"
+    },
+    {
+      "path": "resources/views/errors/403.blade.php",
+      "sha256": "1fd7cc04b06bbf92b2e1c228a41d82bd0c76fa20c511fd9b9814e0f6053b62f5"
+    },
+    {
+      "path": "tests/Feature/Authorization/PermissionTest.php",
+      "sha256": "c97295e601ce74bb1923d20abaf30792db398d60bb36f74d76b42f49ef19c0ff"
+    },
+    {
+      "path": "tests/Browser/ReviewLoadingCheck.js",
+      "sha256": "edc6e3c4ebbf9c129a113f6ef31bc5f5327678b20c928150ea06be7469ae3e05"
+    }
+  ],
+  "verdict": {
+    "browser_keyboard_reliability_slice": "verified_for_recorded_cases",
+    "full_v1_senior_review": "not_yet_ready",
+    "real_pilot": "not_yet_ready",
+    "formal_i3": "complete_agreed_handoff_scope_native_speech_optional_not_verified"
+  },
+  "automated": {
+    "pint_check": "pass",
+    "temporary_storage_cleaned": true,
+    "full_suite_rerun": false,
+    "frontend_build": "pass",
+    "assertions": 132,
+    "targeted_php_tests": 19,
+    "database": "forced SQLite :memory:",
+    "app_js_kb": 368.69,
+    "modules": 686,
+    "app_js_gzip_kb": 105.18,
+    "diff_check": "pass"
+  },
+  "matrix": {
+    "samples": 220,
+    "artifact": "docs/qa/I3_BROWSER_MATRIX_2026-10-14.json",
+    "broken_descriptions": 0,
+    "role_samples": {
+      "staff": 84,
+      "lecturer": 44,
+      "admin": 92
+    },
+    "below_44_rounded_mobile_targets": 0,
+    "not_all_possible_expanded_form_or_pagination_states": true,
+    "viewports": [
+      1440,
+      1024,
+      768,
+      390
+    ],
+    "missing_control_names": 0,
+    "unreached_enabled_controls": 0,
+    "data_modes": [
+      "populated_synthetic",
+      "empty_master_data_synthetic_college"
+    ],
+    "overflow_samples": 0,
+    "scored_focus_issues": 0,
+    "keyboard_walks": 110,
+    "native_date_focus": "host outline metrics excluded; report date focus visually checked"
+  },
+  "public_samples": [
+    {
+      "path": "/",
+      "width": 1440,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 1024,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 768,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/login",
+      "width": 1440,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/login",
+      "width": 1024,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/login",
+      "width": 768,
+      "http": 200,
+      "overflow": false
+    },
+    {
+      "path": "/login",
+      "width": 390,
+      "http": 200,
+      "overflow": false
+    }
+  ],
+  "state_checks": [
+    {
+      "name": "invalid_login_error_named_and_recoverable",
+      "status": "pass"
+    },
+    {
+      "name": "admin_create_loading_then_field_error_recovery",
+      "status": "pass"
+    },
+    {
+      "name": "admin_network_failure_safe_alert_and_retry_controls",
+      "status": "pass"
+    },
+    {
+      "name": "lecturer_availability_failure_blocks_submit_and_shows_alert",
+      "status": "pass"
+    }
+  ],
+  "review_and_forbidden": {
+    "date": "2026-10-14",
+    "checks": [
+      {
+        "name": "committed_browser_regression",
+        "status": "pass"
+      },
+      {
+        "name": "403_thai_landmark_safe_return_keyboard",
+        "status": "pass"
+      },
+      {
+        "name": "403_keyboard_return_navigates_home",
+        "status": "pass"
+      }
+    ],
+    "forbidden_viewports": [
+      {
+        "role": "staff",
+        "width": 1440,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "staff",
+        "width": 1024,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "staff",
+        "width": 768,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "staff",
+        "width": 390,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "lecturer",
+        "width": 1440,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "lecturer",
+        "width": 1024,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "lecturer",
+        "width": 768,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      },
+      {
+        "role": "lecturer",
+        "width": 390,
+        "http": 403,
+        "overflow": false,
+        "keyboard_return_link": "pass"
+      }
+    ],
+    "review_loading_regression": [
+      {
+        "action": "approve",
+        "loading": "pass",
+        "duplicate_guard": "pass",
+        "error_recovery": "pass"
+      },
+      {
+        "action": "reject",
+        "loading": "pass",
+        "duplicate_guard": "pass",
+        "error_recovery": "pass"
+      },
+      {
+        "failure": "network",
+        "safe_alert": "pass",
+        "action_recovery": "pass",
+        "mobile_overflow": "none"
+      },
+      {
+        "failure": "http",
+        "safe_alert": "pass",
+        "action_recovery": "pass",
+        "mobile_overflow": "none"
+      }
+    ],
+    "status": "pass"
+  },
+  "approval_focus": {
+    "active_tag": "P",
+    "active_role": "status",
+    "active_text": "อนุมัติคำขอเรียบร้อยแล้ว"
+  },
+  "screen_reader": {
+    "run": false,
+    "reason": "Native computer control unavailable in this session",
+    "remaining_checklist": "docs/I3_SCREEN_READER_CHECKLIST.md",
+    "mandatory_gate": false
+  },
+  "scope_limits": [
+    "Not a full accessibility certification",
+    "Sampled token contrast only; not every rendered element",
+    "No live performance/CLS/LCP instrumentation",
+    "Full security/operations and Senior integration remain I-4/I-5"
+  ],
+  "mysql_access": false,
+  "export_added": false,
+  "main_merged": false,
+  "pushed": false,
+  "cleanup": "recorded_in_I4_after_restore_check",
+  "formal_i3": "complete_agreed_handoff_scope_native_speech_optional_not_verified",
+  "chrome_accessibility_tree": {
+    "status": "pass",
+    "native_speech_verified": false,
+    "evidence": "docs/qa/I3_CHROME_AX_2026-10-14.json",
+    "samples": 114
+  }
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import PageHeader from '../../../Components/PageHeader.vue';
 import SectionHeader from '../../../Components/SectionHeader.vue';
@@ -32,24 +32,47 @@ const selectedBooking = computed(() => props.bookings.data.find((item) => item.i
 watch(() => props.bookings.data, (items) => { if (!items.some((item) => item.id === selectedId.value)) selectedId.value = items[0]?.id ?? null; });
 const page = usePage<SharedProps>();
 const reasons = reactive<Record<number, string>>({});
+const pendingAction = ref<'approve' | 'reject' | null>(null);
+const requestError = ref('');
+const reviewFeedback = ref<HTMLElement | null>(null);
+function focusFeedback(): void { void nextTick(() => reviewFeedback.value?.focus()); }
+const reviewVisitOptions = {
+    onSuccess: focusFeedback,
+    onError: focusFeedback,
+    onFinish: () => { pendingAction.value = null; },
+    onNetworkError: () => {
+        requestError.value = 'เชื่อมต่อระบบไม่ได้ กรุณาตรวจสอบสถานะคำขอก่อนลองอีกครั้ง';
+        focusFeedback();
+        return false;
+    },
+    onHttpException: () => {
+        requestError.value = 'ระบบตอบกลับไม่สำเร็จ กรุณาตรวจสอบสถานะคำขอก่อนลองอีกครั้ง';
+        focusFeedback();
+        return false;
+    },
+};
 function simulatorStatusLabel(status: string): string {
     const labels: Record<string, string> = { active: 'พร้อมใช้งาน', disabled: 'ปิดใช้งาน', maintenance: 'อยู่ระหว่างบำรุงรักษา' };
     return labels[status] ?? status;
 }
 
 function approve(id: number): void {
-    if (!window.confirm('ยืนยันอนุมัติคำขอนี้หรือไม่')) {
+    if (pendingAction.value || !window.confirm('ยืนยันอนุมัติคำขอนี้หรือไม่')) {
         return;
     }
-    router.post(`/app/bookings/${id}/approve`);
+    requestError.value = '';
+    pendingAction.value = 'approve';
+    router.post(`/app/bookings/${id}/approve`, {}, reviewVisitOptions);
 }
 
 function reject(id: number): void {
     const reason = (reasons[id] ?? '').trim();
-    if (!reason) {
+    if (pendingAction.value || !reason) {
         return;
     }
-    router.post(`/app/bookings/${id}/reject`, { reason });
+    requestError.value = '';
+    pendingAction.value = 'reject';
+    router.post(`/app/bookings/${id}/reject`, { reason }, reviewVisitOptions);
 }
 </script>
 
@@ -57,8 +80,9 @@ function reject(id: number): void {
     <Head title="ตรวจสอบคำขอ" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
         <PageHeader title="ตรวจสอบคำขอ" description="คำขอรอตรวจสอบกันช่วงเวลาทรัพยากรไว้จนกว่าจะไม่อนุมัติหรือยกเลิก"></PageHeader>
-        <p v-if="page.props.flash?.success" class="action-success" role="status">{{ page.props.flash.success }}</p>
-        <div v-if="Object.keys(page.props.errors).length" class="action-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
+        <p v-if="requestError" ref="reviewFeedback" tabindex="-1" class="action-errors" role="alert">{{ requestError }}</p>
+        <div v-else-if="Object.keys(page.props.errors).length" ref="reviewFeedback" tabindex="-1" class="action-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
+        <p v-else-if="page.props.flash?.success" ref="reviewFeedback" tabindex="-1" class="action-success" role="status">{{ page.props.flash.success }}</p>
 
         <nav class="workflow-links" aria-label="กลุ่มคำขอ">
             <Link href="/app/review" aria-current="page">รอตรวจสอบ ({{ bookings.total }})</Link>
@@ -98,11 +122,12 @@ function reject(id: number): void {
                     <Link :href="`/app/bookings/${booking.id}`">ดูรายละเอียดและประวัติการตรวจสอบ</Link>
                 </div>
 
-                <div class="review-actions">
+                <p v-if="pendingAction" role="status">{{ pendingAction === 'approve' ? 'กำลังอนุมัติคำขอ…' : 'กำลังบันทึกผลไม่อนุมัติ…' }}</p>
+                <div class="review-actions" :aria-busy="pendingAction !== null">
                     <SectionHeader :level="3" title="การพิจารณา" description="ตรวจข้อมูลและทรัพยากรก่อนอนุมัติ หากไม่อนุมัติต้องระบุเหตุผล" />
-                    <button class="approve" type="button" @click="approve(booking.id)">อนุมัติ</button>
-                    <label :for="`reject-reason-${booking.id}`">เหตุผลกรณีไม่อนุมัติ</label><textarea :id="`reject-reason-${booking.id}`" v-model="reasons[booking.id]" rows="3" maxlength="2000" placeholder="ระบุเหตุผลให้ผู้ขอทราบ"></textarea>
-                    <button type="button" :disabled="!(reasons[booking.id] ?? '').trim()" @click="reject(booking.id)">ไม่อนุมัติ</button>
+                    <button class="approve" type="button" :disabled="pendingAction !== null" @click="approve(booking.id)">{{ pendingAction === 'approve' ? 'กำลังอนุมัติ…' : 'อนุมัติ' }}</button>
+                    <label :for="`reject-reason-${booking.id}`">เหตุผลกรณีไม่อนุมัติ</label><textarea :id="`reject-reason-${booking.id}`" v-model="reasons[booking.id]" :disabled="pendingAction !== null" rows="3" maxlength="2000" placeholder="ระบุเหตุผลให้ผู้ขอทราบ"></textarea>
+                    <button type="button" :disabled="pendingAction !== null || !(reasons[booking.id] ?? '').trim()" @click="reject(booking.id)">ไม่อนุมัติ</button>
                 </div>
             </article>
             </div>

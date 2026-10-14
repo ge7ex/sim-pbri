@@ -1,0 +1,4053 @@
+{
+  "date": "2026-10-14",
+  "source_baseline": "238bf178e171e4151ce64e1b72744be1bc9a0efa plus uncommitted Review loading fix",
+  "environment": "local Chrome; synthetic SQLite",
+  "pages": [
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 19,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 8,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 32,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 32,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 32,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 5,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 5,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 5,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 10,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 30,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 30,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 30,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 19,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 29,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 29,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 29,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 18,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 10,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 25,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/users",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 25,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 25,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/users",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 14,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/users",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 14,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/users",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 14,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 18,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 7,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 17,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 31,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 31,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 31,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 17,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 27,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 27,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 27,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 10,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 9,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 9,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 9,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 25,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/users",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 25,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 25,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/users",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 14,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/users",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 14,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/users",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 14,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 18,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 7,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 18,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 8,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 31,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 31,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 31,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 15,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 15,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 15,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 5,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 5,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 5,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 10,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 14,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 14,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 14,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 4,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 4,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 4,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 3,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 10,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 17,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 7,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 30,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 30,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 30,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 3,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 3,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 19,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 9,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 9,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 9,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 17,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 7,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 8,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 26,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 26,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 26,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 10,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 10,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 5,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 5,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 5,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 12,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 12,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 12,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 7,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 11,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 25,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 25,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 25,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 12,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 12,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 12,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 7,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 7,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 22,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 22,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 22,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 11,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 17,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 20,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 20,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 9,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 9,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 9,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 19,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 19,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 8,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 17,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 17,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 15,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 15,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 15,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 4,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 4,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 4,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 21,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 21,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 11,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 3,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 18,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 18,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 8,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 3,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 3,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 16,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 16,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 11,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 11,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 13,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 13,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 8,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 8,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1440,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 11,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 11,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1024,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 768,
+      "http": 200
+    },
+    {
+      "overflow": false,
+      "h1": 1,
+      "main": 1,
+      "visible_controls": 6,
+      "missing_names": [],
+      "broken_descriptions": [],
+      "small_targets": [
+        {
+          "tag": "A",
+          "label": "SIMSIM PBRIระบบจองศูนย์ Simulation",
+          "width": 168,
+          "height": 44
+        }
+      ],
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 390,
+      "http": 200,
+      "keyboard": {
+        "reached_controls": 6,
+        "unreached_controls": 0,
+        "missing_focus_indicator": []
+      }
+    }
+  ],
+  "checks": [],
+  "page_error_count": 0,
+  "screen_reader_run": false,
+  "prior_interaction_checks": [
+    {
+      "name": "mobile_menu_keyboard_escape_focus_return",
+      "status": "pass"
+    },
+    {
+      "name": "skip_link_keyboard_enters_main",
+      "status": "pass"
+    },
+    {
+      "name": "review_approve_loading_duplicate_guard_error_recovery",
+      "status": "pass"
+    },
+    {
+      "name": "review_reject_loading_duplicate_guard_error_recovery",
+      "status": "pass"
+    },
+    {
+      "name": "review_real_approval_success_then_empty_queue",
+      "status": "pass"
+    },
+    {
+      "name": "report_loading_validation_zero_and_back_reload",
+      "status": "pass"
+    }
+  ],
+  "keyboard_scope": "Post-touch-fix Tab walks; native date focus uses a separately inspected screenshot, not host-outline scoring",
+  "status": "completed"
+}

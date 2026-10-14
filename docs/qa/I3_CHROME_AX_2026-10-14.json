@@ -1,0 +1,3584 @@
+{
+  "date": "2026-10-14",
+  "method": "Chrome DevTools Accessibility.getFullAXTree; roles/names/landmarks/headings only; input values not recorded",
+  "samples": [
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1440,
+      "exposed_controls": 20,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app",
+      "width": 390,
+      "exposed_controls": 9,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "exposed_controls": 46,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "exposed_controls": 35,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1440,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายละเอียดคำขอ #1"
+        },
+        {
+          "level": 2,
+          "name": "ข้อมูลคำขอและช่วงเวลา"
+        },
+        {
+          "level": 2,
+          "name": "เครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ห้องและอุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "ประวัติสถานะ"
+        },
+        {
+          "level": 2,
+          "name": "การดำเนินการ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายละเอียดคำขอ #1"
+        },
+        {
+          "level": 2,
+          "name": "ข้อมูลคำขอและช่วงเวลา"
+        },
+        {
+          "level": 2,
+          "name": "เครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ห้องและอุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "ประวัติสถานะ"
+        },
+        {
+          "level": 2,
+          "name": "การดำเนินการ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 1440,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 1440,
+      "exposed_controls": 30,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 390,
+      "exposed_controls": 19,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "exposed_controls": 29,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มรายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "ชุดอุปกรณ์แนะนำ"
+        },
+        {
+          "level": 3,
+          "name": "ประเภทเครื่องจำลองที่แนะนำ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 390,
+      "exposed_controls": 18,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มรายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "ชุดอุปกรณ์แนะนำ"
+        },
+        {
+          "level": 3,
+          "name": "ประเภทเครื่องจำลองที่แนะนำ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 1440,
+      "exposed_controls": 27,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพย์สินและการบำรุงรักษา"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        },
+        {
+          "level": 3,
+          "name": "หุ่นฝึก A (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "เครื่องติดตามสัญญาณชีพตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพย์สินและการบำรุงรักษา"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        },
+        {
+          "level": 3,
+          "name": "หุ่นฝึก A (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "เครื่องติดตามสัญญาณชีพตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/users",
+      "width": 1440,
+      "exposed_controls": 24,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "จัดการบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "สร้างบัญชีบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "บัญชีในหน่วยงาน"
+        },
+        {
+          "level": 3,
+          "name": "อาจารย์ตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "เจ้าหน้าที่ตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "ผู้ดูแลระบบตัวอย่าง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/users",
+      "width": 390,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "จัดการบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "สร้างบัญชีบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "บัญชีในหน่วยงาน"
+        },
+        {
+          "level": 3,
+          "name": "อาจารย์ตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "เจ้าหน้าที่ตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "ผู้ดูแลระบบตัวอย่าง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1440,
+      "exposed_controls": 18,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 390,
+      "exposed_controls": 7,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1440,
+      "exposed_controls": 31,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 390,
+      "exposed_controls": 20,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1440,
+      "exposed_controls": 25,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 390,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 1440,
+      "exposed_controls": 19,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 390,
+      "exposed_controls": 8,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1440,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "exposed_controls": 45,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "exposed_controls": 34,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 1440,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 1440,
+      "exposed_controls": 28,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 390,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "exposed_controls": 22,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มรายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 390,
+      "exposed_controls": 11,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มรายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "เพิ่มสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 1440,
+      "exposed_controls": 27,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพย์สินและการบำรุงรักษา"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพย์สินและการบำรุงรักษา"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/users",
+      "width": 1440,
+      "exposed_controls": 24,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "จัดการบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "สร้างบัญชีบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "บัญชีในหน่วยงาน"
+        },
+        {
+          "level": 3,
+          "name": "บัญชีตรวจหน้าว่าง lecturer"
+        },
+        {
+          "level": 3,
+          "name": "บัญชีตรวจหน้าว่าง staff"
+        },
+        {
+          "level": 3,
+          "name": "บัญชีตรวจหน้าว่าง admin"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/users",
+      "width": 390,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "จัดการบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "สร้างบัญชีบุคลากร"
+        },
+        {
+          "level": 2,
+          "name": "บัญชีในหน่วยงาน"
+        },
+        {
+          "level": 3,
+          "name": "บัญชีตรวจหน้าว่าง lecturer"
+        },
+        {
+          "level": 3,
+          "name": "บัญชีตรวจหน้าว่าง staff"
+        },
+        {
+          "level": 3,
+          "name": "บัญชีตรวจหน้าว่าง admin"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1440,
+      "exposed_controls": 18,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 390,
+      "exposed_controls": 7,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1440,
+      "exposed_controls": 27,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1440,
+      "exposed_controls": 25,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 390,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 1440,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1440,
+      "exposed_controls": 19,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app",
+      "width": 390,
+      "exposed_controls": 9,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "exposed_controls": 45,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "exposed_controls": 35,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1440,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายละเอียดคำขอ #1"
+        },
+        {
+          "level": 2,
+          "name": "ข้อมูลคำขอและช่วงเวลา"
+        },
+        {
+          "level": 2,
+          "name": "เครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ห้องและอุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "ประวัติสถานะ"
+        },
+        {
+          "level": 2,
+          "name": "การดำเนินการ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายละเอียดคำขอ #1"
+        },
+        {
+          "level": 2,
+          "name": "ข้อมูลคำขอและช่วงเวลา"
+        },
+        {
+          "level": 2,
+          "name": "เครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ห้องและอุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "ประวัติสถานะ"
+        },
+        {
+          "level": 2,
+          "name": "การดำเนินการ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 1440,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/review",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 1440,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/simulators",
+      "width": 390,
+      "exposed_controls": 4,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "ชุดอุปกรณ์แนะนำ"
+        },
+        {
+          "level": 3,
+          "name": "ประเภทเครื่องจำลองที่แนะนำ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/scenarios",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "ชุดอุปกรณ์แนะนำ"
+        },
+        {
+          "level": 3,
+          "name": "ประเภทเครื่องจำลองที่แนะนำ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 1440,
+      "exposed_controls": 26,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        },
+        {
+          "level": 3,
+          "name": "หุ่นฝึก A (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "เครื่องติดตามสัญญาณชีพตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/reports",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        },
+        {
+          "level": 3,
+          "name": "หุ่นฝึก A (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "เครื่องติดตามสัญญาณชีพตัวอย่าง"
+        },
+        {
+          "level": 3,
+          "name": "การประเมินผู้ป่วยเบื้องต้น (ตัวอย่าง)"
+        },
+        {
+          "level": 3,
+          "name": "สถานการณ์ประเมินผู้ป่วย (ตัวอย่าง)"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1440,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 390,
+      "exposed_controls": 7,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1440,
+      "exposed_controls": 30,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 390,
+      "exposed_controls": 20,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1440,
+      "exposed_controls": 24,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 390,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 1440,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "populated",
+      "path": "/app/resources",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1440,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "exposed_controls": 44,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "exposed_controls": 34,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 1440,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/review",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ตรวจสอบคำขอ"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 1440,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/simulators",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทะเบียนเครื่องจำลองและทรัพย์สิน"
+        },
+        {
+          "level": 2,
+          "name": "ประเภทเครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ทะเบียนทรัพย์สิน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 1440,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/scenarios",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายวิชาและสถานการณ์จำลอง"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชาและสถานการณ์"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 1440,
+      "exposed_controls": 26,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/reports",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายงานและสถิติ"
+        },
+        {
+          "level": 2,
+          "name": "ช่วงเวลาที่ต้องการดู"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "แนวโน้มคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "ผู้เข้าร่วมในคำขอที่อนุมัติ"
+        },
+        {
+          "level": 2,
+          "name": "การใช้ห้อง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้หุ่นจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "การใช้อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "รายวิชา"
+        },
+        {
+          "level": 2,
+          "name": "สถานการณ์"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1440,
+      "exposed_controls": 17,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 390,
+      "exposed_controls": 7,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1440,
+      "exposed_controls": 26,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1440,
+      "exposed_controls": 24,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 390,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 1440,
+      "exposed_controls": 13,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "staff",
+      "mode": "empty",
+      "path": "/app/resources",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ทรัพยากร SIM"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรของหน่วยงาน"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app",
+      "width": 1440,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app",
+      "width": 390,
+      "exposed_controls": 9,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "exposed_controls": 40,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "exposed_controls": 35,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        },
+        {
+          "level": 3,
+          "name": "ห้องฝึกทักษะการพยาบาล"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 1440,
+      "exposed_controls": 10,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายละเอียดคำขอ #1"
+        },
+        {
+          "level": 2,
+          "name": "ข้อมูลคำขอและช่วงเวลา"
+        },
+        {
+          "level": 2,
+          "name": "เครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ห้องและอุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "ประวัติสถานะ"
+        },
+        {
+          "level": 2,
+          "name": "การดำเนินการ"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings/1",
+      "width": 390,
+      "exposed_controls": 5,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "รายละเอียดคำขอ #1"
+        },
+        {
+          "level": 2,
+          "name": "ข้อมูลคำขอและช่วงเวลา"
+        },
+        {
+          "level": 2,
+          "name": "เครื่องจำลอง"
+        },
+        {
+          "level": 2,
+          "name": "ห้องและอุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "ประวัติสถานะ"
+        },
+        {
+          "level": 2,
+          "name": "การดำเนินการ"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 1440,
+      "exposed_controls": 12,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/account/password",
+      "width": 390,
+      "exposed_controls": 7,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 1440,
+      "exposed_controls": 25,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/bookings",
+      "width": 390,
+      "exposed_controls": 20,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 1440,
+      "exposed_controls": 19,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "populated",
+      "path": "/app/calendar",
+      "width": 390,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app",
+      "width": 1440,
+      "exposed_controls": 11,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app",
+      "width": 390,
+      "exposed_controls": 6,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ภาพรวมระบบจองศูนย์ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ภาพรวมคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอล่าสุด"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 1440,
+      "exposed_controls": 39,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings/create",
+      "width": 390,
+      "exposed_controls": 34,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "สร้างคำขอจองห้อง Simulation"
+        },
+        {
+          "level": 3,
+          "name": "คำขออุปกรณ์นอกแค็ตตาล็อก"
+        },
+        {
+          "level": 2,
+          "name": "1) ห้องและช่วงเวลา"
+        },
+        {
+          "level": 3,
+          "name": "ช่วงเวลาใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "2) ข้อมูลการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "3) รายวิชาและสถานการณ์ (ถ้ามี)"
+        },
+        {
+          "level": 2,
+          "name": "4) อุปกรณ์"
+        },
+        {
+          "level": 2,
+          "name": "5) หมายเหตุและตรวจสอบก่อนส่ง"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 1440,
+      "exposed_controls": 12,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/account/password",
+      "width": 390,
+      "exposed_controls": 7,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เปลี่ยนรหัสผ่าน"
+        },
+        {
+          "level": 2,
+          "name": "ตั้งรหัสผ่านใหม่"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 1440,
+      "exposed_controls": 21,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/bookings",
+      "width": 390,
+      "exposed_controls": 16,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ประวัติการจอง"
+        },
+        {
+          "level": 2,
+          "name": "ค้นหาคำขอ"
+        },
+        {
+          "level": 2,
+          "name": "รายการคำขอจอง"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 1440,
+      "exposed_controls": 19,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "lecturer",
+      "mode": "empty",
+      "path": "/app/calendar",
+      "width": 390,
+      "exposed_controls": 14,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ปฏิทินการใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ตารางการใช้ห้องและทรัพยากร"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 16 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันเสาร์ที่ 17 ตุลาคม พ.ศ. 2569"
+        },
+        {
+          "level": 3,
+          "name": "วันพฤหัสบดีที่ 1 สิงหาคม พ.ศ. 2573"
+        },
+        {
+          "level": 3,
+          "name": "วันศุกร์ที่ 2 สิงหาคม พ.ศ. 2573"
+        }
+      ]
+    },
+    {
+      "role": "guest",
+      "mode": "public",
+      "path": "/",
+      "width": 1440,
+      "exposed_controls": 8,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ระบบบริหารจัดการทรัพยากรและการจองห้องปฏิบัติการ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "บริการหลักของระบบ"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรสำหรับการฝึก Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ขั้นตอนการส่งคำขอใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ติดต่อผู้ดูแลระบบ"
+        },
+        {
+          "level": 3,
+          "name": "จองห้องปฏิบัติการ"
+        },
+        {
+          "level": 3,
+          "name": "จัดการทรัพยากร Simulation"
+        },
+        {
+          "level": 3,
+          "name": "ติดตามสถานะคำขอ"
+        },
+        {
+          "level": 3,
+          "name": "ตรวจสอบและอนุมัติ"
+        }
+      ]
+    },
+    {
+      "role": "guest",
+      "mode": "public",
+      "path": "/",
+      "width": 390,
+      "exposed_controls": 3,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "ระบบบริหารจัดการทรัพยากรและการจองห้องปฏิบัติการ Simulation"
+        },
+        {
+          "level": 2,
+          "name": "บริการหลักของระบบ"
+        },
+        {
+          "level": 2,
+          "name": "ทรัพยากรสำหรับการฝึก Simulation"
+        },
+        {
+          "level": 2,
+          "name": "ขั้นตอนการส่งคำขอใช้งาน"
+        },
+        {
+          "level": 2,
+          "name": "ติดต่อผู้ดูแลระบบ"
+        },
+        {
+          "level": 3,
+          "name": "จองห้องปฏิบัติการ"
+        },
+        {
+          "level": 3,
+          "name": "จัดการทรัพยากร Simulation"
+        },
+        {
+          "level": 3,
+          "name": "ติดตามสถานะคำขอ"
+        },
+        {
+          "level": 3,
+          "name": "ตรวจสอบและอนุมัติ"
+        }
+      ]
+    },
+    {
+      "role": "guest",
+      "mode": "public",
+      "path": "/login",
+      "width": 1440,
+      "exposed_controls": 4,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เข้าสู่ระบบ SIM PBRI"
+        },
+        {
+          "level": 2,
+          "name": "เข้าสู่ระบบ"
+        }
+      ]
+    },
+    {
+      "role": "guest",
+      "mode": "public",
+      "path": "/login",
+      "width": 390,
+      "exposed_controls": 4,
+      "missing_names": [],
+      "h1": 1,
+      "main": 1,
+      "headings": [
+        {
+          "level": 1,
+          "name": "เข้าสู่ระบบ SIM PBRI"
+        },
+        {
+          "level": 2,
+          "name": "เข้าสู่ระบบ"
+        }
+      ]
+    }
+  ],
+  "native_screen_reader_voice_tested": false,
+  "status": "pass"
+}

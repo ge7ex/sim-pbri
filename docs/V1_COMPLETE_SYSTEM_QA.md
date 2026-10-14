@@ -131,3 +131,7 @@ Full screen-reader coverage, complete cross-role keyboard/error/loading checks, 
 ## I-1 / I-2 targeted closure — 14 October 2026
 
 Source baseline e52282d. PASS: 64 targeted tests / 475 assertions on guarded SQLite memory; this is not a fresh full-suite run. PASS: 15 synthetic account Chrome checks and 7 synthetic Draft Chrome checks, with no page errors. Account rotation/reset/session expiry/deactivation/reactivation and Draft deletion/conflict recovery are now browser-verified. Initial temporary-view-directory and overly exact locator failures were harness issues and were resolved without changing application code. Guarded cleanup confirmed port 8766 closed and removed temporary SQLite/credentials/test storage. No MySQL access/cache clearing/build/push/main merge occurred. See I1_I2_VERIFICATION.md for exact scope and JSON evidence. I-1/I-2 functional gates are closed; I-3, I-4, I-5, Full V1 Senior Review and Real Pilot gates remain open.
+
+## I-3 closure — 14 October 2026
+
+I-3 is complete for the agreed handoff scope: 220 page samples, 110 Tab walks, 114 Chrome accessibility-tree samples and targeted 19 tests / 132 assertions pass. Five reproduced defects fixed; see docs/I3_VERIFICATION.md. Native speech is NOT VERIFIED and is additional assurance, not the mandatory label check. Owner instructed proceeding to I-4. Full V1 and Real Pilot remain NOT YET READY pending later gates.

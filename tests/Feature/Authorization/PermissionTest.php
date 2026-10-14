@@ -62,6 +62,18 @@ final class PermissionTest extends TestCase
                 ]));
     }
 
+    public function test_forbidden_page_has_thai_explanation_landmark_and_safe_return_link(): void
+    {
+        $staff = $this->userWithRole(UserRole::Staff);
+
+        $this->actingAs($staff)->get('/app/users')
+            ->assertForbidden()
+            ->assertSee('ไม่มีสิทธิ์เข้าถึงหน้านี้')
+            ->assertSee('lang="th"', false)
+            ->assertSee('<main aria-labelledby="error-title">', false)
+            ->assertSee('href="/"', false);
+    }
+
     private function userWithRole(UserRole $role): User
     {
         $college = College::factory()->create();
