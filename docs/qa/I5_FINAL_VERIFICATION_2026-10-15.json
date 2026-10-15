@@ -1,0 +1,41 @@
+{
+  "page_errors": 0,
+  "foreign_college_denial_cases": 6,
+  "application_changes_for_harness_failures": false,
+  "senior_review_performed": false,
+  "room_status_contract": "Disabled room remains visible but selection disabled; reopened room selectable",
+  "loading_failure_reference": "docs/qa/FINAL_REVIEW_PRIVACY_2026-10-15.json",
+  "real_pilot_ready": false,
+  "i5": "complete_technical_walkthrough",
+  "application_head": "8ec55d2890ec16a669f5252b3c8aa91a29b9d6f6",
+  "harness_corrections": [
+    "Disabled-room disappearance assumption replaced with actual status/nonselectability contract",
+    "Carousel navigation used before checking target room",
+    "Request selector is button.request-option, not select; restored savedbookingID on resume"
+  ],
+  "responsive_reference": "docs/qa/FINAL_ROLE_MATRIX_2026-10-15.json",
+  "senior_review_candidate_ready": true,
+  "account_operations_reference": "docs/qa/I1_BROWSER_2026-10-15.json",
+  "limits": [
+    "Native screen-reader speech not run; owner skipped optional assurance",
+    "No real Senior feedback/owner acceptance recorded",
+    "Real deployment/TLS/proxy/cookies/privileges/logging/recurringbackup/data remain RealPilot gates",
+    "Full security scan target is original6a914e7 with one medium finding; laterfix and final-source delta verified separately"
+  ],
+  "demo": {
+    "roles": [
+      "Admin",
+      "Staff",
+      "Lecturer"
+    ],
+    "retained_reason": "Owner requested immediate presentation with synthetic role accounts",
+    "url": "http://127.0.0.1:8766/login",
+    "normal_server_8000_untouched": true,
+    "active": true,
+    "cleanup_command": "scripts/qa/phase-i-demo.ps1 -Action Cleanup",
+    "database": "guarded private TEMP SQLite",
+    "credentials": "private local credentials.txt, never copied into report/Git"
+  },
+  "walkthrough_checks": 13,
+  "date": "2026-10-15"
+}

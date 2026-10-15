@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-15",
+  "environment": "real Laravel/Vue/Inertia; isolated synthetic SQLite; Chrome",
+  "checks": [
+    {
+      "name": "admin_create_equipment",
+      "status": "pass"
+    },
+    {
+      "name": "admin_create_room",
+      "status": "pass"
+    },
+    {
+      "name": "room_disable_then_reopen_booking_visibility",
+      "status": "pass"
+    },
+    {
+      "name": "admin_create_course_and_scenario",
+      "status": "pass"
+    },
+    {
+      "name": "admin_create_simulator_type_and_asset",
+      "status": "pass"
+    },
+    {
+      "name": "lecturer_save_reload_resume_draft_submit",
+      "status": "pass"
+    },
+    {
+      "name": "staff_approve_real_submission",
+      "status": "pass"
+    },
+    {
+      "name": "lecturer_cancel_and_history_retained",
+      "status": "pass"
+    },
+    {
+      "name": "lecturer_submit_second_scenario_request",
+      "status": "pass"
+    },
+    {
+      "name": "staff_reject_with_reason_visible_in_lecturer_history",
+      "status": "pass"
+    },
+    {
+      "name": "admin_finance_staff_redaction_and_report_zero",
+      "status": "pass"
+    },
+    {
+      "name": "mobile_keyboard_sidebar_and_no_export",
+      "status": "pass"
+    },
+    {
+      "name": "report_zero_numeric_and_populated_approved",
+      "status": "pass"
+    }
+  ],
+  "bookings": [
+    {
+      "purpose": "approved then cancelled",
+      "id": 5
+    },
+    {
+      "purpose": "rejected with reason",
+      "id": 6
+    }
+  ],
+  "page_errors": 0,
+  "status": "pass"
+}

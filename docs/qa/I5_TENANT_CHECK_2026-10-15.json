@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-15",
+  "checks": [
+    {
+      "role": "ADMIN",
+      "boundary": "foreign_booking",
+      "http": 403,
+      "private_names_disclosed": false
+    },
+    {
+      "role": "ADMIN",
+      "boundary": "foreign_image",
+      "http": 403,
+      "private_names_disclosed": false
+    },
+    {
+      "role": "STAFF",
+      "boundary": "foreign_booking",
+      "http": 403,
+      "private_names_disclosed": false
+    },
+    {
+      "role": "STAFF",
+      "boundary": "foreign_image",
+      "http": 403,
+      "private_names_disclosed": false
+    },
+    {
+      "role": "LECTURER",
+      "boundary": "foreign_booking",
+      "http": 403,
+      "private_names_disclosed": false
+    },
+    {
+      "role": "LECTURER",
+      "boundary": "foreign_image",
+      "http": 403,
+      "private_names_disclosed": false
+    }
+  ],
+  "status": "pass"
+}

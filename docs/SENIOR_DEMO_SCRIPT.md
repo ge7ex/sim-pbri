@@ -2,7 +2,7 @@
 
 ## Readiness
 
-The isolated demo setup is repeatable and uses the real Laravel + Vue + Inertia application with fictional data. It does **not** make this build Senior-review-ready: see `V1_COMPLETE_SYSTEM_QA.md` for the remaining QA, source, and business-decision gates.
+The isolated demo setup is repeatable and uses the real Laravel + Vue + Inertia application with fictional data. The current 15 October2026 candidate has passed I-4 and I-5 technical checks; see `SENIOR_REVIEW_CANDIDATE_2026-10-15.md`. Senior approval and Real Pilot readiness are separate, not yet obtained.
 
 ## Start and clean up
 
@@ -42,4 +42,8 @@ Cleanup verifies the recorded PHP server command lines, stops only the demo serv
 4. **Admin — 4 minutes:** Review fictional master data, account management, dashboard and statistics. Room dimensions are intentionally hidden from all pages, including Admin; do not expect dimension fields or calculated area in the UI. If creating a user, the random temporary credential appears once; do not retain it after the demo.
 5. **Cross-role — 2 minutes:** Verify Staff has no Admin-only financial data or account-management link; verify a Lecturer cannot access Staff review or Admin account routes. No Export control or route is available.
 
-All phone numbers and names in this environment are fictional. No image upload, live email, external integration, real MySQL data, or production account is used. Synthetic browser QA completed Staff approval and rejection plus Lecturer cancellation, and verified status/history updates. Recent checks also confirmed the Staff rejected-history zero state, keyboard focus through skip link and grouped navigation, labels on status/date filters, and no console errors on the Staff review page; an Admin server validation error is associated with an alert. Full keyboard/screen-reader and cross-role error/loading matrices remain outstanding.
+All phone numbers and names in this environment are fictional. No image upload, live email, external integration, real MySQL data, or production account is used. Synthetic browser QA completed Staff approval and rejection plus Lecturer cancellation, and verified status/history updates. Recent checks also confirmed the Staff rejected-history zero state, keyboard focus through skip link and grouped navigation, labels on status/date filters, and no console errors on the Staff review page; an Admin server validation error is associated with an alert. Current role/responsive/keyboard/error/loading results are recorded in the 15OctoberQA evidence. Actual native screen-reader speech remains owner-skipped optional assurance, NOT VERIFIED.
+
+## Executed15October2026
+
+I-5 real-app walkthrough13checks and crossCollegebooking/image403sixcases pass. Adminroom/equipment/course/scenario/simulatorcreation, disabled/nonselectable roomandreenable, LecturerDraftresumesubmit, Staffapprove/rejectreason, historycancel, populated/zero reports, financeroleprivacy andmobilekeyboard verified. Initial harness assumptions about hiding disabledrooms/carousel/select element were corrected against actualUI; no applicationpatch made for those harnessfailures. Account15checks and Reviewnetwork/loading cases are separatefreshI4evidence. Currentdemo intentionallyretained forownerpresentation; readprivatecredentials locally; cleanupafterpresentation.
