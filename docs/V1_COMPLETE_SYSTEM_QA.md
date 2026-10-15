@@ -143,3 +143,7 @@ At application commit6a914e7, full suites190 tests/1705 assertions each (normal 
 ## R0–R4 resume checkpoint — 14 October 2026
 
 R1 confirmed original Scenario/outertransaction race red in3 collision modes and green all6 after c4502ce; Draft atomicity preserved. Full190tests/1705assertions pass twice. R2 CSS-only01ac3c6 passes12 Chrome role/viewport/keyboard samples and build686modules. Registered51routes contain0 Export matches. SameSecurityscan42a2fa7a now holds accepted model and1 validated originalsource finding with latergreenfix, but coverage remainspartial (18paths). I4 INPROGRESS; I5 NOTSTARTED; Senior/RealPilot NOTREADY. Stop at10% primaryremaining; demo cleaned. See I4_I5_RESUME_CHECKPOINT_2026-10-14.md; historical entries above remain historical.
+
+## Current I-4 verdict —15October2026
+
+I-4 COMPLETE technicalscope on app8ec55d2. Originalscan42a2fa7a sealedat6a914e7 with1mediumrace, laterfix/delta verified. Final191tests/1707assertions twice; build/audits0/Pint pass; Chrome116pages+7forbidden, account15/Draft7/report8/review4 pass. Sourcehashes/exactevidence: docs/qa/I4_FINAL_VERIFICATION_2026-10-15.json. I-5 stillpending; FullV1Senior/RealPilot NOTREADY untilnextgate. Earlier partialscan/statusentries above are historical, not current.

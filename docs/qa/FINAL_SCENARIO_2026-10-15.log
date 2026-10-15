@@ -1,0 +1,122 @@
+{
+    "effective_isolation": "REPEATABLE-READ",
+    "disposable_schema": "sim_pbri_i4_qa_b049549faf7e",
+    "controller_path": "BookingController::store",
+    "results": [
+        {
+            "mode": "room",
+            "barrier": {
+                "barrier": "inventory-lock-statement",
+                "transaction_level": 2,
+                "plain_scenario_before_lock": false
+            },
+            "worker": {
+                "accepted": false,
+                "validation_fields": [
+                    "starts_at"
+                ],
+                "plain_scenario_before_lock": false,
+                "outer_controller": true
+            },
+            "own_bookings": 0,
+            "draft_preserved": true,
+            "own_audit_rows": 0,
+            "passed": true
+        },
+        {
+            "mode": "equipment",
+            "barrier": {
+                "barrier": "inventory-lock-statement",
+                "transaction_level": 2,
+                "plain_scenario_before_lock": false
+            },
+            "worker": {
+                "accepted": false,
+                "validation_fields": [
+                    "resources"
+                ],
+                "plain_scenario_before_lock": false,
+                "outer_controller": true
+            },
+            "own_bookings": 0,
+            "draft_preserved": true,
+            "own_audit_rows": 0,
+            "passed": true
+        },
+        {
+            "mode": "simulator",
+            "barrier": {
+                "barrier": "inventory-lock-statement",
+                "transaction_level": 2,
+                "plain_scenario_before_lock": false
+            },
+            "worker": {
+                "accepted": false,
+                "validation_fields": [
+                    "simulator_asset_id"
+                ],
+                "plain_scenario_before_lock": false,
+                "outer_controller": true
+            },
+            "own_bookings": 0,
+            "draft_preserved": true,
+            "own_audit_rows": 0,
+            "passed": true
+        },
+        {
+            "mode": "scenario_null",
+            "barrier": {
+                "barrier": "inventory-lock-statement",
+                "transaction_level": 2,
+                "plain_scenario_before_lock": false
+            },
+            "worker": {
+                "accepted": false,
+                "validation_fields": [
+                    "starts_at"
+                ],
+                "plain_scenario_before_lock": false,
+                "outer_controller": true
+            },
+            "own_bookings": 0,
+            "draft_preserved": true,
+            "own_audit_rows": 0,
+            "passed": true
+        },
+        {
+            "mode": "touching",
+            "barrier": {
+                "barrier": "inventory-lock-statement",
+                "transaction_level": 2,
+                "plain_scenario_before_lock": false
+            },
+            "worker": {
+                "accepted": true,
+                "plain_scenario_before_lock": false,
+                "outer_controller": true
+            },
+            "own_bookings": 1,
+            "draft_preserved": false,
+            "own_audit_rows": 1,
+            "passed": true
+        },
+        {
+            "mode": "success",
+            "barrier": {
+                "barrier": "inventory-lock-statement",
+                "transaction_level": 2,
+                "plain_scenario_before_lock": false
+            },
+            "worker": {
+                "accepted": true,
+                "plain_scenario_before_lock": false,
+                "outer_controller": true
+            },
+            "own_bookings": 1,
+            "draft_preserved": false,
+            "own_audit_rows": 1,
+            "passed": true
+        }
+    ]
+}
+Disposable schema removed.

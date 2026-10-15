@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-15",
+  "reports": [
+    {
+      "role": "ADMIN",
+      "width": 1440,
+      "admin_financial_payload": "present",
+      "status": "pass"
+    },
+    {
+      "role": "ADMIN",
+      "width": 1024,
+      "admin_financial_payload": "present",
+      "status": "pass"
+    },
+    {
+      "role": "ADMIN",
+      "width": 768,
+      "admin_financial_payload": "present",
+      "status": "pass"
+    },
+    {
+      "role": "ADMIN",
+      "width": 390,
+      "admin_financial_payload": "present",
+      "status": "pass"
+    },
+    {
+      "role": "STAFF",
+      "width": 1440,
+      "admin_financial_payload": "absent",
+      "status": "pass"
+    },
+    {
+      "role": "STAFF",
+      "width": 1024,
+      "admin_financial_payload": "absent",
+      "status": "pass"
+    },
+    {
+      "role": "STAFF",
+      "width": 768,
+      "admin_financial_payload": "absent",
+      "status": "pass"
+    },
+    {
+      "role": "STAFF",
+      "width": 390,
+      "admin_financial_payload": "absent",
+      "status": "pass"
+    }
+  ],
+  "review": [
+    {
+      "action": "approve",
+      "loading": "pass",
+      "duplicate_guard": "pass",
+      "error_recovery": "pass"
+    },
+    {
+      "action": "reject",
+      "loading": "pass",
+      "duplicate_guard": "pass",
+      "error_recovery": "pass"
+    },
+    {
+      "failure": "network",
+      "safe_alert": "pass",
+      "action_recovery": "pass",
+      "mobile_overflow": "none"
+    },
+    {
+      "failure": "http",
+      "safe_alert": "pass",
+      "action_recovery": "pass",
+      "mobile_overflow": "none"
+    }
+  ],
+  "status": "pass"
+}

@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-15",
+  "environment": "isolated synthetic SQLite; local Chrome",
+  "checks": [
+    {
+      "name": "admin_login_and_create_lecturer",
+      "status": "pass"
+    },
+    {
+      "name": "one_time_secret_hide",
+      "status": "pass"
+    },
+    {
+      "name": "temporary_login_forces_password_change",
+      "status": "pass"
+    },
+    {
+      "name": "invalid_current_password_preserves_change_gate",
+      "status": "pass"
+    },
+    {
+      "name": "forced_password_rotation_and_dashboard",
+      "status": "pass"
+    },
+    {
+      "name": "new_password_authenticates_second_session",
+      "status": "pass"
+    },
+    {
+      "name": "admin_reset_reauthenticates_and_returns_temporary_secret",
+      "status": "pass"
+    },
+    {
+      "name": "reset_invalidates_existing_user_sessions",
+      "status": "pass"
+    },
+    {
+      "name": "reset_password_requires_rotation_again",
+      "status": "pass"
+    },
+    {
+      "name": "admin_deactivates_account_and_session_expires",
+      "status": "pass"
+    },
+    {
+      "name": "inactive_account_cannot_login",
+      "status": "pass"
+    },
+    {
+      "name": "admin_reactivates_account_and_login_recovers",
+      "status": "pass"
+    },
+    {
+      "name": "admin_self_deactivation_and_role_controls_disabled",
+      "status": "pass"
+    },
+    {
+      "name": "staff_direct_account_route_forbidden",
+      "status": "pass"
+    },
+    {
+      "name": "no_browser_page_errors",
+      "status": "pass"
+    }
+  ],
+  "page_error_count": 0,
+  "status": "pass"
+}

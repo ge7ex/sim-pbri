@@ -1,66 +1,115 @@
 {
-  "runtime_migrations": {
-    "pending": 0,
-    "ran": 21,
-    "read_only": true
-  },
-  "composer_advisories": 0,
-  "pushed": false,
-  "security": {
-    "coverage": "partial",
-    "candidate": "candidate-booking-scenario-snapshot",
-    "candidate_fixed": false,
-    "later_model_checkpoint_rejected": true,
-    "scan_id": "42a2fa7a-05b1-44cb-9018-4394ab93913f",
-    "completed": false
-  },
-  "build": {
-    "js_gzip_kb": 105.18,
-    "modules": 686,
-    "status": "pass"
-  },
-  "mysql_existing_concurrency": {
-    "disposable_schema_removed": true,
-    "flows": [
-      "create",
-      "recall"
-    ],
-    "scenario_outer_transaction_covered": false,
-    "status": "pass"
-  },
-  "stop_reason": "owner_quota_threshold_remaining_7_percent",
-  "date": "2026-10-14",
+  "i5": "not_started",
+  "deployed": false,
   "main_merged": false,
-  "sqlite_restore": {
-    "matching_tables": 27,
-    "status": "pass"
+  "source_files": [
+    {
+      "path": "app/Modules/Booking/Actions/CreateBookingAction.php",
+      "sha256": "4b33ab7bf15dfdba3b9ddbf5c5fb5c518c28eec149767d2d440f7afa91fe5dcf"
+    },
+    {
+      "path": "app/Modules/Booking/Http/Controllers/BookingController.php",
+      "sha256": "82572116488193add601650ed566725ef821c767254a91f897ab94a459a5bb94"
+    },
+    {
+      "path": "resources/css/app-shell.css",
+      "sha256": "ef2323850bc06980121f9cf6dbc24e8cc54f12f03be2e2054e8459da7f0bf7ea"
+    },
+    {
+      "path": "tests/Integration/ScenarioConcurrencyCheck.php",
+      "sha256": "5b9aaaeacb0b5cb680ef1c768c0a405c3a9c46d9e09f389f2b8454a7d4ee2fdd"
+    },
+    {
+      "path": "tests/Unit/YamlDependencySafetyTest.php",
+      "sha256": "fdd7eb4ef42db3707a0494a87c5fd1396cd6bd1ee0ad9500186dc4a38f38cd6c"
+    },
+    {
+      "path": "composer.lock",
+      "sha256": "0fb9335c58e1197feefcca56496aeb550a2c2ba8e13379439c05ac7205ae4f43"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "7bc5e768f6304f80d9e3e30f09eb57dc53867f03f3fb529971e0091dc3ebced9"
+    }
+  ],
+  "browser": {
+    "account_checks": 15,
+    "forbidden_cases": 7,
+    "report_privacy_samples": 8,
+    "page_errors": 0,
+    "native_speech_verified": false,
+    "role_viewport_pages": 116,
+    "review_loading_failure_cases": 4,
+    "draft_checks": 7
   },
-  "full_suite": {
-    "tests": 190,
-    "database": "sqlite :memory:",
-    "assertions": 1705,
-    "status": "pass"
-  },
-  "npm_vulnerabilities": 0,
+  "branch": "codex/i4-gpt-classic-handoff-2026-10-14",
   "export_added": false,
-  "i4": "in_progress",
-  "cleanup": {
-    "demo_removed": true,
-    "port_8766_closed": true
+  "i4": "complete_technical_scope",
+  "runtime_mysql_rows_mutated": false,
+  "security": {
+    "target": "6a914e7c32401880e59c0d2ce3cb75ebe7100a40",
+    "report": "C:\\Users\\User\\.codex\\state\\plugins\\codex-security\\scans\\sim-pbri\\6a914e7c32401880e59c0d2ce3cb75ebe7100a40_20261014T032704Z_y252lcov\\report.md",
+    "report_sha256": "aa3336e5a3c2774420bc3edd91dc2e125888f42c5f983c588c2eb9e4a6a0c011",
+    "delta_review": {
+      "concrete_remaining_findings": 0,
+      "independent": "static",
+      "baseline": "6a914e7",
+      "head": "8ec55d2890ec16a669f5252b3c8aa91a29b9d6f6"
+    },
+    "findings": {
+      "medium": 1,
+      "unresolved_on_current_source": 0
+    },
+    "status": "complete",
+    "token_usage": {
+      "total": 459016859,
+      "source": "tool_codex_rollout_aggregate_9threads",
+      "limitation": "Aggregate includes long resumed conversation history and cached context; not marginal token consumption of this final slice."
+    },
+    "scan_id": "42a2fa7a-05b1-44cb-9018-4394ab93913f",
+    "workbench_original_triage": "open_on_old_revision_not_retroactively_changed"
   },
-  "encrypted_session_suite": {
-    "tests": 190,
-    "assertions": 1705,
-    "status": "pass"
+  "automated": {
+    "pint": "pass",
+    "npm_vulnerabilities": 0,
+    "simulator_concurrency": {
+      "pass": true,
+      "cases": 2
+    },
+    "composer_advisories_after": 0,
+    "normal": {
+      "assertions": 1707,
+      "exit": 0,
+      "tests": 191
+    },
+    "build": {
+      "modules": 686,
+      "js_gzip_kb": 105.18,
+      "status": "pass"
+    },
+    "scenario_concurrency": {
+      "pass": true,
+      "disposable_schema": true,
+      "cases": 6,
+      "driver": "mysql"
+    },
+    "database": "sqlite :memory:",
+    "encrypted_sessions": {
+      "assertions": 1707,
+      "exit": 0,
+      "tests": 191
+    }
   },
-  "application_head": "6a914e7c32401880e59c0d2ce3cb75ebe7100a40",
-  "resume_checkpoint": {
-    "handoff": "docs/I4_I5_RESUME_CHECKPOINT_2026-10-14.md",
-    "i4": "in_progress",
-    "r2_complete": true,
-    "r1_fixed": true,
-    "i5": "not_started",
-    "evidence": "docs/qa/I4_RESUME_VERIFICATION_2026-10-14.json",
-    "application_head": "01ac3c686fa79f0a34f74a240bb7652d7d8a02a5"
-  }
+  "verdict": {
+    "real_pilot_ready": false,
+    "full_v1_ready_for_senior_review": false
+  },
+  "operations": {
+    "mysql_migrations": "historical_2026-10-14_21ran_0pending_no_schema_changes_since",
+    "encrypted_mysql_restore": "historical_owner_authorized_2026-10-12_pass",
+    "runbook": "docs/DEPLOYMENT_RUNBOOK_V1.md",
+    "real_pilot_gates": "docs/REAL_PILOT_READINESS_GATES.md"
+  },
+  "date": "2026-10-15",
+  "application_head": "8ec55d2890ec16a669f5252b3c8aa91a29b9d6f6"
 }

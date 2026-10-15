@@ -1,326 +1,115 @@
 {
-  "date": "2026-10-12",
-  "branch": "backend/inertia-foundation",
-  "application_head": "25d8a20f3c8badf9f829df664d59b47d742fbf49",
-  "verdict": {
-    "full_v1_ready_for_senior_review": false,
-    "real_pilot_ready": false
+  "i5": "not_started",
+  "deployed": false,
+  "main_merged": false,
+  "source_files": [
+    {
+      "path": "app/Modules/Booking/Actions/CreateBookingAction.php",
+      "sha256": "4b33ab7bf15dfdba3b9ddbf5c5fb5c518c28eec149767d2d440f7afa91fe5dcf"
+    },
+    {
+      "path": "app/Modules/Booking/Http/Controllers/BookingController.php",
+      "sha256": "82572116488193add601650ed566725ef821c767254a91f897ab94a459a5bb94"
+    },
+    {
+      "path": "resources/css/app-shell.css",
+      "sha256": "ef2323850bc06980121f9cf6dbc24e8cc54f12f03be2e2054e8459da7f0bf7ea"
+    },
+    {
+      "path": "tests/Integration/ScenarioConcurrencyCheck.php",
+      "sha256": "5b9aaaeacb0b5cb680ef1c768c0a405c3a9c46d9e09f389f2b8454a7d4ee2fdd"
+    },
+    {
+      "path": "tests/Unit/YamlDependencySafetyTest.php",
+      "sha256": "fdd7eb4ef42db3707a0494a87c5fd1396cd6bd1ee0ad9500186dc4a38f38cd6c"
+    },
+    {
+      "path": "composer.lock",
+      "sha256": "0fb9335c58e1197feefcca56496aeb550a2c2ba8e13379439c05ac7205ae4f43"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "7bc5e768f6304f80d9e3e30f09eb57dc53867f03f3fb529971e0091dc3ebced9"
+    }
+  ],
+  "browser": {
+    "account_checks": 15,
+    "forbidden_cases": 7,
+    "report_privacy_samples": 8,
+    "page_errors": 0,
+    "native_speech_verified": false,
+    "role_viewport_pages": 116,
+    "review_loading_failure_cases": 4,
+    "draft_checks": 7
+  },
+  "branch": "codex/i4-gpt-classic-handoff-2026-10-14",
+  "export_added": false,
+  "i4": "complete_technical_scope",
+  "runtime_mysql_rows_mutated": false,
+  "security": {
+    "target": "6a914e7c32401880e59c0d2ce3cb75ebe7100a40",
+    "report": "C:\\Users\\User\\.codex\\state\\plugins\\codex-security\\scans\\sim-pbri\\6a914e7c32401880e59c0d2ce3cb75ebe7100a40_20261014T032704Z_y252lcov\\report.md",
+    "report_sha256": "aa3336e5a3c2774420bc3edd91dc2e125888f42c5f983c588c2eb9e4a6a0c011",
+    "delta_review": {
+      "concrete_remaining_findings": 0,
+      "independent": "static",
+      "baseline": "6a914e7",
+      "head": "8ec55d2890ec16a669f5252b3c8aa91a29b9d6f6"
+    },
+    "findings": {
+      "medium": 1,
+      "unresolved_on_current_source": 0
+    },
+    "status": "complete",
+    "token_usage": {
+      "total": 459016859,
+      "source": "tool_codex_rollout_aggregate_9threads",
+      "limitation": "Aggregate includes long resumed conversation history and cached context; not marginal token consumption of this final slice."
+    },
+    "scan_id": "42a2fa7a-05b1-44cb-9018-4394ab93913f",
+    "workbench_original_triage": "open_on_old_revision_not_retroactively_changed"
   },
   "automated": {
-    "php_artisan_test": {
-      "status": "pass",
-      "tests": 187,
-      "assertions": 1672,
-      "database": "guarded sqlite :memory:",
-      "runner": "Direct PHPUnit runner with Composer autoload preload; complete tests/ tree; SQLite :memory: and explicit PHPUnit environment",
-      "refreshed_on": "2026-10-12"
+    "pint": "pass",
+    "npm_vulnerabilities": 0,
+    "simulator_concurrency": {
+      "pass": true,
+      "cases": 2
     },
-    "php_artisan_test_session_encrypt_true": {
-      "status": "pass",
-      "tests": 187,
-      "assertions": 1672,
-      "database": "guarded sqlite :memory:",
-      "session_encrypt": "true",
-      "refreshed_on": "2026-10-12",
-      "runner": "php artisan test --no-ansi"
+    "composer_advisories_after": 0,
+    "normal": {
+      "assertions": 1707,
+      "exit": 0,
+      "tests": 191
     },
-    "npm_run_build": {
-      "status": "pass",
+    "build": {
       "modules": 686,
-      "refreshed_on": "2026-10-12"
+      "js_gzip_kb": 105.18,
+      "status": "pass"
     },
-    "pint_test_dirty": {
-      "status": "pass",
-      "scope": "changed PHP files only",
-      "refreshed_on": "2026-10-12"
+    "scenario_concurrency": {
+      "pass": true,
+      "disposable_schema": true,
+      "cases": 6,
+      "driver": "mysql"
     },
-    "composer_audit": {
-      "status": "pass",
-      "advisories": 0,
-      "refreshed_on": "2026-10-12"
-    },
-    "npm_audit": {
-      "status": "pass",
-      "vulnerabilities": 0,
-      "refreshed_on": "2026-10-12"
-    },
-    "runtime_migrations": {
-      "status": "pass",
-      "applied": 21,
-      "last_migration": "2026_10_12_000018_add_room_dimensions",
-      "mode": "fresh read-only status inspection; no migration executed",
-      "pending": 0
-    },
-    "export_route_scan": {
-      "status": "pass",
-      "matches": 0,
-      "scope": "route name and URI export/download scan",
-      "registered_routes": 51
-    },
-    "demo_setup_cleanup": {
-      "status": "pass",
-      "database": "synthetic sqlite under TEMP",
-      "cleanup_port_guard": "pass",
-      "process_identity": "name command_line creation_ticks"
-    },
-    "caller_app_db_environment_restoration": {
-      "status": "pass",
-      "method": "sentinel variables preserved after setup"
-    },
-    "isolated_sqlite_restore": {
-      "status": "pass",
-      "integrity": "ok",
-      "matching_table_row_counts": 26,
-      "production_mysql": "not_verified"
-    },
-    "powershell_parser": {
-      "status": "pass",
-      "file": "scripts/qa/phase-i-demo.ps1"
-    },
-    "php_restore_script_lint": {
-      "status": "pass",
-      "file": "scripts/qa/verify-phase-i-demo-restore.php"
-    },
-    "deployment_runbook": {
-      "status": "drafted_from_source",
-      "target_host_tested": false,
-      "deployment_authorized": false
-    },
-    "git_diff_check": {
-      "status": "pass",
-      "scope": "current candidate"
-    },
-    "mysql_report_date_literal_select": {
-      "status": "pass",
-      "result": "2026-10-16",
-      "scope": "literal-only SELECT DATE(DATE_ADD(... INTERVAL 7 HOUR)); no table read or write"
-    },
-    "export_ui_source_scan": {
-      "scope": "resources/js, app, routes searched for download, Thai export labels, and CSV/XLSX/PDF export terms",
-      "status": "pass",
-      "matches": 0
-    },
-    "current_mysql_aggregate_counts": {
-      "status": "pass",
-      "database": "current configured MySQL",
-      "mode": "read-only COUNT(*) only",
-      "users": 3,
-      "colleges": 1,
-      "sim_resources": 1,
-      "bookings": 0,
-      "simulator_assets": 0,
-      "booking_drafts": 0,
-      "record_contents_read": false,
-      "writes": false
+    "database": "sqlite :memory:",
+    "encrypted_sessions": {
+      "assertions": 1707,
+      "exit": 0,
+      "tests": 191
     }
   },
-  "browser": {
-    "environment": "synthetic isolated sqlite",
-    "admin_account_create_and_hide_one_time_credential": "pass",
-    "staff_role_navigation_and_direct_403": "pass",
-    "staff_same_college_review_contact": "pass_current_isolated_synthetic_sqlite_run",
-    "lecturer_booking_history_and_detail": "pass",
-    "approval_confirmation": "pass_synthetic_fixture_pending_to_approved",
-    "responsive_1440_1024_768_390": "pass_lecturer_booking_form_no_overflow",
-    "credential_change": "not_verified_in_browser",
-    "booking_draft_ui": "pass_save_resume_2026-10-16_09:00-11:00_bangkok",
-    "room_dimensions_ui": "pass_after_hide_change_admin_create_edit_and_lecturer_picker",
-    "previous_localhost_attempt": "earlier isolated attempt had a browser control timeout; this run later verified synthetic Staff approval; no real credentials or institutional data used",
-    "lecturer_draft_save_resume": "pass_current_isolated_synthetic_sqlite_run",
-    "staff_review_queue": "pass_current_isolated_synthetic_sqlite_run",
-    "responsive_lecturer_dashboard_and_booking_form_1440_1024_768_390": "pass_prior_lecturer_dashboard_and_current_booking_form",
-    "room_dimensions_ui_after_hide_change": "pass_admin_create_edit_and_lecturer_picker_no_dimensions_or_area_visible",
-    "admin_room_dimension_create_edit_ui": "pass_no_dimension_inputs_or_area_visible",
-    "staff_same_college_review_contact_and_room_snapshot": "pass_synthetic_fixture",
-    "lecturer_booking_room_picker_dimensions": "pass_no_dimensions_or_area_visible",
-    "staff_draft_privacy": "pass_draft_not_visible_in_staff_queue",
-    "lecturer_booking_form_responsive_1440_1024_768_390": "pass_no_horizontal_overflow",
-    "staff_review_responsive_390": "pass_no_horizontal_overflow",
-    "admin_resources_responsive": "pass_no_horizontal_overflow_1440_1024_768_390",
-    "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
-    "keyboard_screen_reader": "not_verified_end_to_end",
-    "admin_resource_validation_error_accessibility": "pass_server_validation_role_alert_aria_invalid_and_describedby_target_resolves",
-    "keyboard_focus_spot_check": "pass_sampled_tab_focus_outline_2_4px_solid; not_full_keyboard_or_screen_reader_run",
-    "mobile_navigation_escape": "pass_390px_escape_closes_menu_aria_expanded_false_focus_returned_with_visible_indicator",
-    "staff_queue_empty_after_approval": "pass_pending_count_1_to_0_empty_state_displayed_in_synthetic_sqlite",
-    "staff_report_finance_redaction": "pass_approved_usage_populated_no_financial_labels_or_export_links",
-    "lecturer_draft_ui": "pass_save_resume_16_oct_2026_09_00_to_11_00_then_submit_pending_draft_removed",
-    "lecturer_to_staff_end_to_end": "pass_synthetic_lecturer_draft_resume_submit_staff_approval_approved_history",
-    "staff_rejected_history_zero_state": "pass_current_synthetic_staff_page_zero_results",
-    "staff_keyboard_and_filter_labels": "pass_skip_link_nav_menu_tab_focus_status_date_labels; spot_check_only",
-    "staff_review_console_errors": "none_observed_current_synthetic_review_page"
+  "verdict": {
+    "real_pilot_ready": false,
+    "full_v1_ready_for_senior_review": false
   },
-  "database_changes": {
-    "runtime_mysql_migrations_applied": true,
-    "application_fixtures_seeded_into_mysql": false,
-    "existing_booking_snapshots_backfilled": false,
-    "booking_drafts_table_created": true,
-    "booking_drafts_row_count": 0,
-    "existing_application_rows_modified": false,
-    "room_dimension_columns_added": true,
-    "existing_rooms_populated_with_dimensions": false
+  "operations": {
+    "mysql_migrations": "historical_2026-10-14_21ran_0pending_no_schema_changes_since",
+    "encrypted_mysql_restore": "historical_owner_authorized_2026-10-12_pass",
+    "runbook": "docs/DEPLOYMENT_RUNBOOK_V1.md",
+    "real_pilot_gates": "docs/REAL_PILOT_READINESS_GATES.md"
   },
-  "limitations": [
-    "Original project_sim_flow_v12.md and complete gap analysis unavailable; traceability is not source-complete.",
-    "The MySQL date-grouping expression was validated with a literal-only SELECT; SQL aggregation over actual MySQL booking rows was not exercised.",
-    "Senior review candidate verdict remains NOT YET READY.",
-    "Real Pilot remains NOT YET READY.",
-    "End-to-end keyboard/screen-reader and complete cross-role zero/error/loading browser checks remain incomplete; the 390px mobile-menu Escape/focus-return path, sampled focus, and one server validation path passed.",
-    "Rehearsal of the integrated Admin/Staff/Lecturer demo remains; Senior feedback is intentionally post-delivery, and owner acceptance is a Real Pilot gate.",
-    "A user-authorized temporary local MySQL AES-256-GCM backup/restore drill passed for exact row counts across 27 tables; source counts were unchanged and temporary artifacts were deleted. Institution-approved production schedule, off-host retention, access control and recovery targets remain unverified."
-  ],
-  "verification_refresh": {
-    "date": "2026-10-12",
-    "candidate_uncommitted": false,
-    "branch": "backend/inertia-foundation",
-    "test_default": {
-      "status": "pass",
-      "tests": 187,
-      "assertions": 1672,
-      "database": "guarded sqlite :memory:"
-    },
-    "test_session_encrypt_true": {
-      "status": "pass",
-      "tests": 187,
-      "assertions": 1672
-    },
-    "build_modules": 686,
-    "pint_changed_php": "pass",
-    "composer_audit": "0 advisories",
-    "npm_audit": "0 vulnerabilities",
-    "git_diff_check": "pass",
-    "timezone": "Asia/Bangkok confirmed by owner; UTC persisted; no timestamp conversion",
-    "room_dimensions": "hidden from all UI and omitted from Admin/booking page props; schema and values preserved",
-    "runtime_migrations": "fresh read-only migrate:status; all 21 Ran, 0 pending; no migration executed",
-    "export_download_route_scan": "0 matches among 51 registered routes",
-    "browser_workflows_repeated": true,
-    "runtime_mysql_changes_this_slice": "temporary restore-test schema created and dropped; source application schema/data unchanged",
-    "implementation_commit": "47552b4",
-    "branch_ahead_of_origin_before_push": 0,
-    "admin_dimension_forms": "browser verified on isolated synthetic SQLite",
-    "staff_approval": "browser verified; pending queue moved to approved history",
-    "lecturer_draft": "saved_and_resumed_2026-10-16_09:00-11:00_Bangkok; submitted_as_pending; draft_removed_on_success",
-    "lecturer_responsive": "1440/1024/768/390 no overflow",
-    "staff_responsive": "390 no overflow; other widths not freshly measured",
-    "mysql_date_add_literal_select": "pass; expected Bangkok date; no table queried",
-    "demo_cleanup": "pass; port 8766 closed and TEMP demo removed",
-    "admin_responsive": "pass_no_overflow_1440_1024_768_390",
-    "browser_reject_cancel": "pass_synthetic_staff_reject_and_lecturer_cancel",
-    "application_head": "47552b4f0e1592bda303d3c8ac6d439dd1832e3e",
-    "branch_ahead_after_push": 0,
-    "full_suite_after_mobile_escape_fix": "187 passed / 1672 assertions; guarded sqlite :memory:",
-    "mobile_menu_escape": "390px: aria-expanded=false, focus returned to toggle, focus-visible true",
-    "staff_report_privacy": "approved usage populated; no financial labels or export/download links",
-    "staff_queue_empty_state": "pending count moved from 1 to 0 after synthetic approval",
-    "runbook_timezone_and_migration_facts": "updated to Asia/Bangkok booking/report semantics and 21 migration read-only QA snapshot",
-    "lecturer_to_staff_workflow": "pass_same_synthetic_sqlite_demo_staff_approved_and_history_showed_request",
-    "senior_walkthrough": "partial; Admin report and Staff queue cross-checked after timezone correction; native confirm path blocked CUA input; prior Lecturer-to-Staff approval flow passed; full integrated rehearsal remains",
-    "export_source_scan": "0 matching user-facing source terms in resources/js, app, routes",
-    "mysql_encrypted_backup_restore": "pass_AES-256-GCM; isolated temporary schema; exact row counts match across 27 tables; source counts unchanged; temp file/schema deleted",
-    "lecturer_form_accessibility_spot_check": "all visible controls named; 2.4px focus outline; role=status capacity help; over-capacity submit disabled; no request sent; synthetic SQLite only",
-    "demo_seed_bangkok_timezone": "pass; fixture times stored as UTC instants from Bangkok wall time; browser displayed 09:00-11:00 approved and 13:00-15:00 pending",
-    "admin_staff_integrated_rehearsal": "partial; Admin report and Staff review details verified in same SQLite fixture; approval path uses native window.confirm and CUA CDP input timed out before POST; DB remained 1 approved / 1 pending; cleanup confirmed",
-    "full_suite_after_demo_timezone_fix": "187 passed / 1672 assertions; guarded sqlite :memory:"
-  },
-  "secrets_or_personal_data_included": false,
-  "candidate_uncommitted": false,
-  "current_follow_up": {
-    "date": "2026-10-12",
-    "code_baseline": "bebd6de4d0368c09438a937091826cf848179aa3",
-    "commit_status": "committed_locally_unpushed_not_merged_to_main; branch ahead 5",
-    "committed_change_scope": [
-      "resources/js/Modules/Booking/Pages/Review.vue",
-      "tests/Feature/Booking/BookingStateTransitionTest.php"
-    ],
-    "php_artisan_test": {
-      "status": "pass",
-      "tests": 189,
-      "assertions": 1700,
-      "database": "guarded sqlite :memory:"
-    },
-    "user_management_test": {
-      "status": "pass",
-      "tests": 13,
-      "assertions": 141
-    },
-    "npm_run_build": {
-      "status": "pass",
-      "modules": 686
-    },
-    "pint_changed_php": "pass",
-    "git_diff_check": "pass",
-    "codex_security_diff_scan": {
-      "status": "complete",
-      "scan_id": "3bb54aee-bdf1-41bd-a7ec-d3d2b90d587a",
-      "base": "883b7440d6140eeed5885a8590844d03c6f1f79d",
-      "head": "048828fcfa3255dd26109cc8be1cef57ab9d2f6e",
-      "reviewed_source_files": 3,
-      "findings": 0,
-      "scope": "branch diff only; not a full-repository security scan"
-    },
-    "composer_audit": "not_run_auto_review_rejected_429",
-    "npm_audit": "not_rerun_lockfiles_unchanged",
-    "browser": {
-      "admin_post_login_csrf": "pass_duplicate_email_request_after_login_without_hard_reload_returned_validation_not_419",
-      "duplicate_email_validation": "pass_thai_message_aria_invalid_true_describedby_resolves",
-      "admin_report": "pass_approved_usage_and_admin_only_financial_statistics_visible",
-      "staff_login": "pass_synthetic_demo_staff_login",
-      "staff_approval_confirmation": "pass_native_confirmation_accepted_POST_302_visible_role_status_queue_empty_approved_history",
-      "staff_approval_responsive": "pass_390px_no_horizontal_overflow",
-      "page_errors": "none",
-      "demo_cleanup": "pass_port_8766_closed_and_temp_directory_removed"
-    },
-    "mysql": "not accessed or changed during this slice",
-    "codex_security_diff_scan_patch": "not_run; earlier scan does not cover this UI-only patch",
-    "senior_review_candidate": "not_yet_ready; traceability source and end-to-end accessibility/error/loading gates remain"
-  },
-  "continuation_2026_10_12": {
-    "head": "0b3bf6c536a0805a68c1b121a53ab49003ec2fa3",
-    "branch": "backend/inertia-foundation",
-    "ahead_of_origin": 8,
-    "pushed": false,
-    "merged_to_main": false,
-    "changes": [
-      "Admin account search empty state gains role=status"
-    ],
-    "build": {
-      "status": "pass",
-      "modules": 686
-    },
-    "php_suite": {
-      "status": "not_run_auto_review_429",
-      "previous_commit_result": "189 tests / 1700 assertions before Vue-only commit"
-    },
-    "browser_accessibility": {
-      "admin_no_results_status_region": "pass",
-      "admin_staff_keyboard_spot_checks": "pass",
-      "lecturer_form_names_and_24h_time": "pass",
-      "screen_reader": "not_run"
-    },
-    "demo_cleanup": "pass; SQLite temp removed; port 8766 closed",
-    "mysql_cache_clear_incident": {
-      "command": "php artisan optimize:clear ran outside isolated demo environment",
-      "config": "DB_CONNECTION=mysql; CACHE_STORE=database",
-      "read_only_counts_after": "cache=0; cache_locks=0",
-      "pre_command_counts": "unknown",
-      "restore_attempted": false,
-      "details": "docs/incidents/2026-10-12-cache-clear-during-ui-qa.md"
-    },
-    "senior_review_candidate": "not_yet_ready"
-  },
-  "verification_i1_i2_2026_10_14": {
-    "source_baseline": "e52282d6545f2ae813edafe2ad7dc53d5e006b1b",
-    "evidence": "docs/qa/I1_I2_VERIFICATION.json",
-    "i1": "done_for_accepted_functional_scope",
-    "i2": "done_for_accepted_functional_scope",
-    "targeted_tests": 64,
-    "assertions": 475,
-    "full_suite_rerun": false,
-    "account_browser_checks": 15,
-    "draft_browser_checks": 7,
-    "mysql_access": false,
-    "application_source_changed": false,
-    "demo_cleanup": "verified_port_closed_temp_demo_removed",
-    "full_v1_ready": false
-  }
+  "date": "2026-10-15",
+  "application_head": "8ec55d2890ec16a669f5252b3c8aa91a29b9d6f6"
 }

@@ -1,0 +1,8 @@
+{
+  "normal_exit": 0,
+  "session": "array",
+  "date": "2026-10-15",
+  "cache": "array",
+  "database": "sqlite :memory:",
+  "encrypted_exit": 0
+}
