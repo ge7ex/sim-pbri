@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "Setup: refused safely",
+    "Start: refused safely"
+  ],
+  "database_preserved": true,
+  "credentials_preserved": true,
+  "listener_preserved": true,
+  "syntax": "pass"
+}

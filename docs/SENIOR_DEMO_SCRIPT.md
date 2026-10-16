@@ -12,11 +12,19 @@ From the repository root in PowerShell:
 .\scripts\qa\phase-i-demo.ps1 -Action Setup
 ```
 
-The script creates a dedicated SQLite database under `%TEMP%\sim-pbri-phase-i-demo`, generates a random APP_KEY and three random sign-in credentials, migrates the isolated database, and starts Laravel on `http://127.0.0.1:8766`. The credential file is protected by a Windows ACL for the current user. Read the credentials only on the local machine; do not paste them into reports, chat, tickets, or Git.
+The script creates a dedicated SQLite database under `%TEMP%\sim-pbri-phase-i-demo`, generates a random APP_KEY and three random sign-in credentials, migrates the isolated database, and starts Laravel on `http://127.0.0.1:8766`. The credential file is protected by a Windows ACL for the current user. Keep credentials out of reports, tickets and Git. Deliver these synthetic local credentials privately to the owner when explicitly requested; they are not production accounts.
 
 Setup restores the caller's prior APP/DB environment variables after launching the isolated server. Cleanup verifies the recorded process name, command line, and creation ticks and refuses to delete TEMP data while port 8766 is still listening.
 
-After the walkthrough:
+To reopen a stopped existing demo without deleting or reseeding its data:
+
+```powershell
+.\scripts\qa\phase-i-demo.ps1 -Action Start
+```
+
+Start preserves the database and credentials. Browser sessions may require a fresh login after restart. Do not use Cleanup to restart a demo.
+
+Only when the owner is finished and wants to delete the isolated demo:
 
 ```powershell
 .\scripts\qa\phase-i-demo.ps1 -Action Cleanup

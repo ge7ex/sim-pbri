@@ -34,7 +34,7 @@ foreach ([
     'lecturer' => 'อาจารย์ตัวอย่าง',
 ] as $role => $name) {
     $email = $role.'@example.test';
-    $password = Str::password(28, true, true, true, true);
+    $password = Str::password(28, true, true, true, false);
     $users[$role] = User::query()->forceCreate([
         'college_id' => $college->id,
         'name' => $name,

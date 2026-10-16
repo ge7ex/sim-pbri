@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-16",
+  "origin": "http://127.0.0.1:8766",
+  "roles": [
+    {
+      "role": "ADMIN",
+      "email": "admin@example.test",
+      "login": "pass",
+      "role_page_http": 200
+    },
+    {
+      "role": "STAFF",
+      "email": "staff@example.test",
+      "login": "pass",
+      "role_page_http": 200
+    },
+    {
+      "role": "LECTURER",
+      "email": "lecturer@example.test",
+      "login": "pass",
+      "role_page_http": 200
+    }
+  ],
+  "status": "pass"
+}

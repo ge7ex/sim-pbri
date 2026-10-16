@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('Setup', 'Cleanup')]
+    [ValidateSet('Setup', 'Start', 'Cleanup')]
     [string] $Action = 'Setup'
 )
 
@@ -56,33 +56,48 @@ if ($Action -eq 'Cleanup') {
     exit 0
 }
 
-if (Test-Path -LiteralPath $demoRoot) {
-    throw "Demo directory already exists. Run Cleanup first: $demoRoot"
+if ($Action -eq 'Setup' -and (Test-Path -LiteralPath $demoRoot)) {
+    throw "Demo directory already exists. Use Start to preserve it: $demoRoot"
 }
 if (Test-Path -LiteralPath (Join-Path $repoRoot 'bootstrap\cache\config.php')) {
     throw 'Laravel config is cached; refusing to start until the project config cache is cleared through the normal local workflow.'
 }
 if (Get-NetTCPConnection -State Listen -LocalPort 8766 -ErrorAction SilentlyContinue) {
-    throw 'Port 8766 is already in use. Stop the existing isolated QA server before setup.'
+    throw 'Port 8766 is already in use. Stop the existing isolated QA server before starting.'
 }
 
-New-Item -ItemType Directory -Path $demoRoot | Out-Null
-$identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-$acl = Get-Acl -LiteralPath $demoRoot
-$acl.SetAccessRuleProtection($true, $false)
-$rule = [Security.AccessControl.FileSystemAccessRule]::new(
-    $identity.User,
-    [Security.AccessControl.FileSystemRights]::FullControl,
-    [Security.AccessControl.InheritanceFlags]'ContainerInherit, ObjectInherit',
-    [Security.AccessControl.PropagationFlags]::None,
-    [Security.AccessControl.AccessControlType]::Allow
-)
-$acl.SetAccessRule($rule)
-Set-Acl -LiteralPath $demoRoot -AclObject $acl
-
 $databasePath = Join-Path $demoRoot 'sim-pbri-phase-i-demo.sqlite'
-New-Item -ItemType File -Path $databasePath | Out-Null
+if ($Action -eq 'Setup') {
+    New-Item -ItemType Directory -Path $demoRoot | Out-Null
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $acl = Get-Acl -LiteralPath $demoRoot
+    $acl.SetAccessRuleProtection($true, $false)
+    $rule = [Security.AccessControl.FileSystemAccessRule]::new(
+        $identity.User,
+        [Security.AccessControl.FileSystemRights]::FullControl,
+        [Security.AccessControl.InheritanceFlags]'ContainerInherit, ObjectInherit',
+        [Security.AccessControl.PropagationFlags]::None,
+        [Security.AccessControl.AccessControlType]::Allow
+    )
+    $acl.SetAccessRule($rule)
+    Set-Acl -LiteralPath $demoRoot -AclObject $acl
 
+    New-Item -ItemType File -Path $databasePath | Out-Null
+} else {
+    foreach ($existingPath in @($demoRoot, $databasePath, (Join-Path $demoRoot 'credentials.txt'))) {
+        if (-not (Test-Path -LiteralPath $existingPath) -or
+            ((Get-Item -LiteralPath $existingPath).Attributes -band [IO.FileAttributes]::ReparsePoint)) {
+            throw 'Start requires the existing non-linked demo directory, SQLite database and credentials. Use Setup only for a new demo.'
+        }
+    }
+    $stream = [IO.File]::OpenRead($databasePath)
+    try {
+        $header = [byte[]]::new(16)
+        if ($stream.Read($header, 0, 16) -ne 16 -or [Text.Encoding]::ASCII.GetString($header) -ne "SQLite format 3`0") {
+            throw 'Existing demo file is not a SQLite database.'
+        }
+    } finally { $stream.Dispose() }
+}
 $isolatedEnvironmentNames = @(
     'APP_ENV', 'APP_DEBUG', 'APP_URL', 'APP_KEY', 'DB_CONNECTION', 'DB_DATABASE',
     'DB_URL', 'DATABASE_URL', 'SESSION_DRIVER', 'CACHE_STORE', 'QUEUE_CONNECTION',
@@ -109,12 +124,14 @@ try {
     $env:MAIL_MAILER = 'array'
     $env:LARAVEL_STORAGE_PATH = Join-Path $demoRoot 'storage'
 
-    & php artisan migrate --force --no-interaction
-    if ($LASTEXITCODE -ne 0) { throw 'Isolated demo migrations failed.' }
-    $seedOutput = & php (Join-Path $repoRoot 'scripts\qa\seed-phase-i-demo.php') 2>&1
-    $seedExitCode = $LASTEXITCODE
-    $seedOutput | Write-Output
-    if ($seedExitCode -ne 0 -or ($seedOutput -join "`n") -notmatch 'Seeded fictional') { throw 'Synthetic demo fixture seeding failed.' }
+    if ($Action -eq 'Setup') {
+        & php artisan migrate --force --no-interaction
+        if ($LASTEXITCODE -ne 0) { throw 'Isolated demo migrations failed.' }
+        $seedOutput = & php (Join-Path $repoRoot 'scripts\qa\seed-phase-i-demo.php') 2>&1
+        $seedExitCode = $LASTEXITCODE
+        $seedOutput | Write-Output
+        if ($seedExitCode -ne 0 -or ($seedOutput -join "`n") -notmatch 'Seeded fictional') { throw 'Synthetic demo fixture seeding failed.' }
+    }
 
     $server = Start-Process -FilePath 'C:\xampp\php\php.exe' `
         -ArgumentList @('artisan', 'serve', '--host=127.0.0.1', '--port=8766', '--no-reload') `
@@ -163,20 +180,26 @@ try {
     }
     Start-Sleep -Milliseconds 300
     if (Get-NetTCPConnection -State Listen -LocalPort 8766 -ErrorAction SilentlyContinue) {
-        throw "Setup failed while port 8766 still listens; demo data was preserved at $demoRoot for safe cleanup."
+        throw "Demo startup failed while port 8766 still listens; demo data was preserved at $demoRoot for safe cleanup."
     }
-    if (Test-Path -LiteralPath $demoRoot) { Remove-Item -LiteralPath $demoRoot -Recurse -Force }
+    if ($Action -eq 'Setup' -and (Test-Path -LiteralPath $demoRoot)) { Remove-Item -LiteralPath $demoRoot -Recurse -Force }
     throw
 } finally {
     try {
         Pop-Location
     } finally {
         foreach ($name in $isolatedEnvironmentNames) {
-            [Environment]::SetEnvironmentVariable($name, $originalEnvironment[$name], 'Process')
+            if ($null -eq $originalEnvironment[$name]) {
+                $environmentPath = 'Env:\' + $name
+                if (Test-Path -LiteralPath $environmentPath) { Remove-Item -LiteralPath $environmentPath }
+            } else {
+                [Environment]::SetEnvironmentVariable($name, $originalEnvironment[$name], 'Process')
+            }
         }
     }
 }
 
 Write-Output 'Synthetic demo is ready at http://127.0.0.1:8766'
 Write-Output "Random demo sign-in credentials are in: $(Join-Path $demoRoot 'credentials.txt')"
-Write-Output 'Use Cleanup after the walkthrough. No real MySQL data is used.'
+Write-Output 'Use Start to reopen existing demo data; Cleanup deletes it after the walkthrough. No real MySQL data is used.'
+if ($Action -eq 'Start') { Write-Output 'Existing demo database and passwords preserved. Old browser sessions may require a new login after restart.' }

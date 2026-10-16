@@ -1,0 +1,10 @@
+{
+  "credentials_preserved": true,
+  "caller_db_env_null_before": true,
+  "caller_db_env_restored": true,
+  "mysql_access": false,
+  "sqlite_bytes_preserved": true,
+  "date": "2026-10-16",
+  "login_http": 200,
+  "caller_db_env_null_after": true
+}
