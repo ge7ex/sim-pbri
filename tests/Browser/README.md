@@ -15,3 +15,9 @@ Fresh executed results and red-before/green-after evidence: `docs/qa/PILOT_UAT_V
 ## Review action loading/failure regression
 
 `ReviewLoadingCheck.js` is a Playwright CLI run-code function. Use only the guarded synthetic Phase I demo at `http://127.0.0.1:8766`, signed in as its Staff with a pending booking in Senior Demo College. Run `playwright-cli --session <isolated-session> run-code --filename tests/Browser/ReviewLoadingCheck.js`. It intercepts approval/rejection responses and asserts duplicate-event protection, loading, validation, network/503 recovery and feedback focus. Intercepted actions do not write to the database. Results are in `docs/qa/I3_VERIFICATION.json`. Setup and cleanup: `scripts/qa/phase-i-demo.ps1`; never use runtime MySQL.
+
+## Modal, calendar and registry workflow regression
+
+`UiWorkflowCheck.js` is an async Playwright run-code function for each synthetic Admin, Staff and Lecturer session on `http://127.0.0.1:8766`. It refuses a different origin/College. Requires at least one pending review, an own cancellable Lecturer booking, and simulator type/assets. It intercepts all mutation requests it tests; it does not approve, recall, cancel or edit stored records. Recall uses an intercepted approved UI status because the retained demo may have no approved record; this is UI evidence, not a claim of database transition coverage. Backend transition and authorization coverage remains in PHPUnit.
+
+Set `SIM_UI_SCREENSHOT_DIR` to an existing local output directory before running. The function captures synthetic UI screenshots there. Run in separate authenticated contexts for each role, then run `ReviewLoadingCheck.js` as Staff. Never use runtime MySQL or port 8000. Fresh results: `docs/qa/UI_WORKFLOW_2026-10-16.json`.

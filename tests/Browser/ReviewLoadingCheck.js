@@ -29,6 +29,7 @@ async (page) => {
                 const button = action === 'approve' ? page.locator('button.approve') : page.getByRole('button', { name: 'ไม่อนุมัติ', exact: true });
                 await button.focus();
                 await page.keyboard.press('Enter');
+                await page.getByRole('dialog').getByRole('button', { name: action === 'approve' ? 'ยืนยันอนุมัติ' : 'ยืนยันไม่อนุมัติ', exact: true }).click();
                 let timeout;
                 try {
                     await Promise.race([ready, new Promise((_, reject) => { timeout = setTimeout(() => reject(new Error('Review request not observed')), 10000); })]);
@@ -63,6 +64,7 @@ async (page) => {
                 : route.fulfill({ status: 503, contentType: 'text/plain', body: 'Synthetic service failure' }));
             try {
                 await page.locator('button.approve').click();
+                await page.getByRole('dialog').getByRole('button', { name: 'ยืนยันอนุมัติ', exact: true }).click();
                 const message = failure === 'network' ? 'เชื่อมต่อระบบไม่ได้' : 'ระบบตอบกลับไม่สำเร็จ';
                 await page.getByRole('alert').filter({ hasText: message }).waitFor();
                 await page.waitForFunction(() => document.querySelector('.review-actions')?.getAttribute('aria-busy') === 'false');

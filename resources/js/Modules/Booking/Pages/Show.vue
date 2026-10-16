@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
+import ConfirmDialog from '../../../Components/ConfirmDialog.vue';
 import PageHeader from '../../../Components/PageHeader.vue';
 import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
@@ -65,21 +66,21 @@ const canRecall = computed(() =>
     && ['approved', 'rejected'].includes(props.booking.status),
 );
 
-function cancelBooking(): void {
-    if (window.confirm('ยืนยันยกเลิกคำขอนี้หรือไม่')) {
-        router.post(`/app/bookings/${props.booking.id}/cancel`);
-    }
-}
-
-function recallBooking(): void {
-    const reason = recallReason.value.trim();
-    if (!reason || !window.confirm('ยืนยันเรียกกลับรายการนี้เข้าสถานะรอตรวจสอบหรือไม่')) {
-        return;
-    }
-
-    router.post(`/app/bookings/${props.booking.id}/recall`, {
-        confirmed: true,
-        reason,
+const confirmation = ref<'cancel' | 'recall' | null>(null);
+const actionProcessing = ref(false);
+const actionError = ref('');
+function cancelBooking(): void { if (!actionProcessing.value) confirmation.value = 'cancel'; }
+function recallBooking(): void { if (!actionProcessing.value && recallReason.value.trim()) confirmation.value = 'recall'; }
+function confirmAction(): void {
+    if (!confirmation.value || actionProcessing.value) return;
+    const action = confirmation.value;
+    if (action === 'recall' && !recallReason.value.trim()) return;
+    actionProcessing.value = true;
+    actionError.value = '';
+    router.post(`/app/bookings/${props.booking.id}/${action}`, action === 'recall' ? { confirmed: true, reason: recallReason.value.trim() } : {}, {
+        onFinish: () => { actionProcessing.value = false; confirmation.value = null; },
+        onNetworkError: () => { actionError.value = 'เชื่อมต่อระบบไม่ได้ กรุณาตรวจสอบสถานะก่อนลองอีกครั้ง'; return false; },
+        onHttpException: () => { actionError.value = 'ระบบตอบกลับไม่สำเร็จ กรุณาตรวจสอบสถานะก่อนลองอีกครั้ง'; return false; },
     });
 }
 </script>
@@ -88,6 +89,7 @@ function recallBooking(): void {
     <Head :title="`รายละเอียดคำขอ #${booking.id}`" />
     <AppLayout :user="page.props.auth.user" :permissions="page.props.auth.permissions">
         <PageHeader :title="`รายละเอียดคำขอ #${booking.id}`"><Link class="button-secondary" href="/app/bookings">กลับประวัติการจอง</Link><BookingStatusBadge :status="booking.status" /></PageHeader>
+        <p v-if="actionError" class="action-errors" role="alert">{{ actionError }}</p>
         <div v-if="Object.keys(page.props.errors).length" class="action-errors" role="alert"><p v-for="(error, key) in page.props.errors" :key="key">{{ error }}</p></div>
 
         <section class="panel"><SectionHeader title="ข้อมูลคำขอและช่วงเวลา" /><div class="detail-grid">
@@ -169,12 +171,17 @@ function recallBooking(): void {
         </section>
 
         <section v-if="canCancel || canRecall" class="panel"><SectionHeader title="การดำเนินการ" description="ยกเลิกหรือเรียกกลับตามสิทธิ์และสถานะปัจจุบันของคำขอ" /><div class="actions">
-            <button v-if="canCancel" type="button" @click="cancelBooking">ยกเลิกคำขอ</button>
+            <button v-if="canCancel" type="button" :disabled="actionProcessing" @click="cancelBooking">ยกเลิกคำขอ</button>
             <div v-if="canRecall" class="recall">
                 <label>เหตุผลที่เรียกกลับ<textarea v-model="recallReason" rows="3" maxlength="2000"></textarea></label>
-                <button type="button" :disabled="!recallReason.trim()" @click="recallBooking">เรียกกลับเพื่อตรวจสอบใหม่</button>
+                <button type="button" :disabled="actionProcessing || !recallReason.trim()" @click="recallBooking">เรียกกลับเพื่อตรวจสอบใหม่</button>
             </div>
         </div></section>
+        <ConfirmDialog :open="confirmation !== null" :busy="actionProcessing"
+            :title="confirmation === 'recall' ? 'ยืนยันเรียกกลับเพื่อตรวจสอบใหม่' : 'ยืนยันยกเลิกคำขอ'"
+            :description="confirmation === 'recall' ? `คำขอ #${booking.id} จะเปลี่ยนจาก${bookingStatusLabel(booking.status)}เป็นรอตรวจสอบ และต้องได้รับการพิจารณาอีกครั้ง\nเหตุผล: ${recallReason.trim()}` : `คำขอ #${booking.id} จะถูกยกเลิกและคืนช่วงเวลาที่จองไว้`"
+            :confirm-label="confirmation === 'recall' ? 'ยืนยันเปลี่ยนเป็นรอตรวจสอบ' : 'ยืนยันยกเลิกคำขอ'"
+            @close="confirmation = null" @confirm="confirmAction" />
     </AppLayout>
 </template>
 

@@ -42,7 +42,7 @@ final class BookingPrivacyTest extends TestCase
         ]);
 
         $this->actingAs($viewer)
-            ->get('/app/calendar')
+            ->get('/app/calendar?date_from=2026-10-01&date_to=2026-10-31')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Modules/Booking/Pages/Calendar')

@@ -30,13 +30,13 @@ final class BookingRelationPrivacyTest extends TestCase
             }
         }
         $this->actingAs($actor);
-        foreach (['/app/bookings', '/app/review', '/app/calendar', '/app/bookings/'.$malformed->id, '/app/bookings/'.$own->id] as $url) {
+        foreach (['/app/bookings', '/app/review', '/app/calendar?date_from=2026-10-01&date_to=2026-10-31', '/app/bookings/'.$malformed->id, '/app/bookings/'.$own->id] as $url) {
             $response = $this->get($url)->assertOk();
             $payload = json_encode($response->inertiaProps());
             $this->assertStringNotContainsString('FOREIGN SECRET', $payload, $url);
             $this->assertStringContainsString('OWN RESOURCE', $payload, $url);
             $this->assertStringContainsString('Preserved requester snapshot', $payload, $url);
-            if ($url !== '/app/calendar') {
+            if (! str_starts_with($url, '/app/calendar')) {
                 $this->assertStringContainsString('OWN ACTOR', $payload, $url);
             }
         }

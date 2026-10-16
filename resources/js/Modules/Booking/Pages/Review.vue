@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
+import ConfirmDialog from '../../../Components/ConfirmDialog.vue';
 import PageHeader from '../../../Components/PageHeader.vue';
 import SectionHeader from '../../../Components/SectionHeader.vue';
 import AppLayout from '../../../Layouts/AppLayout.vue';
@@ -32,14 +33,19 @@ const selectedBooking = computed(() => props.bookings.data.find((item) => item.i
 watch(() => props.bookings.data, (items) => { if (!items.some((item) => item.id === selectedId.value)) selectedId.value = items[0]?.id ?? null; });
 const page = usePage<SharedProps>();
 const reasons = reactive<Record<number, string>>({});
+const confirmation = ref<{ id: number; action: 'approve' | 'reject' } | null>(null);
 const pendingAction = ref<'approve' | 'reject' | null>(null);
 const requestError = ref('');
+const reviewRequested = ref(false);
 const reviewFeedback = ref<HTMLElement | null>(null);
 function focusFeedback(): void { void nextTick(() => reviewFeedback.value?.focus()); }
+function afterConfirmationClosed(): void {
+    if (reviewRequested.value) { reviewRequested.value = false; focusFeedback(); }
+}
 const reviewVisitOptions = {
     onSuccess: focusFeedback,
     onError: focusFeedback,
-    onFinish: () => { pendingAction.value = null; },
+    onFinish: () => { pendingAction.value = null; confirmation.value = null; },
     onNetworkError: () => {
         requestError.value = 'เชื่อมต่อระบบไม่ได้ กรุณาตรวจสอบสถานะคำขอก่อนลองอีกครั้ง';
         focusFeedback();
@@ -57,22 +63,20 @@ function simulatorStatusLabel(status: string): string {
 }
 
 function approve(id: number): void {
-    if (pendingAction.value || !window.confirm('ยืนยันอนุมัติคำขอนี้หรือไม่')) {
-        return;
-    }
-    requestError.value = '';
-    pendingAction.value = 'approve';
-    router.post(`/app/bookings/${id}/approve`, {}, reviewVisitOptions);
+    if (!pendingAction.value) confirmation.value = { id, action: 'approve' };
 }
-
 function reject(id: number): void {
+    if (!pendingAction.value && (reasons[id] ?? '').trim()) confirmation.value = { id, action: 'reject' };
+}
+function confirmReview(): void {
+    if (!confirmation.value || pendingAction.value) return;
+    const { id, action } = confirmation.value;
     const reason = (reasons[id] ?? '').trim();
-    if (pendingAction.value || !reason) {
-        return;
-    }
+    if (action === 'reject' && !reason) return;
     requestError.value = '';
-    pendingAction.value = 'reject';
-    router.post(`/app/bookings/${id}/reject`, { reason }, reviewVisitOptions);
+    pendingAction.value = action;
+    reviewRequested.value = true;
+    router.post(`/app/bookings/${id}/${action}`, action === 'reject' ? { reason } : {}, reviewVisitOptions);
 }
 </script>
 
@@ -134,6 +138,11 @@ function reject(id: number): void {
         </div>
         <p v-else class="empty panel">ไม่มีคำขอที่รอตรวจสอบ</p>
         <nav v-if="bookings.last_page > 1" class="review-pager" aria-label="หน้าคำขอ"><Link v-if="bookings.prev_page_url" :href="bookings.prev_page_url">ก่อนหน้า</Link><span>หน้า {{ bookings.current_page }} / {{ bookings.last_page }}</span><Link v-if="bookings.next_page_url" :href="bookings.next_page_url">ถัดไป</Link></nav>
+        <ConfirmDialog :open="confirmation !== null" :busy="pendingAction !== null"
+            :title="confirmation?.action === 'reject' ? 'ยืนยันไม่อนุมัติคำขอ' : 'ยืนยันอนุมัติคำขอ'"
+            :description="confirmation?.action === 'reject' ? `คำขอ #${confirmation.id} จะไม่ผ่านการอนุมัติ\nเหตุผล: ${reasons[confirmation.id]}` : `คำขอ #${confirmation?.id} จะเปลี่ยนเป็นอนุมัติแล้ว โปรดตรวจสอบรายละเอียดก่อนยืนยัน`"
+            :confirm-label="confirmation?.action === 'reject' ? 'ยืนยันไม่อนุมัติ' : 'ยืนยันอนุมัติ'"
+            @close="confirmation = null" @closed="afterConfirmationClosed" @confirm="confirmReview" />
     </AppLayout>
 </template>
 

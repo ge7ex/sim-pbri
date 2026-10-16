@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-16",
+  "origin": "http://127.0.0.1:8766",
+  "roles": [
+    {
+      "role": "ADMIN",
+      "checks": [
+        "calendar: current Bangkok month, list/calendar toggle, range, year navigation, multi-day/midnight, privacy, mobile",
+        "review/recall: modal, safe initial focus, keyboard containment, Escape, focus restore, cancel sends no request, explicit confirmation payload",
+        "registry Admin: dropdown/details, explicit edit/create, one editor, save modal, cancel preserves fields, validation preserves fields"
+      ],
+      "page_errors": 0
+    },
+    {
+      "role": "STAFF",
+      "checks": [
+        "calendar: current Bangkok month, list/calendar toggle, range, year navigation, multi-day/midnight, privacy, mobile",
+        "review/recall: modal, safe initial focus, keyboard containment, Escape, focus restore, cancel sends no request, explicit confirmation payload",
+        "registry Staff: read-only selector and no financial/edit controls",
+        {
+          "review_loading": [
+            {
+              "action": "approve",
+              "loading": "pass",
+              "duplicate_guard": "pass",
+              "error_recovery": "pass"
+            },
+            {
+              "action": "reject",
+              "loading": "pass",
+              "duplicate_guard": "pass",
+              "error_recovery": "pass"
+            },
+            {
+              "failure": "network",
+              "safe_alert": "pass",
+              "action_recovery": "pass",
+              "mobile_overflow": "none"
+            },
+            {
+              "failure": "http",
+              "safe_alert": "pass",
+              "action_recovery": "pass",
+              "mobile_overflow": "none"
+            }
+          ]
+        }
+      ],
+      "page_errors": 0
+    },
+    {
+      "role": "LECTURER",
+      "checks": [
+        "calendar: current Bangkok month, list/calendar toggle, range, year navigation, multi-day/midnight, privacy, mobile",
+        "Lecturer cancellation: mobile modal, Escape no write, explicit confirm, intercepted validation"
+      ],
+      "page_errors": 0
+    }
+  ],
+  "writes": "All changed-action requests intercepted; no demo or runtime business data writes",
+  "status": "pass"
+}
